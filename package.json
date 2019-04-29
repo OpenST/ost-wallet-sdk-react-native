@@ -1,0 +1,27 @@
+{
+  "name": "ost-wallet-sdk-react-native",
+  "version": "1.0.0",
+  "description": "OST Wallet SDK support for React Native apps.",
+  "main": "./js/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ostdotcom/ost-wallet-sdk-react-native.git"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "ost",
+    "key-management-sdk",
+    "ost-platform",
+    "brand-tokens"
+  ],
+  "author": "",
+  "license": "",
+  "peerDependencies": {
+    "react-native": "^0.41.2"
+  }
+}
