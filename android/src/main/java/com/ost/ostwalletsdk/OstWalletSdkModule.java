@@ -6,6 +6,8 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 
+import com.ost.walletsdk.OstSdk;
+
 public class OstWalletSdkModule extends ReactContextBaseJavaModule {
 
   private final ReactApplicationContext reactContext;
@@ -21,9 +23,15 @@ public class OstWalletSdkModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public String initialize(String BASE_URL) {
-    return BASE_URL;
-    //return OstSdk.initialize(getReactApplicationContext(), BASE_URL);
+  public void initialize(
+    String BASE_URL,
+    Callback errorCallback
+  ) {
+    try{
+      OstSdk.initialize(getReactApplicationContext(), BASE_URL);
+    } catch(Throwable e){
+      errorCallback.invoke(e.getMessage());
+    }
   }
 
 }
