@@ -32,8 +32,21 @@
 3. Change the `minSdkVersion` to 22 in `android/build.gradle`	
 4. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
   	```
-      compile project(':ost-wallet-sdk-react-native')
-  	```
+    compile project(':ost-wallet-sdk-react-native')
+5. Create file `android\app\src\main\assets\ost-mobilesdk.json` with application specific configurations using  the json below as an example
+
+ ```json
+{
+	"BLOCK_GENERATION_TIME": 3,
+	"PIN_MAX_RETRY_COUNT": 3,
+	"REQUEST_TIMEOUT_DURATION": 60,
+	"SESSION_BUFFER_TIME": 3600,
+	"PRICE_POINT_TOKEN_SYMBOL": "OST",
+	"PRICE_POINT_CURRENCY_SYMBOL": "USD",
+	"USE_SEED_PASSWORD": false
+}
+ ```
+ NOTE: These configurations are MANDATORY for successful operation. Failing to set them will significantly impact usage.
 
 ## Usage
 ```javascript
