@@ -18,7 +18,7 @@
 2. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
 3. Go to `node_modules/ost-wallet-sdk-react-native/ios` and add `OstWalletSdk.xcodeproj`
 4. In XCode, in the project navigator, select your project. Add `libOstWalletSdk.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
-5. Run your project (`Cmd+R`)<
+5. Run your project (`Cmd+R`)
 
 #### Android
 
