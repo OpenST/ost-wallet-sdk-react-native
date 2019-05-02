@@ -1,7 +1,7 @@
 
-#import "RNOstWalletSdk.h"
+#import "OstWalletSdk.h"
 
-@implementation RNOstWalletSdk
+@implementation OstWalletSdk
 
 - (dispatch_queue_t)methodQueue
 {

@@ -3,7 +3,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:RNOstWalletSdk.xcodeproj">
+      location = "group:OstWalletSdk.xcodeproj">
    </FileRef>
 </Workspace>
   
