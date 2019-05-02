@@ -14,10 +14,11 @@
 
 #### iOS
 
-1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-2. Go to `node_modules` ➜ `ost-wallet-sdk-react-native` and add `RNOstWalletSdk.xcodeproj`
-3. In XCode, in the project navigator, select your project. Add `libRNOstWalletSdk.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
-4. Run your project (`Cmd+R`)<
+1. Go to `node_modules/ost-wallet-sdk-react-native/ios` and run this command: `carthage update --platform iOS` 
+2. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
+3. Go to `node_modules/ost-wallet-sdk-react-native/ios` and add `OstWalletSdk.xcodeproj`
+4. In XCode, in the project navigator, select your project. Add `libOstWalletSdk.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
+5. Run your project (`Cmd+R`)<
 
 #### Android
 
