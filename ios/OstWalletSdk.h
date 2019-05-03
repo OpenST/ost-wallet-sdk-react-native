@@ -6,5 +6,4 @@
 #endif
 
 @interface OstWalletSdk : NSObject <RCTBridgeModule>
-
 @end

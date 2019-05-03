@@ -1,5 +1,5 @@
-
 #import "OstWalletSdk.h"
+#import <React/RCTLog.h>
 
 @interface RCT_EXTERN_REMAP_MODULE(OstSdk, OstWalletSdkS, NSObject)
 
@@ -9,11 +9,13 @@ RCT_EXTERN_METHOD(initialize)
 
 @implementation OstWalletSdk
 
-- (dispatch_queue_t)methodQueue
+RCT_EXPORT_MODULE();
+
+RCT_EXPORT_METHOD(initialize:(NSString *)url )
 {
-    return dispatch_get_main_queue();
+  RCTLogInfo(@"BaseUrl %@", url);
 }
-RCT_EXPORT_MODULE()
 
 @end
+  
   
