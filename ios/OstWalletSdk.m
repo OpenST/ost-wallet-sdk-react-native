@@ -1,6 +1,12 @@
 
 #import "OstWalletSdk.h"
 
+@interface RCT_EXTERN_REMAP_MODULE(OstSdk, OstWalletSdk, NSObject)
+
+RCT_EXTERN_METHOD(initialize)
+
+@end
+
 @implementation OstWalletSdk
 
 - (dispatch_queue_t)methodQueue
