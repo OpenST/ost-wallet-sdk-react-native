@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00B4B3D5227C912900DA74EF /* OstWalletSdkBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 00B4B3D4227C912900DA74EF /* OstWalletSdkBridge.m */; };
-		770458AF227C1EBA00B37439 /* OstWalletSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770458AE227C1EBA00B37439 /* OstWalletSdk.swift */; };
+		770458AF227C1EBA00B37439 /* OstWalletRNSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770458AE227C1EBA00B37439 /* OstWalletRNSdk.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,9 +26,9 @@
 /* Begin PBXFileReference section */
 		00B4B3D3227C912900DA74EF /* OstWalletSdkBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OstWalletSdkBridge.h; sourceTree = "<group>"; };
 		00B4B3D4227C912900DA74EF /* OstWalletSdkBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OstWalletSdkBridge.m; sourceTree = "<group>"; };
-		134814201AA4EA6300B7C361 /* libOstWalletSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOstWalletSdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		770458AD227C1EBA00B37439 /* OstWalletSdk-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OstWalletSdk-Bridging-Header.h"; sourceTree = "<group>"; };
-		770458AE227C1EBA00B37439 /* OstWalletSdk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWalletSdk.swift; sourceTree = "<group>"; };
+		134814201AA4EA6300B7C361 /* libOstWalletRNSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOstWalletRNSdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		770458AD227C1EBA00B37439 /* OstWalletRNSdk-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OstWalletRNSdk-Bridging-Header.h"; sourceTree = "<group>"; };
+		770458AE227C1EBA00B37439 /* OstWalletRNSdk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWalletRNSdk.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,7 +45,7 @@
 		134814211AA4EA7D00B7C361 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				134814201AA4EA6300B7C361 /* libOstWalletSdk.a */,
+				134814201AA4EA6300B7C361 /* libOstWalletRNSdk.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -55,18 +55,18 @@
 			children = (
 				00B4B3D3227C912900DA74EF /* OstWalletSdkBridge.h */,
 				00B4B3D4227C912900DA74EF /* OstWalletSdkBridge.m */,
-				770458AE227C1EBA00B37439 /* OstWalletSdk.swift */,
+				770458AE227C1EBA00B37439 /* OstWalletRNSdk.swift */,
 				134814211AA4EA7D00B7C361 /* Products */,
-				770458AD227C1EBA00B37439 /* OstWalletSdk-Bridging-Header.h */,
+				770458AD227C1EBA00B37439 /* OstWalletRNSdk-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		58B511DA1A9E6C8500147676 /* OstWalletSdk */ = {
+		58B511DA1A9E6C8500147676 /* OstWalletRNSdk */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "OstWalletSdk" */;
+			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "OstWalletRNSdk" */;
 			buildPhases = (
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
@@ -76,9 +76,9 @@
 			);
 			dependencies = (
 			);
-			name = OstWalletSdk;
+			name = OstWalletRNSdk;
 			productName = RCTDataManager;
-			productReference = 134814201AA4EA6300B7C361 /* libOstWalletSdk.a */;
+			productReference = 134814201AA4EA6300B7C361 /* libOstWalletRNSdk.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -96,7 +96,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "OstWalletSdk" */;
+			buildConfigurationList = 58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "OstWalletRNSdk" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -108,7 +108,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				58B511DA1A9E6C8500147676 /* OstWalletSdk */,
+				58B511DA1A9E6C8500147676 /* OstWalletRNSdk */,
 			);
 		};
 /* End PBXProject section */
@@ -118,7 +118,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				770458AF227C1EBA00B37439 /* OstWalletSdk.swift in Sources */,
+				770458AF227C1EBA00B37439 /* OstWalletRNSdk.swift in Sources */,
 				00B4B3D5227C912900DA74EF /* OstWalletSdkBridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -220,7 +220,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = OstWalletSdk;
+				PRODUCT_NAME = OstWalletRNSdk;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "OstWalletSdk-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -241,7 +241,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = OstWalletSdk;
+				PRODUCT_NAME = OstWalletRNSdk;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "OstWalletSdk-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
@@ -251,7 +251,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "OstWalletSdk" */ = {
+		58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "OstWalletRNSdk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B511ED1A9E6C8500147676 /* Debug */,
@@ -260,7 +260,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "OstWalletSdk" */ = {
+		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "OstWalletRNSdk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B511F01A9E6C8500147676 /* Debug */,
