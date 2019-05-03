@@ -1,7 +1,7 @@
 
 #import "OstWalletSdk.h"
 
-@interface RCT_EXTERN_REMAP_MODULE(OstSdk, OstWalletSdk, NSObject)
+@interface RCT_EXTERN_REMAP_MODULE(OstSdk, OstWalletSdkS, NSObject)
 
 RCT_EXTERN_METHOD(initialize)
 

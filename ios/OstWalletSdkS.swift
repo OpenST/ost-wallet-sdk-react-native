@@ -10,7 +10,7 @@ import Foundation
 
 
 @objc
-class OstWalletSdk: NSObject {
+class OstWalletSdkS: NSObject {
     
     @objc
     func initialize() {
