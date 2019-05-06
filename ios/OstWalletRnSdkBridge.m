@@ -12,6 +12,6 @@
 
 @interface RCT_EXTERN_REMAP_MODULE(OstWalletSdk, OstWalletRnSdk ,NSObject)
 
-RCT_EXTERN_METHOD(addEvent:(NSString *)name)
+RCT_EXTERN_METHOD(initialize:(NSString *)url callback:(RCTResponseSenderBlock)callback)
 
 @end
