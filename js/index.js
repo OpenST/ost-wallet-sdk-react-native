@@ -1,6 +1,6 @@
 
 import { NativeModules } from 'react-native';
 
-const { OstWalletRnSdk } = NativeModules;
+const { OstWalletSdk } = NativeModules;
 
-export default OstWalletRnSdk;
+export default OstWalletSdk;
