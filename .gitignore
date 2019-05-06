@@ -68,3 +68,4 @@ typings/
 
 # IDE specific
 .vscode
+.idea

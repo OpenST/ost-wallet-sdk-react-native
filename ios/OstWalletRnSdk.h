@@ -5,5 +5,7 @@
 #import <React/RCTBridgeModule.h>
 #endif
 
-@interface OstWalletSdk : NSObject <RCTBridgeModule>
+@interface OstWalletRnSdk : NSObject <RCTBridgeModule>
+
 @end
+  
