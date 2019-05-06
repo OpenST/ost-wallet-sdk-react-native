@@ -11,9 +11,13 @@ import Foundation
 @objc(OstWalletRnSdk)
 class OstWalletRnSdk: NSObject {
     
-    @objc(addEvent:)
-    func addEvent(name: String) -> Void {
-        print("Hello I am in swift");
+    @objc(initialize:)
+    func initialize(url: String, _ callback: RCTResponseSenderBlock) -> Void {
+        do {
+            try print("Hello in swift");
+        } catch  {
+            callback(error)
+        }
     }
     
 }
