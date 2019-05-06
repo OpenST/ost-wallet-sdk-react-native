@@ -16,7 +16,7 @@ class OstWalletRnSdk: NSObject {
         do {
             try print("Hello in swift");
         } catch  {
-            callback(error)
+            callback(error);
         }
     }
     
