@@ -9,13 +9,20 @@
 #import "OstWalletRnBridge.h"
 #import <React/RCTBridgeModule.h>
 
+
 @implementation OstWalletRnBridge
 
-@end
+    - (dispatch_queue_t)methodQueue
+    {
+        return dispatch_get_main_queue();
+    }
+    RCT_EXPORT_MODULE()
 
+@end
 
 @interface RCT_EXTERN_MODULE(OstWalletRnSdk, NSObject)
 
-RCT_EXTERN_METHOD(addEvent:(NSString *)url )
+    RCT_EXTERN_METHOD(addEvent:(NSString *)url )
 
 @end
+

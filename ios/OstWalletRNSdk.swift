@@ -10,8 +10,9 @@ import Foundation
 
 @objc(OstWalletRnSdk)
 class OstWalletRnSdk: NSObject {
-    
-   @objc func addEvent(url: String) -> Void {
+
+   @objc(addEvent:)
+   func addEvent(url: String) -> Void {
     print("Base url:" , url)
    }
     
