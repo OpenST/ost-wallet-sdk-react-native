@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00B4B3D5227C912900DA74EF /* OstWalletSdkBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 00B4B3D4227C912900DA74EF /* OstWalletSdkBridge.m */; };
-		770458AF227C1EBA00B37439 /* OstWalletRNSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770458AE227C1EBA00B37439 /* OstWalletRNSdk.swift */; };
+		0073CE74227F0C8300F17194 /* OstWalletRnSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0073CE73227F0C8300F17194 /* OstWalletRnSdk.swift */; };
+		0073CE76227F0DC100F17194 /* OstWalletRnBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 0073CE75227F0DC100F17194 /* OstWalletRnBridge.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,11 +24,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		00B4B3D3227C912900DA74EF /* OstWalletSdkBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OstWalletSdkBridge.h; sourceTree = "<group>"; };
-		00B4B3D4227C912900DA74EF /* OstWalletSdkBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OstWalletSdkBridge.m; sourceTree = "<group>"; };
-		134814201AA4EA6300B7C361 /* libOstWalletRNSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOstWalletRNSdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		770458AD227C1EBA00B37439 /* OstWalletRNSdk-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OstWalletRNSdk-Bridging-Header.h"; sourceTree = "<group>"; };
-		770458AE227C1EBA00B37439 /* OstWalletRNSdk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWalletRNSdk.swift; sourceTree = "<group>"; };
+		0073CE72227F0C8300F17194 /* OstWalletRnSdk-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OstWalletRnSdk-Bridging-Header.h"; sourceTree = "<group>"; };
+		0073CE73227F0C8300F17194 /* OstWalletRnSdk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstWalletRnSdk.swift; sourceTree = "<group>"; };
+		0073CE75227F0DC100F17194 /* OstWalletRnBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OstWalletRnBridge.m; sourceTree = "<group>"; };
+		134814201AA4EA6300B7C361 /* libOstWalletRnSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOstWalletRnSdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,7 +44,7 @@
 		134814211AA4EA7D00B7C361 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				134814201AA4EA6300B7C361 /* libOstWalletRNSdk.a */,
+				134814201AA4EA6300B7C361 /* libOstWalletRnSdk.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -53,20 +52,19 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				00B4B3D3227C912900DA74EF /* OstWalletSdkBridge.h */,
-				00B4B3D4227C912900DA74EF /* OstWalletSdkBridge.m */,
-				770458AE227C1EBA00B37439 /* OstWalletRNSdk.swift */,
+				0073CE75227F0DC100F17194 /* OstWalletRnBridge.m */,
+				0073CE73227F0C8300F17194 /* OstWalletRnSdk.swift */,
 				134814211AA4EA7D00B7C361 /* Products */,
-				770458AD227C1EBA00B37439 /* OstWalletRNSdk-Bridging-Header.h */,
+				0073CE72227F0C8300F17194 /* OstWalletRnSdk-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		58B511DA1A9E6C8500147676 /* OstWalletRNSdk */ = {
+		58B511DA1A9E6C8500147676 /* OstWalletRnSdk */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "OstWalletRNSdk" */;
+			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "OstWalletRnSdk" */;
 			buildPhases = (
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
@@ -76,9 +74,9 @@
 			);
 			dependencies = (
 			);
-			name = OstWalletRNSdk;
+			name = OstWalletRnSdk;
 			productName = RCTDataManager;
-			productReference = 134814201AA4EA6300B7C361 /* libOstWalletRNSdk.a */;
+			productReference = 134814201AA4EA6300B7C361 /* libOstWalletRnSdk.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -87,7 +85,7 @@
 		58B511D31A9E6C8500147676 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					58B511DA1A9E6C8500147676 = {
@@ -96,7 +94,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "OstWalletRNSdk" */;
+			buildConfigurationList = 58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "OstWalletRnSdk" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -108,7 +106,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				58B511DA1A9E6C8500147676 /* OstWalletRNSdk */,
+				58B511DA1A9E6C8500147676 /* OstWalletRnSdk */,
 			);
 		};
 /* End PBXProject section */
@@ -118,8 +116,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				770458AF227C1EBA00B37439 /* OstWalletRNSdk.swift in Sources */,
-				00B4B3D5227C912900DA74EF /* OstWalletSdkBridge.m in Sources */,
+				0073CE76227F0DC100F17194 /* OstWalletRnBridge.m in Sources */,
+				0073CE74227F0C8300F17194 /* OstWalletRnSdk.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,14 +132,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -178,14 +184,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -203,6 +217,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -220,9 +235,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = OstWalletRNSdk;
+				PRODUCT_NAME = OstWalletRnSdk;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "OstWalletSdk-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "OstWalletRnSdk-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 			};
@@ -241,9 +256,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = OstWalletRNSdk;
+				PRODUCT_NAME = OstWalletRnSdk;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "OstWalletSdk-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "OstWalletRnSdk-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
@@ -251,7 +266,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "OstWalletRNSdk" */ = {
+		58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "OstWalletRnSdk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B511ED1A9E6C8500147676 /* Debug */,
@@ -260,7 +275,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "OstWalletRNSdk" */ = {
+		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "OstWalletRnSdk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B511F01A9E6C8500147676 /* Debug */,
