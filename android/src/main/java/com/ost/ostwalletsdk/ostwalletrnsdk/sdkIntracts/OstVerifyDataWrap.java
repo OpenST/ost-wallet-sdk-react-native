@@ -1,4 +1,4 @@
-package com.ostwalletrnsdk.sdkIntracts;
+package com.ost.ostwalletsdk.ostwalletrnsdk.sdkIntracts;
 import com.ost.walletsdk.workflows.interfaces.OstVerifyDataInterface;
 
 

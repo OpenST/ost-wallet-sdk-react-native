@@ -1,10 +1,10 @@
-package com.ostwalletrnsdk;
+package com.ost.ostwalletsdk.ostwalletrnsdk;
 
 import com.ost.walletsdk.ecKeyInteracts.UserPassphrase;
 import com.ost.walletsdk.network.OstApiError;
 import com.ost.walletsdk.workflows.errors.OstError;
-import com.ostwalletrnsdk.errors.RNOstApiErrorFormator;
-import com.ostwalletrnsdk.errors.RNOstErrorFormator;
+import com.ost.ostwalletsdk.ostwalletrnsdk.errors.RNOstApiErrorFormator;
+import com.ost.ostwalletsdk.ostwalletrnsdk.errors.RNOstErrorFormator;
 
 public class Utils {
 

@@ -1,6 +1,6 @@
-package com.ostwalletrnsdk.sdkIntracts;
+package com.ost.ostwalletsdk.ostwalletrnsdk.sdkIntracts;
 import com.ost.walletsdk.workflows.interfaces.OstDeviceRegisteredInterface;
-import com.ostwalletrnsdk.errors.OstRNErrors;
+import com.ost.ostwalletsdk.ostwalletrnsdk.errors.OstRNErrors;
 
 import org.json.JSONException;
 import org.json.JSONObject;

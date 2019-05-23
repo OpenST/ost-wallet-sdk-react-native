@@ -1,4 +1,4 @@
-package com.ostwalletrnsdk;
+package com.ost.ostwalletsdk.ostwalletrnsdk;
 
 import android.graphics.Bitmap;
 import android.util.Base64;
@@ -12,8 +12,8 @@ import com.ost.walletsdk.ecKeyInteracts.UserPassphrase;
 import com.ost.walletsdk.utils.CommonUtils;
 import com.ost.walletsdk.workflows.OstWorkflowContext;
 import com.ost.walletsdk.workflows.errors.OstError;
-import com.ostwalletrnsdk.errors.OstRNError;
-import com.ostwalletrnsdk.errors.OstRNErrors;
+import com.ost.ostwalletsdk.ostwalletrnsdk.errors.OstRNError;
+import com.ost.ostwalletsdk.ostwalletrnsdk.errors.OstRNErrors;
 
 import org.json.JSONArray;
 import org.json.JSONException;

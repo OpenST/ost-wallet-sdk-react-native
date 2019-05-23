@@ -1,4 +1,4 @@
-package com.ostwalletrnsdk.errors;
+package com.ost.ostwalletsdk.ostwalletrnsdk.errors;
 
 import com.ost.walletsdk.workflows.errors.OstError;
 

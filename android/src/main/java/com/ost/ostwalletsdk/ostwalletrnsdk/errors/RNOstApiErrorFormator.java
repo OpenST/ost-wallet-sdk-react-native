@@ -1,4 +1,4 @@
-package com.ostwalletrnsdk.errors;
+package com.ost.ostwalletsdk.ostwalletrnsdk.errors;
 import com.ost.walletsdk.network.OstApiError;
 
 import org.json.JSONException;

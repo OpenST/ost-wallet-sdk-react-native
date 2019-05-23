@@ -1,8 +1,8 @@
-package com.ostwalletrnsdk.sdkIntracts;
+package com.ost.ostwalletsdk.ostwalletrnsdk.sdkIntracts;
 
 import com.ost.walletsdk.workflows.interfaces.*;
-import com.ostwalletrnsdk.OstWorkFlowCallbackImpl;
-import com.ostwalletrnsdk.errors.OstRNErrors;
+import com.ost.ostwalletsdk.ostwalletrnsdk.OstWorkFlowCallbackImpl;
+import com.ost.ostwalletsdk.ostwalletrnsdk.errors.OstRNErrors;
 
 import java.util.HashMap;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package com.ostwalletrnsdk;
+package com.ost.ostwalletsdk.ostwalletrnsdk;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,7 +9,7 @@ import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.bridge.JavaScriptModule;
-import com.ostwalletrnsdk.sdkIntracts.BaseSdkInteract;
+import com.ost.ostwalletsdk.ostwalletrnsdk.sdkIntracts.BaseSdkInteract;
 
 public class OstWalletRnSdkPackage implements ReactPackage {
 

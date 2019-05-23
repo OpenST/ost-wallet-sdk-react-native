@@ -1,13 +1,13 @@
-package com.ostwalletrnsdk;
+package com.ost.ostwalletsdk.ostwalletrnsdk;
 
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.ost.walletsdk.ecKeyInteracts.UserPassphrase;
-import com.ostwalletrnsdk.sdkIntracts.BaseSdkInteract;
-import com.ostwalletrnsdk.sdkIntracts.OstPinAcceptWrap;
-import com.ostwalletrnsdk.sdkIntracts.OstVerifyDataWrap;
+import com.ost.ostwalletsdk.ostwalletrnsdk.sdkIntracts.BaseSdkInteract;
+import com.ost.ostwalletsdk.ostwalletrnsdk.sdkIntracts.OstPinAcceptWrap;
+import com.ost.ostwalletsdk.ostwalletrnsdk.sdkIntracts.OstVerifyDataWrap;
 
 import org.json.JSONObject;
 

@@ -1,4 +1,4 @@
-package com.ostwalletrnsdk;
+package com.ost.ostwalletsdk.ostwalletrnsdk;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,11 +15,11 @@ import com.ost.walletsdk.workflows.interfaces.OstDeviceRegisteredInterface;
 import com.ost.walletsdk.workflows.interfaces.OstPinAcceptInterface;
 import com.ost.walletsdk.workflows.interfaces.OstVerifyDataInterface;
 import com.ost.walletsdk.workflows.interfaces.OstWorkFlowCallback;
-import com.ostwalletrnsdk.errors.OstRNError;
-import com.ostwalletrnsdk.errors.OstRNErrors;
-import com.ostwalletrnsdk.sdkIntracts.OstDeviceRegisteredWrap;
-import com.ostwalletrnsdk.sdkIntracts.OstPinAcceptWrap;
-import com.ostwalletrnsdk.sdkIntracts.OstVerifyDataWrap;
+import com.ost.ostwalletsdk.ostwalletrnsdk.errors.OstRNError;
+import com.ost.ostwalletsdk.ostwalletrnsdk.errors.OstRNErrors;
+import com.ost.ostwalletsdk.ostwalletrnsdk.sdkIntracts.OstDeviceRegisteredWrap;
+import com.ost.ostwalletsdk.ostwalletrnsdk.sdkIntracts.OstPinAcceptWrap;
+import com.ost.ostwalletsdk.ostwalletrnsdk.sdkIntracts.OstVerifyDataWrap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
