@@ -1,6 +1,9 @@
+import OstWalletSdk from './OstWalletSdk';
+import OstWalletSdkEvents from './OstWalletSdkEvents';
+import OstWalletWorkFlowCallback from './OstWalletWorkFlowCallback';
 
-import { NativeModules } from 'react-native';
-
-const { OstWalletSdk } = NativeModules;
-
-export default OstWalletSdk;
+export {
+    OstWalletSdk,
+    OstWalletSdkEvents,
+    OstWalletWorkFlowCallback
+}
