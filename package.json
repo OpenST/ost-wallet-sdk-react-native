@@ -6,15 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "adm-zip": "^0.4.7",
-    "fastfall": "^1.5.1",
-    "got": "^7.0.0",
-    "plist": "^2.1.0",
-    "progress": "^2.0.0",
-    "pump": "^1.0.2",
-    "xcode": "^1.0.0"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ostdotcom/ost-wallet-sdk-react-native.git"
