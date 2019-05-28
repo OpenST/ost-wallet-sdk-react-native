@@ -57,34 +57,23 @@ static NSString* invalidWorkflowErrorMessage = @"";
   return err;
 }
 
-+ (NSDictionary *) invalidJsonStringError: (NSString * _Nonnull) internalCode {
-  NSString *errorMessage = invalidJsonStringErrorMessage;
-  return [OstError toUserInfoWithErrorMessage: errorMessage
-                                    errorCode: OstRNErrorUtils.invalidJsonString
-                                 internalCode: internalCode
-                                    errorInfo: nil
-                                   isApiError: false
-                                     apiError: nil];
++ (OstError *) invalidJsonStringError: (NSString * _Nonnull) internalCode {
+  return [[OstError alloc]initWithInternalCode: internalCode
+                                     errorCode: OstErrorCodeInvalidJsonString
+                                     errorInfo: nil];
 }
 
-+ (NSDictionary *) invalidJsonArrayError: (NSString * _Nonnull) internalCode {
-  NSString *errorMessage = invalidJsonArrayErrorMessage;
-  return [OstError toUserInfoWithErrorMessage: errorMessage
-                                    errorCode: OstRNErrorUtils.invalidJsonArray
-                                 internalCode: internalCode
-                                    errorInfo: nil
-                                   isApiError: false
-                                     apiError: nil];
++ (OstError *) invalidJsonArrayError: (NSString * _Nonnull) internalCode {
+  return [[OstError alloc]initWithInternalCode: internalCode
+                                     errorCode: OstErrorCodeInvalidJsonArray
+                                     errorInfo: nil];
+
 }
 
-+ (NSDictionary *) invalidWorkflowError: (NSString * _Nonnull) internalCode {
-  NSString *errorMessage = invalidWorkflowErrorMessage;
-  return [OstError toUserInfoWithErrorMessage: errorMessage
-                                    errorCode: OstRNErrorUtils.invalidWorkflow
-                                 internalCode: internalCode
-                                    errorInfo: nil
-                                   isApiError: false
-                                     apiError: nil];
++ (OstError *) invalidWorkflowError: (NSString * _Nonnull) internalCode {
+  return [[OstError alloc]initWithInternalCode: internalCode
+                                     errorCode: OstErrorCodeInvalidWorkflow
+                                     errorInfo: nil];
 }
 
 @end

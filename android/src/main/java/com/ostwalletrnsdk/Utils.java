@@ -1,27 +1,54 @@
 package com.ostwalletrnsdk;
 
 import com.ost.walletsdk.ecKeyInteracts.UserPassphrase;
-import com.ost.walletsdk.network.OstApiError;
 import com.ost.walletsdk.workflows.errors.OstError;
-import com.ostwalletrnsdk.errors.RNOstApiErrorFormator;
-import com.ostwalletrnsdk.errors.RNOstErrorFormator;
+import com.ost.walletsdk.workflows.errors.OstErrors;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Utils {
 
-    public static String getError(Object error ){
+
+    /*
+    * getError should only used for errorCallbacks directly invoked.
+    * Don't user for workflow callback.
+    */
+
+    public static String getError(Object error, String internalErrorCode ){
         String jsonError = null ;
-        if( error instanceof OstApiError){
-            OstApiError ostApiError = ( OstApiError ) error ;
-            jsonError = new RNOstApiErrorFormator( ostApiError ).toString();
-        }else if( error instanceof OstError){
-            OstError ostError = ( OstError ) error ;
-            jsonError = new RNOstErrorFormator( ostError ).toString();
-        }else if( error instanceof Throwable ){
-            jsonError =  ((Throwable)error).getMessage() ;
+        if( error instanceof OstError){
+            return  ((OstError) error).toJSONObject().toString();
+        }
+        JSONObject err = new JSONObject();
+
+        try {
+            err.putOpt(OstError.OstJSONErrorKeys.ERROR_MESSAGE, ((Throwable)error).getMessage());
+        } catch (JSONException e) {
+            //Ignore.
         }
 
-        return  jsonError ;
+        try {
+            err.putOpt(OstError.OstJSONErrorKeys.INTERNAL_ERROR_CODE, internalErrorCode);
+        } catch (JSONException e) {
+            //Ignore.
+        }
+
+        try {
+            err.putOpt(OstError.OstJSONErrorKeys.ERROR_CODE, OstErrors.ErrorCode.UNCAUGHT_EXCEPTION_HANDELED);
+        } catch (JSONException e) {
+            //Ignore.
+        }
+
+        try {
+            err.putOpt(OstError.OstJSONErrorKeys.IS_API_ERROR, 0);
+        } catch (JSONException e) {
+            //Ignore.
+        }
+
+        return err.toString();
     }
+
 
     public static void cleanPassPhrase( UserPassphrase passphrase ){
         if( null != passphrase ){

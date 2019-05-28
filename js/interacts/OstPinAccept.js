@@ -9,7 +9,9 @@ class OstPinAccept extends BaseSdkInteract {
     }
 
     pinEntered(userId, pin, passphrasePrefix, errorCallback) {
-        OstRNSdkCallbackManager.pinEntered(this.interactuuid, userId, pin, passphrasePrefix, errorCallback);
+        OstRNSdkCallbackManager.pinEntered(this.interactuuid, userId, pin, passphrasePrefix,  function( error ) {
+            BaseSdkInteract.errorCallbackInvoker( error , errorCallback );
+        });
     }
 }
 

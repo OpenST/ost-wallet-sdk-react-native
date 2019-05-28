@@ -49,16 +49,24 @@ static NSMutableDictionary *map;
   return map[ uuid ];
 }
 
-- (void) errorEncountered:(NSDictionary *) errorDict error: (NSError **) error {
+- (void) postError: (NSError **) errorPointer fallbackError: (OstError *) fallbackError {
   OstWorkFlowCallbackImpl *workflow = [OstWorkFlowCallbackImpl getInstance:[self workflowCallbackId]];
   if ( nil == workflow ) {
-    *error = [[NSError alloc] initWithDomain: OstRNErrorUtils.ERROR_DOMAIN
-                                        code: OstRNErrorUtils.INVALID_WORKFLOW_CODE
-                                    userInfo: errorDict];
+    //Update the errorPointer.
+    *errorPointer = [[OstError alloc]initWithInternalCode: @"rn_si_bsi_pe_1"
+                                         errorCode: OstErrorCodeInvalidWorkflow
+                                         errorInfo: nil];
     return;
   }
-
-  [workflow flowInterruptedWithWorkflowContext: nil ostErrorDictionary: errorDict];
+  
+  OstError *errorToPost;
+  if ( [*errorPointer isKindOfClass: OstError.class] ) {
+    errorToPost = (OstError *)(*errorPointer);
+  } else {
+    errorToPost = fallbackError;
+  }
+  *errorPointer = nil;
+  [workflow flowInterruptedWithWorkflowContext: workflow.pseudoContext error: errorToPost];
   [self done];
 }
 
@@ -93,11 +101,14 @@ static NSMutableDictionary *map;
   [self done];
 }
 
-- (NSDictionary *) convertJSONString: (NSString *) jsonParams error: (NSError **)error{
+- (NSDictionary *) convertJSONString: (NSString *) jsonParams error: (OstError **)error {
   NSData *jsonData = [jsonParams dataUsingEncoding:NSUTF8StringEncoding];
   NSDictionary *params = [NSJSONSerialization JSONObjectWithData:jsonData
                                                          options:NSJSONReadingAllowFragments
                                                            error: error];
+  if ( nil != *error) {
+    *error =  [OstRNErrorUtils invalidJsonStringError: @"rn_si_bsi_cjsons_1"];
+  }
   return params;
 }
 

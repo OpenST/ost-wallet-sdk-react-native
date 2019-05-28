@@ -85,9 +85,9 @@ RCT_EXPORT_METHOD(executeTransaction: (NSString *) userId
                options:0
                error:&error];
   
-  if( error ){
-    NSDictionary *err = [OstRNErrorUtils invalidJsonArrayError:@"rn_owrs_et_1"];
-    [workflowCallback flowInterruptedWithWorkflowContext: context ostErrorDictionary: err];
+  if( nil != error ) {
+    OstError *ostError = [OstRNErrorUtils invalidJsonArrayError:@"rn_owrs_et_1"];
+    [workflowCallback flowInterruptedWithWorkflowContext: context error: ostError];
     return;
   }
 
@@ -98,9 +98,9 @@ RCT_EXPORT_METHOD(executeTransaction: (NSString *) userId
                options:0
                error:&error];
   
-  if( error ){
-     NSDictionary *err = [OstRNErrorUtils invalidJsonArrayError:@"rn_owrs_et_2"];
-    [workflowCallback flowInterruptedWithWorkflowContext: context ostErrorDictionary: err];
+  if( nil != error ) {
+    OstError *ostError = [OstRNErrorUtils invalidJsonArrayError:@"rn_owrs_et_2"];
+    [workflowCallback flowInterruptedWithWorkflowContext: context error: ostError];
     return;
   }
   
@@ -112,9 +112,9 @@ RCT_EXPORT_METHOD(executeTransaction: (NSString *) userId
                options: 0
                error: &error];
     
-    if( error ){
-      NSDictionary *err = [OstRNErrorUtils invalidJsonStringError:@"rn_owrs_et_3"];
-      [workflowCallback flowInterruptedWithWorkflowContext: context ostErrorDictionary: err];
+    if( nil != error ){
+      OstError *ostError = [OstRNErrorUtils invalidJsonStringError:@"rn_owrs_et_3"];
+      [workflowCallback flowInterruptedWithWorkflowContext: context error: ostError];
       return;
     }
   }

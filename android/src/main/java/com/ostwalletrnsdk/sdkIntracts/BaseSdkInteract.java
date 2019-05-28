@@ -1,8 +1,8 @@
 package com.ostwalletrnsdk.sdkIntracts;
 
+import com.ost.walletsdk.workflows.errors.OstErrors;
 import com.ost.walletsdk.workflows.interfaces.*;
 import com.ostwalletrnsdk.OstWorkFlowCallbackImpl;
-import com.ostwalletrnsdk.errors.OstRNErrors;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -42,7 +42,7 @@ public class BaseSdkInteract {
         return instance;
     }
 
-    protected void errorEncountered(String internalErrorCode, OstRNErrors.ErrorCode errorCode) {
+    protected void errorEncountered(String internalErrorCode, OstErrors.ErrorCode errorCode) {
         getSdkCallbackForAction();
         OstWorkFlowCallbackImpl ostWorkFlowCallback = OstWorkFlowCallbackImpl.getInstance( this.workflowCallbackId );
         ostWorkFlowCallback.errorEncountered( internalErrorCode , errorCode );

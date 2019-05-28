@@ -5,6 +5,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.ost.walletsdk.ecKeyInteracts.UserPassphrase;
+import com.ost.walletsdk.workflows.errors.OstError;
 import com.ostwalletrnsdk.sdkIntracts.BaseSdkInteract;
 import com.ostwalletrnsdk.sdkIntracts.OstPinAcceptWrap;
 import com.ostwalletrnsdk.sdkIntracts.OstVerifyDataWrap;
@@ -46,7 +47,7 @@ public class OstRNSdkCallbackManager extends ReactContextBaseJavaModule {
             BaseSdkInteract baseSdkInteract = BaseSdkInteract.map.get(uuid);
             baseSdkInteract.messageReceived("deviceRegistered", jsonString );
         } catch (Throwable e) {
-            errorCallback.invoke( Utils.getError( e ) );
+            errorCallback.invoke( Utils.getError( e ,  "rn_si_ornscm_dr_1") );
         }
     }
 
@@ -58,7 +59,7 @@ public class OstRNSdkCallbackManager extends ReactContextBaseJavaModule {
         try{
             userPassPhrase = new UserPassphrase(userId, pin, passphrasePrefix) ;
         } catch(Throwable e){
-            errorCallback.invoke( Utils.getError( e ) );
+            errorCallback.invoke( Utils.getError( e ,  "rn_si_ornscm_pe_1") );
             return;
         }
 
@@ -67,7 +68,7 @@ public class OstRNSdkCallbackManager extends ReactContextBaseJavaModule {
             baseSdkInteract.messageReceived("pinEntered", userPassPhrase );
         } catch (Throwable e) {
             Utils.cleanPassPhrase( userPassPhrase );
-            errorCallback.invoke( Utils.getError( e ) );
+            errorCallback.invoke( Utils.getError( e ,  "rn_si_ornscm_pe_2") );
         }
     }
 
@@ -77,7 +78,7 @@ public class OstRNSdkCallbackManager extends ReactContextBaseJavaModule {
             OstVerifyDataWrap baseSdkInteract = (OstVerifyDataWrap) BaseSdkInteract.map.get(uuid);
             baseSdkInteract.messageReceived("dataVerified" );
         }catch ( Throwable e){
-            errorCallback.invoke( Utils.getError( e ) );
+            errorCallback.invoke( Utils.getError( e ,  "rn_si_ornscm_dv_1") );
         }
     }
 }

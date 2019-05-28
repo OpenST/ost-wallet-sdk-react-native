@@ -33,8 +33,8 @@ RCT_EXPORT_METHOD(deviceRegistered: (NSString *) uuid
   BaseSdkInteract *interact = [BaseSdkInteract getFromMap: uuid];
   
   if ( nil == interact || ![interact isKindOfClass: [OstDeviceRegisteredWrap class] ]) {
-    NSDictionary *error = [OstRNErrorUtils invalidWorkflowError:@"rn_sdjcbm_drjscb_1"];
-    callback( @[error] );
+    OstError *ostError = [OstRNErrorUtils invalidWorkflowError:@"rn_sdjcbm_drjscb_1"];
+    callback( @[ [ostError userInfo] ] );
     return;
   }
   
@@ -56,8 +56,8 @@ RCT_EXPORT_METHOD(pinEntered: (NSString *) uuid
 {
   BaseSdkInteract *interact = [BaseSdkInteract getFromMap: uuid];
   if ( nil == interact || ![interact isKindOfClass: [OstPinAcceptWrap class] ]) {
-    NSDictionary *error = [OstRNErrorUtils invalidWorkflowError:@"rn_sdjcbm_pe_1"];
-    callback( @[error] );
+    OstError *ostError = [OstRNErrorUtils invalidWorkflowError:@"rn_sdjcbm_pe_1"];
+    callback( @[ [ostError userInfo] ] );
     return;
   }
   OstPinAcceptWrap * subInteract = (OstPinAcceptWrap *) interact;
@@ -70,8 +70,8 @@ RCT_EXPORT_METHOD(dataVerified: (NSString *) uuid
 {
   BaseSdkInteract *interact = [BaseSdkInteract getFromMap: uuid];
   if ( nil == interact || ![interact isKindOfClass: [OstVerifyDataWrap class] ]) {
-    NSDictionary *error = [OstRNErrorUtils invalidWorkflowError:@"rn_sdjcbm_pe_1"];
-    callback( @[error] );
+    OstError *ostError = [OstRNErrorUtils invalidWorkflowError:@"rn_sdjcbm_dv_1"];
+    callback( @[ [ostError userInfo] ] );
     return;
   }
   OstVerifyDataWrap * subInteract = (OstVerifyDataWrap *) interact;

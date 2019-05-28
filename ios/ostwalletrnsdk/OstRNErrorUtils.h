@@ -24,9 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (class, readonly) NSString * invalidJsonArray;
 @property (class, readonly) NSString * invalidWorkflow;
 
-+ (NSDictionary *) invalidJsonStringError: (NSString * _Nonnull) internalCode;
-+ (NSDictionary *) invalidJsonArrayError: (NSString * _Nonnull) internalCode;
-+ (NSDictionary *) invalidWorkflowError: (NSString * _Nonnull) internalCode;
++ (OstError *) invalidJsonStringError: (NSString * _Nonnull) internalCode;
++ (OstError *) invalidJsonArrayError: (NSString * _Nonnull) internalCode;
++ (OstError *) invalidWorkflowError: (NSString * _Nonnull) internalCode;
 
 + (NSDictionary *) errorToJson: (NSError * _Nonnull) error internalCode:(NSString * _Nonnull) internalCode;
 + (NSDictionary *) errorToJson:(NSError * _Nonnull)error internalCode:(NSString * _Nonnull)internalCode errorCode:(NSString * _Nonnull) errorCode;
