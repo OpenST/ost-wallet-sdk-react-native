@@ -59,7 +59,7 @@ In this case, you can skip steps 1 to 3 mentioned below and only do step 4 and 5
     ```
     - Run `carthage update --platform iOS`
     - A `Cartfile.resolved` file and a `Carthage` directory will appear in `./ios` (the same directory where your `.xcodeproj` or `.xcworkspace` is)
-2. Open application target, under `General` tab, drag the built `OstWalletSdk.framework` binary from `Carthage/Build/iOS` into `Linked Frameworks and Libraries` section.
+2. Open application target, under `General` tab, drag the built `OstWalletSdk.framework` binary from `./ios/Carthage/Build/iOS` into `Linked Frameworks and Libraries` section.
 3. On the application targets’ `Build Phases` settings tab, click the _+_ icon and choose `New Run Script Phase`. Add the following command:
    ```sh
    /usr/local/bin/carthage copy-frameworks
@@ -75,8 +75,8 @@ In this case, you can skip steps 1 to 3 mentioned below and only do step 4 and 5
    $(SRCROOT)/Carthage/Build/iOS/SipHash.framework
    $(SRCROOT)/Carthage/Build/iOS/OstWalletSdk.framework
    ```   
-4. Click on your project, select `File > Add Files to "<Your Project>"`, browse to `./node_modules/ost-wallet-sdk-react-native/ios` and add the folder `sdkCode` with these settings:
-   - Destination: (check) Copy items if needed 
+4. Click on your project, select `File > Add Files to "<Your Project>"`, browse to `./node_modules/ost-wallet-sdk-react-native/ios` and add the folder `ostwalletrnsdk` with these settings:
+   - Destination: (uncheck) Copy items if needed 
    - Added folders: (select) Create groups
    - Click `Add`
 5. On the application targets’ `Build Settings` tab, enable `Always Embed Swift Standard Libraries` under `Build Options`
