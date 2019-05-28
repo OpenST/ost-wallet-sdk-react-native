@@ -11,12 +11,11 @@ import com.ost.walletsdk.models.entities.OstBaseEntity;
 import com.ost.walletsdk.workflows.OstContextEntity;
 import com.ost.walletsdk.workflows.OstWorkflowContext;
 import com.ost.walletsdk.workflows.errors.OstError;
+import com.ost.walletsdk.workflows.errors.OstErrors;
 import com.ost.walletsdk.workflows.interfaces.OstDeviceRegisteredInterface;
 import com.ost.walletsdk.workflows.interfaces.OstPinAcceptInterface;
 import com.ost.walletsdk.workflows.interfaces.OstVerifyDataInterface;
 import com.ost.walletsdk.workflows.interfaces.OstWorkFlowCallback;
-import com.ostwalletrnsdk.errors.OstRNError;
-import com.ostwalletrnsdk.errors.OstRNErrors;
 import com.ostwalletrnsdk.sdkIntracts.OstDeviceRegisteredWrap;
 import com.ostwalletrnsdk.sdkIntracts.OstPinAcceptWrap;
 import com.ostwalletrnsdk.sdkIntracts.OstVerifyDataWrap;
@@ -61,7 +60,7 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
             params.put("apiParams", apiParams);
         } catch (JSONException e) {
             ostDeviceRegisteredWrap.cleanUp();
-            errorEncountered("rn_owfcb_rd_1", OstRNErrors.ErrorCode.INVALID_JSON_STRING);
+            errorEncountered("rn_owfcb_rd_1", OstErrors.ErrorCode.INVALID_JSON_STRING);
             return;
         }
         invokeCallback("registerDevice", params, "OstDeviceRegisteredInterface", ostDeviceRegisteredWrap.getUUID());
@@ -76,7 +75,7 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
             params.put("userId", userId);
         } catch (JSONException e) {
             ostPinAcceptWrap.cleanUp();
-            errorEncountered("rn_owfcb_gp_1", OstRNErrors.ErrorCode.INVALID_JSON_STRING);
+            errorEncountered("rn_owfcb_gp_1", OstErrors.ErrorCode.INVALID_JSON_STRING);
             return;
         }
         invokeCallback("getPin", params, "OstPinAcceptInterface", ostPinAcceptWrap.getUUID());
@@ -91,7 +90,7 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
             params.put("userId", userId);
         } catch (JSONException e) {
             ostPinAcceptWrap.cleanUp();
-            errorEncountered("rn_owfcb_ip_1", OstRNErrors.ErrorCode.INVALID_JSON_STRING);
+            errorEncountered("rn_owfcb_ip_1", OstErrors.ErrorCode.INVALID_JSON_STRING);
             return;
         }
         invokeCallback("invalidPin", params, "OstPinAcceptInterface", ostPinAcceptWrap.getUUID());
@@ -104,7 +103,7 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
             params.put("ostWorkflowContext", convert(ostWorkflowContext));
             params.put("userId", userId);
         } catch (JSONException e) {
-            errorEncountered("rn_owfcb_pv_1", OstRNErrors.ErrorCode.INVALID_JSON_STRING);
+            errorEncountered("rn_owfcb_pv_1", OstErrors.ErrorCode.INVALID_JSON_STRING);
             return;
         }
         invokeCallback("pinValidated", params, null, null);
@@ -128,7 +127,7 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
         JSONObject params = new JSONObject();
         try {
             params.put("ostWorkflowContext", convert(ostWorkflowContext));
-            params.put("ostError", Utils.getError(ostError));
+            params.put("ostError", ostError.toJSONObject() );
         } catch (JSONException e) {
             Log.w(LOG_TAG, "Unexpected error in flowInterrupt");
         }
@@ -143,7 +142,7 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
             params.put("ostWorkflowContext", convert(ostWorkflowContext));
             params.put("ostContextEntity", convert(ostContextEntity));
         } catch (JSONException e) {
-            errorEncountered("rn_owfcb_ra_1", OstRNErrors.ErrorCode.INVALID_JSON_STRING);
+            errorEncountered("rn_owfcb_ra_1", OstErrors.ErrorCode.INVALID_JSON_STRING);
         }
         invokeCallback("requestAcknowledged", params, null, null);
     }
@@ -157,7 +156,7 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
             params.put("ostContextEntity", convert(ostContextEntity));
         } catch (JSONException e) {
             ostVerifyDataWrap.cleanUp();
-            errorEncountered("rn_owfcb_vd_1", OstRNErrors.ErrorCode.INVALID_JSON_STRING);
+            errorEncountered("rn_owfcb_vd_1", OstErrors.ErrorCode.INVALID_JSON_STRING);
             return;
         }
         invokeCallback("verifyData", params, "OstVerifyDataInterface", ostVerifyDataWrap.getUUID());
@@ -167,8 +166,8 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
         map.remove(this.uuid);
     }
 
-    public void errorEncountered(String internalErrorCode, OstRNErrors.ErrorCode errorCode) {
-        OstError error = new OstRNError(internalErrorCode, errorCode, this.uuid);
+    public void errorEncountered(String internalErrorCode, OstErrors.ErrorCode errorCode) {
+        OstError error = new OstError( internalErrorCode , errorCode );
         Log.e(LOG_TAG, String.format("Internal error code: %s Error code: %s", error.getInternalErrorCode(), errorCode.toString()));
         this.flowInterrupt(pseudoContext, error);
     }

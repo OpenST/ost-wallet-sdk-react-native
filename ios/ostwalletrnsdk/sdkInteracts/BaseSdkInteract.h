@@ -28,10 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) cancelFlow;
 //- (bool) messageReceived: (NSString *) methodName json: (NSString * _Nullable) jsonParams;
 + (BaseSdkInteract *) getFromMap: (NSString *) uuid;
-- (NSDictionary *) convertJSONString: (NSString *) jsonParams error: (NSError **) error;
+- (NSDictionary *) convertJSONString: (NSString * _Nonnull) jsonParams error: (OstError *_Nullable * _Nullable)error;
 - (void) done;
-- (void) errorEncountered:(NSDictionary *) errorDict error: (NSError **) error;
-
+- (void) postError: (NSError **) errorPointer fallbackError: (OstError *) fallbackError;
 @end
 
 NS_ASSUME_NONNULL_END

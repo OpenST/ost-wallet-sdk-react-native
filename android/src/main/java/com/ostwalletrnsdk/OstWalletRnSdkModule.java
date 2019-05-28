@@ -10,10 +10,10 @@ import com.facebook.react.bridge.ReactMethod;
 import com.ost.walletsdk.OstSdk;
 import com.ost.walletsdk.ecKeyInteracts.UserPassphrase;
 import com.ost.walletsdk.utils.CommonUtils;
+import com.ost.walletsdk.workflows.OstExecuteTransaction;
 import com.ost.walletsdk.workflows.OstWorkflowContext;
 import com.ost.walletsdk.workflows.errors.OstError;
-import com.ostwalletrnsdk.errors.OstRNError;
-import com.ostwalletrnsdk.errors.OstRNErrors;
+import com.ost.walletsdk.workflows.errors.OstErrors;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,7 +45,7 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
     try{
       OstSdk.initialize(getReactApplicationContext(), BASE_URL);
     } catch(Throwable e){
-      errorCallback.invoke( Utils.getError( e ) );
+      errorCallback.invoke( Utils.getError( e , "rn_ownsm_i_1")  );
     }
   }
 
@@ -96,14 +96,14 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
 
     List<String> listAddresses = null ;
     List<String> listAmounts = null ;
-    Map<String, Object> mapMeta =null;
+    Map<String, Object> metaMap =null;
     OstWorkflowContext context = new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.EXECUTE_TRANSACTION);
     OstWorkFlowCallbackImpl workFlowCallback = new OstWorkFlowCallbackImpl( uuid, this.reactContext, context );
     try {
       JSONArray jsonArrayAddresses = new JSONArray(tokenHolderAddresses);
       listAddresses = new CommonUtils().jsonArrayToList(jsonArrayAddresses);
     }catch (JSONException e ) {
-      workFlowCallback.flowInterrupt(context , new OstRNError("rn_ownsm_et_1", OstRNErrors.ErrorCode.INVALID_JSON_ARRAY, uuid));
+      workFlowCallback.flowInterrupt(context , new OstError( "rn_ownsm_et_1" , OstErrors.ErrorCode.INVALID_JSON_ARRAY));
       return;
     }
 
@@ -111,19 +111,19 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
       JSONArray jsonArrayAmounts = new JSONArray( amounts ) ;
       listAmounts = new CommonUtils().jsonArrayToList(jsonArrayAmounts);
     } catch(JSONException e){
-      workFlowCallback.flowInterrupt(context , new OstRNError("rn_ownsm_et_2", OstRNErrors.ErrorCode.INVALID_JSON_ARRAY, uuid));
+      workFlowCallback.flowInterrupt(context , new OstError( "rn_ownsm_et_2" , OstErrors.ErrorCode.INVALID_JSON_ARRAY));
       return;
     }
 
     try {
       JSONObject metaObj = new JSONObject(meta);
-      //TODO
+      metaMap = OstExecuteTransaction.convertMetaMap( metaObj );
     } catch (JSONException e) {
-      workFlowCallback.flowInterrupt(context , new OstRNError("rn_ownsm_et_3", OstRNErrors.ErrorCode.INVALID_JSON_STRING, uuid));
+      workFlowCallback.flowInterrupt(context , new OstError( "rn_ownsm_et_3" , OstErrors.ErrorCode.INVALID_JSON_STRING));
       return;
     }
 
-    OstSdk.executeTransaction(userId, listAddresses, listAmounts, ruleName, mapMeta, workFlowCallback);
+    OstSdk.executeTransaction(userId, listAddresses, listAmounts, ruleName, metaMap, workFlowCallback);
 
   }
 
@@ -152,7 +152,7 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
       String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
       successCallback.invoke( encoded );
     }catch ( Throwable e ){
-      errorCallback.invoke( Utils.getError( e ) );
+      errorCallback.invoke( Utils.getError( e , "rn_ownsm_gadqrc_1" )  );
     }
   }
 
@@ -163,7 +163,7 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
     try {
       OstSdk.performQRAction( userId , data ,workFlowCallback) ;
     }catch (JSONException e ){
-      workFlowCallback.flowInterrupt( context ,  new OstRNError("rn_ownsm_pqra_1" , OstRNErrors.ErrorCode.INVALID_JSON_STRING ,  uuid ));
+        workFlowCallback.flowInterrupt(context , new OstError( "rn_ownsm_pqra_1" , OstErrors.ErrorCode.INVALID_JSON_STRING));
     }
 
   }
@@ -182,6 +182,13 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
       return;
     }
     OstSdk.resetPin(userId, currentPassphrase, newPassphrase, workFlowCallback );
+  }
+
+  @ReactMethod
+  public  void revokeDevice(String userId ,  String deviceAddress , String uuid ){
+    OstWorkflowContext context = new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.REVOKE_DEVICE_WITH_QR_CODE);
+    OstWorkFlowCallbackImpl workFlowCallback = new OstWorkFlowCallbackImpl( uuid, this.reactContext, context );
+    OstSdk.revokeDevice(userId , deviceAddress , workFlowCallback );
   }
 
   @ReactMethod
@@ -214,6 +221,13 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
 
       OstSdk.abortDeviceRecovery(userId, passphrase, workFlowCallback );
 
+  }
+
+  @ReactMethod
+  public void updateBiometricPreference(String userId, boolean enable, String uuid){
+    OstWorkflowContext context = new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.UPDATE_BIOMETRIC_PREFERENCE);
+    OstWorkFlowCallbackImpl workFlowCallback = new OstWorkFlowCallbackImpl( uuid, this.reactContext, context );
+    OstSdk.updateBiometricPreference(userId , enable , workFlowCallback);
   }
 
   @ReactMethod

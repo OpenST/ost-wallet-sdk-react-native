@@ -9,7 +9,9 @@ class OstVerifyData extends BaseSdkInteract {
     }
 
     dataVerified( errorCallback ) {
-        OstRNSdkCallbackManager.dataVerified(this.interactuuid, errorCallback );
+        OstRNSdkCallbackManager.dataVerified(this.interactuuid, function( error ) {
+            BaseSdkInteract.errorCallbackInvoker( error , errorCallback );
+        } );
     }
 }
 

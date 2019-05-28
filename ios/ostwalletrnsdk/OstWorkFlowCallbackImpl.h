@@ -15,8 +15,10 @@
 #endif
 
 @interface OstWorkFlowCallbackImpl : NSObject <OstWorkflowDelegate>
+@property NSString * _Nonnull uuid;
+@property OstWorkflowContext *_Nonnull pseudoContext;
+
 + (OstWorkFlowCallbackImpl *_Nullable) getInstance:(NSString *_Nonnull) uuid;
 - (instancetype _Nullable ) initWithId:(NSString * _Nonnull) uuId workflowContext: ( OstWorkflowContext *_Nonnull) workflowContext;
-- (void)flowInterruptedWithWorkflowContext:(OstWorkflowContext * _Nullable)workflowContext ostErrorDictionary: (NSDictionary *_Nonnull) error;
 @end
 

@@ -1,27 +1,81 @@
 import uuidv4 from 'uuid/v4';
 import { setInstance } from './callbackHandlers/OstWalletSdkCallbackManager';
 
+ /**
+ * OstWalletWorkFlowCallback 
+ * All callback workflow implementations class should be derived from OstWalletWorkFlowCallback
+ */
+
 class OstWalletWorkFlowCallback {
+    
+    /**
+     * @constructor: Should be called from derived class constructor always.  
+     * super();
+     */
     constructor() {
         this.uuid = uuidv4();
         setInstance(this);
     }
 
-    registerDevice( response , ostDeviceRegistered) {  /*overwrite*/ }
+     /**
+     * Register Device  
+     * @param {Object} response - with day apiParams 
+     * @param {OstDeviceRegistered} ostDeviceRegistered - With callback to pass response, deviceRegistered 
+     * @override
+     */
+    registerDevice( response , ostDeviceRegistered) { }
        
-    verifyData( response, ostVerifyData ) {  /*overwrite*/ }
+     /**
+     * Verify Data
+     * @param {Object} response - with data ostWorkflowContext, ostContextEntity
+     * @param {OstVerifyData} ostVerifyData - With callback dataVerified , cancelFlow
+     * @override
+     */
+    verifyData( response, ostVerifyData ) {   }
 
-    getPin(response, ostPinAcceptInterface) {  /*overwrite*/ }
+     /**
+     * Get pin
+     * @param {Object} response - with data ostWorkflowContext, userId
+     * @param {OstVerifyData} ostPinAcceptInterface - With callback pinEntered , cancelFlow
+     * @override
+     */
+    getPin(response, ostPinAcceptInterface) {  }
 
-    invalidPin(response, ostPinAcceptInterface)  {  /*overwrite*/ }
+     /**
+     * Invalid Pin
+     * @param {Object} response - with data ostWorkflowContext, userId
+     * @param {OstVerifyData} ostPinAcceptInterface - With callback pinEntered , cancelFlow
+     * @override
+     */
+    invalidPin(response, ostPinAcceptInterface)  {  }
 
-    pinValidated(response) {  /*overwrite*/ }
+     /**
+     * Pin validated
+     * @param {Object} response - with data ostWorkflowContext, userId
+     * @override
+     */
+    pinValidated(response) {  }
 
-    requestAcknowledged(response) {  /*overwrite*/ }
+     /**
+     * Request acknowledged
+     * @param {Object} response - with data ostWorkflowContext, ostContextEntity
+     * @override
+     */
+    requestAcknowledged(response) {  }
 
-    flowComplete(response) {  /*overwrite*/ }
+     /**
+     * Flow complete
+     * @param {Object} response - with data ostWorkflowContext, ostContextEntity
+     * @override
+     */
+    flowComplete(response) {   }
 
-    flowInterrupt(response)  {  /*overwrite*/ }
+    /**
+     * Flow interrupt
+     * @param {Object} response - with data ostWorkflowContext, ostError
+     * @override
+     */
+    flowInterrupt(response)  {   }
 }
 
 export default OstWalletWorkFlowCallback;

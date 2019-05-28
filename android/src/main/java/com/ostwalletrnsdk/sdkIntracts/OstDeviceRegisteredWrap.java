@@ -1,6 +1,6 @@
 package com.ostwalletrnsdk.sdkIntracts;
+import com.ost.walletsdk.workflows.errors.OstErrors;
 import com.ost.walletsdk.workflows.interfaces.OstDeviceRegisteredInterface;
-import com.ostwalletrnsdk.errors.OstRNErrors;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,7 +29,7 @@ public class OstDeviceRegisteredWrap extends BaseSdkInteract {
         try {
             jsonMethodParams = new JSONObject( jsonParams );
         } catch (JSONException e) {
-            errorEncountered("rn_si_odrw_mr_1", OstRNErrors.ErrorCode.INVALID_JSON_STRING);
+            errorEncountered("rn_si_odrw_mr_1", OstErrors.ErrorCode.INVALID_JSON_STRING);
             return false;
         }
 

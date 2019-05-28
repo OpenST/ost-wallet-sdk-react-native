@@ -16,8 +16,6 @@
 static NSMutableDictionary *map = nil;
 
 @interface OstWorkFlowCallbackImpl()
-  @property NSString *uuid;
-  @property OstWorkflowContext *pseudoContext ;
 @end
 
 @implementation OstWorkFlowCallbackImpl
