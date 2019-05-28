@@ -1,5 +1,5 @@
 
-# ost-wallet-sdk-react-native
+# OST Wallet SDK React Native
 
 ## Getting started
 
@@ -107,6 +107,8 @@ NOTE: These configurations are MANDATORY for successful operation. Failing to se
 
 ## Usage in React Native
 
+#### Subscribe to `OstWalletSdkEvents` in your top most level component
+
 In the most top level component (mostly `App.js`) import like this:
 ```javascript
 import {OstWalletSdkEvents, OstWalletSdk} from 'ost-wallet-sdk-react-native';
@@ -134,8 +136,12 @@ class App extends Component {
 
 }
 ```
+#### OST SDK APIs
+This section to be populated...
 
-Implement the `OstWalletWorkFlowCallback` interface in a class:
+#### WorkFlow Callbacks
+
+Implement the `OstWalletWorkFlowCallback` interface in a class before calling any of the above WorkFlows.
 
 ```javascript
 import { OstWalletWorkFlowCallback } from 'ost-wallet-sdk-react-native';

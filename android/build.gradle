@@ -14,14 +14,14 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url "https://jitpack.io" }
+        maven { url "https://jitpack.io" } // Temp
     }
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
+apply plugin: 'maven' // Temp
 
-group = 'com.github.ostdotcom'
+group = 'com.github.ostdotcom' // Temp
 
 android {
     compileSdkVersion 28
@@ -50,6 +50,5 @@ repositories {
 dependencies {
     implementation 'com.facebook.react:react-native:+'
     //implementation 'com.ost:ost-wallet-sdk-android:2.0.1'
-    implementation 'com.github.ostdotcom:ost-wallet-sdk-android:011dfac50b69c846c22c17ad6ba8ef03672e8b9d'
+    implementation 'com.github.ostdotcom:ost-wallet-sdk-android:011dfac50b69c846c22c17ad6ba8ef03672e8b9d' // Temp
 }
-  
