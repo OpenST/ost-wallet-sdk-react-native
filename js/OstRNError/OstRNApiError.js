@@ -22,7 +22,9 @@ class OstRNApiError extends  OstRNError{
     this.apiError = error && error.api_error || {}
   }
   
-  static ApiErrorCodes = ErrorCodes;
+  static get ApiErrorCodes() {
+    return ErrorCodes;
+  }
   
   getApiError(){
     return this.apiError ;
