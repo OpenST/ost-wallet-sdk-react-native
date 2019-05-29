@@ -15,24 +15,24 @@ Run this command in the root directory of your project
 $ react-native link ost-wallet-sdk-react-native
 ```
 
-In this case, you can skip steps 1 to 3 mentioned below and only do step 4 and 5.
+In this case, you can **skip steps 1 to 3** mentioned below and **only do step 4 and 5**.
 
 #### Manual installation
 
-1. Open up `android/app/src/main/java/[...]/MainApplication.java`. 
+1. Open up `./android/app/src/main/java/[...]/MainApplication.java`. 
    - Add `import com.ostwalletrnsdk.OstWalletRnSdkPackage;` to the imports at the top of the file. 
    - Add `new OstWalletRnSdkPackage()` to the list returned by the `getPackages()` method
-2. Append the following lines to `android/settings.gradle`:
+2. Append the following lines to `./android/settings.gradle`:
   	```
   	include ':ost-wallet-sdk-react-native'
   	project(':ost-wallet-sdk-react-native').projectDir = new File(rootProject.projectDir, 	'../node_modules/ost-wallet-sdk-react-native/android')
   	```
-3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
+3. Insert the following lines inside the dependencies block in `./android/app/build.gradle`:
     ```
     compile project(':ost-wallet-sdk-react-native')
     ```
 4. Change the `minSdkVersion` to 22 in `android/build.gradle`	    
-5. Create file `android\app\src\main\assets\ost-mobilesdk.json` with application specific configurations using  the json below as an example
+5. Create file `./android/app/src/main/assets/ost-mobilesdk.json` with application specific configurations using  the json below as an example
 
      ```json
     {
