@@ -38,7 +38,7 @@ class OstRNApiError extends  OstRNError{
     return this.apiError.error_data;
   }
   
-  getApiErrorMsg(){
+  getApiErrorMessage(){
     return this.apiError.msg;
   }
   
