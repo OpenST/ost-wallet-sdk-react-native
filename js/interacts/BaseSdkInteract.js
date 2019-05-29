@@ -1,4 +1,5 @@
 import { NativeModules } from 'react-native';
+import { instantiateOstError } from "../callbackHandlers/OstWalletSdkCallbackManager"
 const { OstRNSdkCallbackManager } = NativeModules;
 
 class BaseSdkInteract {
@@ -21,6 +22,7 @@ class BaseSdkInteract {
         }
     
         if( typeof callback == "function" ){
+            let ostError = instantiateOstError( error );
             callback( error );
         }
     }

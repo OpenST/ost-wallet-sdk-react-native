@@ -1,4 +1,6 @@
 import callbackIntercept from './OstWalletWorkflowCallbackIntercept';
+import OstRNError from "../OstRNError/OstRNError";
+import OstRNApiError from "../OstRNError/OstRNApiError";
 
 const instanceMap = {};
 
@@ -30,7 +32,7 @@ function callbackInvoker(params) {
         method = instance[ functionName ], 
         data = params['params'],
         interactuuid = params['interactuuid']
-        ;
+    ;
     callbackIntercept[functionName].apply( callbackIntercept, [
         instance,
         method,
@@ -38,5 +40,13 @@ function callbackInvoker(params) {
         interactuuid
     ]);
 }
+
+function instantiateOstError( error ) {
+  let isApiError =  error['is_api_error'];
+  if( !!isApiError ){
+      return new OstRNApiError( error );
+  }
+  return new OstRNError( OstRNError );
+};
 
 export { setInstance, getInstance, clearInstance, callbackInvoker };
