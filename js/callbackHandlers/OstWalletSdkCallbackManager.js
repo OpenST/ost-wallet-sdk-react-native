@@ -47,6 +47,6 @@ function instantiateOstError( error ) {
       return new OstRNApiError( error );
   }
   return new OstRNError( OstRNError );
-};
+}
 
 export { setInstance, getInstance, clearInstance, callbackInvoker , instantiateOstError };
