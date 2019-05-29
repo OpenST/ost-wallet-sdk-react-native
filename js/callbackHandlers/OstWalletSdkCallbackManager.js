@@ -22,7 +22,7 @@ const callbackInvoker = params =>  {
         try {
           params = JSON.parse(params);
         } catch (e) {
-          console.error("Unexpected JSON string", params ); 
+          console.warn("Unexpected JSON string", params );
           return;
         }
     }
