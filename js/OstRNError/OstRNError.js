@@ -21,7 +21,7 @@ class OstRNError {
     }
     
     isApiError(){
-        return this.error.is_api_error ;
+        return !!this.error.is_api_error ;
     }
 }
 
