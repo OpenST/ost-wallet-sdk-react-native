@@ -141,11 +141,15 @@ class App extends Component {
 To use the apis you first need to import the `OstWalletSdk` from 'ost-wallet-sdk-react-native' as below-
 
 ```javascript
-import {OstWalletSdkEvents, OstWalletSdk} from 'ost-wallet-sdk-react-native';
+import {OstWalletSdk} from 'ost-wallet-sdk-react-native';
 ```
-You must pass a new instance of the workflow callback implementation for each of the below methods. Refer `WorkFlow Callbacks` for how to create an implementation of the `OstWalletWorkFlowCallback` interface in a class.
+You would need to pass a new instance of the workflow callback implementation for each of the below methods. Refer `WorkFlow Callbacks` for how to create an implementation of the `OstWalletWorkFlowCallback` interface in a class. Once you have a workflow callback implementation ready, you need to import that as well to use it.
 
-Below are the apis available-
+```javascript
+import OstWalletSdkCallbackImplementation from './OstWalletSdkCallbackImplementation';
+```
+
+Below are the SDK APIs available-
 
 ### Set up the device
 This workflow needs userId and tokenId so setupDevice may be called after the user logs in to the application. Using a mapping between userId in OST Platform and the app user, you have access to userId and tokenId.
@@ -157,7 +161,7 @@ If the user is logged in, then setupDevice should be called every time the app l
   parameter tokenId: Id assigned by Ost to token<br/>
   parameter workFlowCallback: callback implementation object for application communication<br/>
   
-```OstWalletSdk.setupDevice(userId, tokenId, new OstWalletWorkflowCallback());```
+`OstWalletSdk.setupDevice(userId, tokenId, new OstWalletWorkflowCallback());`
 
 ### Activate the user
 User activation refers to the deployment of smart-contracts that form the user's Brand Token wallet. An activated user can engage with a Brand Token economy. 
@@ -170,7 +174,7 @@ User activation refers to the deployment of smart-contracts that form the user's
   parameter spendingLimit: spending limit once in a transaction of session<br/>
   parameter workFlowCallback: callback implementation object for application communication <br/>
   
-```OstWalletSdk.activateUser(userId,pin,passphrasePrefix,expiresAfterInSecs,spendingLimit, new ActivateUserCallback());```
+`OstWalletSdk.activateUser(userId,pin,passphrasePrefix,expiresAfterInSecs,spendingLimit, new ActivateUserCallback());`
 
 ### Authorize a session
 A session is a period of time during which a sessionKey is authorized to sign transactions under a pre-set limit on behalf of the user. The device manager, which controls the tokens, authorizes sessions. 
