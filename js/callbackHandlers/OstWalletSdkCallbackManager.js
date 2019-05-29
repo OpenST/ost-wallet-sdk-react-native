@@ -49,4 +49,4 @@ const instantiateOstError = error => {
   return new OstRNError( error );
 };
 
-export { setInstance, getInstance, clearInstance, callbackInvoker , instantiateOstError };
+export { setInstance, getInstance, clearInstance, instantiateOstError , callbackInvoker };
