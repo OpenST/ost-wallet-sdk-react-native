@@ -19,27 +19,55 @@ class OstRNApiError extends  OstRNError{
   
   constructor( error ){
     super(error);
+    this.apiError = error && error.api_error || {}
   }
   
+  getApiError(){
+    return this.apiError ;
+  }
   
-  getInternalId(){
-    return this.error.internal_id; 
+  getApiInternalId(){
+    return this.apiError.internal_id;
+  }
+  
+  getApiErrorCode(){
+    return this.apiError.code;
+  }
+  
+  getApiErrorData(){
+    return this.apiError.error_data;
+  }
+  
+  getApiErrorMsg(){
+    return this.apiError.msg;
   }
   
   isBadRequest(){
-  
+    return this.getApiErrorCode() == ApiErrorCodes['BAD_REQUEST'];
   }
   
   isNotFound(){
-  
+    return this.getApiErrorCode() == ApiErrorCodes['NOT_FOUND'];
   }
   
   isDeviceTimeOutOfSync(){
-  
+    return this.isErrorParameterKey( "api_request_timestamp" );
   }
   
   isApiSignerUnauthorized(){
+    return this.isErrorParameterKey( "api_key" );
+  }
   
+   isErrorParameterKey( key ){
+      if(!key) return false ;
+      let errorData = this.getApiErrorData() || [];
+      for(let cnt =0 ; cnt < errorData.length ; cnt++){
+        let parameter =  errorData[cnt]['parameter'];
+        if( parameter && parameter.toLowerCase() ==  key.toLowerCase() ){
+         return true ;
+        }
+      }
+      return false ;
   }
   
 }
