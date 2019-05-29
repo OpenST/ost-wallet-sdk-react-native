@@ -19,63 +19,70 @@ class OstWalletWorkFlowCallback {
 
      /**
      * Register Device  
-     * @param {Object} response - with day apiParams 
-     * @param {OstDeviceRegistered} ostDeviceRegistered - With callback to pass response, deviceRegistered 
+     * @param {Object} apiParams - Register Device API parameters
+     * @param {OstDeviceRegistered} ostDeviceRegistered - With callback to pass response
      * @override
      */
-    registerDevice( response , ostDeviceRegistered) { }
+    registerDevice( apiParams , ostDeviceRegistered ) { }
        
      /**
      * Verify Data
-     * @param {Object} response - with data ostWorkflowContext, ostContextEntity
-     * @param {OstVerifyData} ostVerifyData - With callback dataVerified , cancelFlow
+     * @param {Object} ostWorkflowContext - info about workflow type with data ostWorkflowContext, ostContextEntity
+     * @param {Object} ostContextEntity - info about entity
+     * @param {OstVerifyData} ostVerifyData - to acknowledge workflow to proceed
      * @override
      */
-    verifyData( response, ostVerifyData ) {   }
+    verifyData( ostWorkflowContext , ostContextEntity ,  ostVerifyData ) {   }
 
      /**
      * Get pin
-     * @param {Object} response - with data ostWorkflowContext, userId
-     * @param {OstVerifyData} ostPinAcceptInterface - With callback pinEntered , cancelFlow
+     * @param {Object} ostWorkflowContext - holds work flow type
+     * @param {String} userId - Id of user whose password and pin are needed
+     * @param {OstVerifyData} ostPinAcceptInterface - To pass pin
      * @override
      */
-    getPin(response, ostPinAcceptInterface) {  }
+    getPin(ostWorkflowContext, userId , ostPinAcceptInterface) {  }
 
      /**
      * Invalid Pin
-     * @param {Object} response - with data ostWorkflowContext, userId
-     * @param {OstVerifyData} ostPinAcceptInterface - With callback pinEntered , cancelFlow
+     * @param {Object} ostWorkflowContext - holds work flow type
+     * @param {String} userId - Id of user whose password and pin are needed.
+     * @param {OstVerifyData} ostPinAcceptInterface - to pass another pin
      * @override
      */
-    invalidPin(response, ostPinAcceptInterface)  {  }
+    invalidPin(ostWorkflowContext, userId ,  ostPinAcceptInterface)  {  }
 
      /**
      * Pin validated
-     * @param {Object} response - with data ostWorkflowContext, userId
+     * @param {Object} ostWorkflowContext - holds work flow type
+     * @param {String} userId - Id of user whose password and pin are needed.
      * @override
      */
-    pinValidated(response) {  }
+    pinValidated(ostWorkflowContext , userId) {  }
 
      /**
      * Request acknowledged
-     * @param {Object} response - with data ostWorkflowContext, ostContextEntity
+     * @param {Object} ostWorkflowContext - info about workflow type
+     * @param ostContextEntity - info about entity
      * @override
      */
-    requestAcknowledged(response) {  }
+    requestAcknowledged(ostWorkflowContext , ostContextEntity ) {  }
 
      /**
      * Flow complete
-     * @param {Object} response - with data ostWorkflowContext, ostContextEntity
+     * @param ostWorkflowContext - workflow type
+     * @param ostContextEntity -  status of the flow
      * @override
      */
-    flowComplete(response) {   }
+    flowComplete(ostWorkflowContext , ostContextEntity ) {   }
 
     /**
      * Flow interrupt
-     * @param {Object} response - with data ostWorkflowContext, ostError
+     * @param ostWorkflowContext workflow type
+     * @param ostError reason of interruption
      * @override
      */
-    flowInterrupt(response)  {   }
+    flowInterrupt(ostWorkflowContext , ostError)  {   }
 }
 
 export default OstWalletWorkFlowCallback;

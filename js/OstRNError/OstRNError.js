@@ -3,35 +3,26 @@ class OstRNError {
     constructor( error ){
         this.error = error || {}; 
     }
-    
+  
     getErrorCode(){
-        return this.error.error_code;
+       return this.error.error_code ;
     }
-
-    getErrorMessage(){
-        return this.error.error_message; 
-    }
-
+  
     getInternalErrorCode(){
-        return this.error.internal_error_code; 
+      return this.error.internal_error_code ;
     }
-
-    isApiError(){
-        return this.error.is_api_error; 
+    
+    getErrorMessage(){
+        return this.error.error_message;
     }
-
-    getApiError(){
-        return this.error.api_error;
-    }
-
+    
     getErrorInfo(){
-        return this.error.error_info; 
+        return this.error.error_info;
     }
-
-    getApiInternalId(){
-        return this.error.internal_id; 
+    
+    isApiError(){
+        return !!this.error.is_api_error ;
     }
-
 }
 
 export default OstRNError ; 
