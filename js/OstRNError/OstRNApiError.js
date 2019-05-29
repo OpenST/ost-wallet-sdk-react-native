@@ -1,6 +1,6 @@
 import OstRNError from "./OstRNError";
 
-const ApiErrorCodes = {
+const ErrorCodes = {
   "BAD_REQUEST" : "BAD_REQUEST" ,
   "AUTHENTICATION_ERROR" : "AUTHENTICATION_ERROR",
   "NOT_FOUND" : "NOT_FOUND" ,
@@ -21,6 +21,8 @@ class OstRNApiError extends  OstRNError{
     super(error);
     this.apiError = error && error.api_error || {}
   }
+  
+  static ApiErrorCodes = ErrorCodes;
   
   getApiError(){
     return this.apiError ;
@@ -43,11 +45,11 @@ class OstRNApiError extends  OstRNError{
   }
   
   isBadRequest(){
-    return this.getApiErrorCode() == ApiErrorCodes['BAD_REQUEST'];
+    return this.getApiErrorCode() == ErrorCodes['BAD_REQUEST'];
   }
   
   isNotFound(){
-    return this.getApiErrorCode() == ApiErrorCodes['NOT_FOUND'];
+    return this.getApiErrorCode() == ErrorCodes['NOT_FOUND'];
   }
   
   isDeviceTimeOutOfSync(){
