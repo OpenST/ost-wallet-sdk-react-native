@@ -46,7 +46,7 @@ const instantiateOstError = error => {
   if( !!isApiError ){
       return new OstRNApiError( error );
   }
-  return new OstRNError( OstRNError );
+  return new OstRNError( error );
 };
 
 export { setInstance, getInstance, clearInstance, callbackInvoker , instantiateOstError };
