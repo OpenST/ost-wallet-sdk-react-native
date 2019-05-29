@@ -4,20 +4,20 @@ import OstRNApiError from "../OstRNError/OstRNApiError";
 
 const instanceMap = {};
 
-function setInstance(instance) {
-    instanceMap[instance.uuid] = instance;
+const setInstance = instance => {
+  instanceMap[instance.uuid] = instance;
+};
+
+const getInstance = uuid => {
+  return instanceMap[uuid];
 }
 
-function getInstance(uuid) {
-    return instanceMap[uuid];
-}
-
-function clearInstance(uuid) {
+const clearInstance = uuid => {
     instanceMap[uuid] = null;
     delete instanceMap[uuid];
-}
+};
 
-function callbackInvoker(params) {
+const callbackInvoker = params =>  {
     if (typeof params == 'string') {
         try {
           params = JSON.parse(params);
@@ -39,14 +39,14 @@ function callbackInvoker(params) {
         data,
         interactuuid
     ]);
-}
+};
 
-function instantiateOstError( error ) {
+const instantiateOstError = error => {
   let isApiError =  error['is_api_error'];
   if( !!isApiError ){
       return new OstRNApiError( error );
   }
   return new OstRNError( OstRNError );
-}
+};
 
 export { setInstance, getInstance, clearInstance, callbackInvoker , instantiateOstError };
