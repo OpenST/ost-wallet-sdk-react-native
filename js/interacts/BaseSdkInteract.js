@@ -17,7 +17,7 @@ class BaseSdkInteract {
             try{
                 error = JSON.parse(error); 
             }catch(e){
-                console.warn("Unexpected JSON string", params );
+                console.warn("Unexpected JSON string", error );
             }
         }
     
