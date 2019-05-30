@@ -58,7 +58,7 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
         JSONObject params = new JSONObject();
         try {
             params.put("apiParams", apiParams);
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             ostDeviceRegisteredWrap.cleanUp();
             errorEncountered("rn_owfcb_rd_1", OstErrors.ErrorCode.INVALID_JSON_STRING);
             return;
@@ -73,7 +73,7 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
         try {
             params.put("ostWorkflowContext", convert(ostWorkflowContext));
             params.put("userId", userId);
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             ostPinAcceptWrap.cleanUp();
             errorEncountered("rn_owfcb_gp_1", OstErrors.ErrorCode.INVALID_JSON_STRING);
             return;
@@ -88,7 +88,7 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
         try {
             params.put("ostWorkflowContext", convert(ostWorkflowContext));
             params.put("userId", userId);
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             ostPinAcceptWrap.cleanUp();
             errorEncountered("rn_owfcb_ip_1", OstErrors.ErrorCode.INVALID_JSON_STRING);
             return;
@@ -102,7 +102,7 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
         try {
             params.put("ostWorkflowContext", convert(ostWorkflowContext));
             params.put("userId", userId);
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             errorEncountered("rn_owfcb_pv_1", OstErrors.ErrorCode.INVALID_JSON_STRING);
             return;
         }
@@ -115,7 +115,7 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
         try {
             params.put("ostWorkflowContext", convert(ostWorkflowContext));
             params.put("ostContextEntity", convert(ostContextEntity));
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             Log.e(LOG_TAG, "Unexpected error in flowComplete");
         }
         invokeCallback("flowComplete", params, null, null);
@@ -128,7 +128,7 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
         try {
             params.put("ostWorkflowContext", convert(ostWorkflowContext));
             params.put("ostError", ostError.toJSONObject() );
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             Log.w(LOG_TAG, "Unexpected error in flowInterrupt");
         }
         invokeCallback("flowInterrupt", params, null, null);
@@ -141,7 +141,7 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
         try {
             params.put("ostWorkflowContext", convert(ostWorkflowContext));
             params.put("ostContextEntity", convert(ostContextEntity));
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             errorEncountered("rn_owfcb_ra_1", OstErrors.ErrorCode.INVALID_JSON_STRING);
         }
         invokeCallback("requestAcknowledged", params, null, null);
@@ -154,7 +154,7 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
         try {
             params.put("ostWorkflowContext", convert(ostWorkflowContext));
             params.put("ostContextEntity", convert(ostContextEntity));
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             ostVerifyDataWrap.cleanUp();
             errorEncountered("rn_owfcb_vd_1", OstErrors.ErrorCode.INVALID_JSON_STRING);
             return;
@@ -213,7 +213,7 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
             if (null != context) {
                 obj.put("WORKFLOW_TYPE", context.getWorkflow_type().name());
             }
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             Log.w(LOG_TAG, "Unexpected OstWorkflowContext");
         }
         return obj;
@@ -242,7 +242,7 @@ public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
             obj.put("entityType", entityType);
             obj.put("message", message);
             obj.put("entity", entity);
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             Log.e(LOG_TAG, "Unexpected OstContextEntity");
         }
 

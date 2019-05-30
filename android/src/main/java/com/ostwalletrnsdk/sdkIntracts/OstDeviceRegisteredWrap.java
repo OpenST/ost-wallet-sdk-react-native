@@ -28,7 +28,7 @@ public class OstDeviceRegisteredWrap extends BaseSdkInteract {
         JSONObject jsonMethodParams;
         try {
             jsonMethodParams = new JSONObject( jsonParams );
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             errorEncountered("rn_si_odrw_mr_1", OstErrors.ErrorCode.INVALID_JSON_STRING);
             return false;
         }

@@ -24,25 +24,25 @@ public class Utils {
 
         try {
             err.putOpt(OstError.OstJSONErrorKeys.ERROR_MESSAGE, ((Throwable)error).getMessage());
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             //Ignore.
         }
 
         try {
             err.putOpt(OstError.OstJSONErrorKeys.INTERNAL_ERROR_CODE, internalErrorCode);
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             //Ignore.
         }
 
         try {
             err.putOpt(OstError.OstJSONErrorKeys.ERROR_CODE, OstErrors.ErrorCode.UNCAUGHT_EXCEPTION_HANDELED);
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             //Ignore.
         }
 
         try {
             err.putOpt(OstError.OstJSONErrorKeys.IS_API_ERROR, 0);
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             //Ignore.
         }
 
