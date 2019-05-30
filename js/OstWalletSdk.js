@@ -61,9 +61,18 @@ class OstWalletRNSdk {
      * @public
      */
     executeTransaction(userId, tokenHolderAddresses, amounts, ruleName, meta, workflow) {
-        tokenHolderAddresses = JSON.stringify(tokenHolderAddresses);
-        amounts = JSON.stringify(amounts);
-        meta = JSON.stringify( meta ); 
+        if( tokenHolderAddresses instanceof Array ){
+          tokenHolderAddresses = JSON.stringify(tokenHolderAddresses);
+        }
+        if( amounts instanceof Array ){
+          amounts = JSON.stringify(amounts);
+        }
+        try {
+          meta = meta && JSON.stringify( meta );
+        }catch (e){
+          console.warn("Unexpected JSON Object meta in executeTransaction", meta );
+        }
+       
         OstWalletSdk.executeTransaction(userId, tokenHolderAddresses, amounts, ruleName, meta , workflow.uuid);
     }
 

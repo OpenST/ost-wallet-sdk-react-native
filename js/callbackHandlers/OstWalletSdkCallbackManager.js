@@ -10,7 +10,7 @@ const setInstance = instance => {
 
 const getInstance = uuid => {
   return instanceMap[uuid];
-}
+};
 
 const clearInstance = uuid => {
     instanceMap[uuid] = null;

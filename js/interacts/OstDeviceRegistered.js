@@ -9,7 +9,11 @@ class OstDeviceRegistered extends BaseSdkInteract {
     }
 
     deviceRegistered(apiResponse, errorCallback) {
-        apiResponse = apiResponse && JSON.stringify(apiResponse);
+        try {
+          apiResponse = apiResponse && JSON.stringify(apiResponse) ;
+        }catch (e){
+          console.warn("Unexpected JSON Object apiResponse in deviceRegistered", apiResponse );
+        }
         OstRNSdkCallbackManager.deviceRegistered(this.interactuuid, apiResponse, function( error ){
             BaseSdkInteract.errorCallbackInvoker( error , errorCallback );
         });
