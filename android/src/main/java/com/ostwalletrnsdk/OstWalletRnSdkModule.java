@@ -82,7 +82,13 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
     OstWorkflowContext context = new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.SETUP_DEVICE);
     OstWorkFlowCallbackImpl workFlowCallback = new OstWorkFlowCallbackImpl( uuid, this.reactContext, context );
 
-    long expiresAfterInSecsLong =  Long.valueOf(expiresAfterInSecs);
+    long expiresAfterInSecsLong = 0;
+    try {
+       expiresAfterInSecsLong =  Long.valueOf(expiresAfterInSecs);
+    }catch (Throwable e ){
+      workFlowCallback.flowInterrupt(context , new OstError( "rn_ownsm_as_1" , OstErrors.ErrorCode.INVALID_SESSION_EXPIRY_TIME));
+    }
+
     OstSdk.addSession(userId, spendingLimit , expiresAfterInSecsLong, workFlowCallback );
   }
 
