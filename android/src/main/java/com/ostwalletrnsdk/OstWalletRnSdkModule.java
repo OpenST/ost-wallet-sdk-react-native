@@ -102,7 +102,7 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
     try {
       JSONArray jsonArrayAddresses = new JSONArray(tokenHolderAddresses);
       listAddresses = new CommonUtils().jsonArrayToList(jsonArrayAddresses);
-    }catch (JSONException e ) {
+    }catch (Throwable e ) {
       workFlowCallback.flowInterrupt(context , new OstError( "rn_ownsm_et_1" , OstErrors.ErrorCode.INVALID_JSON_ARRAY));
       return;
     }
@@ -110,7 +110,7 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
     try{
       JSONArray jsonArrayAmounts = new JSONArray( amounts ) ;
       listAmounts = new CommonUtils().jsonArrayToList(jsonArrayAmounts);
-    } catch(JSONException e){
+    } catch(Throwable e){
       workFlowCallback.flowInterrupt(context , new OstError( "rn_ownsm_et_2" , OstErrors.ErrorCode.INVALID_JSON_ARRAY));
       return;
     }
@@ -118,7 +118,7 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
     try {
       JSONObject metaObj = new JSONObject(meta);
       metaMap = OstExecuteTransaction.convertMetaMap( metaObj );
-    } catch (JSONException e) {
+    } catch (Throwable e) {
       workFlowCallback.flowInterrupt(context , new OstError( "rn_ownsm_et_3" , OstErrors.ErrorCode.INVALID_JSON_STRING));
       return;
     }
@@ -162,7 +162,7 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
     OstWorkFlowCallbackImpl workFlowCallback = new OstWorkFlowCallbackImpl( uuid, this.reactContext, context );
     try {
       OstSdk.performQRAction( userId , data ,workFlowCallback) ;
-    }catch (JSONException e ){
+    }catch (Throwable e ){
         workFlowCallback.flowInterrupt(context , new OstError( "rn_ownsm_pqra_1" , OstErrors.ErrorCode.INVALID_JSON_STRING));
     }
 
