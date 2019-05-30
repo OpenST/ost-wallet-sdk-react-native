@@ -195,6 +195,7 @@ static NSMutableDictionary *map = nil;
     case OstWorkflowTypeRevokeDeviceWithQRCode: return @"REVOKE_DEVICE_WITH_QR_CODE";
     case OstWorkflowTypeResetPin: return @"RESET_PIN";
     case OstWorkflowTypeLogoutAllSessions: return @"LOGOUT_ALL_SESSIONS";
+    case OstWorkflowTypeUpdateBiometricPreference: return @"UPDATE_BIOMETRIC_PREFERENCE";
     default: return @"UNKNOWN";
   }
 }
@@ -228,6 +229,7 @@ static NSMutableDictionary *map = nil;
     case OstEntityTypeString: return @"string";
     case OstEntityTypeDictionary: return @"json";
     case OstEntityTypeArray: return @"array";
+    case OstEntityTypeBoolean: return @"boolean";
     default: return @"unknown";
   }
 }
