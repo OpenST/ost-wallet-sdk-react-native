@@ -19,7 +19,6 @@ class OstRNApiError extends  OstRNError{
   
   constructor( error ){
     super(error);
-    this.apiError = error && error.api_error || {}
   }
   
   static get ApiErrorCodes() {
@@ -27,23 +26,23 @@ class OstRNApiError extends  OstRNError{
   }
   
   getApiError(){
-    return this.apiError ;
+    return this.error && this.error.apiError || {} ;
   }
   
   getApiInternalId(){
-    return this.apiError.internal_id;
+    return this.getApiError().internal_id;
   }
   
   getApiErrorCode(){
-    return this.apiError.code;
+    return this.getApiError().code;
   }
   
   getApiErrorData(){
-    return this.apiError.error_data;
+    return this.getApiError().error_data;
   }
   
   getApiErrorMessage(){
-    return this.apiError.msg;
+    return this.getApiError().msg;
   }
   
   isBadRequest(){

@@ -38,19 +38,19 @@ class OstWalletWorkFlowCallback {
      * Get pin
      * @param {Object} ostWorkflowContext - holds work flow type
      * @param {String} userId - Id of user whose password and pin are needed
-     * @param {OstVerifyData} ostPinAcceptInterface - To pass pin
+     * @param {OstPinAccept} ostPinAccept - To pass pin
      * @override
      */
-    getPin(ostWorkflowContext, userId , ostPinAcceptInterface) {  }
+    getPin(ostWorkflowContext, userId , ostPinAccept) {  }
 
      /**
      * Invalid Pin
      * @param {Object} ostWorkflowContext - holds work flow type
      * @param {String} userId - Id of user whose password and pin are needed.
-     * @param {OstVerifyData} ostPinAcceptInterface - to pass another pin
+     * @param {OstPinAccept} ostPinAccept - to pass another pin
      * @override
      */
-    invalidPin(ostWorkflowContext, userId ,  ostPinAcceptInterface)  {  }
+    invalidPin(ostWorkflowContext, userId ,  ostPinAccept)  {  }
 
      /**
      * Pin validated
