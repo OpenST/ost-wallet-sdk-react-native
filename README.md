@@ -225,8 +225,9 @@ A developer can use this method to generate a QR code that displays the informat
 #### Parameters
    parameter userId: Ost User id<br/>
    parameter successCallback: Receives the qr data as response<br/>
+   parameter errorCallback: Receives error object<br/>
    
-```OstWalletSdk.getAddDeviceQRCode(userId, successCallback);```
+```OstWalletSdk.getAddDeviceQRCode(userId, successCallback, errorCallback);```
 
 ### Perform QR action
 QR codes can be used to encode transaction data for authorizing devices, making purchases via webstores, etc.This method can be used to process the information scanned off a QR code and act on it.
