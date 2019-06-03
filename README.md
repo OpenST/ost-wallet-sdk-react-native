@@ -225,8 +225,9 @@ A developer can use this method to generate a QR code that displays the informat
 #### Parameters
    parameter userId: Ost User id<br/>
    parameter successCallback: Receives the qr data as response<br/>
+   parameter errorCallback: Receives error object<br/>
    
-```OstWalletSdk.getAddDeviceQRCode(userId, successCallback);```
+```OstWalletSdk.getAddDeviceQRCode(userId, successCallback, errorCallback);```
 
 ### Perform QR action
 QR codes can be used to encode transaction data for authorizing devices, making purchases via webstores, etc.This method can be used to process the information scanned off a QR code and act on it.
@@ -297,20 +298,163 @@ class OstWalletSdkCallbackImplementation extends OstWalletWorkFlowCallback {
 
     registerDevice(apiParams, ostDeviceRegistered) {}
 
-    getPin(res, ostPinAcceptInterface) {}
+    getPin(ostWorkflowContext, ostContextEntity, ostPinAccept) {}
 
-    invalidPin(res, ostPinAcceptInterface) {}
+    invalidPin(ostWorkflowContext, ostContextEntity, ostPinAccept) {}
 
-    pinValidated(res) {}
+    pinValidated(ostWorkflowContext, ostContextEntity) {}
 
-    flowComplete(res) {}
+    flowComplete( ostWorkflowContext, ostContextEntity ) {}
 
-    flowInterrupt(res) {}
+    flowInterrupt(ostWorkflowContext, ostError ) {}
 
     requestAcknowledged(ostWorkflowContext, ostContextEntity) {}
 
-    verifyData(ostWorkflowContext, ostContextEntity, ostVerifyDataInterface) {}
+    verifyData(ostWorkflowContext, ostContextEntity, ostVerifyData) {}
 }
 
 export default OstWalletSdkCallbackImplementation;
 ```
+
+The callback functions provided by the interface are as follows-
+
+### 1. flowComplete
+
+This function will be called by wallet SDK when a workflow is completed. The details of workflow and the entity that was updated during the workflow will be available in arguments.
+
+```
+flowComplete( ostWorkflowContext, ostContextEntity)
+```
+
+| Argument | Description |
+|---|---|
+| **OstWorkflowContext**	|	Information about the workflow	|
+| **OstContextEntity**	| Information about the entity |
+
+
+
+<br>
+
+
+
+
+### 2. flowInterrupt
+This function will be called by wallet SDK when a workflow is cancelled. The workflow details and error details will be available in arguments.
+
+```
+flowInterrupt( ostWorkflowContext, ostError)
+```
+
+| Argument | Description |
+|---|---|
+| **OstWorkflowContext**	| Information about the workflow |
+| **OstError**	| ostError object will have details about the error that interrupted the flow |
+
+
+
+<br>
+
+
+
+
+### 3. requestAcknowledged
+This function will be called by wallet SDK when the core API request was successful which happens during the execution of workflows. At this stage the workflow is not completed but it shows that the main communication between the wallet SDK and OST Platform server is complete. <br>Once the workflow is complete the `app` will receive the details in `flowComplete` (described below) function. 
+
+```
+requestAcknowledged( ostWorkflowContext, ostContextEntity)
+```
+
+| Argument | Description |
+|---|---|
+|  **OstWorkflowContext**	| Information about the workflow	|
+|  **OstContextEntity**	| Information about the entity |
+
+<br>
+
+
+
+
+### 4. getPin
+This function will be called by wallet SDK when it needs to get the PIN from the `app` user to authenticate any authorised action.
+<br>**Expected Function Definition:** Developers of client company are expected to launch their user interface to get the PIN from the user and pass back this PIN to SDK by calling **ostPinAccept.pinEntered()** 
+
+```
+getPin( userId, ostPinAcceptInterface)
+```
+
+| Argument | Description |
+|---|---|
+| **userId**	| Unique identifier of the user |
+| **OstPinAccept**	| **ostPinAccept.pinEntered()** should be called to pass the PIN back to SDK. <br> For some reason if the developer wants to cancel the current workflow they can do it by calling **ostPinAccept.cancelFlow()** |
+
+
+<br>
+
+
+
+
+### 5. pinValidated
+This function will be called by wallet SDK when the last entered PIN is validated. 
+
+```
+pinValidated(userId)
+```
+
+| Argument | Description |
+|---|---|
+| **userId**	| Unique identifier of the user |
+
+
+
+
+<br>
+
+
+
+### 6. invalidPin
+This function will be called by wallet SDK when the last entered PIN was wrong and `app` user has to provide the PIN again. Developers are expected to repeat the `getPin` method here and pass back the PIN again back to the SDK by calling  **ostPinAccept.pinEntered()** .
+
+```
+invalidPin( userId, ostPinAccept)
+```
+
+| Argument | Description |
+|---|---|
+| **userId**	|	Unique identifier of the user	|
+| **OstPinAccept**	| **ostPinAccept.pinEntered()** should be called to again pass the PIN back to SDK. <br> For some reason if the developer wants to cancel the current workflow they can do it by calling **ostPinAccept.cancelFlow()**  |
+
+
+<br>
+
+
+### 7. registerDevice
+This function will be called by wallet SDK to register the device.<br>**Expected Function Definition:** Developers of client company are expected to register the device by communicating with client company's server. On client company's server they can use `Server SDK` to register this device in OST Platform. Once the device is registered on OST Platform client company's server will receive the newly created `device` entity. This device entity should be passed back to the `app`.<br>
+Finally they should pass back this newly created device entity back to the wallet SDK by calling **OstDeviceRegistered.deviceRegistered( newDeviceEntity )**.
+
+```
+registerDevice( apiParams, ostDeviceRegisteredInterface)
+```
+
+| Argument | Description |
+|---|---|
+| **apiParams**	|	Device information for registration	|
+| **OstDeviceRegistered**	| **OstDeviceRegistered.deviceRegistered( newDeviceEntity )** should be called to pass the newly created device entity back to SDK. <br>In case data is not verified the current workflow should be canceled by developer by calling **OstDeviceRegistered.cancelFlow()**  |
+
+
+
+<br>
+
+### 8. verifyData
+This function will be called by wallet SDK to verify data during `performQRAction` workflow.
+
+
+```
+verifyData( ostWorkflowContext, ostContextEntity, ostVerifyData)
+```
+
+
+| Argument | Description |
+|---|---|
+| **OstWorkflowContext**	| Information about the current workflow during which this callback will be called	|
+| **OstContextEntity**	| Information about the entity |
+| **OstVerifyData**	| **ostVerifyData.dataVerified()** should be called if the data is verified successfully. <br>In case data is not verified the current workflow should be canceled by developer by calling **ostVerifyData.cancelFlow()** |
