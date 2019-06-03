@@ -8,8 +8,8 @@ class BaseSdkInteract {
         this.interactuuid = interactuuid;
     }
 
-    cancelFlow( errorCallback ) {
-        OstRNSdkCallbackManager.cancelFlow( this.interactuuid , errorCallback );
+    cancelFlow(  ) {
+        OstRNSdkCallbackManager.cancelFlow( this.interactuuid );
     }
 
     static errorCallbackInvoker( error , callback ){
