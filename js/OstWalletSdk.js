@@ -12,8 +12,7 @@ class OstWalletRNSdk {
      */
     initialize( endpoint , callback ){
         OstWalletSdk.initialize( endpoint , (error)=>{
-          let success  = error ?  false : true ;
-          callback( error , success );
+          callback( error , !error );
         });
     }
 
