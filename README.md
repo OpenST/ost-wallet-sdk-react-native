@@ -121,8 +121,9 @@ class App extends Component {
     
   constructor() {
     super();
-    OstWalletSdk.initialize(BASE_URL, err => {
-      console.warn(err);
+    OstWalletSdk.initialize(BASE_URL, (error , success ) => {
+      console.warn(error);
+      console.warn(success);
     });
   }
 
