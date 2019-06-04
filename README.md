@@ -379,7 +379,7 @@ This function will be called by wallet SDK when it needs to get the PIN from the
 <br>**Expected Function Definition:** Developers of client company are expected to launch their user interface to get the PIN from the user and pass back this PIN to SDK by calling **ostPinAccept.pinEntered()** 
 
 ```
-getPin( userId, ostPinAcceptInterface)
+getPin( userId, ostPinAccept)
 ```
 
 | Argument | Description |
@@ -432,7 +432,7 @@ This function will be called by wallet SDK to register the device.<br>**Expected
 Finally they should pass back this newly created device entity back to the wallet SDK by calling **OstDeviceRegistered.deviceRegistered( newDeviceEntity )**.
 
 ```
-registerDevice( apiParams, ostDeviceRegisteredInterface)
+registerDevice( apiParams, ostDeviceRegistered)
 ```
 
 | Argument | Description |
