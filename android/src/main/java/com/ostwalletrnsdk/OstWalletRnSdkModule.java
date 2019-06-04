@@ -48,7 +48,7 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
       callback.invoke( Utils.getError( e , "rn_ownsm_i_1")  );
       return;
     }
-    callback.invoke( null );
+    callback.invoke();
   }
 
   @ReactMethod
