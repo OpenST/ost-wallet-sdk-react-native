@@ -6,11 +6,15 @@ class OstWalletRNSdk {
      /**
      * Initialize wallet sdk
      * @param {String} endpoint - OST Platform endpoint
-     * @param {function} errorCallback - error callback.
+     * @param {function} callback -   A typical node-style, error-first callback.
+     * @callback params {Object}error , {Boolean} success
      * @public
      */
-    initialize( endpoint , errorCallback ){
-        OstWalletSdk.initialize( endpoint , errorCallback ); 
+    initialize( endpoint , callback ){
+        OstWalletSdk.initialize( endpoint , (error)=>{
+          let success  = error ?  false : true ;
+          callback( error , success );
+        });
     }
 
     /**

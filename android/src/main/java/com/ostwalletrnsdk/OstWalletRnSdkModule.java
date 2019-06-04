@@ -40,13 +40,15 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void initialize(
     String BASE_URL,
-    Callback errorCallback
+    Callback callback
   ) {
     try{
       OstSdk.initialize(getReactApplicationContext(), BASE_URL);
     } catch(Throwable e){
-      errorCallback.invoke( Utils.getError( e , "rn_ownsm_i_1")  );
+      callback.invoke( Utils.getError( e , "rn_ownsm_i_1")  );
+      return;
     }
+    callback.invoke( null );
   }
 
   @ReactMethod

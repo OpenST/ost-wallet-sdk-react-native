@@ -26,6 +26,7 @@ RCT_EXPORT_METHOD(initialize:(NSString *)url callback:(RCTResponseSenderBlock)ca
     callback(@[ err ]);
     return;
   }
+  callback(@[[NSNull null]]);
 }
 
 RCT_EXPORT_METHOD(setupDevice:(NSString *)userId
