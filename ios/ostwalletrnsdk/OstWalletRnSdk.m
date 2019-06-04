@@ -122,9 +122,17 @@ RCT_EXPORT_METHOD(executeTransaction: (NSString *) userId
   
   
   //Convert rule name to know rule enum.
-  OstExecuteTransactionType ruleType = OstExecuteTransactionTypeDirectTransfer;
+  OstExecuteTransactionType ruleType;
   if ( [@"Pricer" caseInsensitiveCompare: ruleName] == NSOrderedSame ) {
     ruleType = OstExecuteTransactionTypePay;
+  }else if ( [@"Direct Transfer" caseInsensitiveCompare: ruleName] == NSOrderedSame ){
+    ruleType = OstExecuteTransactionTypeDirectTransfer;
+  }else{
+    OstError *ostError = [[OstError alloc]initWithInternalCode:@"rn_owrs_et_4"
+                                                         errorCode: OstErrorCodeRulesNotFound
+                                                         errorInfo: nil];
+    [workflowCallback flowInterruptedWithWorkflowContext: context error: ostError];
+    return;
   }
   
   
