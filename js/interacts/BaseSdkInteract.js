@@ -1,3 +1,13 @@
+/*
+ Copyright © 2019 OST.com Inc
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+ */
+
 import { NativeModules } from 'react-native';
 import { instantiateOstError } from "../callbackHandlers/OstWalletSdkCallbackManager"
 const { OstRNSdkCallbackManager } = NativeModules;
@@ -15,12 +25,12 @@ class BaseSdkInteract {
     static errorCallbackInvoker( error , callback ){
         if (typeof error == 'string') {
             try{
-                error = JSON.parse(error); 
+                error = JSON.parse(error);
             }catch(e){
                 console.warn("Unexpected JSON string", error );
             }
         }
-    
+
         if( typeof callback == "function" ){
             let ostError = instantiateOstError( error );
             callback( error );
