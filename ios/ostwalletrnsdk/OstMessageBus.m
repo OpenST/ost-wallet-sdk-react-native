@@ -44,4 +44,9 @@ RCT_EXPORT_MODULE();
   [self sendEventWithName:@"onOstWalletSdkEvents" body: data];
 }
 
++ (BOOL) requiresMainQueueSetup
+{
+  return YES;
+}
+
 @end
