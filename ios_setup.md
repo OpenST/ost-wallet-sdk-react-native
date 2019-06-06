@@ -5,7 +5,7 @@
 Get [Carthage](https://github.com/Carthage/Carthage) by running following command on terminal
 
 ```bash
-$ brew install carthage
+ brew install carthage
 ```
 
 You can also choose [other methods](https://github.com/Carthage/Carthage/#installing-carthage) to install [Carthage](https://github.com/Carthage/Carthage)
@@ -18,8 +18,9 @@ Add following entry in your `Cartfile`
 
 Now to actually install everything run the following in your terminal:
 
-`carthage update --platform iOS`
-
+```bash
+ carthage update --platform iOS
+```
 A `Cartfile.resolved` file and a `Carthage` directory will appear in the same directory where your `.xcodeproj` or `.xcworkspace` is.
 
 
@@ -32,8 +33,10 @@ Open your project in Xcode, click on the project file in the left section of the
 Now open the `./ios/Carthage/Build/iOS` folder in Finder:
 
 Run this command
-`open ios/Carthage/Build/iOS`
 
+```bash
+open ios/Carthage/Build/iOS
+```
 Open application target, under General tab, drag the built `OstWalletSdk.framework` binary from `./ios/Carthage/Build/iOS` folder into Linked Frameworks and Libraries section.
 
 ![copy-framework-file](https://dxwfxs8b4lg24.cloudfront.net/docs/native/images/copy-framework-file.png)
@@ -43,8 +46,9 @@ We need to add the `.framework` files of dependencies present inside `./ios/Cart
 
 Open `application targets` in Xcode. Under `Build Phases` click `+` icon and choose `New Run Script Phase`. Add the following command.
 
-`/usr/local/bin/carthage copy-frameworks`
-
+```bash
+/usr/local/bin/carthage copy-frameworks
+```
 
 Click the `+` under `Input Files` and add the following entry framework:
 

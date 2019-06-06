@@ -4,8 +4,9 @@
 
 ### Automatic Linking
 
-`react-native link @ostdotcom/ost-wallet-sdk-react-native`
-
+```bash
+react-native link @ostdotcom/ost-wallet-sdk-react-native
+```
 ### Manual Linking
 
 1. Open up `./android/app/src/main/java/[...]/MainApplication.java`. 
