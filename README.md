@@ -33,13 +33,9 @@ Run following command in your react-native project root
 `react-native link @ostdotcom/ost-wallet-sdk-react-native`
 
 
-4. Android Setup
+4. [Android setup for OST React Native SDK](android_setup.md)
 
-Please follow [Android setup for OST React Native SDK](android_setup.md)
-
-5. iOS Setup
-
-Please follow [iOS setup for OST React Native SDK](ios_setup.md)
+5. [iOS setup for OST React Native SDK](ios_setup.md)
 
 ## SDK Usage
 
