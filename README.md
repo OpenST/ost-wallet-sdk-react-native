@@ -443,7 +443,7 @@ logoutAllSessions(userId,
 
 
 ### revokeDevice
-This will unauthorize the current device.
+This method will unauthorize the current device.
 
 ```javascript
 /**
@@ -459,6 +459,20 @@ revokeDevice( userId ,
 
 ```
 
+
+### updateBiometricPreference
+This method can be used to enable or disable the biometric.
+
+```javascript
+/**
+   * Update biometric prederence  
+   * @param {String} userId - Ost User id
+   * @param {boolean} enable - to enable biometric prefernce
+   * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication 
+   * @public
+   */
+updateBiometricPreference( userId , enable ,workflow )
+```
 
 # SDK WorkFlow Callbacks
 
