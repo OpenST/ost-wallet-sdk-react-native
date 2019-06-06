@@ -4,7 +4,9 @@
 
 Get [Carthage](https://github.com/Carthage/Carthage) by running following command on terminal
 
->  brew install carthage
+```bash
+$ brew install carthage
+```
 
 You can also choose [other methods](https://github.com/Carthage/Carthage/#installing-carthage) to install [Carthage](https://github.com/Carthage/Carthage)
 
@@ -12,16 +14,14 @@ You can also choose [other methods](https://github.com/Carthage/Carthage/#instal
 Carthage looks at a file called `Cartfile` to determine which libraries to install. Create a file in the `./ios` directory of your react-native project called `Cartfile` and enter the following to tell Carthage which dependencies we want:
 
 Add following entry in your `Cartfile`
-> github "ostdotcom/ost-wallet-sdk-ios" == 2.0.4
+`github "ostdotcom/ost-wallet-sdk-ios" == 2.0.4`
 
 Now to actually install everything run the following in your terminal:
 
-> carthage update --platform iOS
+`carthage update --platform iOS`
 
 A `Cartfile.resolved` file and a `Carthage` directory will appear in the same directory where your `.xcodeproj` or `.xcworkspace` is.
 
-
-<br>
 
 ## 3. Copying the `OstWalletSdk.framework` file in your Xcode project
 
@@ -29,21 +29,21 @@ Open your project in Xcode, click on the project file in the left section of the
 
 `Carthage` folder will have the `.framework` files that we will add in Xcode project.
 
-Now open the `Carthage/Build/iOS` folder in Finder:
+Now open the `./ios/Carthage/Build/iOS` folder in Finder:
 
 Run this command
-> open Carthage/Build/iOS
+`open ios/Carthage/Build/iOS`
 
-Open application target, under General tab, drag the built `OstWalletSdk.framework` binary from `Carthage/Build/iOS` folder into Linked Frameworks and Libraries section.
+Open application target, under General tab, drag the built `OstWalletSdk.framework` binary from `./ios/Carthage/Build/iOS` folder into Linked Frameworks and Libraries section.
 
 ![copy-framework-file](https://dxwfxs8b4lg24.cloudfront.net/docs/native/images/copy-framework-file.png)
 
 ## 4. Adding the `OstWalletSdk` dependencies in your Xcode project
-We need to add the `.framework` files of dependencies present inside `Carthage/Build/iOS`.
+We need to add the `.framework` files of dependencies present inside `./ios/Carthage/Build/iOS`.
 
 Open `application targets` in Xcode. Under `Build Phases` click `+` icon and choose `New Run Script Phase`. Add the following command.
 
-> /usr/local/bin/carthage copy-frameworks
+`/usr/local/bin/carthage copy-frameworks`
 
 
 Click the `+` under `Input Files` and add the following entry framework:
@@ -60,8 +60,6 @@ $(SRCROOT)/Carthage/Build/iOS/OstWalletSdk.framework
 ```
 
 
-<br>
-
 ![copy-framework-file](https://dxwfxs8b4lg24.cloudfront.net/docs/native/images/add-dependency-framework-files.png)
 
 
@@ -70,7 +68,7 @@ Follow these steps to add additional files:
 
 * Click on your project, select `File > Add Files to "<Your Project>"`
 
-* Browse to `./node_modules/ost-wallet-sdk-react-native/ios`
+* Browse to `./node_modules/@ostdotcom/ost-wallet-sdk-react-native/ios`
 
 * Add the folder `ostwalletrnsdk` with following settings:
     
@@ -87,9 +85,6 @@ Open application target, under `Build Settings` tab, enable `Always Embed Swift 
 ## 7. Create SDK configuration file
 
 Create `OstWalletSdk.plist` file. This file has configuration attributes used by OstWalletSdk. You should copy paste the configuration values from below snippet.
-
-
-Copy paste this configuration file.
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
