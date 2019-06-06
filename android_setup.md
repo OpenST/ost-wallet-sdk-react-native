@@ -4,7 +4,7 @@
 
 ### Automatic Linking
 
-> `react-native link ost-wallet-sdk-react-native`
+`react-native link @ostdotcom/ost-wallet-sdk-react-native`
 
 ### Manual Linking
 
@@ -38,17 +38,17 @@ android {
 ## 3. Create SDK configuration file
 Create file `./android/app/src/main/assets/ost-mobilesdk.json` with application specific configurations using  the json below as an example
 
-     ```json
-    {
-        "BLOCK_GENERATION_TIME": 3,
-        "PIN_MAX_RETRY_COUNT": 3,
-        "REQUEST_TIMEOUT_DURATION": 60,
-        "SESSION_BUFFER_TIME": 3600,
-        "PRICE_POINT_TOKEN_SYMBOL": "OST",
-        "PRICE_POINT_CURRENCY_SYMBOL": "USD",
-        "USE_SEED_PASSWORD": false
-    }
-     ```
+```json
+{
+  "BLOCK_GENERATION_TIME": 3,
+  "PIN_MAX_RETRY_COUNT": 3,
+  "REQUEST_TIMEOUT_DURATION": 60,
+  "SESSION_BUFFER_TIME": 3600,
+  "PRICE_POINT_TOKEN_SYMBOL": "OST",
+  "PRICE_POINT_CURRENCY_SYMBOL": "USD",
+  "USE_SEED_PASSWORD": false
+}
+```
 **NOTE: These configurations are MANDATORY for successful operation. Failing to set them will significantly impact usage.**
 
 
