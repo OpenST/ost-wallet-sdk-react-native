@@ -3,7 +3,9 @@
 
 ## Getting started
 
-`$ npm install ost-wallet-sdk-react-native`
+```bash
+$ npm install ost-wallet-sdk-react-native
+```
 
 ### Android
 
