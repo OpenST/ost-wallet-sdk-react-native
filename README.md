@@ -26,11 +26,11 @@ Follow this [official react-native getting started guide](https://facebook.githu
 2. Install the OST React Native SDK in your project
 Run following command in your react-native project root
 
-` npm install ost-wallet-sdk-react-native`
+` npm install @ostdotcom/ost-wallet-sdk-react-native`
 
 3. Linking the OST React native SDk with your project
 
-> `react-native link ost-wallet-sdk-react-native`
+`react-native link @ostdotcom/ost-wallet-sdk-react-native`
 
 
 4. Android Setup
