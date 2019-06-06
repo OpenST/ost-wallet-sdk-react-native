@@ -14,7 +14,7 @@ You can also choose [other methods](https://github.com/Carthage/Carthage/#instal
 Carthage looks at a file called `Cartfile` to determine which libraries to install. Create a file in the `./ios` directory of your react-native project called `Cartfile` and enter the following to tell Carthage which dependencies we want:
 
 Add following entry in your `Cartfile`
-`github "ostdotcom/ost-wallet-sdk-ios" == 2.0.4`
+`github "ostdotcom/ost-wallet-sdk-ios" == 2.1.0`
 
 Now to actually install everything run the following in your terminal:
 
@@ -97,8 +97,6 @@ Create `OstWalletSdk.plist` file. This file has configuration attributes used by
         <dict>
             <key>BlockGenerationTime</key>
             <integer>3</integer>
-            <key>PricePointTokenSymbol</key>
-            <string>OST</string>
             <key>PricePointCurrencySymbol</key>
             <string>USD</string>
             <key>RequestTimeoutDuration</key>
@@ -114,12 +112,11 @@ Create `OstWalletSdk.plist` file. This file has configuration attributes used by
 ```
 
 1. BlockGenerationTime: The time in seconds it takes to mine a block on auxiliary chain.
-2. PricePointTokenSymbol: This is the symbol of base currency. So its value will be `OST`.
-3. PricePointCurrencySymbol: It is the symbol of quote currency used in price conversion.
-4. RequestTimeoutDuration: Request timeout in seconds for https calls made by ostWalletSdk.
-5. PinMaxRetryCount: Maximum retry count to get the wallet Pin from user.
-6. SessionBufferTime: Buffer expiration time for session keys in seconds.
-7. UseSeedPassword: Uses mnemonics and password to generate seed.
+2. PricePointCurrencySymbol: It is the symbol of quote currency used in price conversion.
+3. RequestTimeoutDuration: Request timeout in seconds for https calls made by ostWalletSdk.
+4. PinMaxRetryCount: Maximum retry count to get the wallet Pin from user.
+5. SessionBufferTime: Buffer expiration time for session keys in seconds.
+6. UseSeedPassword: Uses mnemonics and password to generate seed.
 
 **These configurations are MANDATORY for successful operation. Failing to set them will significantly impact usage.**
 

@@ -45,7 +45,6 @@ Create file `./android/app/src/main/assets/ost-mobilesdk.json` with application 
   "PIN_MAX_RETRY_COUNT": 3,
   "REQUEST_TIMEOUT_DURATION": 60,
   "SESSION_BUFFER_TIME": 3600,
-  "PRICE_POINT_TOKEN_SYMBOL": "OST",
   "PRICE_POINT_CURRENCY_SYMBOL": "USD",
   "USE_SEED_PASSWORD": false
 }
