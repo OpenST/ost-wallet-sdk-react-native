@@ -71,9 +71,11 @@ class OstWalletRNSdk {
      * @param {String} ruleName - Rule name to be executed.
      * @param {object} meta - additional data.
      * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication 
+     * @param {object} [options={}] - Transaction workflow options.
+     * @param {boolean} [options.waitForFinalization=true]
      * @public
      */
-    executeTransaction(userId, tokenHolderAddresses, amounts, ruleName, meta, workflow) {
+    executeTransaction(userId, tokenHolderAddresses, amounts, ruleName, meta, workflow, options) {
         if( tokenHolderAddresses instanceof Array ){
           tokenHolderAddresses = JSON.stringify(tokenHolderAddresses);
         }
@@ -85,8 +87,16 @@ class OstWalletRNSdk {
         }catch (e){
           console.warn("Unexpected JSON Object meta in executeTransaction", meta );
         }
+
+        if ( !options ) {
+            options = {};
+        }
+
+        if ( typeof options.waitForFinalization === 'undefined') {
+            options.waitForFinalization = true;
+        }
        
-        OstWalletSdk.executeTransaction(userId, tokenHolderAddresses, amounts, ruleName, meta , workflow.uuid);
+        OstWalletSdk.executeTransaction(userId, tokenHolderAddresses, amounts, ruleName, meta , options, workflow.uuid);
     }
 
      /**

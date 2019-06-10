@@ -17,6 +17,7 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
 import com.ost.walletsdk.OstSdk;
 import com.ost.walletsdk.ecKeyInteracts.UserPassphrase;
 import com.ost.walletsdk.utils.CommonUtils;
@@ -111,6 +112,7 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
                                  String amounts,
                                  String ruleName,
                                  String meta,
+                                 ReadableMap options,
                                  String uuid ){
 
     List<String> listAddresses = null ;
@@ -142,6 +144,12 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
       return;
     }
 
+    boolean waitForFinalization = true;
+    if ( options.hasKey("waitForFinalization") ) {
+      waitForFinalization = options.getBoolean("waitForFinalization");
+    }
+
+    //TODO: update downstream SDK and pass waitForFinalization flag.
     OstSdk.executeTransaction(userId, listAddresses, listAmounts, ruleName, metaMap, workFlowCallback);
 
   }

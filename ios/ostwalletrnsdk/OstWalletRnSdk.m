@@ -76,8 +76,30 @@ RCT_EXPORT_METHOD(executeTransaction: (NSString *) userId
                   amounts: (NSString *) amounts
                   ruleName: (NSString *) ruleName
                   meta: (NSString *) meta
+                  options: (NSDictionary *) options
                   uuid: (NSString *) uuid )
 {
+  [OstWalletRnSdk coreExecuteTransaction: userId
+                    tokenHolderAddresses: tokenHolderAddresses
+                                 amounts: amounts
+                                ruleName: ruleName
+                                    meta: meta
+                                 options: options
+                                    uuid: uuid];
+}
++ (void) coreExecuteTransaction: (NSString *) userId
+           tokenHolderAddresses: (NSString *) tokenHolderAddresses
+                        amounts: (NSString *) amounts
+                       ruleName: (NSString *) ruleName
+                           meta: (NSString *) meta
+                        options: (NSDictionary *) options
+                           uuid: (NSString *) uuid
+{
+  BOOL waitForFinalization = true;
+  if ( nil != [options objectForKey:@"waitForFinalization"]) {
+    waitForFinalization = [[options objectForKey:@"waitForFinalization"] boolValue];
+  }
+  
   OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypeExecuteTransaction];
   OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
   
@@ -139,12 +161,13 @@ RCT_EXPORT_METHOD(executeTransaction: (NSString *) userId
   }
   
   
-  [OstWalletSdk executeTransactionWithUserId:userId
-                        tokenHolderAddresses:addressesArr
-                                     amounts:amountsArr
+  [OstWalletSdk executeTransactionWithUserId: userId
+                        tokenHolderAddresses: addressesArr
+                                     amounts: amountsArr
                              transactionType: ruleType
-                                        meta:metaObj
-                                    delegate:workflowCallback];
+                                        meta: metaObj
+                         waitForFinalization: waitForFinalization
+                                    delegate: workflowCallback];
 }
 
 RCT_EXPORT_METHOD(getDeviceMnemonics: (NSString *) userId
