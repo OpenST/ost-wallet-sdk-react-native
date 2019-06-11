@@ -27,10 +27,10 @@ import com.ost.walletsdk.workflows.errors.OstError;
 import com.ost.walletsdk.workflows.errors.OstErrors;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -144,14 +144,18 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
       return;
     }
 
-    boolean waitForFinalization = true;
+    HashMap<String, Object> optionsMap = new HashMap<>();
     if ( options.hasKey("waitForFinalization") ) {
-      waitForFinalization = options.getBoolean("waitForFinalization");
+      boolean waitForFinalization = options.getBoolean("waitForFinalization");
+      optionsMap.put(OstSdk.WAIT_FOR_FINALIZATION, waitForFinalization);
     }
 
-    //TODO: update downstream SDK and pass waitForFinalization flag.
-    OstSdk.executeTransaction(userId, listAddresses, listAmounts, ruleName, metaMap, workFlowCallback);
+    if ( options.hasKey("currencyCode") ) {
+      String currencyCode = options.getString("currencyCode");
+      optionsMap.put(OstSdk.CURRENCY_CODE, currencyCode);
+    }
 
+    OstSdk.executeTransaction(userId, listAddresses, listAmounts, ruleName, metaMap, optionsMap ,workFlowCallback);
   }
 
   @ReactMethod
