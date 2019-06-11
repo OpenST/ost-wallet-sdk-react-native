@@ -95,79 +95,73 @@ RCT_EXPORT_METHOD(executeTransaction: (NSString *) userId
                         options: (NSDictionary *) options
                            uuid: (NSString *) uuid
 {
-  BOOL waitForFinalization = true;
-  if ( nil != [options objectForKey:@"waitForFinalization"]) {
-    waitForFinalization = [[options objectForKey:@"waitForFinalization"] boolValue];
-  }
-  
-  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypeExecuteTransaction];
-  OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
-  
-  NSData *data = [tokenHolderAddresses dataUsingEncoding:NSUTF8StringEncoding];
-  NSError *error = nil;
-  
-  NSArray *addressesArr = [NSJSONSerialization
-               JSONObjectWithData:data
-               options:0
-               error:&error];
-  
-  if( nil != error ) {
-    OstError *ostError = [OstRNErrorUtils invalidJsonArrayError:@"rn_owrs_et_1"];
-    [workflowCallback flowInterruptedWithWorkflowContext: context error: ostError];
-    return;
-  }
-
-  data = [amounts dataUsingEncoding:NSUTF8StringEncoding];
-  error = nil;
-  NSArray *amountsArr = [NSJSONSerialization
-               JSONObjectWithData:data
-               options:0
-               error:&error];
-  
-  if( nil != error ) {
-    OstError *ostError = [OstRNErrorUtils invalidJsonArrayError:@"rn_owrs_et_2"];
-    [workflowCallback flowInterruptedWithWorkflowContext: context error: ostError];
-    return;
-  }
-  
-  NSDictionary *metaObj  = nil;
-  if( nil != meta ){
-    data = [meta dataUsingEncoding:NSUTF8StringEncoding];
-    metaObj = [NSJSONSerialization
-               JSONObjectWithData: data
-               options: 0
-               error: &error];
+    OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypeExecuteTransaction];
+    OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
     
-    if( nil != error ){
-      OstError *ostError = [OstRNErrorUtils invalidJsonStringError:@"rn_owrs_et_3"];
-      [workflowCallback flowInterruptedWithWorkflowContext: context error: ostError];
-      return;
+    NSData *data = [tokenHolderAddresses dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = nil;
+    
+    NSArray *addressesArr = [NSJSONSerialization
+                             JSONObjectWithData:data
+                             options:0
+                             error:&error];
+    
+    if( nil != error ) {
+        OstError *ostError = [OstRNErrorUtils invalidJsonArrayError:@"rn_owrs_et_1"];
+        [workflowCallback flowInterruptedWithWorkflowContext: context error: ostError];
+        return;
     }
-  }
-  
-  
-  //Convert rule name to know rule enum.
-  OstExecuteTransactionType ruleType;
-  if ( [@"Pricer" caseInsensitiveCompare: ruleName] == NSOrderedSame ) {
-    ruleType = OstExecuteTransactionTypePay;
-  }else if ( [@"Direct Transfer" caseInsensitiveCompare: ruleName] == NSOrderedSame ){
-    ruleType = OstExecuteTransactionTypeDirectTransfer;
-  }else{
-    OstError *ostError = [[OstError alloc]initWithInternalCode:@"rn_owrs_et_4"
+    
+    data = [amounts dataUsingEncoding:NSUTF8StringEncoding];
+    error = nil;
+    NSArray *amountsArr = [NSJSONSerialization
+                           JSONObjectWithData:data
+                           options:0
+                           error:&error];
+    
+    if( nil != error ) {
+        OstError *ostError = [OstRNErrorUtils invalidJsonArrayError:@"rn_owrs_et_2"];
+        [workflowCallback flowInterruptedWithWorkflowContext: context error: ostError];
+        return;
+    }
+    
+    NSDictionary *metaObj  = nil;
+    if( nil != meta ){
+        data = [meta dataUsingEncoding:NSUTF8StringEncoding];
+        metaObj = [NSJSONSerialization
+                   JSONObjectWithData: data
+                   options: 0
+                   error: &error];
+        
+        if( nil != error ){
+            OstError *ostError = [OstRNErrorUtils invalidJsonStringError:@"rn_owrs_et_3"];
+            [workflowCallback flowInterruptedWithWorkflowContext: context error: ostError];
+            return;
+        }
+    }
+    
+    
+    //Convert rule name to know rule enum.
+    OstExecuteTransactionType ruleType;
+    if ( [@"Pricer" caseInsensitiveCompare: ruleName] == NSOrderedSame ) {
+        ruleType = OstExecuteTransactionTypePay;
+    }else if ( [@"Direct Transfer" caseInsensitiveCompare: ruleName] == NSOrderedSame ){
+        ruleType = OstExecuteTransactionTypeDirectTransfer;
+    }else{
+        OstError *ostError = [[OstError alloc]initWithInternalCode:@"rn_owrs_et_4"
                                                          errorCode: OstErrorCodeRulesNotFound
                                                          errorInfo: nil];
-    [workflowCallback flowInterruptedWithWorkflowContext: context error: ostError];
-    return;
-  }
-  
-  
-  [OstWalletSdk executeTransactionWithUserId: userId
-                        tokenHolderAddresses: addressesArr
-                                     amounts: amountsArr
-                             transactionType: ruleType
-                                        meta: metaObj
-                         waitForFinalization: waitForFinalization
-                                    delegate: workflowCallback];
+        [workflowCallback flowInterruptedWithWorkflowContext: context error: ostError];
+        return;
+    }
+    
+    [OstWalletSdk executeTransactionWithUserId:userId
+                          tokenHolderAddresses:addressesArr
+                                       amounts:amountsArr
+                               transactionType:ruleType
+                                          meta:metaObj
+                                       options:options
+                                      delegate:workflowCallback];
 }
 
 RCT_EXPORT_METHOD(getDeviceMnemonics: (NSString *) userId
