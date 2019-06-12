@@ -1,0 +1,57 @@
+//
+/*
+ Copyright © 2019 OST.com Inc
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+*/
+
+#import "OstWalletRnSdkApi.h"
+#import "OstJsonApiCallbackImpl.h"
+
+@implementation OstWalletRnSdkApi
+
+RCT_EXPORT_MODULE(OstJsonApi) ;
+
+RCT_EXPORT_METHOD(getBalanceForUserId: (NSString * _Nonnull) userId
+                  successCallback: (RCTResponseSenderBlock _Nonnull) successCallback
+                  errorCallback: (RCTResponseSenderBlock _Nonnull) errorCallback )
+{
+  
+  OstJsonApiCallbackImpl *delegate = [[OstJsonApiCallbackImpl alloc]initWithSuccess:successCallback errorCallback:errorCallback];
+  [OstJsonApi getBalanceForUserId: userId delegate: delegate];
+}
+
+RCT_EXPORT_METHOD(getBalanceWithPricePointForUserId: (NSString * _Nonnull)userId
+                  successCallback: (RCTResponseSenderBlock _Nonnull) successCallback
+                  errorCallback: (RCTResponseSenderBlock _Nonnull) errorCallback )
+{
+  OstJsonApiCallbackImpl *delegate = [[OstJsonApiCallbackImpl alloc]initWithSuccess:successCallback errorCallback:errorCallback];
+  [OstJsonApi getBalanceWithPricePointForUserId: userId delegate: delegate];
+}
+
+RCT_EXPORT_METHOD(getPricePointForUserId: (NSString * _Nonnull)userId
+                  successCallback: (RCTResponseSenderBlock _Nonnull) successCallback
+                  errorCallback: (RCTResponseSenderBlock _Nonnull) errorCallback )
+{
+  OstJsonApiCallbackImpl *delegate = [[OstJsonApiCallbackImpl alloc]initWithSuccess:successCallback errorCallback:errorCallback];
+  [OstJsonApi getPricePointForUserId: userId delegate: delegate];
+}
+
+RCT_EXPORT_METHOD(getTransactionsForUserId: (NSString * _Nonnull)userId
+                  params: (NSDictionary<NSString *, id> * _Nonnull)params
+                  successCallback: (RCTResponseSenderBlock _Nonnull) successCallback
+                  errorCallback: (RCTResponseSenderBlock _Nonnull) errorCallback )
+{
+  OstJsonApiCallbackImpl *delegate = [[OstJsonApiCallbackImpl alloc]initWithSuccess:successCallback errorCallback:errorCallback];
+  [OstJsonApi getTransactionsForUserId: userId params:params delegate:delegate];
+}
+
+
+
+
+@end
+
