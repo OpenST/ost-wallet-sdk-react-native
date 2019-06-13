@@ -17,6 +17,8 @@
 
 RCT_EXPORT_MODULE(OstWalletSdk) ;
 
+#pragma mark - Initialize
+
 RCT_EXPORT_METHOD(initialize:(NSString *)url callback:(RCTResponseSenderBlock)callback)
 {
  
@@ -31,6 +33,34 @@ RCT_EXPORT_METHOD(initialize:(NSString *)url callback:(RCTResponseSenderBlock)ca
   }
   callback(@[[NSNull null]]);
 }
+
+#pragma mark - Getters
+
+RCT_EXPORT_METHOD(getUser: (NSString *)userId
+                  callback:(RCTResponseSenderBlock)callback) {
+  
+  OstUser *user = [OstWalletSdk getUser:userId];
+  if (nil != user) {
+    callback( @[user.data ] );
+    return;
+  }
+  
+  callback( @[] );
+}
+
+RCT_EXPORT_METHOD(getToken: (NSString *)tokenId
+                  callback:(RCTResponseSenderBlock)callback) {
+  
+  OstToken *token = [OstWalletSdk getToken: tokenId];
+  if (nil != token) {
+    callback( @[token.data ] );
+    return;
+  }
+
+  callback( @[] );
+}
+
+#pragma mark - Workflows
 
 RCT_EXPORT_METHOD(setupDevice:(NSString *)userId
                   tokenId:(NSString *)tokenId

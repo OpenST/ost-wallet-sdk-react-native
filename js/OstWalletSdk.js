@@ -212,6 +212,32 @@ class OstWalletRNSdk {
     logoutAllSessions(userId, workflow ) {
         OstWalletSdk.logoutAllSessions( userId ,  workflow.uuid  ); 
     }
+
+  /**
+   * Get user object for provided userId
+   * @param {String} userId - Ost User id
+   * @param {function} callback - Gets object if present else nil
+   * @callback params {Object}user
+   * @public
+   */
+    getUser(userId, callback) {
+        OstWalletSdk.getUser(userId, (userEntity)=>{
+          callback( userEntity );
+        });
+    }
+
+    /**
+    * Get token object for provided userId
+    * @param {String} userId - Ost User id
+    * @param {function} callback - Gets object if present else nil
+    * @callback params {Object}token
+    * @public
+    */
+    getToken(tokenId, callback) {
+        OstWalletSdk.getToken(tokenId, (tokenEntity)=>{
+            callback( tokenEntity );
+        });
+    }
 }
 
 export default new OstWalletRNSdk();
