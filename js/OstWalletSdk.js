@@ -72,7 +72,8 @@ class OstWalletRNSdk {
      * @param {object} meta - additional data.
      * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication 
      * @param {object} [options={}] - Transaction workflow options.
-     * @param {boolean} [options.waitForFinalization=true]
+     * @param {boolean} [options.wait_for_finalization=true]
+     * @param {boolean} [options.currency_code=null]
      * @public
      */
     executeTransaction(userId, tokenHolderAddresses, amounts, ruleName, meta, workflow, options) {
@@ -92,8 +93,8 @@ class OstWalletRNSdk {
             options = {};
         }
 
-        if ( typeof options.waitForFinalization === 'undefined') {
-            options.waitForFinalization = true;
+        if ( typeof options.wait_for_finalization === 'undefined') {
+            options.wait_for_finalization = true;
         }
        
         OstWalletSdk.executeTransaction(userId, tokenHolderAddresses, amounts, ruleName, meta , options, workflow.uuid);
