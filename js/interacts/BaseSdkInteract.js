@@ -9,8 +9,13 @@
  */
 
 import { NativeModules } from 'react-native';
-import { instantiateOstError } from "../callbackHandlers/OstWalletSdkCallbackManager"
 const { OstRNSdkCallbackManager } = NativeModules;
+
+let instantiateOstError;
+import('../callbackHandlers/OstWalletSdkCallbackManager').then((imports) => {
+    instantiateOstError = imports.instantiateOstError;
+});
+
 
 class BaseSdkInteract {
     constructor(workflowuuid, interactuuid) {
