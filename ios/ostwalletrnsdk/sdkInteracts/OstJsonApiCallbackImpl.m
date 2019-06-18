@@ -30,12 +30,30 @@
 }
 
 - (void)onOstJsonApiErrorWithError:(OstError * _Nullable)error errorData:(NSDictionary<NSString *,id> * _Nullable)errorData {
-  self.errorCallback(@[ [error userInfo], errorData ]);
+  
+  OstError *errorDict = [[OstError alloc]init];
+  NSDictionary<NSString *,id> *errorDataDict = [[NSDictionary alloc]init];
+ 
+  if (nil != error) {
+    errorDict = error;
+  }
+  if (nil != errorData) {
+    errorDataDict = errorData;
+  }
+  
+  self.errorCallback(@[ errorDict,
+                        errorDataDict ]);
   [self cleanUp];
 }
 
 - (void)onOstJsonApiSuccessWithData:(NSDictionary<NSString *,id> * _Nullable)data {
-  self.successCallback(@[ data ]);
+  
+  NSDictionary<NSString *,id> *dataDict = [[NSDictionary alloc]init];
+  if (nil != data) {
+    dataDict = data;
+  }
+  
+  self.successCallback(@[ dataDict ]);
   [self cleanUp];
 }
 
