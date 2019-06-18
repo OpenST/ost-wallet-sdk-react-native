@@ -182,17 +182,12 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
       return;
     }
 
-    HashMap<String, Object> optionsMap = new HashMap<>();
-    if ( options.hasKey("waitForFinalization") ) {
-      boolean waitForFinalization = options.getBoolean("waitForFinalization");
-      optionsMap.put(OstSdk.WAIT_FOR_FINALIZATION, waitForFinalization);
+    HashMap<String, Object> optionsMap = null;
+    if ( null != options) {
+      optionsMap = options.toHashMap();
+    } else {
+      optionsMap = new HashMap<>();
     }
-
-    if ( options.hasKey("currencyCode") ) {
-      String currencyCode = options.getString("currencyCode");
-      optionsMap.put(OstSdk.CURRENCY_CODE, currencyCode);
-    }
-
     OstSdk.executeTransaction(userId, listAddresses, listAmounts, ruleName, metaMap, optionsMap ,workFlowCallback);
   }
 
