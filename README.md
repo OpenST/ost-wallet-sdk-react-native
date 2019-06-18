@@ -649,3 +649,79 @@ verifyData( ostWorkflowContext, ostContextEntity, ostVerifyData)
 | **OstWorkflowContext**	| Information about the current workflow during which this callback will be called	|
 | **OstContextEntity**	| Information about the entity |
 | **OstVerifyData**	| **ostVerifyData.dataVerified()** should be called if the data is verified successfully. <br>In case data is not verified the current workflow should be canceled by developer by calling **ostVerifyData.cancelFlow()** |
+
+
+
+## OST JSON APIs
+
+### User Balance
+
+Api to get user balance. Balance of only current logged-in user can be fetched.<br/><br/>
+
+```javascript
+/**
+   * Api to get user balance
+   * @param {String} userId - Ost User id
+   * @param {function} Success callback with success data
+   * @param {function} Failure callback with error and failure response
+   * @public
+   */
+OstJsonApi.getBalanceForUserId(userId,  
+                    (data) => {},
+                    (error, response) => {} ) 
+```
+
+### Price Points
+
+Api to get Price Points. 
+It will provide latest conversion rates of base token to fiat currency.<br/><br/>
+
+```javascript
+/**
+   * Api to get Price Points. 
+   * @param {String} userId - Ost User id
+   * @param {function} Success callback with success data
+   * @param {function} Failure callback with error and failure response
+   * @public
+   */
+OstJsonApi.getPricePointForUserId(userId,  
+                    (data) => {},
+                    (error, response) => {} ) 
+```
+
+### Balance With Price Points
+
+Api to get user balance and Price Points. Balance of only current logged-in user can be fetched.
+It will also provide latest conversion rates of base token to fiat currency.<br/><br/>
+```javascript
+/**
+   * Api to get user balance and Price Points. 
+   * @param {String} userId - Ost User id
+   * @param {function} Success callback with success data
+   * @param {function} Failure callback with error and failure response
+   * @public
+   */
+OstJsonApi.getBalanceWithPricePointForUserId(userId,  
+                    (data) => {},
+                    (error, response) => {} ) 
+```
+
+### Transactions
+
+Api to get user transactions. Transactions of only current logged-in user can be fetched.<br/><br/>
+
+```javascript
+/**
+   * Api to get user transactions
+   * @param {String} userId - Ost User id
+   * @param {String} userId - Ost User id
+   * @param {object} params - transaction params
+   * @param {function} Success callback with success data
+   * @param {function} Failure callback with error and failure response
+   * @public
+   */
+OstJsonApi.getTransactionsForUserId(userId,  
+                    params,
+                    (data) => {},
+                    (error, response) => {} ) 
+```
