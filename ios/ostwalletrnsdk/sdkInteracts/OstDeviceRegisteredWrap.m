@@ -24,7 +24,7 @@
     return;
   }
   
-  [delegate deviceRegistered: params error: error];
+  [delegate deviceRegistered: params];
   if ( nil != *error) {
     OstError *err = [[OstError alloc]initWithInternalCode: @"rn_si_odrw_dr_2"
                                                 errorCode: OstErrorCodeSdkError

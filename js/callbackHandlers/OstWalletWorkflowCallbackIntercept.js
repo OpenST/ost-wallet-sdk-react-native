@@ -8,7 +8,7 @@
  http://www.apache.org/licenses/LICENSE-2.0
  */
  
-import { clearInstance , instantiateOstError } from './OstWalletSdkCallbackManager';
+// import { clearInstance , instantiateOstError } from './OstWalletSdkCallbackManager';
 import OstDeviceRegistered from '../interacts/OstDeviceRegistered';
 import OstPinAccept from '../interacts/OstPinAccept';
 import OstVerifyData from '../interacts/OstVerifyData';
@@ -18,6 +18,13 @@ const ostWorkflowContextKey = "ostWorkflowContext",
       ostErrorKey   = "ostError",
       userIdKey     = "userId"
 ;
+
+let clearInstance, instantiateOstError;
+import('./OstWalletSdkCallbackManager').then((imports) => {
+    clearInstance = imports.clearInstance;
+    instantiateOstError = imports.instantiateOstError;
+});
+
 
 class OstWalletWorkFlowCallbackIntercepts {
    

@@ -39,10 +39,17 @@ const callbackInvoker = params =>  {
     let workflowuuid = params['uuid'],
         instance = getInstance( workflowuuid  ),
         functionName = params['functionName'],
-        method = instance[ functionName ], 
+        method, 
         data = params['params'],
         interactuuid = params['interactuuid']
     ;
+
+    if ( !instance || !functionName ) {
+      return;
+    }
+
+    method = instance[ functionName ];
+
     callbackIntercept[functionName].apply( callbackIntercept, [
         instance,
         method,
