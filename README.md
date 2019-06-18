@@ -474,6 +474,36 @@ This method can be used to enable or disable the biometric.
 updateBiometricPreference( userId , enable ,workflow )
 ```
 
+### getUser
+Use it to get User Entity 
+
+```javascript
+/**
+   * Get user object for provided userId
+   * @param {String} userId - Ost User id
+   * @param {function} callback - Gets object if present else nil
+   * @callback params {Object}user
+   * @public
+   */
+    getUser( userId, 
+              (userEntity) => {})
+```
+
+### getToken
+Use it to get Token Entity
+
+```javascript
+/**
+    * Get token object for provided userId
+    * @param {String} userId - Ost User id
+    * @param {function} callback - Gets object if present else nil
+    * @callback params {Object}token
+    * @public
+    */
+     getToken( tokenId, 
+              (tokenEntity) => {})
+```
+
 # SDK WorkFlow Callbacks
 
 Implement the `OstWalletWorkFlowCallback` class before calling any of the above WorkFlows.
@@ -649,7 +679,6 @@ verifyData( ostWorkflowContext, ostContextEntity, ostVerifyData)
 | **OstWorkflowContext**	| Information about the current workflow during which this callback will be called	|
 | **OstContextEntity**	| Information about the entity |
 | **OstVerifyData**	| **ostVerifyData.dataVerified()** should be called if the data is verified successfully. <br>In case data is not verified the current workflow should be canceled by developer by calling **ostVerifyData.cancelFlow()** |
-
 
 
 ## OST JSON APIs
