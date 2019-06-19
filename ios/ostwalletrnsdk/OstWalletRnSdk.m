@@ -105,7 +105,7 @@ RCT_EXPORT_METHOD(executeTransaction: (NSString *) userId
                   tokenHolderAddresses: (NSString *) tokenHolderAddresses
                   amounts: (NSString *) amounts
                   ruleName: (NSString *) ruleName
-                  meta: (NSString *) meta
+                  meta: (NSDictionary *) meta
                   options: (NSDictionary *) options
                   uuid: (NSString *) uuid )
 {
@@ -121,7 +121,7 @@ RCT_EXPORT_METHOD(executeTransaction: (NSString *) userId
            tokenHolderAddresses: (NSString *) tokenHolderAddresses
                         amounts: (NSString *) amounts
                        ruleName: (NSString *) ruleName
-                           meta: (NSString *) meta
+                           meta: (NSDictionary *) meta
                         options: (NSDictionary *) options
                            uuid: (NSString *) uuid
 {
@@ -155,21 +155,11 @@ RCT_EXPORT_METHOD(executeTransaction: (NSString *) userId
         return;
     }
     
-    NSDictionary *metaObj  = nil;
-    if( nil != meta ){
-        data = [meta dataUsingEncoding:NSUTF8StringEncoding];
-        metaObj = [NSJSONSerialization
-                   JSONObjectWithData: data
-                   options: 0
-                   error: &error];
-        
-        if( nil != error ){
-            OstError *ostError = [OstRNErrorUtils invalidJsonStringError:@"rn_owrs_et_3"];
-            [workflowCallback flowInterruptedWithWorkflowContext: context error: ostError];
-            return;
-        }
+    NSDictionary *metaObj = meta;
+    if ( nil == metaObj ) {
+      metaObj = [[NSDictionary alloc]init];
     }
-    
+  
     
     //Convert rule name to know rule enum.
     OstExecuteTransactionType ruleType;
