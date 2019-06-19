@@ -17,8 +17,11 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
 import com.ost.walletsdk.OstSdk;
 import com.ost.walletsdk.ecKeyInteracts.UserPassphrase;
+import com.ost.walletsdk.models.entities.OstToken;
+import com.ost.walletsdk.models.entities.OstUser;
 import com.ost.walletsdk.utils.CommonUtils;
 import com.ost.walletsdk.workflows.OstExecuteTransaction;
 import com.ost.walletsdk.workflows.OstWorkflowContext;
@@ -26,10 +29,10 @@ import com.ost.walletsdk.workflows.errors.OstError;
 import com.ost.walletsdk.workflows.errors.OstErrors;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +62,42 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
       return;
     }
     callback.invoke();
+  }
+
+  @ReactMethod
+  public void getUser(
+          String userId,
+          Callback callback
+  ) {
+    try{
+      OstUser ostUser = OstSdk.getUser(userId);
+      if (null == ostUser) {
+        callback.invoke();
+      } else {
+        callback.invoke(Utils.convertJsonToMap(ostUser.getData()));
+      }
+    } catch(Throwable e){
+      callback.invoke( Utils.getError( e , "rn_ownsm_gu_1")  );
+      return;
+    }
+  }
+
+  @ReactMethod
+  public void getToken(
+          String tokenId,
+          Callback callback
+  ) {
+    try{
+      OstToken ostToken = OstSdk.getToken(tokenId);
+      if (null == ostToken) {
+        callback.invoke();
+      } else {
+        callback.invoke(Utils.convertJsonToMap(ostToken.getData()));
+      }
+    } catch(Throwable e){
+      callback.invoke( Utils.getError( e , "rn_ownsm_gt_1")  );
+      return;
+    }
   }
 
   @ReactMethod
@@ -111,6 +150,7 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
                                  String amounts,
                                  String ruleName,
                                  String meta,
+                                 ReadableMap options,
                                  String uuid ){
 
     List<String> listAddresses = null ;
@@ -142,8 +182,13 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
       return;
     }
 
-    OstSdk.executeTransaction(userId, listAddresses, listAmounts, ruleName, metaMap, workFlowCallback);
-
+    HashMap<String, Object> optionsMap = null;
+    if ( null != options) {
+      optionsMap = options.toHashMap();
+    } else {
+      optionsMap = new HashMap<>();
+    }
+    OstSdk.executeTransaction(userId, listAddresses, listAmounts, ruleName, metaMap, optionsMap ,workFlowCallback);
   }
 
   @ReactMethod

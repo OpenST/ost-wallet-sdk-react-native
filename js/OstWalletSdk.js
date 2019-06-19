@@ -71,9 +71,12 @@ class OstWalletRNSdk {
      * @param {String} ruleName - Rule name to be executed.
      * @param {object} meta - additional data.
      * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication 
+     * @param {object} [options={}] - Transaction workflow options.
+     * @param {boolean} [options.wait_for_finalization=true]
+     * @param {boolean} [options.currency_code=null]
      * @public
      */
-    executeTransaction(userId, tokenHolderAddresses, amounts, ruleName, meta, workflow) {
+    executeTransaction(userId, tokenHolderAddresses, amounts, ruleName, meta, workflow, options) {
         if( tokenHolderAddresses instanceof Array ){
           tokenHolderAddresses = JSON.stringify(tokenHolderAddresses);
         }
@@ -85,8 +88,16 @@ class OstWalletRNSdk {
         }catch (e){
           console.warn("Unexpected JSON Object meta in executeTransaction", meta );
         }
+
+        if ( !options ) {
+            options = {};
+        }
+
+        if ( typeof options.wait_for_finalization === 'undefined') {
+            options.wait_for_finalization = true;
+        }
        
-        OstWalletSdk.executeTransaction(userId, tokenHolderAddresses, amounts, ruleName, meta , workflow.uuid);
+        OstWalletSdk.executeTransaction(userId, tokenHolderAddresses, amounts, ruleName, meta , options, workflow.uuid);
     }
 
      /**
@@ -201,6 +212,32 @@ class OstWalletRNSdk {
      */
     logoutAllSessions(userId, workflow ) {
         OstWalletSdk.logoutAllSessions( userId ,  workflow.uuid  ); 
+    }
+
+  /**
+   * Get user object for provided userId
+   * @param {String} userId - Ost User id
+   * @param {function} callback - Gets object if present else nil
+   * @callback params {Object}user
+   * @public
+   */
+    getUser(userId, callback) {
+        OstWalletSdk.getUser(userId, (userEntity)=>{
+          callback( userEntity );
+        });
+    }
+
+    /**
+    * Get token object for provided userId
+    * @param {String} userId - Ost User id
+    * @param {function} callback - Gets object if present else nil
+    * @callback params {Object}token
+    * @public
+    */
+    getToken(tokenId, callback) {
+        OstWalletSdk.getToken(tokenId, (tokenEntity)=>{
+            callback( tokenEntity );
+        });
     }
 }
 
