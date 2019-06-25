@@ -83,11 +83,6 @@ class OstWalletRNSdk {
         if( amounts instanceof Array ){
           amounts = JSON.stringify(amounts);
         }
-        try {
-          meta = meta && JSON.stringify( meta );
-        }catch (e){
-          console.warn("Unexpected JSON Object meta in executeTransaction", meta );
-        }
 
         if ( !options ) {
             options = {};
