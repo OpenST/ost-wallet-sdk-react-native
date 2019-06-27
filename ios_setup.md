@@ -14,7 +14,7 @@ You can also choose [other methods](https://github.com/Carthage/Carthage/#instal
 Carthage looks at a file called `Cartfile` to determine which libraries to install. Create a file in the `./ios` directory of your react-native project called `Cartfile` and enter the following to tell Carthage which dependencies we want:
 
 Add following entry in your `Cartfile`
-`github "ostdotcom/ost-wallet-sdk-ios" == 2.2.0`
+`github "ostdotcom/ost-wallet-sdk-ios" == 2.2.1`
 
 Now to actually install everything run the following in your terminal:
 
