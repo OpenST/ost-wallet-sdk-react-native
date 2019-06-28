@@ -110,7 +110,7 @@ public class OstRNSdkJsonApiModule extends ReactContextBaseJavaModule {
         @Override
         public void onOstJsonApiSuccess(@Nullable JSONObject data) {
             try {
-                if (null == data) data = JSONObject();
+                if (null == data) data = new JSONObject();
 
                 successCallback.invoke(Utils.convertJsonToMap(data));
             } catch (JSONException e) {
@@ -121,7 +121,7 @@ public class OstRNSdkJsonApiModule extends ReactContextBaseJavaModule {
         @Override
         public void onOstJsonApiError(@NonNull OstError err, @Nullable JSONObject data) {
             try {
-                if (null == data) data = JSONObject();
+                if (null == data) data = new JSONObject();
 
                 errorCallback.invoke(Utils.convertJsonToMap(err.toJSONObject()), Utils.convertJsonToMap(data));
             } catch (JSONException e) {
