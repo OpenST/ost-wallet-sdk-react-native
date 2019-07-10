@@ -1,6 +1,10 @@
 # OST Wallet SDK Changelog
 
 
+## Version v2.2.2
+### Bug Fix:
+* iOS: Scanning unrecognized QR codes no longer causes the SDK to crash
+
 ## Version v2.2.1
 ### Bug Fix:
 * Fix `fetchDevice` cache issue for `initiateDeviceRecovery`
