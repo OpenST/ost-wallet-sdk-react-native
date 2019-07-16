@@ -30,7 +30,6 @@ import com.ostwalletrnsdk.sdkIntracts.OstDeviceRegisteredWrap;
 import com.ostwalletrnsdk.sdkIntracts.OstPinAcceptWrap;
 import com.ostwalletrnsdk.sdkIntracts.OstVerifyDataWrap;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;

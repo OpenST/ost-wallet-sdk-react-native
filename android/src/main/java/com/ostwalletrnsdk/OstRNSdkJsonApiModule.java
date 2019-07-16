@@ -10,9 +10,6 @@
 
 package com.ostwalletrnsdk;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -24,6 +21,9 @@ import com.ost.walletsdk.workflows.errors.OstError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class OstRNSdkJsonApiModule extends ReactContextBaseJavaModule {
 
@@ -119,7 +119,7 @@ public class OstRNSdkJsonApiModule extends ReactContextBaseJavaModule {
         }
 
         @Override
-        public void onOstJsonApiError(@NonNull OstError err, @Nullable JSONObject data) {
+        public void onOstJsonApiError(@Nonnull OstError err, @Nullable JSONObject data) {
             try {
                 if (null == data) data = new JSONObject();
 
