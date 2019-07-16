@@ -1,5 +1,7 @@
 # OST Wallet SDK Changelog
 
+## Version v2.2.3
+* Android: Added support for AndroidX
 
 ## Version v2.2.2
 ### Bug Fix:
