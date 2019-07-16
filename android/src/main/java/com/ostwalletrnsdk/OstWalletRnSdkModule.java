@@ -149,7 +149,7 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
                                  String tokenHolderAddresses,
                                  String amounts,
                                  String ruleName,
-                                 String meta,
+                                 ReadableMap meta,
                                  ReadableMap options,
                                  String uuid ){
 
@@ -174,12 +174,10 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
       return;
     }
 
-    try {
-      JSONObject metaObj = new JSONObject(meta);
-      metaMap = OstExecuteTransaction.convertMetaMap( metaObj );
-    } catch (Throwable e) {
-      workFlowCallback.flowInterrupt(context , new OstError( "rn_ownsm_et_3" , OstErrors.ErrorCode.INVALID_JSON_STRING));
-      return;
+    if ( null == meta ) {
+      metaMap = new HashMap<>();
+    } else {
+      metaMap = meta.toHashMap();
     }
 
     HashMap<String, Object> optionsMap = null;
