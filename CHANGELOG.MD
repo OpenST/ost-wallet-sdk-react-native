@@ -1,5 +1,9 @@
 # OST Wallet SDK Changelog
 
+## Version v2.2.4
+### Bug Fix:
+* iOS: Inconsistent signature generation fix.
+
 ## Version v2.2.3
 * Android: Added support for AndroidX
 
