@@ -10,7 +10,7 @@ class OstPassphrasePrefixAccept extends BaseUISdkInteract {
 
   setPassphrase(passphrasePrefixString, ostUserId, errorCallback) {
 
-    OstRNSdkUICallbackManager.setPassphrase(passphrasePrefixString, ostUserId, this.interactuuid, function( error ){
+    OstRNSdkUICallbackManager.setPassphrase(this.interactuuid, ostUserId, passphrasePrefixString, function( error ){
       BaseSdkInteract.errorCallbackInvoker( error , errorCallback );
     });
   }

@@ -28,9 +28,9 @@ RCT_EXPORT_METHOD(cancelFlow: (NSString *) uuid )
   [interact cancelFlow];
 }
 
-RCT_EXPORT_METHOD(setPassphrase: (NSString *) passphrasePrefix
+RCT_EXPORT_METHOD(setPassphrase: (NSString *) uuid
                   userId: (NSString *) userId
-                  uuid: (NSString *) uuid
+                  passphrasePrefix: (NSString *) passphrasePrefix
                   callback: (RCTResponseSenderBlock) callback )
 {
   BaseSdkInteract *interact = [BaseSdkInteract getFromMap: uuid];
