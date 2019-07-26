@@ -20,6 +20,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.bridge.JavaScriptModule;
 import com.ostwalletrnsdk.sdkIntracts.BaseSdkInteract;
+import com.ostwalletrnsdk.ui.OstWalletUiRnSdkModule;
 
 public class OstWalletRnSdkPackage implements ReactPackage {
 
@@ -29,7 +30,8 @@ public class OstWalletRnSdkPackage implements ReactPackage {
         return Arrays.<NativeModule>asList(
                 new OstWalletRnSdkModule(reactContext),
                 new OstRNSdkCallbackManager(reactContext),
-                new OstRNSdkJsonApiModule(reactContext)
+                new OstRNSdkJsonApiModule(reactContext),
+                new OstWalletUiRnSdkModule(reactContext)
         );
     }
 

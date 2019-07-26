@@ -91,4 +91,14 @@ public class OstRNSdkCallbackManager extends ReactContextBaseJavaModule {
             errorCallback.invoke( Utils.getError( e ,  "rn_si_ornscm_dv_1") );
         }
     }
+
+    @ReactMethod
+    public void setPassphrase( String uuid , String userPassphrase, Callback errorCallback ){
+        try {
+            OstVerifyDataWrap baseSdkInteract = (OstVerifyDataWrap) BaseSdkInteract.map.get(uuid);
+            baseSdkInteract.messageReceived("setPassphrase", userPassphrase );
+        }catch ( Throwable e){
+            errorCallback.invoke( Utils.getError( e ,  "rn_si_ornscm_sp_1") );
+        }
+    }
 }
