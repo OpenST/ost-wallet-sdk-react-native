@@ -30,8 +30,8 @@ RCT_EXPORT_METHOD(setContentConfig: (NSDictionary<NSString *, id> *)config) {
 #pragma mark - UIWorkflows
 
 RCT_EXPORT_METHOD(activateUser: (NSString * _Nonnull) userId
-                  spendingLimit: (NSString * _Nonnull) spendingLimit
                   expiresAfterInSecs: (NSString * _Nonnull) expiresAfterInSecs
+                  spendingLimit: (NSString * _Nonnull) spendingLimit
                   uuid:(NSString *)uuid) {
   
   OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];

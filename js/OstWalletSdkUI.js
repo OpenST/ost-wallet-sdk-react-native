@@ -15,13 +15,13 @@ class OstWalletRNSdkUI {
   /**
    * Active user
    * @param {String} userId - Ost User id
-   * @param {String} spendingLimit - spending limit once in a transaction of session
    * @param {String} expiresAfterInSecs - session key expiry time.
+   * @param {String} spendingLimit - spending limit once in a transaction of session
    * @param {OstWalletUIWorkFlowCallback} workflow - callback implementation instances for application communication
    * @public
    */
-  activateUser(userId, spendingLimit, expiresAfterInSecs, workflow) {
-    OstWalletSdkUI.activateUser(userId, spendingLimit, String(expiresAfterInSecs), workflow.uuid );
+  activateUser(userId, expiresAfterInSecs, spendingLimit, workflow) {
+    OstWalletSdkUI.activateUser(userId, String(expiresAfterInSecs), String(spendingLimit), workflow.uuid);
   }
 }
 

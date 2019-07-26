@@ -27,10 +27,19 @@ import('./OstWalletSdkCallbackManager').then((imports) => {
 
 class OstWalletUIWorkFlowCallbackIntercepts {
 
+
+  registerDevice( instance, method, data, interactuuid ) {
+    let interactInstance = new OstPassphrasePrefixAccept(instance.uuid, interactuuid),
+      apiParams = data['apiParams'],
+      args = [apiParams, interactInstance];
+    instance && method.apply(instance, args);
+  }
+
   getPassphrase(instance, method, data, interactuuid) {
-    let ostWorkflowContext = data[ostWorkflowContextKey],
-      workflowId = data[workflowIdKey]
-    args = [workflowId, ostWorkflowContext];
+    let interactInstance = new OstPassphrasePrefixAccept(instance.uuid, interactuuid)
+      , ostWorkflowContext = data[ostWorkflowContextKey]
+      , workflowId = data[workflowIdKey]
+    args = [workflowId, ostWorkflowContext, interactInstance];
     instance && method.apply(instance, args);
   }
 
