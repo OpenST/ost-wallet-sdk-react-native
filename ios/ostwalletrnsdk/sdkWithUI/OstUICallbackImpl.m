@@ -41,6 +41,7 @@ static NSMutableDictionary *uiCallbackImplMap = nil;
 -(void)getPassphraseWithOstUserId:(NSString *)ostUserId workflowContext:(OstWorkflowContext *)workflowContext delegate:(id<OstPassphrasePrefixAcceptDelegate>)delegate {
 
   NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+  params[@"ostWorkflowId"] = self.uuid;
   params[@"userId"] = ostUserId;
   params[@"ostWorkflowContext"] = workflowContext;
 
@@ -55,7 +56,7 @@ static NSMutableDictionary *uiCallbackImplMap = nil;
 - (void)flowCompleteWithWorkflowId:(NSString * _Nonnull)workflowId workflowContext:(OstWorkflowContext * _Nonnull)workflowContext contextEntity:(OstContextEntity * _Nonnull)contextEntity {
   
   NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-  params[@"workflowId"] = workflowId;
+  params[@"ostWorkflowId"] = self.uuid;
   params[@"ostWorkflowContext"] = [self convertWorkflowContext: workflowContext];
   params[@"ostContextEntity"] = [self convertContextEntity: contextEntity
                                               workflowType: workflowContext.workflowType];
@@ -69,7 +70,7 @@ static NSMutableDictionary *uiCallbackImplMap = nil;
 - (void)flowInterruptedWithWorkflowId:(NSString * _Nonnull)workflowId workflowContext:(OstWorkflowContext * _Nonnull)workflowContext error:(OstError * _Nonnull)error {
   
   NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-  params[@"workflowId"] = workflowId;
+  params[@"ostWorkflowId"] = self.uuid;
   params[@"ostWorkflowContext"] = [self convertWorkflowContext: workflowContext];
   params[@"ostError"] = [error userInfo];
   
@@ -82,7 +83,7 @@ static NSMutableDictionary *uiCallbackImplMap = nil;
 - (void)requestAcknowledgedWithWorkflowId:(NSString * _Nonnull)workflowId workflowContext:(OstWorkflowContext * _Nonnull)workflowContext contextEntity:(OstContextEntity * _Nonnull)contextEntity {
   
   NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-  params[@"workflowId"] = workflowId;
+  params[@"ostWorkflowId"] = self.uuid;
   params[@"ostWorkflowContext"] = [self convertWorkflowContext: workflowContext];
   params[@"ostContextEntity"] = [self convertContextEntity: contextEntity
                                               workflowType: workflowContext.workflowType];

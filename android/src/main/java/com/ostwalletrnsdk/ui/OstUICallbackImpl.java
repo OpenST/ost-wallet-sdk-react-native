@@ -7,9 +7,12 @@ import android.util.Log;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.ost.walletsdk.OstSdk;
+import com.ost.walletsdk.models.entities.OstBaseEntity;
 import com.ost.walletsdk.workflows.OstContextEntity;
 import com.ost.walletsdk.workflows.OstWorkflowContext;
 import com.ost.walletsdk.workflows.errors.OstError;
+import com.ost.walletsdk.workflows.errors.OstErrors;
 import com.ostwalletrnsdk.sdkIntracts.OstPassphraseAcceptWrap;
 
 import org.json.JSONObject;
@@ -37,10 +40,12 @@ public class OstUICallbackImpl implements OstUserPassphraseCallback,
     String uuid;
 
     ReactApplicationContext reactContext;
+    OstWorkflowContext pseudoContext;
 
-    OstUICallbackImpl(String uuid, ReactApplicationContext reactContext) {
+    OstUICallbackImpl(String uuid, ReactApplicationContext reactContext, OstWorkflowContext ostWorkflowContext) {
         this.uuid = uuid;
         this.reactContext = reactContext;
+        this.pseudoContext = ostWorkflowContext;
         map.put(this.uuid, this);
     }
 
@@ -51,11 +56,55 @@ public class OstUICallbackImpl implements OstUserPassphraseCallback,
         try {
             params.put("ostWorkflowContext", convert(ostWorkflowContext));
             params.put("userId", userId);
+            params.put("ostWorkflowId", this.uuid);
         } catch (Throwable e) {
+            errorEncountered("rn_owfcb_pv_1", null, OstErrors.ErrorCode.INVALID_JSON_STRING);
             ostPinAcceptWrap.cancelFlow();
             return;
         }
         invokeCallback("getPassphrase", params, "OstPassphraseAcceptor", ostPinAcceptWrap.getUUID());
+    }
+
+
+    @Override
+    public void flowComplete(String workflowId, OstWorkflowContext ostWorkflowContext, OstContextEntity ostContextEntity) {
+        JSONObject params = new JSONObject();
+        try {
+            params.put("ostWorkflowContext", convert(ostWorkflowContext));
+            params.put("ostContextEntity", convert(ostContextEntity));
+            params.put("ostWorkflowId", this.uuid);
+        } catch (Throwable e) {
+            Log.e(LOG_TAG, "Unexpected error in flowComplete");
+        }
+        invokeCallback("flowComplete", params, null, null);
+        cleanUp();
+    }
+
+    @Override
+    public void flowInterrupt(String workflowId, OstWorkflowContext ostWorkflowContext, OstError ostError) {
+        JSONObject params = new JSONObject();
+        try {
+            params.put("ostWorkflowContext", convert(ostWorkflowContext));
+            params.put("ostError", ostError.toJSONObject() );
+            params.put("ostWorkflowId", this.uuid);
+        } catch (Throwable e) {
+            Log.w(LOG_TAG, "Unexpected error in flowInterrupt");
+        }
+        invokeCallback("flowInterrupt", params, null, null);
+        cleanUp();
+    }
+
+    @Override
+    public void requestAcknowledged(String workflowId, OstWorkflowContext ostWorkflowContext, OstContextEntity ostContextEntity) {
+        JSONObject params = new JSONObject();
+        try {
+            params.put("ostWorkflowContext", convert(ostWorkflowContext));
+            params.put("ostContextEntity", convert(ostContextEntity));
+            params.put("ostWorkflowId", this.uuid);
+        } catch (Throwable e) {
+            errorEncountered("rn_ouici_ra_1", workflowId ,OstErrors.ErrorCode.INVALID_JSON_STRING);
+        }
+        invokeCallback("requestAcknowledged", params, null, null);
     }
 
     private JSONObject convert(OstWorkflowContext context) {
@@ -69,6 +118,12 @@ public class OstUICallbackImpl implements OstUserPassphraseCallback,
             Log.w(LOG_TAG, "Unexpected OstWorkflowContext");
         }
         return obj;
+    }
+
+    public void errorEncountered(String internalErrorCode, String workflowId ,OstErrors.ErrorCode errorCode) {
+        OstError error = new OstError( internalErrorCode , errorCode );
+        Log.e(LOG_TAG, String.format("Internal error code: %s Error code: %s", error.getInternalErrorCode(), errorCode.toString()));
+        this.flowInterrupt(workflowId, pseudoContext, error);
     }
 
     private void sendEvent(ReactContext reactContext,
@@ -105,18 +160,38 @@ public class OstUICallbackImpl implements OstUserPassphraseCallback,
         sendEvent(this.reactContext, "onOstWalletSdkUIEvents", obj);
     }
 
-    @Override
-    public void flowComplete(String workflowId, OstWorkflowContext ostWorkflowContext, OstContextEntity ostContextEntity) {
+    private JSONObject convert(OstContextEntity contextEntity) {
+        JSONObject obj = new JSONObject();
 
+        if (null == contextEntity) {
+            Log.e(LOG_TAG, "Unexpected OstContextEntity null");
+            return obj;
+        }
+
+        Object objEntity = contextEntity.getEntity();
+        String entityType = contextEntity.getEntityType();
+        String message = contextEntity.getMessage();
+
+        Object entity = objEntity;
+        if (OstSdk.MNEMONICS.equalsIgnoreCase(entityType)){
+            entity = new String((byte[])objEntity);
+        } else if (objEntity instanceof OstBaseEntity) {
+            entity = ((OstBaseEntity) objEntity).getData();
+        }
+
+        try {
+            obj.put("entityType", entityType);
+            obj.put("message", message);
+            obj.put("entity", entity);
+        } catch (Throwable e) {
+            Log.e(LOG_TAG, "Unexpected OstContextEntity");
+        }
+
+
+        return obj;
     }
 
-    @Override
-    public void flowInterrupt(String workflowId, OstWorkflowContext ostWorkflowContext, OstError ostError) {
-
-    }
-
-    @Override
-    public void requestAcknowledged(String workflowId, OstWorkflowContext ostWorkflowContext, OstContextEntity ostContextEntity) {
-
+    private void cleanUp() {
+        map.remove(this.uuid);
     }
 }

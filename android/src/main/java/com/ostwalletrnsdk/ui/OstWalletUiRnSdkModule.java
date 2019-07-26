@@ -16,6 +16,7 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.ost.walletsdk.workflows.OstWorkflowContext;
 import com.ostwalletrnsdk.Utils;
 
 import org.json.JSONObject;
@@ -54,9 +55,10 @@ public class OstWalletUiRnSdkModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void activateUser(String userId, String expiresAfterInSecs, String spendingLimit, String uuid ){
-
         Activity currentActivity = getCurrentActivity();
-        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext);
+        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
+                new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.ACTIVATE_USER));
+
         String workflowId = OstWalletUI.activateUser(currentActivity,
                 userId,
                 Long.parseLong(expiresAfterInSecs),
@@ -69,7 +71,8 @@ public class OstWalletUiRnSdkModule extends ReactContextBaseJavaModule {
     public void initiateDeviceRecovery(String userId, String deviceAddress, String uuid ){
 
         Activity currentActivity = getCurrentActivity();
-        OstUICallbackImpl userPassphraseCallback = new OstUICallbackImpl( uuid, this.reactContext);
+        OstUICallbackImpl userPassphraseCallback = new OstUICallbackImpl( uuid, this.reactContext,
+                new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.INITIATE_DEVICE_RECOVERY));
         String workflowId = OstWalletUI.initiateDeviceRecovery(currentActivity,
                 userId,
                 deviceAddress,
@@ -80,7 +83,8 @@ public class OstWalletUiRnSdkModule extends ReactContextBaseJavaModule {
     public void abortDeviceRecovery(String userId, String uuid ){
 
         Activity currentActivity = getCurrentActivity();
-        OstUICallbackImpl userPassphraseCallback = new OstUICallbackImpl( uuid, this.reactContext);
+        OstUICallbackImpl userPassphraseCallback = new OstUICallbackImpl( uuid, this.reactContext,
+                new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.ABORT_DEVICE_RECOVERY));
         String workflowId = OstWalletUI.abortDeviceRecovery(currentActivity,
                 userId,
                 userPassphraseCallback);

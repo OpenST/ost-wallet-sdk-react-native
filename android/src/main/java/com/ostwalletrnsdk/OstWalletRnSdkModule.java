@@ -36,6 +36,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ost.com.ostsdkui.OstWalletUI;
+
 public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
 
   private final ReactApplicationContext reactContext;
@@ -56,7 +58,7 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
     Callback callback
   ) {
     try{
-      OstSdk.initialize(getReactApplicationContext(), BASE_URL);
+      OstWalletUI.initialize(getReactApplicationContext(), BASE_URL);
     } catch(Throwable e){
       callback.invoke( Utils.getError( e , "rn_ownsm_i_1")  );
       return;
