@@ -9,7 +9,7 @@
  */
 
 import uuidv4 from 'uuid/v4';
-import { setInstance } from './callbackHandlers/OstWalletSdkCallbackManager';
+import { setInstance } from './callbackHandlers/OstWalletSdkUICallbackManager';
 
 /**
  * OstWalletUIWorkFlowCallback
@@ -32,7 +32,6 @@ class OstWalletUIWorkFlowCallback {
    * @param {String} userId - Id of user whose passphrase is required.
    * @param {Object} ostWorkflowContext - info about workflow type
    * @param {OstPassphrasePrefixAccept} setPassphrase - Set passhrase which received from server
-   * @param {OstPassphrasePrefixAccept} cancel - Cancel workflow
    */
   getPassphrase(userId, ostWorkflowContext, OstPassphrasePrefixAccept) { }
   /**

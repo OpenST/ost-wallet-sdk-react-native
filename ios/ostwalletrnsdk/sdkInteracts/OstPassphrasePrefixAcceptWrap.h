@@ -15,7 +15,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OstPassphrasePrefixAcceptWrap : BaseSdkInteract
-- (void) setPassphrasePrefix: (NSString *)passphrasePrefix forUserId: (NSString *)userId;
+- (void) setPassphrase: (NSString *)passphrasePrefix forUserId: (NSString *)userId;
 @end
 
 NS_ASSUME_NONNULL_END

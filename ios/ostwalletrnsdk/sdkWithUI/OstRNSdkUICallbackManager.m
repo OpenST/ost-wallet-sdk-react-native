@@ -28,10 +28,9 @@ RCT_EXPORT_METHOD(cancelFlow: (NSString *) uuid )
   [interact cancelFlow];
 }
 
-RCT_EXPORT_METHOD(setPassphrasePrefix: (NSString *) passphrasePrefix
+RCT_EXPORT_METHOD(setPassphrase: (NSString *) passphrasePrefix
                   userId: (NSString *) userId
                   uuid: (NSString *) uuid
-                  jsonString: (NSString *) jsonString
                   callback: (RCTResponseSenderBlock) callback )
 {
   BaseSdkInteract *interact = [BaseSdkInteract getFromMap: uuid];
@@ -44,7 +43,7 @@ RCT_EXPORT_METHOD(setPassphrasePrefix: (NSString *) passphrasePrefix
   
   NSError *err;
   OstPassphrasePrefixAcceptWrap * subInteract = (OstPassphrasePrefixAcceptWrap *) interact;
-  [subInteract setPassphrasePrefix:passphrasePrefix forUserId:userId];
+  [subInteract setPassphrase:passphrasePrefix forUserId:userId];
   if ( nil != err ) {
     NSDictionary *error = [OstRNErrorUtils errorToJson: err internalCode: @"rn_sdjcbm_drjscb_1"];
     callback( @[error] );

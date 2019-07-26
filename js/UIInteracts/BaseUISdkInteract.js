@@ -43,4 +43,4 @@ class BaseUISdkInteract {
   }
 }
 
-export default BaseSdkInteract;
+export default BaseUISdkInteract;

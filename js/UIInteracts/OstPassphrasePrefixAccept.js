@@ -1,24 +1,19 @@
 import { NativeModules } from 'react-native';
 const { OstRNSdkUICallbackManager } = NativeModules;
 
-import BaseUISdkInteract from '../interacts/BaseSdkInteract';
+import BaseUISdkInteract from './BaseUISdkInteract';
 
 class OstPassphrasePrefixAccept extends BaseUISdkInteract {
   constructor(workflowuuid, interactuuid) {
     super(workflowuuid, interactuuid);
   }
 
-  setPassphrasePrefix(passphrasePrefixString, ostUserId, errorCallback) {
-    try {
-      apiResponse = apiResponse && JSON.stringify(apiResponse) ;
-    }catch (e){
-      console.warn("Unexpected JSON Object apiResponse in deviceRegistered", apiResponse );
-    }
+  setPassphrase(passphrasePrefixString, ostUserId, errorCallback) {
 
-    OstRNSdkUICallbackManager.setPassphrasePrefix(passphrasePrefixString, ostUserId, this.interactuuid, function( error ){
+    OstRNSdkUICallbackManager.setPassphrase(passphrasePrefixString, ostUserId, this.interactuuid, function( error ){
       BaseSdkInteract.errorCallbackInvoker( error , errorCallback );
     });
   }
 }
 
-export default OstDeviceRegistered;
+export default OstPassphrasePrefixAccept;

@@ -169,7 +169,7 @@ static NSMutableDictionary *workFlowCallbackImplMap =nil;
   }
   
   OstMessageBus *bus = [OstMessageBus getInstance];
-  [bus sendEventWithData: obj];
+  [bus sendEventWithData: obj forEvent: [bus getEventNameForType:@"sdk"]];
   bus = nil;
   
 }

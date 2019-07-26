@@ -41,7 +41,7 @@ RCT_EXPORT_METHOD(activateUser: (NSString * _Nonnull) userId
                                                expireAfterInSec:[expiresAfterInSecs doubleValue]
                                        passphrasePrefixDelegate:uiCallbackImpl];
   
-  [OstWalletSdkUI subscribeWithWorkflowId:worklfowId listner:uiCallbackImpl];
+  [OstWalletSdkUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
 }
 
 

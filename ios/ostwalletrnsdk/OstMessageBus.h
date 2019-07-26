@@ -27,8 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OstMessageBus : RCTEventEmitter <RCTBridgeModule>
 + (OstMessageBus *) getInstance;
-- (void) sendEventWithData: (NSMutableDictionary *) data;
+- (void) sendEventWithData: (NSMutableDictionary *) data forEvent: (NSString *)eventName;
 + (BOOL) requiresMainQueueSetup;
+- (NSString *)getEventNameForType: (NSString *)type;
 @end
 
 NS_ASSUME_NONNULL_END

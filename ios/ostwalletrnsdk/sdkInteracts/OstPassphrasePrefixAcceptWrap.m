@@ -14,7 +14,7 @@
 
 @implementation OstPassphrasePrefixAcceptWrap
 
-- (void) setPassphrasePrefix: (NSString *)passphrasePrefix forUserId: (NSString *)userId {
+- (void) setPassphrase: (NSString *)passphrasePrefix forUserId: (NSString *)userId {
   id <OstPassphrasePrefixAcceptDelegate> delegate = (id <OstPassphrasePrefixAcceptDelegate>) self.delegate;
   
   [delegate setPassphraseWithOstUserId:userId passphrase:passphrasePrefix];

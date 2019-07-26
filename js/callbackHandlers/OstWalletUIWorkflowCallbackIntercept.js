@@ -9,7 +9,7 @@
  */
 
 // import { clearInstance , instantiateOstError } from './OstWalletSdkCallbackManager';
-import OstPassphrasePrefixAccept from '../UIinteracts/OstPassphrasePrefixAccept';
+import OstPassphrasePrefixAccept from '../UIInteracts/OstPassphrasePrefixAccept';
 
 const ostWorkflowContextKey = "ostWorkflowContext",
   ostContextEntityKey   = "ostContextEntity",
@@ -26,13 +26,6 @@ import('./OstWalletSdkCallbackManager').then((imports) => {
 
 
 class OstWalletUIWorkFlowCallbackIntercepts {
-
-  registerDevice( instance, method, data, interactuuid ) {
-    let interactInstance = new OstDeviceRegistered(instance.uuid, interactuuid),
-      apiParams = data['apiParams'],
-      args = [apiParams, interactInstance];
-    instance && method.apply(instance, args);
-  }
 
   getPassphrase(instance, method, data, interactuuid) {
     let ostWorkflowContext = data[ostWorkflowContextKey],

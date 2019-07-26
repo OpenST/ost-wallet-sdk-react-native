@@ -44,11 +44,11 @@ static NSMutableDictionary *uiCallbackImplMap = nil;
   params[@"ostUserId"] = ostUserId;
   params[@"ostWorkflowContext"] = workflowContext;
 
-  OstPassphrasePrefixAcceptWrap *interact = [[OstPassphrasePrefixAcceptWrap alloc] initWithCallback: delegate workflowCallbackId: self.uuid];
+  __unused OstPassphrasePrefixAcceptWrap *interact = [[OstPassphrasePrefixAcceptWrap alloc] initWithCallback: delegate workflowCallbackId: self.uuid];
 
   [self invokeCallback: @"getPassphrase"
                 params: params
-          interactName: nil
+          interactName: @"OstPassphrasePrefixAcceptWrap"
             interactId: interact.uuid];
 }
 
@@ -113,7 +113,7 @@ static NSMutableDictionary *uiCallbackImplMap = nil;
   }
   
   OstMessageBus *bus = [OstMessageBus getInstance];
-  [bus sendEventWithData: obj];
+  [bus sendEventWithData: obj forEvent: [bus getEventNameForType:@"sdkui"]];
   bus = nil;
   
 }

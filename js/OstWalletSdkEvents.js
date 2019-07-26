@@ -9,9 +9,11 @@
  */
  
 import { callbackInvoker } from './callbackHandlers/OstWalletSdkCallbackManager';
+import { uiCallbackInvoker } from "./callbackHandlers/OstWalletSdkUICallbackManager"
 import OstUnifiedEmiter from './OstUnifiedEmiter';
 
 let eventSubscription = null;
+let eventUISubscription = null;
 let isEventSubscribed = false;
 
 const ostWalletSdkEvents = {
@@ -29,8 +31,13 @@ const ostWalletSdkEvents = {
         eventSubscription = OstUnifiedEmiter.addListener('onOstWalletSdkEvents', function(e) {
             callbackInvoker(e);
         });
+        eventUISubscription = OstUnifiedEmiter.addListener('onOstWalletSdkUIEvents', function(e) {
+          uiCallbackInvoker(e);
+        });
         isEventSubscribed = true;
     },
+
+
 
      /**
       * Unsubscribe event
@@ -38,6 +45,7 @@ const ostWalletSdkEvents = {
       */
     unsubscribeEvent() {
       eventSubscription && eventSubscription.remove();
+      eventUISubscription && eventUISubscription.remove();
       isEventSubscribed = false;
     }
 
