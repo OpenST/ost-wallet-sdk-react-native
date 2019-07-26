@@ -37,8 +37,8 @@ RCT_EXPORT_METHOD(activateUser: (NSString * _Nonnull) userId
   OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
   
   NSString *worklfowId = [OstWalletSdkUI activateUserWithUserId:userId
-                                                  spendingLimit:spendingLimit
                                                expireAfterInSec:[expiresAfterInSecs doubleValue]
+                                                  spendingLimit:spendingLimit
                                        passphrasePrefixDelegate:uiCallbackImpl];
   
   [OstWalletSdkUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];

@@ -19,7 +19,7 @@ const ostWorkflowContextKey = "ostWorkflowContext",
 ;
 
 let clearInstance, instantiateOstError;
-import('./OstWalletSdkCallbackManager').then((imports) => {
+import('./OstWalletSdkUICallbackManager').then((imports) => {
   clearInstance = imports.clearInstance;
   instantiateOstError = imports.instantiateOstError;
 });
@@ -38,7 +38,7 @@ class OstWalletUIWorkFlowCallbackIntercepts {
   getPassphrase(instance, method, data, interactuuid) {
     let interactInstance = new OstPassphrasePrefixAccept(instance.uuid, interactuuid)
       , ostWorkflowContext = data[ostWorkflowContextKey]
-      , workflowId = data[workflowIdKey]
+      , workflowId = data[userIdKey]
     args = [workflowId, ostWorkflowContext, interactInstance];
     instance && method.apply(instance, args);
   }

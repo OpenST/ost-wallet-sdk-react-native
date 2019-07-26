@@ -41,7 +41,7 @@ static NSMutableDictionary *uiCallbackImplMap = nil;
 -(void)getPassphraseWithOstUserId:(NSString *)ostUserId workflowContext:(OstWorkflowContext *)workflowContext delegate:(id<OstPassphrasePrefixAcceptDelegate>)delegate {
 
   NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-  params[@"ostUserId"] = ostUserId;
+  params[@"userId"] = ostUserId;
   params[@"ostWorkflowContext"] = workflowContext;
 
   __unused OstPassphrasePrefixAcceptWrap *interact = [[OstPassphrasePrefixAcceptWrap alloc] initWithCallback: delegate workflowCallbackId: self.uuid];
@@ -71,9 +71,9 @@ static NSMutableDictionary *uiCallbackImplMap = nil;
   NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
   params[@"workflowId"] = workflowId;
   params[@"ostWorkflowContext"] = [self convertWorkflowContext: workflowContext];
-  params[@"ostError"] = error;
+  params[@"ostError"] = [error userInfo];
   
-  [self invokeCallback: @"flowComplete"
+  [self invokeCallback: @"flowInterrupt"
                 params: params
           interactName: nil
             interactId: nil];
