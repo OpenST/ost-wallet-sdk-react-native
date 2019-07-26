@@ -10,9 +10,9 @@
 */
   
 
-#import "OstSetPassphrasePrefixAcceptWrap.h"
+#import "OstPassphrasePrefixAcceptWrap.h"
 
-@implementation OstSetPassphrasePrefixAcceptWrap
+@implementation OstPassphrasePrefixAcceptWrap
 
 - (void) setPassphrasePrefix: (NSString *)passphrasePrefix forUserId: (NSString *)userId {
   id <OstPassphrasePrefixAcceptDelegate> delegate = (id <OstPassphrasePrefixAcceptDelegate>) self.delegate;

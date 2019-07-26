@@ -13,7 +13,7 @@
 #import "OstUICallbackImpl.h"
 #import <OstWalletSdk/OstWalletSdk-Swift.h>
 #import "OstMessageBus.h"
-#import "OstSetPassphrasePrefixAcceptWrap.h"
+#import "OstPassphrasePrefixAcceptWrap.h"
 
 static NSMutableDictionary *uiCallbackImplMap = nil;
 
@@ -44,7 +44,7 @@ static NSMutableDictionary *uiCallbackImplMap = nil;
   params[@"ostUserId"] = ostUserId;
   params[@"ostWorkflowContext"] = workflowContext;
 
-  OstSetPassphrasePrefixAcceptWrap *interact = [[OstSetPassphrasePrefixAcceptWrap alloc] initWithCallback: delegate workflowCallbackId: self.uuid];
+  OstPassphrasePrefixAcceptWrap *interact = [[OstPassphrasePrefixAcceptWrap alloc] initWithCallback: delegate workflowCallbackId: self.uuid];
 
   [self invokeCallback: @"getPassphrase"
                 params: params

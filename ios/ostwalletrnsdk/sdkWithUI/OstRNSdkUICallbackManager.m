@@ -12,7 +12,7 @@
 
 #import "OstRNSdkUICallbackManager.h"
 #import "BaseSdkInteract.h"
-#import "OstSetPassphrasePrefixAcceptWrap.h"
+#import "OstPassphrasePrefixAcceptWrap.h"
 #import "OstRNErrorUtils.h"
 
 @implementation OstRNSdkUICallbackManager
@@ -36,14 +36,14 @@ RCT_EXPORT_METHOD(setPassphrasePrefix: (NSString *) passphrasePrefix
 {
   BaseSdkInteract *interact = [BaseSdkInteract getFromMap: uuid];
   
-  if ( nil == interact || ![interact isKindOfClass: [OstSetPassphrasePrefixAcceptWrap class] ]) {
+  if ( nil == interact || ![interact isKindOfClass: [OstPassphrasePrefixAcceptWrap class] ]) {
     OstError *ostError = [OstRNErrorUtils invalidWorkflowError:@"rn_sdjcbm_drjscb_1"];
     callback( @[ [ostError userInfo] ] );
     return;
   }
   
   NSError *err;
-  OstSetPassphrasePrefixAcceptWrap * subInteract = (OstSetPassphrasePrefixAcceptWrap *) interact;
+  OstPassphrasePrefixAcceptWrap * subInteract = (OstPassphrasePrefixAcceptWrap *) interact;
   [subInteract setPassphrasePrefix:passphrasePrefix forUserId:userId];
   if ( nil != err ) {
     NSDictionary *error = [OstRNErrorUtils errorToJson: err internalCode: @"rn_sdjcbm_drjscb_1"];
