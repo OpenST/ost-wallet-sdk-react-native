@@ -78,8 +78,8 @@ RCT_EXPORT_METHOD(activateUser: (NSString *) userId
                   spendingLimit: (NSString *) spendingLimit
                   uuid: (NSString *) uuid){
   
-   OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypeActivateUser];
-    OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
+  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypeActivateUser];
+  OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
   
   [OstWalletSdk activateUserWithUserId:userId
                                userPin:pin

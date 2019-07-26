@@ -14,12 +14,15 @@ import OstWalletWorkFlowCallback from './OstWalletWorkFlowCallback';
 import OstWalletApiError from './OstRNError/OstRNApiError';
 import OstWalletError from './OstRNError/OstRNError';
 import OstJsonApi from './OstJsonApi';
-
+import OstWalletUIWorkflowCallback from './OstWalletUIWorkflowCallback';
+import OstWalletSdkUI from './OstWalletSdkUI';
 export {
     OstWalletSdk,
     OstWalletSdkEvents,
     OstWalletWorkFlowCallback,
     OstWalletApiError,
     OstWalletError,
-    OstJsonApi
+    OstJsonApi,
+    OstWalletSdkUI,
+    OstWalletUIWorkflowCallback,
 }

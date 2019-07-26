@@ -14,8 +14,7 @@
 #import "OstPinAcceptWrap.h"
 #import "OstVerifyDataWrap.h"
 
-
-static NSMutableDictionary *map = nil;
+static NSMutableDictionary *workFlowCallbackImplMap =nil;
 
 @interface OstWorkFlowCallbackImpl()
 @end
@@ -24,18 +23,18 @@ static NSMutableDictionary *map = nil;
 
 + (OstWorkFlowCallbackImpl *) getInstance:(NSString *) uuid
 {
-  return map[uuid];
+  return workFlowCallbackImplMap[uuid];
 }
 
 - (instancetype) initWithId:(NSString * _Nonnull) uuId workflowContext: ( OstWorkflowContext *) workflowContext
 {
   self = [super init];
   if (self) {
-    if ( map == nil) {
-      map = [[NSMutableDictionary alloc] init];
+    if ( workFlowCallbackImplMap == nil) {
+      workFlowCallbackImplMap = [[NSMutableDictionary alloc] init];
     }
     
-    map[uuId] = self;
+    workFlowCallbackImplMap[uuId] = self;
     self.uuid = uuId;
     self.pseudoContext = workflowContext;
   }
