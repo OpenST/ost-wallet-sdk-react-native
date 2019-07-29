@@ -27,14 +27,6 @@ import('./OstWalletSdkUICallbackManager').then((imports) => {
 
 class OstWalletUIWorkFlowCallbackIntercepts {
 
-
-  registerDevice( instance, method, data, interactuuid ) {
-    let interactInstance = new OstPassphrasePrefixAccept(instance.uuid, interactuuid),
-      apiParams = data['apiParams'],
-      args = [apiParams, interactInstance];
-    instance && method.apply(instance, args);
-  }
-
   getPassphrase(instance, method, data, interactuuid) {
     let interactInstance = new OstPassphrasePrefixAccept(instance.uuid, interactuuid)
       , ostWorkflowContext = data[ostWorkflowContextKey]
@@ -43,7 +35,7 @@ class OstWalletUIWorkFlowCallbackIntercepts {
     instance && method.apply(instance, args);
   }
 
-  requestAcknowledged( instance, method, data , interactuuid ) {
+  requestAcknowledged( instance, method, data , interactuuid ) {    
     let ostWorkflowContext = data[ostWorkflowContextKey],
       ostContextEntity = data[ostContextEntityKey],
       workflowId = data[workflowIdKey]
@@ -60,7 +52,7 @@ class OstWalletUIWorkFlowCallbackIntercepts {
     instance && method.apply(instance, args);
   }
 
-  flowInterrupt( instance, method, data , interactuuid ) {
+  flowInterrupt(instance, method, data , interactuuid ) {
     let ostWorkflowContext = data[ostWorkflowContextKey],
       ostError = instantiateOstError ( data[ostErrorKey] ) ,
       workflowId = data[workflowIdKey],

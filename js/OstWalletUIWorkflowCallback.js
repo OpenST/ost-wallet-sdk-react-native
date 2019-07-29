@@ -6,10 +6,7 @@
  You may obtain a copy of the License at
 
  http://www.apache.org/licenses/LICENSE-2.0
- */
-
-import uuidv4 from 'uuid/v4';
-import { setInstance } from './callbackHandlers/OstWalletSdkUICallbackManager';
+*/
 
 /**
  * OstWalletUIWorkFlowCallback
@@ -23,8 +20,6 @@ class OstWalletUIWorkFlowCallback {
    * super();
    */
   constructor() {
-    this.uuid = uuidv4();
-    setInstance(this);
   }
 
   /** Get server defined passphrase from user.
@@ -41,7 +36,7 @@ class OstWalletUIWorkFlowCallback {
    * @param ostContextEntity - info about entity
    * @override
    */
-  requestAcknowledged(workflowId, ostWorkflowContext , ostContextEntity ) {  }
+  requestAcknowledged(workflowId, ostWorkflowContext , ostContextEntity ) {}
 
   /**
    * Flow complete
