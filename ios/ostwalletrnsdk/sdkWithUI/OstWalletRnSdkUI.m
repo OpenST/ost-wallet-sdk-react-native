@@ -44,5 +44,27 @@ RCT_EXPORT_METHOD(activateUser: (NSString * _Nonnull) userId
   [OstWalletSdkUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
 }
 
+RCT_EXPORT_METHOD(initiateDeviceRecovery: (NSString * _Nonnull) userId
+                  recoverDeviceAddress: (NSString * _Nullable) deviceAddress
+                  uuid:(NSString *)uuid) {
+  
+  OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
+  
+  NSString *worklfowId = [OstWalletSdkUI initaiteDeviceRecoveryWithUserId:userId
+                                                     recoverDeviceAddress:deviceAddress
+                                                 passphrasePrefixDelegate:uiCallbackImpl];
+  
+  [OstWalletSdkUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
+}
 
+RCT_EXPORT_METHOD(abortDeviceRecovery: (NSString * _Nonnull) userId
+                  uuid:(NSString *)uuid) {
+  
+  OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
+  
+  NSString *worklfowId = [OstWalletSdkUI abortDeviceRecoveryWithUserId:userId
+                                              passphrasePrefixDelegate:uiCallbackImpl];
+  
+  [OstWalletSdkUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
+}
 @end
