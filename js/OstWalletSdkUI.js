@@ -38,7 +38,7 @@ class OstWalletRNSdkUI {
    */
   initiateDeviceRecovery(userId, deviceAddressToRecover, uiCallback ) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    OstWalletSdk.initiateDeviceRecovery( userId, deviceAddressToRecover, coreUiCallback.uuid ); 
+    OstWalletSdkUI.initiateDeviceRecovery( userId, deviceAddressToRecover, coreUiCallback.uuid ); 
     return coreUiCallback.uuid;
   }
 
@@ -50,7 +50,7 @@ class OstWalletRNSdkUI {
    */
   abortDeviceRecovery( userId, uiCallback ) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    OstWalletSdk.abortDeviceRecovery( userId, coreUiCallback.uuid); 
+    OstWalletSdkUI.abortDeviceRecovery( userId, coreUiCallback.uuid); 
     return coreUiCallback.uuid;
   }
 
