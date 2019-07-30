@@ -22,21 +22,18 @@ import com.ost.walletsdk.OstSdk;
 import com.ost.walletsdk.ecKeyInteracts.UserPassphrase;
 import com.ost.walletsdk.models.entities.OstToken;
 import com.ost.walletsdk.models.entities.OstUser;
+import com.ost.walletsdk.ui.OstWalletUI;
 import com.ost.walletsdk.utils.CommonUtils;
-import com.ost.walletsdk.workflows.OstExecuteTransaction;
 import com.ost.walletsdk.workflows.OstWorkflowContext;
 import com.ost.walletsdk.workflows.errors.OstError;
 import com.ost.walletsdk.workflows.errors.OstErrors;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import ost.com.ostsdkui.OstWalletUI;
 
 public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
 
