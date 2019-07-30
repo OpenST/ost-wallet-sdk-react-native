@@ -1,8 +1,7 @@
 package com.ostwalletrnsdk.sdkIntracts;
 
+import com.ost.walletsdk.ui.OstPassphraseAcceptor;
 import com.ost.walletsdk.workflows.interfaces.OstBaseInterface;
-
-import ost.com.ostsdkui.OstPassphraseAcceptor;
 
 public class OstPassphraseAcceptWrap extends BaseSdkInteract {
 

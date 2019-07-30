@@ -9,6 +9,9 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.ost.walletsdk.OstSdk;
 import com.ost.walletsdk.models.entities.OstBaseEntity;
+import com.ost.walletsdk.ui.OstPassphraseAcceptor;
+import com.ost.walletsdk.ui.OstUserPassphraseCallback;
+import com.ost.walletsdk.ui.sdkInteract.SdkInteract;
 import com.ost.walletsdk.workflows.OstContextEntity;
 import com.ost.walletsdk.workflows.OstWorkflowContext;
 import com.ost.walletsdk.workflows.errors.OstError;
@@ -20,10 +23,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import javax.annotation.Nullable;
-
-import ost.com.ostsdkui.OstPassphraseAcceptor;
-import ost.com.ostsdkui.OstUserPassphraseCallback;
-import ost.com.ostsdkui.sdkInteract.SdkInteract;
 
 public class OstUICallbackImpl implements OstUserPassphraseCallback,
         SdkInteract.RequestAcknowledged,

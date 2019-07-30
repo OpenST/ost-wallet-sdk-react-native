@@ -16,13 +16,12 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.ost.walletsdk.ui.OstWalletUI;
+import com.ost.walletsdk.ui.sdkInteract.SdkInteract;
 import com.ost.walletsdk.workflows.OstWorkflowContext;
 import com.ostwalletrnsdk.Utils;
 
 import org.json.JSONObject;
-
-import ost.com.ostsdkui.OstWalletUI;
-import ost.com.ostsdkui.sdkInteract.SdkInteract;
 
 public class OstWalletUiRnSdkModule extends ReactContextBaseJavaModule {
 
