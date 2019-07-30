@@ -71,23 +71,25 @@ public class OstWalletUiRnSdkModule extends ReactContextBaseJavaModule {
     public void initiateDeviceRecovery(String userId, String deviceAddress, String uuid ){
 
         Activity currentActivity = getCurrentActivity();
-        OstUICallbackImpl userPassphraseCallback = new OstUICallbackImpl( uuid, this.reactContext,
+        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
                 new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.INITIATE_DEVICE_RECOVERY));
         String workflowId = OstWalletUI.initiateDeviceRecovery(currentActivity,
                 userId,
                 deviceAddress,
-                userPassphraseCallback);
+                ostUICallback);
+        SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
     }
 
     @ReactMethod
     public void abortDeviceRecovery(String userId, String uuid ){
 
         Activity currentActivity = getCurrentActivity();
-        OstUICallbackImpl userPassphraseCallback = new OstUICallbackImpl( uuid, this.reactContext,
+        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
                 new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.ABORT_DEVICE_RECOVERY));
         String workflowId = OstWalletUI.abortDeviceRecovery(currentActivity,
                 userId,
-                userPassphraseCallback);
+                ostUICallback);
+        SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
     }
 
     @ReactMethod
