@@ -18,9 +18,9 @@
 
 
 #if __has_include("OstWalletSdk-Swift.h")
-#import "OstWalletSdkUI-Swift.h"
+#import "OstWalletSdk-Swift.h"
 #else
-#import <OstWalletSdkUI/OstWalletSdkUI-Swift.h>
+#import <OstWalletSdk/OstWalletSdk-Swift.h>
 #endif
 
 

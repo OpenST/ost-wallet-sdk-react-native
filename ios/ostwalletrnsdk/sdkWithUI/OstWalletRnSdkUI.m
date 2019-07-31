@@ -20,11 +20,11 @@ RCT_EXPORT_MODULE(OstWalletSdkUI);
 #pragma mark - setter
 
 RCT_EXPORT_METHOD(setThemeConfig: (NSDictionary<NSString *, id> *)config) {
-  [OstWalletSdkUI setThemeConfig: config];
+  [OstWalletUI setThemeConfig: config];
 }
 
 RCT_EXPORT_METHOD(setContentConfig: (NSDictionary<NSString *, id> *)config) {
-  [OstWalletSdkUI setContentConfig: config];
+  [OstWalletUI setContentConfig: config];
 }
 
 #pragma mark - UIWorkflows
@@ -36,12 +36,12 @@ RCT_EXPORT_METHOD(activateUser: (NSString * _Nonnull) userId
   
   OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
   
-  NSString *worklfowId = [OstWalletSdkUI activateUserWithUserId:userId
+  NSString *worklfowId = [OstWalletUI activateUserWithUserId:userId
                                                expireAfterInSec:[expiresAfterInSecs doubleValue]
                                                   spendingLimit:spendingLimit
                                        passphrasePrefixDelegate:uiCallbackImpl];
   
-  [OstWalletSdkUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
+  [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
 }
 
 RCT_EXPORT_METHOD(initiateDeviceRecovery: (NSString * _Nonnull) userId
@@ -50,11 +50,11 @@ RCT_EXPORT_METHOD(initiateDeviceRecovery: (NSString * _Nonnull) userId
   
   OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
   
-  NSString *worklfowId = [OstWalletSdkUI initaiteDeviceRecoveryWithUserId:userId
+  NSString *worklfowId = [OstWalletUI initaiteDeviceRecoveryWithUserId:userId
                                                      recoverDeviceAddress:deviceAddress
                                                  passphrasePrefixDelegate:uiCallbackImpl];
   
-  [OstWalletSdkUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
+  [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
 }
 
 RCT_EXPORT_METHOD(abortDeviceRecovery: (NSString * _Nonnull) userId
@@ -62,9 +62,9 @@ RCT_EXPORT_METHOD(abortDeviceRecovery: (NSString * _Nonnull) userId
   
   OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
   
-  NSString *worklfowId = [OstWalletSdkUI abortDeviceRecoveryWithUserId:userId
+  NSString *worklfowId = [OstWalletUI abortDeviceRecoveryWithUserId:userId
                                               passphrasePrefixDelegate:uiCallbackImpl];
   
-  [OstWalletSdkUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
+  [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
 }
 @end
