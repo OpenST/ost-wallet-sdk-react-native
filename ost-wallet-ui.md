@@ -55,7 +55,7 @@ OstWalletSdkUI.setContentConfig(ContentConfig);
 ### Setup your Passphrase Prefix Delegate
 
 `Passphrase Prefix` is a salt provided by your application that assists in generation of User's recovery key using user's Pin.
-This salt should be _unique for each user, is immutable and needs to be associated with the user. The salt should not unencrypted be 
+This salt should be _unique_ for each user, is immutable and needs to be associated with the user. The salt should not unencrypted be 
 stored in memory or on deivce. When the UI workflow need's to ask for user's Pin, delegate's getPassphrase method is invoked.
 The delegate must be derived from `OstWalletUIWorkflowCallback` class.
 
@@ -96,7 +96,7 @@ User activation refers to the deployment of smart-contracts that form the user's
 &nbsp;_userId: OST Platform user id provided by application server_<br/>
 &nbsp;_expireAfterInSec: Session key validat duration_<br/>
 &nbsp;_spendingLimit: Spending limit in a transaction in atto BT_<br/>
-&nbsp;_passphrasePrefixDelegate: An instance of a class derived from `OstWalletUIWorkflowCallback` _<br/>
+&nbsp;_passphrasePrefixDelegate: An instance of a class derived from `OstWalletUIWorkflowCallback`_<br/>
 
 &nbsp;_Returns: Workflow Id(use to subscribe object to listen callbacks from perticular workflow id)_<br/>
 
