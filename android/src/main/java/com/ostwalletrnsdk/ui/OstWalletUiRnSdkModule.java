@@ -16,11 +16,13 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
 import com.ost.walletsdk.ui.OstWalletUI;
 import com.ost.walletsdk.ui.sdkInteract.SdkInteract;
 import com.ost.walletsdk.workflows.OstWorkflowContext;
 import com.ostwalletrnsdk.Utils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class OstWalletUiRnSdkModule extends ReactContextBaseJavaModule {
@@ -92,14 +94,24 @@ public class OstWalletUiRnSdkModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setThemeConfig(JSONObject themeConfig){
-
-        OstWalletUI.setThemeConfig(getReactApplicationContext(), themeConfig);
+    public void setThemeConfig(ReadableMap themeConfig){
+        JSONObject themeConfigObject = null;
+        try {
+            themeConfigObject = Utils.convertMapToJson(themeConfig);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OstWalletUI.setThemeConfig(getReactApplicationContext(), themeConfigObject);
     }
 
     @ReactMethod
-    public void setContentConfig(JSONObject contentConfig){
-
-        OstWalletUI.setContentConfig(getReactApplicationContext(), contentConfig);
+    public void setContentConfig(ReadableMap contentConfig)  {
+        JSONObject contentConfigObject = null;
+        try {
+            contentConfigObject = Utils.convertMapToJson(contentConfig);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OstWalletUI.setContentConfig(getReactApplicationContext(), contentConfigObject);
     }
 }
