@@ -15,6 +15,22 @@ import OstWalletUICoreCallback from './OstWalletUICoreCallback';
 import * as OstWalletSdkUICallbackManager from './callbackHandlers/OstWalletSdkUICallbackManager';
 
 class OstWalletRNSdkUI {
+
+  /**
+   * Set theme config
+   * @param {object} config - Config for theme
+   */
+  setThemeConfig(config) {
+    OstWalletSdkUI.setThemeConfig(config)
+  }
+
+  /**
+   * Set content config
+   * @param {object} config - Config for content
+   */
+  setContentConfig(config) {
+    OstWalletSdkUI.setContentConfig(config)
+  }
   /**
    * Active user
    * @param {String} userId - Ost User id
