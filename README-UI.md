@@ -91,7 +91,7 @@ OstWalletSdkUI.activateUser(
 
 ### Initialize Recovery
 
-A user can control their Brand Tokens using their authorized devices. If they lose their authorized device, they can recover access to their BrandTokens by authorizing a new device via the recovery process .<br/><br/>
+A user can control their Brand Tokens using their authorized devices. If they lose their authorized device, they can recover access to their BrandTokens by authorizing a new device via the recovery process.
 
 If application set `recoverDeviceAddress` then OstWalletUI ask for `pin` to initiate device recovery. Else it displays authorized device list for given `userId` to select device from. 
 
@@ -132,7 +132,7 @@ OstWalletSdkUI.abortDeviceRecovery(
 
 Subscribe to specified event of UI Workflow
 
-Supported `EventName` is:
+Supported `EventName` are:
 * requestAcknowledged
 * flowComplete
 * flowInterrupt
