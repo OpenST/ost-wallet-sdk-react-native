@@ -12,8 +12,8 @@ To setup OstWalletSdkUI, please refer [setup](README.md#setup).
 
 ## OstWalletSdkUI SDK APIs
 ### Important Notes
-1. App must [initialize](README.md#initialize-the-sdk) the sdk <em><b>before</b></em> initiating any UI workflows.
-2. App must perform [setupDevice](.README.md#set-up-the-device) workflow <em><b>before</b></em> initiating any UI workflows.
+1. App must [initialize](README.md#installing-react-native-sdk) the sdk <em><b>before</b></em> initiating any UI workflows.
+2. App must perform [setupDevice](README.md#1--subscribe-to-ostwalletsdkevents-in-your-top-most-level-component) workflow <em><b>before</b></em> initiating any UI workflows.
 
 
 To use OstWalletSdkUI 
@@ -27,26 +27,28 @@ Theme for OstWalletUI can be initialized by calling `setThemeConfig` API which s
 
 `nav_bar_logo_image` is used to show image on navigation bar.
 
-**Parameters**<br/>
-&nbsp;_config: Config to use for UI_<br/>
-
 ```javascript
 const theme_config = {
     "nav_bar_logo_image": {
         "asset_name": "nav_bar_logo"
     }
 };
+
+/**
+* Set theme config for UI
+* config: Config to use for UI
+*/
 OstWalletSdkUI.setThemeConfig(theme_config);
 ```
+<b>important</b><br/>
+`asset_name` is name of asset which is present in the respective assets folder for iOS/android.
+
 
 ### Set Content Config
 
 Content for OstWalletUI can be initialized by calling `setContentConfig` API which  setup OstWalletUI content config
 
 While activating user `create_pin["terms_and_condition_url"]` url is used to show terms and conditions, where as while confirming pin `confirm_pin["terms_and_condition_url"]` url is used.
-
-**Parameters**<br/>
-&nbsp;_config: Config to use for UI_<br/>
 
 ```Swift
 const content_config = {
@@ -60,12 +62,15 @@ const content_config = {
     }
 };
 
+/**
+* Set content config for UI
+* config: Config to use for UI
+*/
 OstWalletSdkUI.setContentConfig(content_config);
 ```
 
 ### Activate User
-
-User activation refers to the deployment of smart-contracts that form the user's Brand Token wallet. An activated user can engage with a Brand Token economy.<br/><br/>
+User activation refers to the deployment of smart-contracts that form the user's Brand Token wallet. An activated user can engage with a Brand Token economy.
 
 ```javascript
 /**
@@ -107,7 +112,7 @@ OstWalletSdkUI.initiateDeviceRecovery(
 
 ### Abort Device Recovery
 
-To abort initiated device recovery.<br/><br/>
+To abort initiated device recovery.
 
 ```javascript
 /**
