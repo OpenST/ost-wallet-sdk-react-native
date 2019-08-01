@@ -754,3 +754,7 @@ OstJsonApi.getTransactionsForUserId(userId,
                     (data) => {},
                     (error, response) => {} ) 
 ```
+
+## OstWalletSdkUI
+
+You can use available UI from OstWalletSdk. Please refer [OstWalletSdkUI](README-UI.md) - `Beta Version`
