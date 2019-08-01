@@ -153,6 +153,80 @@ let workflowId = OstWalletUI.abortDeviceRecovery(
 );
 ```
 
+### Subscribe 
+
+Subscribe to specified event of UI Workflow
+
+Supported `EventName` are:
+* requestAcknowledged
+* flowComplete
+* flowInterrupt
+
+You can retrive event names from Sdk:
+```javascript
+OstWalletSdkUI.EVENTS.requestAcknowledged
+OstWalletSdkUI.EVENTS.flowComplete
+OstWalletSdkUI.EVENTS.flowInterrupt
+```
+
+```javascript
+/**
+* Subscribes to specified event of UI Workflow.
+* @param {String} workflowId - Id of the workflow as returned by methods of OstWalletSdkUI
+* @param {String} eventName - Name of the event to subscribe to.
+* @param {Function} listener - The listener function.
+* @param {*} context - (Optional)The context to invoke the listener with.
+* @returns {Boolean} - false if failed to subscribe.
+* @public
+*/
+OstWalletSdkUI.subscribe(
+    workflowId, 
+    eventName, 
+    listener, 
+    context
+)
+```
+
+```javascript
+/**
+* Subscribes once to specified event of UI Workflow.
+* @param {String} workflowId - Id of the workflow as returned by methods of OstWalletSdkUI
+* @param {String} eventName - Name of the event to subscribe to.
+* @param {Function} listener - The listener function.
+* @param {*} context - (Optional)The context to invoke the listener with.
+* @returns {Boolean} - false if failed to subscribe.
+* @public
+*/
+OstWalletSdkUI.subscribeOnce(
+    workflowId, 
+    eventName, 
+    listener,
+    context
+)
+```
+
+
+### Unsubscribe
+
+Unsubscribes the listner from the specified event of UI Workflow.
+
+```javascript
+/**
+* Unsubscribes the listner from the specified event of UI Workflow.
+* @param {String} workflowId - Id of the workflow as returned by methods of OstWalletSdkUI
+* @param {String} eventName - Name of the event to subscribe to.
+* @param {Function} listener - The listener function.
+* @param {*} context - (Optional)The context to invoke the listener with.
+* @returns {Boolean} - false if failed to subscribe.
+* @public
+*/
+OstWalletSdkUI.unsubscribe(
+    workflowId, 
+    eventName,
+    listener, 
+    context
+)
+```
 
 
 
