@@ -683,6 +683,11 @@ verifyData( ostWorkflowContext, ostContextEntity, ostVerifyData)
 
 ## OST JSON APIs
 
+To access APIs defined in OstWalletSdk import OstJsonApi
+```
+import {OstJsonApi} from '@ostdotcom/ost-wallet-sdk-react-native';
+```
+
 ### User Balance
 
 Api to get user balance. Balance of only current logged-in user can be fetched.
