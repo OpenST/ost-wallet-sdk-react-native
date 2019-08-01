@@ -22,6 +22,9 @@ import com.ost.walletsdk.workflows.errors.OstError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -89,9 +92,47 @@ public class OstRNSdkJsonApiModule extends ReactContextBaseJavaModule {
             Callback errorCallback
     ) {
         try {
-            OstJsonApi.getTransactions(userId, requestMap.toHashMap(), new OstJsonApiCallbackImpl(successCallback, errorCallback));
+            Map<String,Object> requestPayload = new HashMap<>();
+            if (null != requestMap) {
+                requestPayload = requestMap.toHashMap();
+            }
+            OstJsonApi.getTransactions(userId, requestPayload, new OstJsonApiCallbackImpl(successCallback, errorCallback));
         } catch (Throwable e) {
-            errorCallback.invoke(Utils.getError(e, "rn_orsjam_gppui_1"));
+            errorCallback.invoke(Utils.getError(e, "rn_orsjam_gtui_1"));
+            return;
+        }
+    }
+
+    @ReactMethod
+    public void getPendingRecoveryForUserId(
+            String userId,
+            Callback successCallback,
+            Callback errorCallback
+    ) {
+        try {
+            OstJsonApi.getPendingRecovery(userId, new OstJsonApiCallbackImpl(successCallback, errorCallback));
+        } catch (Throwable e) {
+            errorCallback.invoke(Utils.getError(e, "rn_orsjam_gprui_1"));
+            return;
+        }
+    }
+
+    @ReactMethod
+    public void getDeviceListForUserId(
+            String userId,
+            ReadableMap requestMap,
+            Callback successCallback,
+            Callback errorCallback
+    ) {
+        try {
+
+            Map<String,Object> requestPayload = new HashMap<>();
+            if (null != requestMap) {
+                requestPayload = requestMap.toHashMap();
+            }
+            OstJsonApi.getDeviceList(userId, requestPayload, new OstJsonApiCallbackImpl(successCallback, errorCallback));
+        } catch (Throwable e) {
+            errorCallback.invoke(Utils.getError(e, "rn_orsjam_gdlui_1"));
             return;
         }
     }
