@@ -23,7 +23,7 @@ import {OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-native';
 
 ### Set Theme Config
 
-Theme for OstWalletUI can be initialized by calling `setThemeConfig` API which setup OstWalletUI theme config
+Theme for OstWalletSdkUI can be initialized by calling `setThemeConfig` API which setup OstWalletSdkUI theme config
 
 `nav_bar_logo_image` is used to show image on navigation bar.
 
@@ -46,7 +46,7 @@ OstWalletSdkUI.setThemeConfig(theme_config);
 
 ### Set Content Config
 
-Content for OstWalletUI can be initialized by calling `setContentConfig` API which  setup OstWalletUI content config
+Content for OstWalletSdkUI can be initialized by calling `setContentConfig` API which setup OstWalletSdkUI content config
 
 While activating user `create_pin["terms_and_condition_url"]` url is used to show terms and conditions, where as while confirming pin `confirm_pin["terms_and_condition_url"]` url is used.
 
