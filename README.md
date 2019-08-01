@@ -685,7 +685,7 @@ verifyData( ostWorkflowContext, ostContextEntity, ostVerifyData)
 
 ### User Balance
 
-Api to get user balance. Balance of only current logged-in user can be fetched.<br/><br/>
+Api to get user balance. Balance of only current logged-in user can be fetched.
 
 ```javascript
 /**
@@ -695,15 +695,17 @@ Api to get user balance. Balance of only current logged-in user can be fetched.<
    * @param {function} Failure callback with error and failure response
    * @public
    */
-OstJsonApi.getBalanceForUserId(userId,  
-                    (data) => {},
-                    (error, response) => {} ) 
+OstJsonApi.getBalanceForUserId(
+    userId,  
+    (data) => {},
+    (error, response) => {} 
+) 
 ```
 
 ### Price Points
 
 Api to get Price Points. 
-It will provide latest conversion rates of base token to fiat currency.<br/><br/>
+It will provide latest conversion rates of base token to fiat currency.
 
 ```javascript
 /**
@@ -713,15 +715,17 @@ It will provide latest conversion rates of base token to fiat currency.<br/><br/
    * @param {function} Failure callback with error and failure response
    * @public
    */
-OstJsonApi.getPricePointForUserId(userId,  
-                    (data) => {},
-                    (error, response) => {} ) 
+OstJsonApi.getPricePointForUserId(
+    userId,  
+    (data) => {},
+    (error, response) => {} 
+) 
 ```
 
 ### Balance With Price Points
 
 Api to get user balance and Price Points. Balance of only current logged-in user can be fetched.
-It will also provide latest conversion rates of base token to fiat currency.<br/><br/>
+It will also provide latest conversion rates of base token to fiat currency.
 ```javascript
 /**
    * Api to get user balance and Price Points. 
@@ -730,29 +734,71 @@ It will also provide latest conversion rates of base token to fiat currency.<br/
    * @param {function} Failure callback with error and failure response
    * @public
    */
-OstJsonApi.getBalanceWithPricePointForUserId(userId,  
-                    (data) => {},
-                    (error, response) => {} ) 
+OstJsonApi.getBalanceWithPricePointForUserId(
+    userId,  
+    (data) => {},
+    (error, response) => {} 
+) 
 ```
 
 ### Transactions
 
-Api to get user transactions. Transactions of only current logged-in user can be fetched.<br/><br/>
+Api to get user transactions. Transactions of only current logged-in user can be fetched.
 
 ```javascript
 /**
    * Api to get user transactions
-   * @param {String} userId - Ost User id
    * @param {String} userId - Ost User id
    * @param {object} params - transaction params
    * @param {function} Success callback with success data
    * @param {function} Failure callback with error and failure response
    * @public
    */
-OstJsonApi.getTransactionsForUserId(userId,  
-                    params,
-                    (data) => {},
-                    (error, response) => {} ) 
+OstJsonApi.getTransactionsForUserId(
+    userId,  
+    params,
+    (data) => {},
+    (error, response) => {} 
+) 
+```
+### Pending Recovery
+
+Api to get pending recovery. Pending recovery of only current logged-in user can be fetched.
+
+```javascript
+/**
+* Api to get pending recovery.
+* @param {String} userId - Ost User id
+* @param {function} Success callback with success data
+* @param {function} Failure callback with error and failure response
+* @public
+*/
+OstJsonApi.getPendingRecoveryForUserId(
+    userId,  
+    (data) => {},
+    (error, response) => {} 
+) 
+```
+
+### Device List
+
+Api to get device list of current user. Device list of only current logged-in user can be fetched.
+
+```javascript
+/**
+* Api to get device list
+* @param {String} userId - Ost User id
+* @param {object} params - device list params
+* @param {function} Success callback with success data
+* @param {function} Failure callback with error and failure response
+* @public
+*/
+OstJsonApi.getDeviceListForUserId(
+    userId,  
+    params,
+    (data) => {},
+    (error, response) => {} 
+) 
 ```
 
 ## OstWalletSdkUI
