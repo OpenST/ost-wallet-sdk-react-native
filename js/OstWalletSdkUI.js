@@ -72,11 +72,34 @@ class OstWalletRNSdkUI {
 
   /* Begin: Reserved space for other workflow methods. */
 
+  /**
+   * Add user session
+   * @param {String} userId - Ost User id
+   * @param {String} expiresAfterInSecs - session key expiry time.
+   * @param {String} spendingLimit - spending limit once in a transaction of session
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+  addSession(userId, expiresAfterInSecs, spendingLimit, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.addSession(userId, String(expiresAfterInSecs), String(spendingLimit), coreUiCallback.uuid);
+    return coreUiCallback.uuid;
+  }
 
 
-
-
-
+  /**
+   * Update biometric prederence
+   * @param {String} userId - Ost User id
+   * @param {boolean} enable - to enable biometric prefernce
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+  updateBiometricPreference( userId , enable , uiCallback ){
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    enable =  !!enable;
+    OstWalletSdkUI.updateBiometricPreference( userId,  enable,  coreUiCallback.uuid  );
+    return coreUiCallback.uuid;
+  }
 
   /* End: Reserved space for other workflow methods. */
   /* region: Event emitter. */
