@@ -94,4 +94,8 @@ RCT_EXPORT_METHOD(updateBiometricPreference: (NSString * _Nonnull) userId
   [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
 }
 
+RCT_EXPORT_METHOD(showComponentSheet) {
+  [OstWalletUI showComponentSheet];
+}
+
 @end

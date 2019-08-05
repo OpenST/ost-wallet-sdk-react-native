@@ -101,6 +101,11 @@ class OstWalletRNSdkUI {
     return coreUiCallback.uuid;
   }
 
+
+  showComponentSheet() {
+    OstWalletSdkUI.showComponentSheet()
+  }
+
   /* End: Reserved space for other workflow methods. */
   /* region: Event emitter. */
 
