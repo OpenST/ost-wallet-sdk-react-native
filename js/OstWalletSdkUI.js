@@ -101,6 +101,17 @@ class OstWalletRNSdkUI {
     return coreUiCallback.uuid;
   }
 
+  /**
+   * Reset pin
+   *
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   */
+  resetPin(userId, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.resetPin( userId, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
+  }
 
   showComponentSheet() {
     OstWalletSdkUI.showComponentSheet()

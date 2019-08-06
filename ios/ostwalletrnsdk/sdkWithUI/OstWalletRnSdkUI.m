@@ -94,6 +94,15 @@ RCT_EXPORT_METHOD(updateBiometricPreference: (NSString * _Nonnull) userId
   [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
 }
 
+
+RCT_EXPORT_METHOD(resetPin: (NSString * _Nonnull) userId
+                  uuid:(NSString *)uuid) {
+  
+  OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
+  NSString *worklfowId = [OstWalletUI resetPinWithUserId:userId passphrasePrefixDelegate:uiCallbackImpl];
+  [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
+}
+
 RCT_EXPORT_METHOD(showComponentSheet) {
   [OstWalletUI showComponentSheet];
 }
