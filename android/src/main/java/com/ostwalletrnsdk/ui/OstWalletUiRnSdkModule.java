@@ -108,6 +108,32 @@ public class OstWalletUiRnSdkModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void resetPin(String userId, String uuid) {
+
+        Activity currentActivity = getCurrentActivity();
+        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
+                new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.RESET_PIN));
+        String workflowId = OstWalletUI.resetPin(currentActivity,
+                userId,
+                ostUICallback);
+        SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
+
+    }
+
+    @ReactMethod
+    public void updateBiometricPreference(String userId, boolean enable, String uuid) {
+
+        Activity currentActivity = getCurrentActivity();
+        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
+                new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.UPDATE_BIOMETRIC_PREFERENCE));
+        String workflowId = OstWalletUI.updateBiometricPreference(currentActivity,
+                userId,
+                enable,
+                ostUICallback);
+        SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
+    }
+
+    @ReactMethod
     public void setThemeConfig(ReadableMap themeConfig){
         JSONObject themeConfigObject = null;
         try {
