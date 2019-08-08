@@ -100,6 +100,18 @@ class OstWalletRNSdkUI {
   }
 
   /**
+   * Get device mnemonics
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+  getDeviceMnemonics(userId, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.getDeviceMnemonics( userId, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
+  }
+
+  /**
    * Update biometric prederence
    * @param {String} userId - Ost User id
    * @param {boolean} enable - to enable biometric prefernce
