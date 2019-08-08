@@ -107,4 +107,16 @@ RCT_EXPORT_METHOD(showComponentSheet) {
   [OstWalletUI showComponentSheet];
 }
 
+RCT_EXPORT_METHOD(revokeDevice: (NSString * _Nonnull) userId
+                  revokeDeviceAddress: (NSString * _Nullable) deviceAddress
+                  uuid:(NSString *)uuid) {
+  
+  OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
+  
+  NSString *worklfowId = [OstWalletUI revokeDeviceWithUserId:userId
+                                         revokeDeviceAddress: deviceAddress
+                                    passphrasePrefixDelegate:uiCallbackImpl];
+  
+  [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
+}
 @end

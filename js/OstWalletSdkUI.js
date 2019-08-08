@@ -86,6 +86,18 @@ class OstWalletRNSdkUI {
     return coreUiCallback.uuid;
   }
 
+  /**
+   * Revoke device
+   * @param {String} userId - Ost User id
+   * @param {String} deviceAddressToRecover - Device address which wants to recover
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+  revokeDevice(userId, deviceAddressToRevoke, uiCallback ) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.revokeDevice( userId, deviceAddressToRevoke, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
+  }
 
   /**
    * Update biometric prederence
