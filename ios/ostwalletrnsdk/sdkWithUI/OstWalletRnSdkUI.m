@@ -130,4 +130,15 @@ RCT_EXPORT_METHOD(getDeviceMnemonics: (NSString * _Nonnull) userId
   
   [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
 }
+
+RCT_EXPORT_METHOD(authorizeCurrentDeviceWithMnemonics: (NSString * _Nonnull) userId
+                  uuid:(NSString *)uuid) {
+  
+  OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
+  
+  NSString *worklfowId = [OstWalletUI authorizeCurrentDeviceWithMnemonicsWithUserId:userId
+                                                           passphrasePrefixDelegate:uiCallbackImpl];
+  
+  [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
+}
 @end

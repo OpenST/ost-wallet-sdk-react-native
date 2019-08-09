@@ -126,6 +126,20 @@ class OstWalletRNSdkUI {
   }
 
   /**
+   * Authorize user device with mnemonics
+   * @param {String} userId - Ost User id
+   * @param {String} mnemonics - string of mnemonics
+   * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication
+   * @public
+   */
+  authorizeCurrentDeviceWithMnemonics(userId, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.authorizeCurrentDeviceWithMnemonics(userId, coreUiCallback.uuid);
+
+    return coreUiCallback.uuid;
+  }
+
+  /**
    * Reset pin
    *
    * @param {String} userId - Ost User id
