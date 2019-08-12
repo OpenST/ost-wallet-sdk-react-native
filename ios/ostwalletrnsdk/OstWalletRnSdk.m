@@ -66,7 +66,8 @@ RCT_EXPORT_METHOD(setupDevice:(NSString *)userId
                   tokenId:(NSString *)tokenId
                   uuid:(NSString *)uuid)
 {
-  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypeSetupDevice];
+  
+  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowId:uuid workflowType:OstWorkflowTypeSetupDevice];
   OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
   [OstWalletSdk setupDeviceWithUserId: userId tokenId:tokenId forceSync: false delegate: workflowCallback];
 }
@@ -78,7 +79,7 @@ RCT_EXPORT_METHOD(activateUser: (NSString *) userId
                   spendingLimit: (NSString *) spendingLimit
                   uuid: (NSString *) uuid){
   
-  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypeActivateUser];
+  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowId:uuid workflowType:OstWorkflowTypeActivateUser];
   OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
   
   [OstWalletSdk activateUserWithUserId:userId
@@ -94,7 +95,7 @@ RCT_EXPORT_METHOD(addSession: (NSString *) userId
                   spendingLimit: (NSString *) spendingLimit
                   uuid: (NSString *) uuid )
 {
-  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypeAddSession];
+  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowId:uuid workflowType:OstWorkflowTypeAddSession];
   OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
   
   [OstWalletSdk addSessionWithUserId:userId spendingLimit:spendingLimit expireAfterInSec:[expiresAfterInSecs doubleValue] delegate:workflowCallback];
@@ -125,7 +126,7 @@ RCT_EXPORT_METHOD(executeTransaction: (NSString *) userId
                         options: (NSDictionary *) options
                            uuid: (NSString *) uuid
 {
-    OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypeExecuteTransaction];
+    OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowId:uuid workflowType:OstWorkflowTypeExecuteTransaction];
     OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
     
     NSData *data = [tokenHolderAddresses dataUsingEncoding:NSUTF8StringEncoding];
@@ -188,7 +189,7 @@ RCT_EXPORT_METHOD(getDeviceMnemonics: (NSString *) userId
                   uuid: (NSString *) uuid )
 {
   
-  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypeGetDeviceMnemonics];
+  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowId:uuid workflowType:OstWorkflowTypeGetDeviceMnemonics];
   OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
   
   [OstWalletSdk getDeviceMnemonicsWithUserId:userId delegate:workflowCallback];
@@ -199,7 +200,7 @@ RCT_EXPORT_METHOD(authorizeCurrentDeviceWithMnemonics: (NSString *) userId
                   uuid: (NSString *) uuid )
 {
   
-  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypeAuthorizeDeviceWithMnemonics];
+  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowId:uuid workflowType:OstWorkflowTypeAuthorizeDeviceWithMnemonics];
   OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
   
   NSArray *byteMnemonices = [mnemonics componentsSeparatedByString:@" "];
@@ -237,7 +238,7 @@ RCT_EXPORT_METHOD(performQRAction: (NSString *) userId
                   uuid: (NSString *) uuid
                   )
 {
-  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypePerformQRAction];
+  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowId:uuid workflowType:OstWorkflowTypePerformQRAction];
   OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
   
   [OstWalletSdk performQRActionWithUserId:userId payload:data delegate:workflowCallback];
@@ -250,7 +251,7 @@ RCT_EXPORT_METHOD(resetPin: (NSString *) userId
                   uuid: (NSString *) uuid
                   )
 {
-  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypeResetPin];
+  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowId:uuid workflowType:OstWorkflowTypeResetPin];
   OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
   
   [OstWalletSdk resetPinWithUserId:userId passphrasePrefix:appSalt oldUserPin:currentPin newUserPin:newPin delegate:workflowCallback];
@@ -263,7 +264,7 @@ RCT_EXPORT_METHOD(initiateDeviceRecovery: (NSString *) userId
                   uuid: (NSString *) uuid
                   )
 {
-  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypeInitiateDeviceRecovery];
+  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowId:uuid workflowType:OstWorkflowTypeInitiateDeviceRecovery];
   OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
   
   [OstWalletSdk initiateDeviceRecoveryWithUserId:userId recoverDeviceAddress:deviceAddressToRecover userPin:pin passphrasePrefix:appSalt delegate:workflowCallback];
@@ -275,7 +276,7 @@ RCT_EXPORT_METHOD(abortDeviceRecovery: (NSString *) userId
                   uuid: (NSString *) uuid
                   )
 {
-  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypeAbortDeviceRecovery];
+  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowId:uuid workflowType:OstWorkflowTypeAbortDeviceRecovery];
   OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
   
   [OstWalletSdk abortDeviceRecoveryWithUserId:userId userPin:pin passphrasePrefix:appSalt delegate:workflowCallback];
@@ -286,7 +287,7 @@ RCT_EXPORT_METHOD(revokeDevice: (NSString *) userId
                   uuid: (NSString *) uuid
                   )
 {
-  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypeRevokeDeviceWithQRCode];
+  OstWorkflowContext *context = [[OstWorkflowContext alloc] initWithWorkflowId:uuid workflowType:OstWorkflowTypeRevokeDevice];
   OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
   
   [OstWalletSdk revokeDeviceWithUserId:userId deviceAddressToRevoke:deviceAddress delegate:workflowCallback];
@@ -297,7 +298,7 @@ RCT_EXPORT_METHOD(updateBiometricPreference: (NSString *) userId
                   uuid: (NSString *) uuid
                   )
 {
-  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypeUpdateBiometricPreference];
+  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowId:uuid workflowType:OstWorkflowTypeUpdateBiometricPreference];
   OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
   
   [OstWalletSdk updateBiometricPreferenceWithUserId:userId enable:enable delegate:workflowCallback];
@@ -307,7 +308,7 @@ RCT_EXPORT_METHOD(logoutAllSessions: (NSString *) userId
                   uuid: (NSString *) uuid
                   )
 {
-  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowType:OstWorkflowTypeLogoutAllSessions];
+  OstWorkflowContext *context = [[ OstWorkflowContext alloc] initWithWorkflowId:uuid workflowType:OstWorkflowTypeLogoutAllSessions];
   OstWorkFlowCallbackImpl *workflowCallback = [[OstWorkFlowCallbackImpl alloc] initWithId: uuid workflowContext:context];
  
   [OstWalletSdk logoutAllSessionsWithUserId:userId delegate:workflowCallback];

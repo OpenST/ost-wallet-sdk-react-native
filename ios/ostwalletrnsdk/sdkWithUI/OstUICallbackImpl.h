@@ -25,7 +25,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OstUICallbackImpl : NSObject <RCTBridgeModule, OstPassphrasePrefixDelegate, OstWorkflowUIDelegate>
+@interface OstUICallbackImpl : NSObject <OstPassphrasePrefixDelegate, OstWorkflowUIDelegate>
 
 @property NSString * _Nonnull uuid;
 
