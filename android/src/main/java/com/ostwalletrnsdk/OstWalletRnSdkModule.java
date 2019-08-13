@@ -247,7 +247,7 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public  void revokeDevice(String userId ,  String deviceAddress , String uuid ){
-    OstWorkflowContext context = new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.REVOKE_DEVICE_WITH_QR_CODE);
+    OstWorkflowContext context = new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.REVOKE_DEVICE);
     OstWorkFlowCallbackImpl workFlowCallback = new OstWorkFlowCallbackImpl( uuid, this.reactContext, context );
     OstSdk.revokeDevice(userId , deviceAddress , workFlowCallback );
   }
