@@ -134,6 +134,42 @@ public class OstWalletUiRnSdkModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void getDeviceMnemonics(String userId, String uuid) {
+
+        Activity currentActivity = getCurrentActivity();
+        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
+                new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.GET_DEVICE_MNEMONICS));
+        String workflowId = OstWalletUI.getDeviceMnemonics(currentActivity,
+                userId,
+                ostUICallback);
+        SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
+
+    }
+
+    @ReactMethod
+    public void revokeDevice(String userId, String address, String uuid ) {
+        Activity currentActivity = getCurrentActivity();
+        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
+                new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.REVOKE_DEVICE));
+        String workflowId = OstWalletUI.revokeDevice(currentActivity,
+                userId,
+                address,
+                ostUICallback);
+        SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
+    }
+
+    @ReactMethod
+    public void authorizeCurrentDeviceWithMnemonics(String userId, String uuid) {
+        Activity currentActivity = getCurrentActivity();
+        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
+                new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.AUTHORIZE_DEVICE_WITH_MNEMONICS));
+        String workflowId = OstWalletUI.authorizeCurrentDeviceWithMnemonics(currentActivity,
+                userId,
+                ostUICallback);
+        SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
+    }
+
+    @ReactMethod
     public void setThemeConfig(ReadableMap themeConfig){
         JSONObject themeConfigObject = null;
         try {
