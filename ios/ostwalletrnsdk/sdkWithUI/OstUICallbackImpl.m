@@ -123,7 +123,7 @@ static NSMutableDictionary *uiCallbackImplMap = nil;
   NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
   data[@"WORKFLOW_TYPE"] = [self getWorkflowTypeName: workflowContext.workflowType];
   data[@"WORKFLOW_ID"] = [self uuid];
-  data[@"BASE_WORKFLOW_ID"] = [workflowContext getWorkflowId];
+  data[@"NATIVE_UI_WORKFLOW_ID"] = [workflowContext getWorkflowId];
   return data;
 }
 
