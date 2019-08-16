@@ -53,7 +53,7 @@ static NSMutableDictionary *uiCallbackImplMap = nil;
             interactId: interact.uuid];
 }
 
-- (void)flowCompleteWithWorkflowId:(NSString * _Nonnull)workflowId workflowContext:(OstWorkflowContext * _Nonnull)workflowContext contextEntity:(OstContextEntity * _Nonnull)contextEntity {
+- (void)flowCompleteWithWorkflowContext:(OstWorkflowContext * _Nonnull)workflowContext contextEntity:(OstContextEntity * _Nonnull)contextEntity {
   
   NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
   params[@"ostWorkflowId"] = self.uuid;
@@ -67,7 +67,7 @@ static NSMutableDictionary *uiCallbackImplMap = nil;
             interactId: nil];
 }
 
-- (void)flowInterruptedWithWorkflowId:(NSString * _Nonnull)workflowId workflowContext:(OstWorkflowContext * _Nonnull)workflowContext error:(OstError * _Nonnull)error {
+- (void)flowInterruptedWithWorkflowContext:(OstWorkflowContext * _Nonnull)workflowContext error:(OstError * _Nonnull)error {
   
   NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
   params[@"ostWorkflowId"] = self.uuid;
@@ -80,7 +80,7 @@ static NSMutableDictionary *uiCallbackImplMap = nil;
             interactId: nil];
 }
 
-- (void)requestAcknowledgedWithWorkflowId:(NSString * _Nonnull)workflowId workflowContext:(OstWorkflowContext * _Nonnull)workflowContext contextEntity:(OstContextEntity * _Nonnull)contextEntity {
+- (void)requestAcknowledgedWithWorkflowContext:(OstWorkflowContext * _Nonnull)workflowContext contextEntity:(OstContextEntity * _Nonnull)contextEntity {
   
   NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
   params[@"ostWorkflowId"] = self.uuid;
@@ -122,6 +122,8 @@ static NSMutableDictionary *uiCallbackImplMap = nil;
 - (NSMutableDictionary *) convertWorkflowContext: (OstWorkflowContext *) workflowContext {
   NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
   data[@"WORKFLOW_TYPE"] = [self getWorkflowTypeName: workflowContext.workflowType];
+  data[@"WORKFLOW_ID"] = [self uuid];
+  data[@"NATIVE_UI_WORKFLOW_ID"] = [workflowContext getWorkflowId];
   return data;
 }
 
@@ -137,7 +139,7 @@ static NSMutableDictionary *uiCallbackImplMap = nil;
       case OstWorkflowTypeAuthorizeDeviceWithMnemonics: return @"AUTHORIZE_DEVICE_WITH_MNEMONICS";
       case OstWorkflowTypeInitiateDeviceRecovery: return @"INITIATE_DEVICE_RECOVERY";
       case OstWorkflowTypeAbortDeviceRecovery: return @"ABORT_DEVICE_RECOVERY";
-      case OstWorkflowTypeRevokeDeviceWithQRCode: return @"REVOKE_DEVICE_WITH_QR_CODE";
+      case OstWorkflowTypeRevokeDevice: return @"REVOKE_DEVICE";
       case OstWorkflowTypeResetPin: return @"RESET_PIN";
       case OstWorkflowTypeLogoutAllSessions: return @"LOGOUT_ALL_SESSIONS";
       case OstWorkflowTypeUpdateBiometricPreference: return @"UPDATE_BIOMETRIC_PREFERENCE";
@@ -178,5 +180,7 @@ static NSMutableDictionary *uiCallbackImplMap = nil;
     default: return @"unknown";
   }
 }
-
-@end
+ 
+ 
+  
+  @end

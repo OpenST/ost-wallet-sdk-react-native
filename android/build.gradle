@@ -47,5 +47,5 @@ repositories {
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
-    implementation 'com.github.ostdotcom:ost-wallet-sdk-android:2.3.0-beta.1'
+    implementation 'com.ost:ost-wallet-sdk-android:2.3.0'
 }

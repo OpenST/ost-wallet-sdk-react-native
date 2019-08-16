@@ -67,4 +67,78 @@ RCT_EXPORT_METHOD(abortDeviceRecovery: (NSString * _Nonnull) userId
   
   [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
 }
+
+RCT_EXPORT_METHOD(addSession: (NSString * _Nonnull) userId
+                  expiresAfterInSecs: (NSString * _Nonnull) expiresAfterInSecs
+                  spendingLimit: (NSString * _Nonnull) spendingLimit
+                  uuid:(NSString *)uuid) {
+  
+  OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
+  NSString *worklfowId = [OstWalletUI addSessionWithUserId:userId
+                                          expireAfterInSec: [expiresAfterInSecs doubleValue]
+                                             spendingLimit:spendingLimit
+                                  passphrasePrefixDelegate:uiCallbackImpl];
+  
+  [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
+}
+
+RCT_EXPORT_METHOD(updateBiometricPreference: (NSString * _Nonnull) userId
+                  enable: (BOOL) enable
+                  uuid:(NSString *)uuid) {
+  
+  OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
+  NSString *worklfowId = [OstWalletUI updateBiometricPreferenceWithUserId:userId
+                                                                   enable:enable
+                                                 passphrasePrefixDelegate:uiCallbackImpl];
+  
+  [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
+}
+
+
+RCT_EXPORT_METHOD(resetPin: (NSString * _Nonnull) userId
+                  uuid:(NSString *)uuid) {
+  
+  OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
+  NSString *worklfowId = [OstWalletUI resetPinWithUserId:userId passphrasePrefixDelegate:uiCallbackImpl];
+  [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
+}
+
+RCT_EXPORT_METHOD(showComponentSheet) {
+  [OstWalletUI showComponentSheet];
+}
+
+RCT_EXPORT_METHOD(revokeDevice: (NSString * _Nonnull) userId
+                  revokeDeviceAddress: (NSString * _Nullable) deviceAddress
+                  uuid:(NSString *)uuid) {
+  
+  OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
+  
+  NSString *worklfowId = [OstWalletUI revokeDeviceWithUserId:userId
+                                         revokeDeviceAddress: deviceAddress
+                                    passphrasePrefixDelegate:uiCallbackImpl];
+  
+  [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
+}
+
+RCT_EXPORT_METHOD(getDeviceMnemonics: (NSString * _Nonnull) userId
+                  uuid:(NSString *)uuid) {
+  
+  OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
+  
+  NSString *worklfowId = [OstWalletUI getDeviceMnemonicsWithUserId:userId
+                                          passphrasePrefixDelegate:uiCallbackImpl];
+  
+  [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
+}
+
+RCT_EXPORT_METHOD(authorizeCurrentDeviceWithMnemonics: (NSString * _Nonnull) userId
+                  uuid:(NSString *)uuid) {
+  
+  OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
+  
+  NSString *worklfowId = [OstWalletUI authorizeCurrentDeviceWithMnemonicsWithUserId:userId
+                                                           passphrasePrefixDelegate:uiCallbackImpl];
+  
+  [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
+}
 @end

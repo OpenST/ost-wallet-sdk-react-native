@@ -94,6 +94,82 @@ public class OstWalletUiRnSdkModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void addSession(String userId, String expiresAfterInSecs, String spendingLimit, String uuid ){
+
+        Activity currentActivity = getCurrentActivity();
+        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
+                new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.ADD_SESSION));
+        String workflowId = OstWalletUI.createSession(currentActivity,
+                userId,
+                Long.parseLong(expiresAfterInSecs),
+                spendingLimit,
+                ostUICallback);
+        SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
+    }
+
+    @ReactMethod
+    public void resetPin(String userId, String uuid) {
+
+        Activity currentActivity = getCurrentActivity();
+        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
+                new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.RESET_PIN));
+        String workflowId = OstWalletUI.resetPin(currentActivity,
+                userId,
+                ostUICallback);
+        SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
+
+    }
+
+    @ReactMethod
+    public void updateBiometricPreference(String userId, boolean enable, String uuid) {
+
+        Activity currentActivity = getCurrentActivity();
+        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
+                new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.UPDATE_BIOMETRIC_PREFERENCE));
+        String workflowId = OstWalletUI.updateBiometricPreference(currentActivity,
+                userId,
+                enable,
+                ostUICallback);
+        SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
+    }
+
+    @ReactMethod
+    public void getDeviceMnemonics(String userId, String uuid) {
+
+        Activity currentActivity = getCurrentActivity();
+        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
+                new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.GET_DEVICE_MNEMONICS));
+        String workflowId = OstWalletUI.getDeviceMnemonics(currentActivity,
+                userId,
+                ostUICallback);
+        SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
+
+    }
+
+    @ReactMethod
+    public void revokeDevice(String userId, String address, String uuid ) {
+        Activity currentActivity = getCurrentActivity();
+        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
+                new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.REVOKE_DEVICE));
+        String workflowId = OstWalletUI.revokeDevice(currentActivity,
+                userId,
+                address,
+                ostUICallback);
+        SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
+    }
+
+    @ReactMethod
+    public void authorizeCurrentDeviceWithMnemonics(String userId, String uuid) {
+        Activity currentActivity = getCurrentActivity();
+        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
+                new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.AUTHORIZE_DEVICE_WITH_MNEMONICS));
+        String workflowId = OstWalletUI.authorizeCurrentDeviceWithMnemonics(currentActivity,
+                userId,
+                ostUICallback);
+        SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
+    }
+
+    @ReactMethod
     public void setThemeConfig(ReadableMap themeConfig){
         JSONObject themeConfigObject = null;
         try {
@@ -113,5 +189,11 @@ public class OstWalletUiRnSdkModule extends ReactContextBaseJavaModule {
             e.printStackTrace();
         }
         OstWalletUI.setContentConfig(getReactApplicationContext(), contentConfigObject);
+    }
+
+    @ReactMethod
+    public void showComponentSheet()  {
+        Activity currentActivity = getCurrentActivity();
+        OstWalletUI.showComponentSheet(currentActivity);
     }
 }

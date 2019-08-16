@@ -11,7 +11,9 @@ import com.ost.walletsdk.OstSdk;
 import com.ost.walletsdk.models.entities.OstBaseEntity;
 import com.ost.walletsdk.ui.OstPassphraseAcceptor;
 import com.ost.walletsdk.ui.OstUserPassphraseCallback;
-import com.ost.walletsdk.ui.sdkInteract.SdkInteract;
+import com.ost.walletsdk.ui.interfaces.FlowCompleteListener;
+import com.ost.walletsdk.ui.interfaces.FlowInterruptListener;
+import com.ost.walletsdk.ui.interfaces.RequestAcknowledgedListener;
 import com.ost.walletsdk.workflows.OstContextEntity;
 import com.ost.walletsdk.workflows.OstWorkflowContext;
 import com.ost.walletsdk.workflows.errors.OstError;
@@ -25,9 +27,9 @@ import java.util.HashMap;
 import javax.annotation.Nullable;
 
 public class OstUICallbackImpl implements OstUserPassphraseCallback,
-        SdkInteract.RequestAcknowledged,
-        SdkInteract.FlowInterrupt,
-        SdkInteract.FlowComplete {
+        RequestAcknowledgedListener,
+        FlowInterruptListener,
+        FlowCompleteListener {
 
     private static final String LOG_TAG = "OstUserPassphraseCBImpl";
     static private HashMap<String, OstUserPassphraseCallback> map = new HashMap<>();
@@ -66,7 +68,7 @@ public class OstUICallbackImpl implements OstUserPassphraseCallback,
 
 
     @Override
-    public void flowComplete(String workflowId, OstWorkflowContext ostWorkflowContext, OstContextEntity ostContextEntity) {
+    public void flowComplete(OstWorkflowContext ostWorkflowContext, OstContextEntity ostContextEntity) {
         JSONObject params = new JSONObject();
         try {
             params.put("ostWorkflowContext", convert(ostWorkflowContext));
@@ -80,7 +82,8 @@ public class OstUICallbackImpl implements OstUserPassphraseCallback,
     }
 
     @Override
-    public void flowInterrupt(String workflowId, OstWorkflowContext ostWorkflowContext, OstError ostError) {
+    public void flowInterrupt(OstWorkflowContext ostWorkflowContext, OstError ostError) {
+
         JSONObject params = new JSONObject();
         try {
             params.put("ostWorkflowContext", convert(ostWorkflowContext));
@@ -94,7 +97,8 @@ public class OstUICallbackImpl implements OstUserPassphraseCallback,
     }
 
     @Override
-    public void requestAcknowledged(String workflowId, OstWorkflowContext ostWorkflowContext, OstContextEntity ostContextEntity) {
+    public void requestAcknowledged(OstWorkflowContext ostWorkflowContext, OstContextEntity ostContextEntity) {
+        String workflowId = ostWorkflowContext.getWorkflowId();
         JSONObject params = new JSONObject();
         try {
             params.put("ostWorkflowContext", convert(ostWorkflowContext));
@@ -111,7 +115,9 @@ public class OstUICallbackImpl implements OstUserPassphraseCallback,
 
         try {
             if (null != context) {
-                obj.put("WORKFLOW_TYPE", context.getWorkflow_type().name());
+                obj.put("WORKFLOW_TYPE", context.getWorkflowType().name());
+                obj.put("WORKFLOW_ID", this.uuid);
+                obj.put("NATIVE_UI_WORKFLOW_ID", context.getWorkflowId());
             }
         } catch (Throwable e) {
             Log.w(LOG_TAG, "Unexpected OstWorkflowContext");
@@ -122,7 +128,7 @@ public class OstUICallbackImpl implements OstUserPassphraseCallback,
     public void errorEncountered(String internalErrorCode, String workflowId ,OstErrors.ErrorCode errorCode) {
         OstError error = new OstError( internalErrorCode , errorCode );
         Log.e(LOG_TAG, String.format("Internal error code: %s Error code: %s", error.getInternalErrorCode(), errorCode.toString()));
-        this.flowInterrupt(workflowId, pseudoContext, error);
+        this.flowInterrupt(pseudoContext, error);
     }
 
     private void sendEvent(ReactContext reactContext,

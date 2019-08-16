@@ -72,11 +72,88 @@ class OstWalletRNSdkUI {
 
   /* Begin: Reserved space for other workflow methods. */
 
+  /**
+   * Add user session
+   * @param {String} userId - Ost User id
+   * @param {String} expiresAfterInSecs - session key expiry time.
+   * @param {String} spendingLimit - spending limit once in a transaction of session
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+  addSession(userId, expiresAfterInSecs, spendingLimit, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.addSession(userId, String(expiresAfterInSecs), String(spendingLimit), coreUiCallback.uuid);
+    return coreUiCallback.uuid;
+  }
 
+  /**
+   * Revoke device
+   * @param {String} userId - Ost User id
+   * @param {String} deviceAddressToRecover - Device address which wants to recover
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+  revokeDevice(userId, deviceAddressToRevoke, uiCallback ) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.revokeDevice( userId, deviceAddressToRevoke, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
+  }
 
+  /**
+   * Get device mnemonics
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+  getDeviceMnemonics(userId, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.getDeviceMnemonics( userId, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
+  }
 
+  /**
+   * Update biometric prederence
+   * @param {String} userId - Ost User id
+   * @param {boolean} enable - to enable biometric prefernce
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+  updateBiometricPreference( userId , enable , uiCallback ){
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    enable =  !!enable;
+    OstWalletSdkUI.updateBiometricPreference( userId,  enable,  coreUiCallback.uuid  );
+    return coreUiCallback.uuid;
+  }
 
+  /**
+   * Authorize user device with mnemonics
+   * @param {String} userId - Ost User id
+   * @param {String} mnemonics - string of mnemonics
+   * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication
+   * @public
+   */
+  authorizeCurrentDeviceWithMnemonics(userId, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.authorizeCurrentDeviceWithMnemonics(userId, coreUiCallback.uuid);
 
+    return coreUiCallback.uuid;
+  }
+
+  /**
+   * Reset pin
+   *
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   */
+  resetPin(userId, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.resetPin( userId, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
+  }
+
+  showComponentSheet() {
+    OstWalletSdkUI.showComponentSheet()
+  }
 
   /* End: Reserved space for other workflow methods. */
   /* region: Event emitter. */

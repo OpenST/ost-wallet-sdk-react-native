@@ -56,10 +56,10 @@ class OstWalletUIWorkFlowCallback {
    * @param ostContextEntity - info about entity
    * @override
    */
-  requestAcknowledged( workflowId, ostWorkflowContext , ostContextEntity ) {
+  requestAcknowledged( ostWorkflowContext , ostContextEntity ) {
     let eName = EventNames.requestAcknowledged;
-    this.ee.emit(eName, this.uuid, ostWorkflowContext , ostContextEntity);
-    this.appCallback.requestAcknowledged && this.appCallback.requestAcknowledged(this.uuid, ostWorkflowContext , ostContextEntity);
+    this.ee.emit(eName, ostWorkflowContext , ostContextEntity);
+    this.appCallback.requestAcknowledged && this.appCallback.requestAcknowledged(ostWorkflowContext , ostContextEntity);
   }
 
   /**
@@ -69,10 +69,10 @@ class OstWalletUIWorkFlowCallback {
    * @param ostContextEntity -  status of the flow
    * @override
    */
-  flowComplete( workflowId, ostWorkflowContext , ostContextEntity ) {
+  flowComplete( ostWorkflowContext , ostContextEntity ) {
     let eName = EventNames.flowComplete;
-    this.ee.emit(eName, this.uuid, ostWorkflowContext , ostContextEntity);
-    this.appCallback.flowComplete && this.appCallback.flowComplete(this.uuid, ostWorkflowContext , ostContextEntity);
+    this.ee.emit(eName, ostWorkflowContext , ostContextEntity);
+    this.appCallback.flowComplete && this.appCallback.flowComplete(ostWorkflowContext , ostContextEntity);
   }
 
   /**
@@ -82,10 +82,10 @@ class OstWalletUIWorkFlowCallback {
    * @param ostError reason of interruption
    * @override
    */
-  flowInterrupt( workflowId, ostWorkflowContext , ostError)  {
+  flowInterrupt( ostWorkflowContext , ostError)  {
     let eName = EventNames.flowInterrupt;
-    this.ee.emit(eName, this.uuid, ostWorkflowContext , ostError);
-    this.appCallback.flowInterrupt && this.appCallback.flowInterrupt(this.uuid, ostWorkflowContext , ostError);
+    this.ee.emit(eName, ostWorkflowContext , ostError);
+    this.appCallback.flowInterrupt && this.appCallback.flowInterrupt(ostWorkflowContext , ostError);
   }
 
   getEventEmitter() {
