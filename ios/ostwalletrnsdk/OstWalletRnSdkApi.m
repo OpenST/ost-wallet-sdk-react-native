@@ -42,7 +42,7 @@ RCT_EXPORT_METHOD(getPricePointForUserId: (NSString * _Nonnull)userId
 }
 
 RCT_EXPORT_METHOD(getTransactionsForUserId: (NSString * _Nonnull)userId
-                  params: (NSDictionary<NSString *, id> * _Nonnull)params
+                  params: (NSDictionary<NSString *, id> * _Nullable)params
                   successCallback: (RCTResponseSenderBlock _Nonnull) successCallback
                   errorCallback: (RCTResponseSenderBlock _Nonnull) errorCallback )
 {
@@ -50,7 +50,22 @@ RCT_EXPORT_METHOD(getTransactionsForUserId: (NSString * _Nonnull)userId
   [OstJsonApi getTransactionsForUserId: userId params:params delegate:delegate];
 }
 
+RCT_EXPORT_METHOD(getPendingRecoveryForUserId: (NSString * _Nonnull)userId
+                  successCallback: (RCTResponseSenderBlock _Nonnull) successCallback
+                  errorCallback: (RCTResponseSenderBlock _Nonnull) errorCallback) {
+  
+  OstJsonApiCallbackImpl *delegate = [[OstJsonApiCallbackImpl alloc]initWithSuccess:successCallback errorCallback:errorCallback];
+  [OstJsonApi getPendingRecoveryForUserId:userId delegate:delegate];
+}
 
+RCT_EXPORT_METHOD(getDeviceListForUserId: (NSString * _Nonnull)userId
+                  params: (NSDictionary<NSString *, id> * _Nullable)params
+                  successCallback: (RCTResponseSenderBlock _Nonnull) successCallback
+                  errorCallback: (RCTResponseSenderBlock _Nonnull) errorCallback) {
+  
+  OstJsonApiCallbackImpl *delegate = [[OstJsonApiCallbackImpl alloc]initWithSuccess:successCallback errorCallback:errorCallback];
+  [OstJsonApi getDeviceListForUserId:userId params:params delegate:delegate];
+}
 
 
 @end

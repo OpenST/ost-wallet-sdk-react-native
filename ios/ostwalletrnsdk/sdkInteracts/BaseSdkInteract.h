@@ -17,6 +17,13 @@
 #endif
 
 
+#if __has_include("OstWalletSdk-Swift.h")
+#import "OstWalletSdk-Swift.h"
+#else
+#import <OstWalletSdk/OstWalletSdk-Swift.h>
+#endif
+
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BaseSdkInteract : NSObject

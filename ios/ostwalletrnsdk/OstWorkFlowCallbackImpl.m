@@ -14,8 +14,7 @@
 #import "OstPinAcceptWrap.h"
 #import "OstVerifyDataWrap.h"
 
-
-static NSMutableDictionary *map = nil;
+static NSMutableDictionary *workFlowCallbackImplMap =nil;
 
 @interface OstWorkFlowCallbackImpl()
 @end
@@ -24,18 +23,18 @@ static NSMutableDictionary *map = nil;
 
 + (OstWorkFlowCallbackImpl *) getInstance:(NSString *) uuid
 {
-  return map[uuid];
+  return workFlowCallbackImplMap[uuid];
 }
 
 - (instancetype) initWithId:(NSString * _Nonnull) uuId workflowContext: ( OstWorkflowContext *) workflowContext
 {
   self = [super init];
   if (self) {
-    if ( map == nil) {
-      map = [[NSMutableDictionary alloc] init];
+    if ( workFlowCallbackImplMap == nil) {
+      workFlowCallbackImplMap = [[NSMutableDictionary alloc] init];
     }
     
-    map[uuId] = self;
+    workFlowCallbackImplMap[uuId] = self;
     self.uuid = uuId;
     self.pseudoContext = workflowContext;
   }
@@ -170,7 +169,7 @@ static NSMutableDictionary *map = nil;
   }
   
   OstMessageBus *bus = [OstMessageBus getInstance];
-  [bus sendEventWithData: obj];
+  [bus sendEventWithData: obj forEvent: [bus getEventNameForType:@"sdk"]];
   bus = nil;
   
 }
@@ -179,6 +178,7 @@ static NSMutableDictionary *map = nil;
 - (NSMutableDictionary *) convertWorkflowContext: (OstWorkflowContext *) workflowContext {
   NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
   data[@"WORKFLOW_TYPE"] = [self getWorkflowTypeName: workflowContext.workflowType];
+  data[@"WORKFLOW_ID"] = [workflowContext getWorkflowId];
   return data;
 }
 
@@ -194,7 +194,7 @@ static NSMutableDictionary *map = nil;
     case OstWorkflowTypeAuthorizeDeviceWithMnemonics: return @"AUTHORIZE_DEVICE_WITH_MNEMONICS";
     case OstWorkflowTypeInitiateDeviceRecovery: return @"INITIATE_DEVICE_RECOVERY";
     case OstWorkflowTypeAbortDeviceRecovery: return @"ABORT_DEVICE_RECOVERY";
-    case OstWorkflowTypeRevokeDeviceWithQRCode: return @"REVOKE_DEVICE_WITH_QR_CODE";
+    case OstWorkflowTypeRevokeDevice: return @"REVOKE_DEVICE";
     case OstWorkflowTypeResetPin: return @"RESET_PIN";
     case OstWorkflowTypeLogoutAllSessions: return @"LOGOUT_ALL_SESSIONS";
     case OstWorkflowTypeUpdateBiometricPreference: return @"UPDATE_BIOMETRIC_PREFERENCE";
