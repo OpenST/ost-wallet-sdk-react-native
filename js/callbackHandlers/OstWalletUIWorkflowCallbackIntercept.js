@@ -30,24 +30,22 @@ class OstWalletUIWorkFlowCallbackIntercepts {
   getPassphrase(instance, method, data, interactuuid) {
     let interactInstance = new OstPassphrasePrefixAccept(instance.uuid, interactuuid)
       , ostWorkflowContext = data[ostWorkflowContextKey]
-      , workflowId = data[userIdKey]
-    args = [workflowId, ostWorkflowContext, interactInstance];
+      , userId = data[userIdKey]
+    args = [userId, ostWorkflowContext, interactInstance];
     instance && method.apply(instance, args);
   }
 
   requestAcknowledged( instance, method, data , interactuuid ) {    
     let ostWorkflowContext = data[ostWorkflowContextKey],
       ostContextEntity = data[ostContextEntityKey],
-      workflowId = data[workflowIdKey]
-      args = [workflowId, ostWorkflowContext , ostContextEntity];
+      args = [ostWorkflowContext , ostContextEntity];
     instance && method.apply(instance, args);
   }
 
   flowComplete( instance, method, data , interactuuid ) {
     let ostWorkflowContext = data[ostWorkflowContextKey],
       ostContextEntity = data[ostContextEntityKey],
-      workflowId = data[workflowIdKey],
-      args = [workflowId, ostWorkflowContext , ostContextEntity ];
+      args = [ostWorkflowContext , ostContextEntity ];
     clearInstance(instance.uuid);
     instance && method.apply(instance, args);
   }
@@ -55,8 +53,7 @@ class OstWalletUIWorkFlowCallbackIntercepts {
   flowInterrupt(instance, method, data , interactuuid ) {
     let ostWorkflowContext = data[ostWorkflowContextKey],
       ostError = instantiateOstError ( data[ostErrorKey] ) ,
-      workflowId = data[workflowIdKey],
-      args = [workflowId, ostWorkflowContext, ostError ];
+      args = [ostWorkflowContext, ostError ];
     clearInstance(instance.uuid);
     instance && method.apply(instance, args);
   }
