@@ -38,12 +38,22 @@ RCT_EXPORT_MODULE();
 
 - (NSArray<NSString *> *)supportedEvents
 {
-  return @[@"onOstWalletSdkEvents"];
+  return @[@"onOstWalletSdkEvents", @"onOstWalletSdkUIEvents"];
 }
 
-- (void) sendEventWithData: (NSMutableDictionary *) data
+- (NSString *)getEventNameForType: (NSString *)type {
+  
+  if([type caseInsensitiveCompare:@"sdk"] == NSOrderedSame) {
+    return @"onOstWalletSdkEvents";
+  }else if([type caseInsensitiveCompare:@"sdkui"] == NSOrderedSame) {
+     return @"onOstWalletSdkUIEvents";
+  }
+  return @"";
+}
+
+- (void) sendEventWithData: (NSMutableDictionary *) data forEvent: (NSString *)eventName
 {
-  [self sendEventWithName:@"onOstWalletSdkEvents" body: data];
+  [self sendEventWithName:eventName body: data];
 }
 
 + (BOOL) requiresMainQueueSetup

@@ -1,5 +1,10 @@
 # OST Wallet SDK Changelog
 
+## Version v2.3.0-beta.1
+### Changes:
+* UI for OstWalletSdk can be derived from SDK itself.
+
+
 ## Version v2.2.4
 ### Bug Fix:
 * iOS: Inconsistent signature generation fix.
