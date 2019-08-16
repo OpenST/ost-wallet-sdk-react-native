@@ -89,6 +89,59 @@ OstWalletSdkUI.activateUser(
 )
 ```
 
+### Authorize Session
+
+A session is a period of time during which a sessionKey is authorized to sign transactions under a pre-set limit on behalf of the user. The device manager, which controls the tokens, authorizes sessions.
+```js
+/**
+   * Add user session
+   * @param {String} userId - Ost User id
+   * @param {String} expiresAfterInSecs - session key expiry time.
+   * @param {String} spendingLimit - spending limit once in a transaction of session
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+  addSession(userId, expiresAfterInSecs, spendingLimit, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.addSession(userId, String(expiresAfterInSecs), String(spendingLimit), coreUiCallback.uuid);
+    return coreUiCallback.uuid;
+  }
+```
+
+### Get Mnemonic Phrase
+
+The mnemonic phrase represents a human-readable way to authorize a new device. This phrase is 12 words long.
+```js
+/**
+   * Get device mnemonics
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+  getDeviceMnemonics(userId, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.getDeviceMnemonics( userId, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
+  }
+```
+
+### Reset a User's PIN
+
+The user's PIN is set when activating the user. This method supports re-setting a PIN and re-creating the recoveryOwner as part of that.
+```js
+/**
+   * Reset pin
+   *
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   */
+  resetPin(userId, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.resetPin( userId, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
+  }
+```
+
 ### Initialize Recovery
 
 A user can control their Brand Tokens using their authorized devices. If they lose their authorized device, they can recover access to their BrandTokens by authorizing a new device via the recovery process.
@@ -127,6 +180,42 @@ OstWalletSdkUI.abortDeviceRecovery(
 ) 
 ```
 
+### Revoke Device
+
+To revoke device access.
+```js
+/**
+   * Revoke device
+   * @param {String} userId - Ost User id
+   * @param {String} deviceAddressToRecover - Device address which wants to recover
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+  revokeDevice(userId, deviceAddressToRevoke, uiCallback ) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.revokeDevice( userId, deviceAddressToRevoke, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
+  }
+```
+
+### Update Biometric Preference
+
+This method can be used to enable or disable the biometric.
+```js
+/**
+   * Update biometric prederence
+   * @param {String} userId - Ost User id
+   * @param {boolean} enable - to enable biometric prefernce
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+  updateBiometricPreference( userId , enable , uiCallback ){
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    enable =  !!enable;
+    OstWalletSdkUI.updateBiometricPreference( userId,  enable,  coreUiCallback.uuid  );
+    return coreUiCallback.uuid;
+  }
+```
 
 ### Subscribe 
 
