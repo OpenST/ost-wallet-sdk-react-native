@@ -2,8 +2,7 @@
 
 ## Introduction
 
-Wallet UI SDK is useful to integrate OstWalletSdk in application with available UI components.
-Please note, at the moment, UI features are only available in <em><b>beta</b></em> release.
+For quick and easy integration with SDK, developers can use built-in User Interface Components which are themeable and support content customization.
 
 ## Setup
 
@@ -296,6 +295,7 @@ OstWalletSdkUI.unsubscribe(
 
 Derive workflow implementation from  `OstWalletUIWorkflowCallback` class before calling any of the above workflows.
 
+### Get User Passphrase
 ```javascript
 /** Get server defined passphrase from user.
 *
@@ -313,4 +313,42 @@ OstPassphrasePrefixAccept.setPassphrase(
     passphrasePrefix, 
     userId
 )
+```
+### Request Acknowledged
+Acknowledge application about the request which is going to made by SDK.
+```js
+/**
+   * Request acknowledged
+   * @param {String} workflowId - Workflow id
+   * @param {Object} ostWorkflowContext - info about workflow type
+   * @param ostContextEntity - info about entity
+   * @override
+   */
+  requestAcknowledged(workflowId, ostWorkflowContext , ostContextEntity )
+```
+
+### Flow Complete
+Inform SDK user that the flow is complete.
+```js
+/**
+   * Flow complete
+   * @param {String} workflowId - Workflow id
+   * @param ostWorkflowContext - workflow type
+   * @param ostContextEntity -  status of the flow
+   * @override
+   */
+  flowComplete(workflowId, ostWorkflowContext , ostContextEntity )
+```
+
+### Flow Interrupt
+Use this listener to get flow interrupt update of UI workflow
+```js
+/**
+   * Flow interrupt
+   * @param {String} workflowId - Workflow id
+   * @param ostWorkflowContext workflow type
+   * @param ostError reason of interruption
+   * @override
+   */
+  flowInterrupt(workflowId, ostWorkflowContext , ostError)
 ```
