@@ -1,3 +1,4 @@
+//
 /*
  Copyright © 2019 OST.com Inc
  
@@ -6,7 +7,10 @@
  You may obtain a copy of the License at
  
  http://www.apache.org/licenses/LICENSE-2.0
- */
+*/
+  
+
+#import <Foundation/Foundation.h>
 
 #if __has_include("RCTBridgeModule.h")
 #import "RCTBridgeModule.h"
@@ -14,22 +18,16 @@
 #import <React/RCTBridgeModule.h>
 #endif
 
-
-#if __has_include("RCTEventEmitter.h")
-#import "RCTEventEmitter.h"
+#if __has_include("OstWalletSdk-Swift.h")
+#import "OstWalletSdk-Swift.h"
 #else
-#import <React/RCTEventEmitter.h>
+#import <OstWalletSdk/OstWalletSdk-Swift.h>
 #endif
-
-
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OstMessageBus : RCTEventEmitter <RCTBridgeModule>
-+ (OstMessageBus *) getInstance;
-- (void) sendEventWithData: (NSMutableDictionary *) data forEvent: (NSString *)eventName;
-+ (BOOL) requiresMainQueueSetup;
-- (NSString *)getEventNameForType: (NSString *)type;
+@interface OstRNSdkUICallbackManager : NSObject <RCTBridgeModule>
+
 @end
 
 NS_ASSUME_NONNULL_END

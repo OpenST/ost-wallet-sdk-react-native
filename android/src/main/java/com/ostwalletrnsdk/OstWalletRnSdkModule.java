@@ -22,14 +22,13 @@ import com.ost.walletsdk.OstSdk;
 import com.ost.walletsdk.ecKeyInteracts.UserPassphrase;
 import com.ost.walletsdk.models.entities.OstToken;
 import com.ost.walletsdk.models.entities.OstUser;
+import com.ost.walletsdk.ui.OstWalletUI;
 import com.ost.walletsdk.utils.CommonUtils;
-import com.ost.walletsdk.workflows.OstExecuteTransaction;
 import com.ost.walletsdk.workflows.OstWorkflowContext;
 import com.ost.walletsdk.workflows.errors.OstError;
 import com.ost.walletsdk.workflows.errors.OstErrors;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
@@ -56,7 +55,7 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
     Callback callback
   ) {
     try{
-      OstSdk.initialize(getReactApplicationContext(), BASE_URL);
+      OstWalletUI.initialize(getReactApplicationContext(), BASE_URL);
     } catch(Throwable e){
       callback.invoke( Utils.getError( e , "rn_ownsm_i_1")  );
       return;
@@ -248,7 +247,7 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public  void revokeDevice(String userId ,  String deviceAddress , String uuid ){
-    OstWorkflowContext context = new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.REVOKE_DEVICE_WITH_QR_CODE);
+    OstWorkflowContext context = new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.REVOKE_DEVICE);
     OstWorkFlowCallbackImpl workFlowCallback = new OstWorkFlowCallbackImpl( uuid, this.reactContext, context );
     OstSdk.revokeDevice(userId , deviceAddress , workFlowCallback );
   }
