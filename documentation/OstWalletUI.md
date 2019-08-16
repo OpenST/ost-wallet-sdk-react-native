@@ -22,17 +22,10 @@ import {OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-native';
 
 ### Set Theme Config
 
-Theme for OstWalletSdkUI can be initialized by calling `setThemeConfig` API which setup OstWalletSdkUI theme config
+Theme for OstWalletSdkUI can be initialized by calling `setThemeConfig` API which setup OstWalletSdkUI theme config. To define custom theme config, please refer [ThemeConfig](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/release-2.3/documentation/ThemeConfig.md) documentation.
 
-`nav_bar_logo_image` is used to show image on navigation bar.
 
-```javascript
-const theme_config = {
-    "nav_bar_logo_image": {
-        "asset_name": "nav_bar_logo"
-    }
-};
-
+```js
 /**
 * Set theme config for UI
 * config: Config to use for UI
@@ -45,22 +38,12 @@ OstWalletSdkUI.setThemeConfig(theme_config);
 
 ### Set Content Config
 
-Content for OstWalletSdkUI can be initialized by calling `setContentConfig` API which setup OstWalletSdkUI content config
+Content for OstWalletSdkUI can be initialized by calling `setContentConfig` API which setup OstWalletSdkUI content config.
+To define custom content config, please refer [ContentConfig](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/release-2.3/documentation/ContentConfig.md) documentation.
 
 While activating user `create_pin["terms_and_condition_url"]` url is used to show terms and conditions, where as while confirming pin `confirm_pin["terms_and_condition_url"]` url is used.
 
-```Swift
-const content_config = {
-    "activate_user": {
-        "create_pin": {
-            "terms_and_condition_url": "https://ost.com/terms"
-        },
-        "confirm_pin": {
-            "terms_and_condition_url": "https://ost.com/terms"
-        }
-    }
-};
-
+```js
 /**
 * Set content config for UI
 * config: Config to use for UI
@@ -68,7 +51,46 @@ const content_config = {
 OstWalletSdkUI.setContentConfig(content_config);
 ```
 
-### Activate User
+### Setup your Passphrase Prefix Delegate
+
+`Passphrase Prefix` is a salt provided by your application that assists in generation of User's recovery key using user's Pin.
+This salt should be _unique_ for each user, is immutable and needs to be associated with the user. The salt should not unencrypted be 
+stored in memory or on deivce. When the UI workflow need's to ask for user's Pin, delegate's getPassphrase method is invoked.
+The delegate must be derived from `OstWalletUIWorkflowCallback` class.
+
+Here is an example:
+```js
+import { OstWalletUIWorkflowCallback } from '@ostdotcom/ost-wallet-sdk-react-native';
+class UserPassphrasePrefixDelegate extends OstWalletUIWorkflowCallback {
+  constructor() {
+    super();
+  }
+  getPassphrase(userId, ostWorkflowContext, OstPassphrasePrefixAccept) {
+    let fetchPromise = new Promise((resolve,reject) => {
+        //Write code here to validate userId. 
+        //If it is not same as that of the logged-in user, reject the promise.
+        
+        //Write code here to fetch the salt from your server.
+        //Read the passphrasePrefix from response and resolve the Promise. 
+    });
+    fetchPromise
+      .then((passphrasePrefix) => {
+        OstPassphrasePrefixAccept.setPassphrase(passphrasePrefix, userId, (error) => {
+          console.warn(error);
+        });
+      })
+      .catch((err) => {
+          // Cancel the workflow.
+          OstPassphrasePrefixAccept.cancelFlow();
+      });
+  }
+}
+export default UserPassphrasePrefixDelegate;
+```
+
+### Ost Wallet UI Workflows
+
+#### Activate User
 User activation refers to the deployment of smart-contracts that form the user's Brand Token wallet. An activated user can engage with a Brand Token economy.
 
 ```javascript
@@ -88,7 +110,7 @@ OstWalletSdkUI.activateUser(
 )
 ```
 
-### Authorize Session
+#### Add Session
 
 A session is a period of time during which a sessionKey is authorized to sign transactions under a pre-set limit on behalf of the user. The device manager, which controls the tokens, authorizes sessions.
 ```js
@@ -107,7 +129,7 @@ A session is a period of time during which a sessionKey is authorized to sign tr
   }
 ```
 
-### Get Mnemonic Phrase
+#### Get Mnemonic Phrase
 
 The mnemonic phrase represents a human-readable way to authorize a new device. This phrase is 12 words long.
 ```js
@@ -124,7 +146,7 @@ The mnemonic phrase represents a human-readable way to authorize a new device. T
   }
 ```
 
-### Reset a User's PIN
+#### Reset a User's PIN
 
 The user's PIN is set when activating the user. This method supports re-setting a PIN and re-creating the recoveryOwner as part of that.
 ```js
@@ -141,7 +163,7 @@ The user's PIN is set when activating the user. This method supports re-setting 
   }
 ```
 
-### Initialize Recovery
+#### Initiate Recovery
 
 A user can control their Brand Tokens using their authorized devices. If they lose their authorized device, they can recover access to their BrandTokens by authorizing a new device via the recovery process.
 
@@ -151,18 +173,23 @@ If application set `recoverDeviceAddress` then OstWalletUI ask for `pin` to init
 /**
 * Initiate device recovery 
 * @param {String} userId - Ost User id
-* @param {String} deviceAddressToRecover - Device address which wants to recover
+* @param {String} recoverDeviceAddress - Device address which wants to recover
 * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication 
 * @public
 */
 OstWalletSdkUI.initiateDeviceRecovery(
     userId,
-    deviceAddressToRecover,
+    recoverDeviceAddress,
     uiCallback 
 )
 ```
 
-### Abort Device Recovery
+> `recoverDeviceAddress` can be `null`. <br/> 
+> If you have your own UI to select the device to revoke, set `recoverDeviceAddress` to the selected device address.<br/> 
+> When `null` is passed, the Sdk will ask user to choose the device using built-in device list UI.<br/> 
+
+
+#### Abort Device Recovery
 
 To abort initiated device recovery.
 
@@ -179,14 +206,14 @@ OstWalletSdkUI.abortDeviceRecovery(
 ) 
 ```
 
-### Revoke Device
+#### Revoke Device
 
 To revoke device access.
 ```js
 /**
    * Revoke device
    * @param {String} userId - Ost User id
-   * @param {String} deviceAddressToRecover - Device address which wants to recover
+   * @param {String} deviceAddressToRevoke - Device address which wants to recover
    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
    * @public
    */
@@ -196,8 +223,12 @@ To revoke device access.
     return coreUiCallback.uuid;
   }
 ```
+> `deviceAddressToRevoke` can be `null`. <br/> 
+> If you have your own UI to select the device to revoke, set `deviceAddressToRevoke` to the selected device address.<br/> 
+> When `null` is passed, the Sdk will ask user to choose the device using built-in device list UI.<br/> 
 
-### Update Biometric Preference
+
+#### Update Biometric Preference
 
 This method can be used to enable or disable the biometric.
 ```js
@@ -208,7 +239,7 @@ This method can be used to enable or disable the biometric.
    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
    * @public
    */
-  updateBiometricPreference( userId , enable , uiCallback ){
+  updateBiometricPreference( userId, enable, uiCallback ){
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
     enable =  !!enable;
     OstWalletSdkUI.updateBiometricPreference( userId,  enable,  coreUiCallback.uuid  );
@@ -216,7 +247,9 @@ This method can be used to enable or disable the biometric.
   }
 ```
 
-### Subscribe 
+##  Ost Wallet UI Events and Listeners
+
+### Subscribe
 
 Subscribe to specified event of UI Workflow
 
@@ -271,11 +304,11 @@ OstWalletSdkUI.subscribeOnce(
 
 ### Unsubscribe
 
-Unsubscribes the listner from the specified event of UI Workflow.
+Unsubscribes the listener from the specified event of UI Workflow.
 
 ```javascript
 /**
-* Unsubscribes the listner from the specified event of UI Workflow.
+* Unsubscribes the listener from the specified event of UI Workflow.
 * @param {String} workflowId - Id of the workflow as returned by methods of OstWalletSdkUI
 * @param {String} eventName - Name of the event to subscribe to.
 * @param {Function} listener - The listener function.
@@ -291,64 +324,49 @@ OstWalletSdkUI.unsubscribe(
 )
 ```
 
-# SDK UI WorkFlow Callbacks
+### Event Listeners
 
-Derive workflow implementation from  `OstWalletUIWorkflowCallback` class before calling any of the above workflows.
-
-### Get User Passphrase
-```javascript
-/** Get server defined passphrase from user.
-*
-* @param {String} userId - Id of user whose passphrase is required.
-* @param {Object} ostWorkflowContext - info about workflow type
-* @param {OstPassphrasePrefixAccept} setPassphrase - Set passhrase which received from server
-*/
-getPassphrase( userId, ostWorkflowContext, OstPassphrasePrefixAccept) 
-```
-Once application gets passphrase prefix for provied `userId`, application should call  
-```javascript
-/** Set passphrase pefix received from server
-*
-OstPassphrasePrefixAccept.setPassphrase(
-    passphrasePrefix, 
-    userId
-)
-```
-### Request Acknowledged
+#### Request Acknowledged Listener
 Acknowledge application about the request which is going to made by SDK.
 ```js
 /**
    * Request acknowledged
-   * @param {String} workflowId - Workflow id
    * @param {Object} ostWorkflowContext - info about workflow type
    * @param ostContextEntity - info about entity
    * @override
    */
-  requestAcknowledged(workflowId, ostWorkflowContext , ostContextEntity )
+  requestAcknowledged(ostWorkflowContext, ostContextEntity ) => {
+    //ostWorkflowContext.WORKFLOW_ID gives the id of the workflow.
+    //ostWorkflowContext.WORKFLOW_TYPE gives the type of the workflow.
+  }
 ```
 
-### Flow Complete
-Inform SDK user that the flow is complete.
+#### Flow Complete Listener
 ```js
 /**
    * Flow complete
-   * @param {String} workflowId - Workflow id
    * @param ostWorkflowContext - workflow type
    * @param ostContextEntity -  status of the flow
    * @override
    */
-  flowComplete(workflowId, ostWorkflowContext , ostContextEntity )
+  flowComplete(ostWorkflowContext, ostContextEntity ) => {
+    //ostWorkflowContext.WORKFLOW_ID gives the id of the workflow.
+    //ostWorkflowContext.WORKFLOW_TYPE gives the type of the workflow.
+  }
 ```
 
-### Flow Interrupt
-Use this listener to get flow interrupt update of UI workflow
+#### Flow Interrupt Listener
 ```js
 /**
    * Flow interrupt
-   * @param {String} workflowId - Workflow id
    * @param ostWorkflowContext workflow type
    * @param ostError reason of interruption
    * @override
    */
-  flowInterrupt(workflowId, ostWorkflowContext , ostError)
+  flowInterrupt(ostWorkflowContext, ostError) => {
+    //ostWorkflowContext.WORKFLOW_ID gives the id of the workflow.
+    //ostWorkflowContext.WORKFLOW_TYPE gives the type of the workflow.
+  }
 ```
+
+
