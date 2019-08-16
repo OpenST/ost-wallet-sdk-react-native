@@ -178,6 +178,7 @@ static NSMutableDictionary *workFlowCallbackImplMap =nil;
 - (NSMutableDictionary *) convertWorkflowContext: (OstWorkflowContext *) workflowContext {
   NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
   data[@"WORKFLOW_TYPE"] = [self getWorkflowTypeName: workflowContext.workflowType];
+  data[@"WORKFLOW_ID"] = [workflowContext getWorkflowId];
   return data;
 }
 
@@ -193,7 +194,7 @@ static NSMutableDictionary *workFlowCallbackImplMap =nil;
     case OstWorkflowTypeAuthorizeDeviceWithMnemonics: return @"AUTHORIZE_DEVICE_WITH_MNEMONICS";
     case OstWorkflowTypeInitiateDeviceRecovery: return @"INITIATE_DEVICE_RECOVERY";
     case OstWorkflowTypeAbortDeviceRecovery: return @"ABORT_DEVICE_RECOVERY";
-    case OstWorkflowTypeRevokeDeviceWithQRCode: return @"REVOKE_DEVICE_WITH_QR_CODE";
+    case OstWorkflowTypeRevokeDevice: return @"REVOKE_DEVICE";
     case OstWorkflowTypeResetPin: return @"RESET_PIN";
     case OstWorkflowTypeLogoutAllSessions: return @"LOGOUT_ALL_SESSIONS";
     case OstWorkflowTypeUpdateBiometricPreference: return @"UPDATE_BIOMETRIC_PREFERENCE";
