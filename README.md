@@ -29,6 +29,11 @@ Run following command in your react-native project root
  npm install @ostdotcom/ost-wallet-sdk-react-native
 ```
 
+The sdk needs [eventemitter3](https://github.com/primus/eventemitter3) as peer-dependency. To install `eventemitter3`, run following command in your react-native project root
+```bash
+ npm install eventemitter3
+```
+
 3. Linking the OST React native SDk with your project
 
 ```bash
