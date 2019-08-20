@@ -83,6 +83,27 @@ RCT_EXPORT_METHOD(getActiveSessionsForUserId: (NSString * _Nonnull) userId
   callback( @[response] );
 }
 
+RCT_EXPORT_METHOD(getCurrentDeviceForUserId: (NSString * _Nonnull) userId
+                  callback:(RCTResponseSenderBlock)callback) {
+  if ( nil == userId ) {
+    callback( @[] );
+    return;
+  }
+  OstUser *user = [OstWalletSdk getUser:userId];
+  if ( nil == user ) {
+    callback( @[] );
+    return;
+  }
+  OstDevice *device = [user getCurrentDevice];
+  if ( nil == device ) {
+    callback( @[] );
+    return;
+  }
+
+  callback( @[device.data]);
+}
+
+
 #pragma mark - Workflows
 
 RCT_EXPORT_METHOD(setupDevice:(NSString *)userId
