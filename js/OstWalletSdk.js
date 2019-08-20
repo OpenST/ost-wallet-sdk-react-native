@@ -209,6 +209,19 @@ class OstWalletRNSdk {
         OstWalletSdk.logoutAllSessions( userId ,  workflow.uuid  ); 
     }
 
+    /**
+    * Get token object for provided userId
+    * @param {String} tokenId - Ost Token id
+    * @param {function} callback - Gets token object if present else nil
+    * @callback params {Object}token
+    * @public
+    */
+    getToken(tokenId, callback) {
+        OstWalletSdk.getToken(tokenId, (tokenEntity)=>{
+            callback( tokenEntity );
+        });
+    }
+
   /**
    * Get user object for provided userId
    * @param {String} userId - Ost User id
@@ -222,16 +235,40 @@ class OstWalletRNSdk {
         });
     }
 
-    /**
-    * Get token object for provided userId
-    * @param {String} userId - Ost User id
-    * @param {function} callback - Gets object if present else nil
-    * @callback params {Object}token
-    * @public
-    */
-    getToken(tokenId, callback) {
-        OstWalletSdk.getToken(tokenId, (tokenEntity)=>{
-            callback( tokenEntity );
+  /**
+   * Get current device object for provided userId
+   * @param {String} userId - Ost User id
+   * @param {function} callback - Gets current device object if present else nil
+   * @callback params {Object} device
+   * @public
+   */
+    getCurrentDeviceForUserId(userId, callback) {
+        OstWalletSdk.getCurrentDeviceForUserId(userId, (device)=>{
+          callback( device );
+        });
+    }
+
+
+  /**
+   * Get user object for provided userId
+   * @param {String} userId - Ost User id
+   * @param {String} minimumSpendingLimitInWei - 
+   * @param {function} callback - Gets array of current device sessions.
+   * @callback params {Array} array of sessions
+   * @public
+   */
+    getActiveSessionsForUserId(userId, minimumSpendingLimitInWei, callback) {
+        let theCallback;
+        if ( typeof minimumSpendingLimitInWei === 'function' ) {
+            theCallback = minimumSpendingLimitInWei;
+            minimumSpendingLimitInWei = "0";
+        } else {
+            theCallback = callback;
+            minimumSpendingLimitInWei = String( minimumSpendingLimitInWei );
+        }
+        console.log("getActiveSessionsForUserId userId", userId);
+        OstWalletSdk.getActiveSessionsForUserId(userId, minimumSpendingLimitInWei, (device)=>{
+          theCallback && theCallback( device );
         });
     }
 }

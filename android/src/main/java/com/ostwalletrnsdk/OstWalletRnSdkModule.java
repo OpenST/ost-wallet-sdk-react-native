@@ -11,6 +11,8 @@
 package com.ostwalletrnsdk;
 
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Base64;
 
 import com.facebook.react.bridge.Callback;
@@ -20,6 +22,8 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.ost.walletsdk.OstSdk;
 import com.ost.walletsdk.ecKeyInteracts.UserPassphrase;
+import com.ost.walletsdk.models.entities.OstDevice;
+import com.ost.walletsdk.models.entities.OstSession;
 import com.ost.walletsdk.models.entities.OstToken;
 import com.ost.walletsdk.models.entities.OstUser;
 import com.ost.walletsdk.ui.OstWalletUI;
@@ -28,7 +32,9 @@ import com.ost.walletsdk.workflows.OstWorkflowContext;
 import com.ost.walletsdk.workflows.errors.OstError;
 import com.ost.walletsdk.workflows.errors.OstErrors;
 
+import jnr.a64asm.Util;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
@@ -49,6 +55,7 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
     return "OstWalletSdk";
   }
 
+  // region - Methods
   @ReactMethod
   public void initialize(
     String BASE_URL,
@@ -98,6 +105,56 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
       return;
     }
   }
+
+  @ReactMethod
+  public void getCurrentDeviceForUserId(@NonNull String userId, @NonNull Callback callback) {
+    try{
+      OstDevice ostDevice = OstSdk.getCurrentDeviceForUserId(userId);
+      if (null == ostDevice) {
+        callback.invoke();
+      } else {
+        callback.invoke(Utils.convertJsonToMap(ostDevice.getData()));
+      }
+    } catch(Throwable e){
+      callback.invoke( Utils.getError( e , "rn_ownsm_gcdfuid_1")  );
+      return;
+    }
+  }
+
+  @ReactMethod
+  public void getActiveSessionsForUserId(@NonNull String userId, @Nullable String minimumSpendingLimitInWei, @NonNull Callback callback) {
+    try{
+      List<OstSession> activeSessions = OstSdk.getActiveSessionsForUserId(userId, minimumSpendingLimitInWei);
+
+      // Convert to JSON Array.
+      JSONArray jsonArray = new JSONArray();
+      for (OstSession session : activeSessions) {
+        jsonArray.put( session.getData() );
+      }
+
+      // Invoke callback
+      callback.invoke(Utils.convertJsonToArray( jsonArray ));
+    } catch(Throwable e){
+      callback.invoke( Utils.getError( e , "rn_gasfuid_gt_1")  );
+      return;
+    }
+  }
+
+  @ReactMethod
+  public void getAddDeviceQRCode(String userId ,Callback successCallback ,  Callback errorCallback ){
+    try {
+      Bitmap bitmap = OstSdk.getAddDeviceQRCode( userId );
+      ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+      bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+      byte[] byteArray = byteArrayOutputStream .toByteArray();
+      String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+      successCallback.invoke( encoded );
+    }catch ( Throwable e ){
+      errorCallback.invoke( Utils.getError( e , "rn_ownsm_gadqrc_1" )  );
+    }
+  }
+
+  // endregion
 
   @ReactMethod
   public void setupDevice(
@@ -201,20 +258,6 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
       OstWorkflowContext context = new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.AUTHORIZE_DEVICE_WITH_MNEMONICS);
       OstWorkFlowCallbackImpl workFlowCallback = new OstWorkFlowCallbackImpl( uuid, this.reactContext, context );
       OstSdk.authorizeCurrentDeviceWithMnemonics(userId , byteArrayMnemonics ,workFlowCallback ) ;
-  }
-
-  @ReactMethod
-  public void getAddDeviceQRCode(String userId ,Callback successCallback ,  Callback errorCallback ){
-    try {
-      Bitmap bitmap = OstSdk.getAddDeviceQRCode( userId );
-      ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-      bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-      byte[] byteArray = byteArrayOutputStream .toByteArray();
-      String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-      successCallback.invoke( encoded );
-    }catch ( Throwable e ){
-      errorCallback.invoke( Utils.getError( e , "rn_ownsm_gadqrc_1" )  );
-    }
   }
 
   @ReactMethod
