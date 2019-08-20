@@ -249,7 +249,7 @@ class OstWalletRNSdk {
     }
 
   /**
-   * Get biometric preference for user 
+   * Get biometric preference for user
    *
    * @param userId - Ost User id
    * @param callback - Gets biometric preference boolean value
