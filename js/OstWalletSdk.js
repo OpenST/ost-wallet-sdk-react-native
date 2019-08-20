@@ -267,8 +267,8 @@ class OstWalletRNSdk {
             minimumSpendingLimitInWei = String( minimumSpendingLimitInWei );
         }
         console.log("getActiveSessionsForUserId userId", userId);
-        OstWalletSdk.getActiveSessionsForUserId(userId, minimumSpendingLimitInWei, (device)=>{
-          theCallback && theCallback( device );
+        OstWalletSdk.getActiveSessionsForUserId(userId, minimumSpendingLimitInWei, (activeSessions)=>{
+          theCallback && theCallback( activeSessions );
         });
     }
 }
