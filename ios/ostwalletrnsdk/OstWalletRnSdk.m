@@ -60,6 +60,29 @@ RCT_EXPORT_METHOD(getToken: (NSString *)tokenId
   callback( @[] );
 }
 
+RCT_EXPORT_METHOD(getActiveSessionsForUserId: (NSString * _Nonnull) userId
+                  spendingLimit:(NSString * _Nullable) spendingLimit
+                  callback:(RCTResponseSenderBlock)callback) {
+  
+  NSMutableArray <NSDictionary *> *response = [[NSMutableArray alloc]init];
+  if ( nil == userId ) {
+    callback( @[response] );
+    return;
+  }
+  
+  NSArray<OstSession *> *sessions = [OstWalletSdk getActiveSessionsWithUserId: userId spendingLimit: spendingLimit];
+  if ( nil == sessions || sessions.count < 1 ) {
+    callback( @[response] );
+    return;
+  }
+  
+  for(OstSession *s in sessions) {
+    NSDictionary *data = s.data;
+    [response addObject: data];
+  }
+  callback( @[response] );
+}
+
 #pragma mark - Workflows
 
 RCT_EXPORT_METHOD(setupDevice:(NSString *)userId
