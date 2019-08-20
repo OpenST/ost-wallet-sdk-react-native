@@ -151,6 +151,16 @@ class OstWalletRNSdkUI {
     return coreUiCallback.uuid;
   }
 
+  getAddDeviceQRCode(userId, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.getAddDeviceQRCode( userId, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
+  }
+
+
+  /**
+   * Show device component sheet
+   */
   showComponentSheet() {
     OstWalletSdkUI.showComponentSheet()
   }

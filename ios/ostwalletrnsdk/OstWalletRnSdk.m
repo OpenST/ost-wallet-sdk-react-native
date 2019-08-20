@@ -103,6 +103,12 @@ RCT_EXPORT_METHOD(getCurrentDeviceForUserId: (NSString * _Nonnull) userId
   callback( @[device.data]);
 }
 
+RCT_EXPORT_METHOD(isBiometricEnabled: (NSString *)userId
+                  callback:(RCTResponseSenderBlock)callback) {
+  
+  BOOL isBiometricEnabled = [OstWalletSdk isBiometricEnabledWithUserId:userId];
+  callback( @[@(isBiometricEnabled)] );
+}
 
 #pragma mark - Workflows
 

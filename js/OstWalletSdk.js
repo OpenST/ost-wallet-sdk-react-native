@@ -248,6 +248,17 @@ class OstWalletRNSdk {
         });
     }
 
+  /**
+   * Get biometric preference for user 
+   *
+   * @param userId - Ost User id
+   * @param callback - Gets biometric preference boolean value
+   */
+  isBiometricEnabled(userId, callback) {
+    OstWalletSdk.isBiometricEnabled(userId, (status) => {
+      callback( status );
+    })
+  }
 
   /**
    * Get user object for provided userId
