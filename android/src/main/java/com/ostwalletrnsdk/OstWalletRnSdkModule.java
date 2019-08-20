@@ -154,6 +154,14 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
     }
   }
 
+  @ReactMethod
+  public void isBiometricEnabled(@NonNull String userId, @NonNull Callback callback) {
+    if ( null == userId ) {
+      callback.invoke(false);
+    }
+    callback.invoke( OstSdk.isBiometricEnabled(userId) );
+  }
+
   // endregion
 
   @ReactMethod
