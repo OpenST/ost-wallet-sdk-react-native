@@ -144,6 +144,7 @@ class OstWalletRNSdkUI {
    *
    * @param {String} userId - Ost User id
    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
    */
   resetPin(userId, uiCallback) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
@@ -151,12 +152,30 @@ class OstWalletRNSdkUI {
     return coreUiCallback.uuid;
   }
 
+  /**
+   * Get add device QR code
+   *
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
   getAddDeviceQRCode(userId, uiCallback) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
     OstWalletSdkUI.getAddDeviceQRCode( userId, coreUiCallback.uuid );
     return coreUiCallback.uuid;
   }
 
+  /**
+   * Authorize device via QR code
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @returns {number}
+   */
+  authorizeDeviceViaQR(userId, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.authorizeDeviceViaQR( userId, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
+  }
 
   /**
    * Show device component sheet
