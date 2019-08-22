@@ -20,9 +20,20 @@ class OstWalletRNSdk {
      * @callback params {Object}error , {Boolean} success
      * @public
      */
-    initialize( endpoint , callback ){
-        OstWalletSdk.initialize( endpoint , (error)=>{
-          callback( error , !error );
+    initialize( endpoint , config, callback ) {
+        let fCallback, fConfig;
+        if ( typeof config === 'object') {
+            fConfig = config;
+        } 
+
+        if ( callback && typeof callback === 'function') {
+            fCallback = callback;
+        } else if ( typeof config === 'function' ) {
+            fCallback = config;
+        }
+
+        OstWalletSdk.initialize( endpoint , fConfig, (error)=>{
+          fCallback && fCallback( error , !error );
         });
     }
 

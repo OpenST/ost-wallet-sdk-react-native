@@ -19,9 +19,8 @@ RCT_EXPORT_MODULE(OstWalletSdk) ;
 
 #pragma mark - Initialize
 
-RCT_EXPORT_METHOD(initialize:(NSString *)url callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(initialize:(NSString *)url config:(NSDictionary *) config callback:(RCTResponseSenderBlock)callback)
 {
- 
   __weak NSError *error = nil;
   
   [OstWalletSdk initializeWithApiEndPoint:url error:&error];

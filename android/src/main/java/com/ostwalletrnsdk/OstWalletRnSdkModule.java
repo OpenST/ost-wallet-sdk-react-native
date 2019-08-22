@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Base64;
 
+import android.util.Log;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -34,6 +35,7 @@ import com.ost.walletsdk.workflows.errors.OstErrors;
 
 import jnr.a64asm.Util;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -42,6 +44,8 @@ import java.util.List;
 import java.util.Map;
 
 public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
+
+  private static final String TAG = "OstWalletRnSdkModule";
 
   private final ReactApplicationContext reactContext;
 
@@ -59,10 +63,21 @@ public class OstWalletRnSdkModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void initialize(
     String BASE_URL,
+    ReadableMap rmConfig,
     Callback callback
   ) {
+    JSONObject config = null;
+    if ( null != rmConfig ) {
+      try {
+        config = Utils.convertMapToJson( rmConfig );
+      } catch (JSONException e) {
+        Log.e(TAG, "Unable to parse config");
+        e.printStackTrace();
+      }
+    }
+
     try{
-      OstWalletUI.initialize(getReactApplicationContext(), BASE_URL);
+      OstWalletUI.initialize(getReactApplicationContext(), BASE_URL, config);
     } catch(Throwable e){
       callback.invoke( Utils.getError( e , "rn_ownsm_i_1")  );
       return;
