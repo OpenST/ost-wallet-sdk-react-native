@@ -66,7 +66,13 @@ RCT_EXPORT_METHOD(getDeviceListForUserId: (NSString * _Nonnull)userId
   OstJsonApiCallbackImpl *delegate = [[OstJsonApiCallbackImpl alloc]initWithSuccess:successCallback errorCallback:errorCallback];
   [OstJsonApi getDeviceListForUserId:userId params:params delegate:delegate];
 }
-
+  
+RCT_EXPORT_METHOD(getCurrentDeviceForUserId: (NSString * _Nonnull)userId
+                  successCallback: (RCTResponseSenderBlock _Nonnull) successCallback
+                  errorCallback: (RCTResponseSenderBlock _Nonnull) errorCallback) {
+    
+  OstJsonApiCallbackImpl *delegate = [[OstJsonApiCallbackImpl alloc]initWithSuccess:successCallback errorCallback:errorCallback];
+  [OstJsonApi getCurrentDeviceForUserId:userId delegate:delegate];
+}
 
 @end
-

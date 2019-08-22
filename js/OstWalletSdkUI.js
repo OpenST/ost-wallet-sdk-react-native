@@ -169,11 +169,24 @@ class OstWalletRNSdkUI {
    * Authorize device via QR code
    * @param {String} userId - Ost User id
    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
-   * @returns {number}
+   * @public
    */
   authorizeDeviceViaQR(userId, uiCallback) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
     OstWalletSdkUI.authorizeDeviceViaQR( userId, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
+  }
+
+  /**
+   * Execute transaction via QR code
+   *
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+  executeTransactionViaQR(userId, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.executeTransactionViaQR( userId, coreUiCallback.uuid );
     return coreUiCallback.uuid;
   }
 
