@@ -179,6 +179,24 @@ public class OstWalletUiRnSdkModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void authorizeDeviceViaQR(String userId, String uuid) {
+        Activity currentActivity = getCurrentActivity();
+        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
+                new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.AUTHORIZE_DEVICE_WITH_QR_CODE));
+        String workflowId = OstWalletUI.authorizeDeviceViaQR(currentActivity, userId, ostUICallback);
+        SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
+    }
+
+    @ReactMethod
+    public void executeTransactionViaQR(String userId, String uuid) {
+        Activity currentActivity = getCurrentActivity();
+        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
+                new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.EXECUTE_TRANSACTION));
+        String workflowId = OstWalletUI.authorizeDeviceViaQR(currentActivity, userId, ostUICallback);
+        SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
+    }
+
+    @ReactMethod
     public void setThemeConfig(ReadableMap themeConfig){
         JSONObject themeConfigObject = null;
         try {
