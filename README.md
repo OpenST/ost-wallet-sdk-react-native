@@ -55,7 +55,7 @@ The sdk needs [eventemitter3](https://github.com/primus/eventemitter3) as peer-d
 
 In the most top level component (mostly `App.js`) import like this:
 ```javascript
-import {OstWalletSdkEvents, OstWalletSdk} from 'ost-wallet-sdk-react-native';
+import { OstWalletSdkEvents, OstWalletSdk, OstWalletSdkUI, OstJsonApi } from '@ostdotcom/ost-wallet-sdk-react-native';
 ```
 
 In `componentDidMount()` subscribe to OstWalletSdkEvents and in `componentWillUnmount()` unsubscribe to OstWalletSdkEvents. Also initiate the SDK in using BASE_URL (OST Platform endpoint) `constructor()`:
@@ -99,7 +99,7 @@ For communication between OST React Native SDK and your application, you need to
 
 ```javascript
 
-import {OstWalletWorkFlowCallback} from 'ost-wallet-sdk-react-native';
+import {OstWalletWorkFlowCallback} from '@ostdotcom/ost-wallet-sdk-react-native';
 
 class OstWalletSdkCallbackImplementation extends OstWalletWorkFlowCallback {
     constructor() {
@@ -194,10 +194,10 @@ onLogoutAllSessions() {
 
 # SDK Methods
 
-To use the APIs you will first need to import the `OstWalletSdk` from 'ost-wallet-sdk-react-native' as below:
+To use the APIs you will first need to import the `OstWalletSdk` from '@ostdotcom/ost-wallet-sdk-react-native' as below:
 
 ```javascript
-import {OstWalletSdk} from 'ost-wallet-sdk-react-native';
+import {OstWalletSdk} from '@ostdotcom/ost-wallet-sdk-react-native';
 ```
 
 You would need to pass a new instance of the workflow callback implementation for each of the below methods. 
@@ -514,7 +514,7 @@ Use it to get Token Entity
 Implement the `OstWalletWorkFlowCallback` class before calling any of the above WorkFlows.
 
 ```javascript
-import { OstWalletWorkFlowCallback } from 'ost-wallet-sdk-react-native';
+import { OstWalletWorkFlowCallback } from '@ostdotcom/ost-wallet-sdk-react-native';
 
 class OstWalletSdkCallbackImplementation extends OstWalletWorkFlowCallback {
     constructor() {
