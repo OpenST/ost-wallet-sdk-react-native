@@ -192,7 +192,7 @@ public class OstWalletUiRnSdkModule extends ReactContextBaseJavaModule {
         Activity currentActivity = getCurrentActivity();
         OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
                 new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.EXECUTE_TRANSACTION));
-        String workflowId = OstWalletUI.authorizeDeviceViaQR(currentActivity, userId, ostUICallback);
+        String workflowId = OstWalletUI.executeTransactionViaQR(currentActivity, userId, ostUICallback);
         SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
     }
 
