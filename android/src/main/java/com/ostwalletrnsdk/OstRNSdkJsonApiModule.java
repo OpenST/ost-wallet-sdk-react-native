@@ -137,6 +137,7 @@ public class OstRNSdkJsonApiModule extends ReactContextBaseJavaModule {
         }
     }
 
+    @ReactMethod
     public void getCurrentDeviceForUserId(
             String userId,
             Callback successCallback,
