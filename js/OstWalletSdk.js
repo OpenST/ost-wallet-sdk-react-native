@@ -130,7 +130,7 @@ class OstWalletRNSdk {
     /**
      * Get device QR code
      * @param {String} userId - Ost User id
-     * @param {function} successCallback - returns string.
+     * @param {function} successCallback - returns image as base64 string.
      * @param {function} errorCallback.
      * @public
      */

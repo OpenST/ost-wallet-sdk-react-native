@@ -184,6 +184,7 @@ import OstWalletWorkflowCallback from './OstWalletSdkCallbackImplementation';
 onLogoutAllSessions() {
     AsyncStorage.getItem('user').then((user) => {
         user = JSON.parse(user);
+        // Note: logoutAllSessions will revoke all sessions keys from all the devices of the user.
         OstWalletSdk.logoutAllSessions(user.user_details.user_id, new OstWalletWorkflowCallback(), console.warn);
     });
 }
@@ -214,7 +215,7 @@ You must initialize the SDK before start using it.
    * @param {function} Callback function with error and success status.
    * @public
    */
-initialize( endpoint , 
+  OstWalletSdk.initialize( endpoint , 
             (error, success) => {})
 ```
 
@@ -232,7 +233,7 @@ If the user is logged in, then setupDevice should be called every time the app l
    * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication 
    * @public
    */
- setupDevice(userId, tokenId, workflow)
+  OstWalletSdk.setupDevice(userId, tokenId, workflow)
 ```
 
 
@@ -250,7 +251,7 @@ User activation refers to the deployment of smart-contracts that form the user's
    * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication 
    * @public
    */
-activateUser( userId, 
+  OstWalletSdk.activateUser( userId, 
               pin, 
               passphrasePrefix, 
               expiresAfterInSecs, 
@@ -272,7 +273,7 @@ A session is a period of time during which a sessionKey is authorized to sign tr
      * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication 
      * @public
      */
-addSession( userId, 
+  OstWalletSdk.addSession( userId, 
             expireAfterInSecs, 
             spendingLimit, 
             workflow)
@@ -295,7 +296,7 @@ A transaction where Brand Tokens are transferred from a user to another actor wi
    * @public
    */
 
-executeTransaction( userId, 
+  OstWalletSdk.executeTransaction( userId, 
                     tokenHolderAddresses, 
                     amounts, 
                     ruleName, 
@@ -316,7 +317,7 @@ The mnemonic phrase represents a human-readable way to authorize a new device. T
    * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication 
    * @public
    */
-getDeviceMnemonics( userId, 
+  OstWalletSdk.getDeviceMnemonics( userId, 
                     workflow)
 
 ```
@@ -333,30 +334,11 @@ A user that has stored their mnemonic phrase can enter it into an appropriate us
      * @public
      */
 
-authorizeCurrentDeviceWithMnemonics(userId, 
+  OstWalletSdk.authorizeCurrentDeviceWithMnemonics(userId, 
                                     mnemonics, 
                                     workflow) 
 
 ```
-
-
-### getAddDeviceQRCode
-A developer can use this method to generate a QR code that displays the information pertinent to the mobile device it is generated on. Scanning this QR code with an authorized mobile device will result in the new device being authorized.
-
-
-```javascript
-/**
-   * Get device QR code
-   * @param {String} userId - Ost User id
-   * @param {function} successCallback - returns string.
-   * @param {function} errorCallback.
-   * @public
-   */
-getAddDeviceQRCode( userId , 
-                    successCallback , 
-                    errorCallback )
-```
-
 
 ### performQRAction
 QR codes can be used to encode transaction data for authorizing devices, making purchases via webstores, etc.This method can be used to process the information scanned off a QR code and act on it.
@@ -369,7 +351,7 @@ QR codes can be used to encode transaction data for authorizing devices, making 
    * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication 
    * @public
    */
-performQRAction(userId, 
+  OstWalletSdk.performQRAction(userId, 
                 data, 
                 workflow) 
 ```
@@ -387,7 +369,7 @@ The user's PIN is set when activating the user. This method supports re-setting 
    * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication 
    * @public
    */
-resetPin( userId, 
+  OstWalletSdk.resetPin( userId, 
           appSalt, 
           currentPin, 
           newPin, 
@@ -407,7 +389,7 @@ A user can control their Brand Tokens using their authorized devices. If they lo
    * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication 
    * @public
    */
-initiateDeviceRecovery( userId, 
+OstWalletSdk.initiateDeviceRecovery( userId, 
                         pin, 
                         appSalt,  
                         deviceAddressToRecover, 
@@ -426,7 +408,7 @@ To abort initiated device recovery.
    * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication 
    * @public
    */
-abortDeviceRecovery(userId,  
+OstWalletSdk.abortDeviceRecovery(userId,  
                     pin ,  
                     appSalt , 
                     workflow ) 
@@ -442,7 +424,7 @@ It will revoke all the sessions associated with provided userId
    * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication 
    * @public
    */
-logoutAllSessions(userId, 
+OstWalletSdk.logoutAllSessions(userId, 
                   workflow )
 ```
 
@@ -458,7 +440,7 @@ This method will unauthorize the current device.
    * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication 
    * @public
    */
-revokeDevice( userId , 
+  OstWalletSdk.revokeDevice( userId , 
               deviceAddress , 
               workflow)
 
@@ -476,37 +458,7 @@ This method can be used to enable or disable the biometric.
    * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication 
    * @public
    */
-updateBiometricPreference( userId , enable ,workflow )
-```
-
-### getUser
-Use it to get User Entity 
-
-```javascript
-/**
-   * Get user object for provided userId
-   * @param {String} userId - Ost User id
-   * @param {function} callback - Gets object if present else nil
-   * @callback params {Object}user
-   * @public
-   */
-    getUser( userId, 
-              (userEntity) => {})
-```
-
-### getToken
-Use it to get Token Entity
-
-```javascript
-/**
-    * Get token object for provided userId
-    * @param {String} userId - Ost User id
-    * @param {function} callback - Gets object if present else nil
-    * @callback params {Object}token
-    * @public
-    */
-     getToken( tokenId, 
-              (tokenEntity) => {})
+  OstWalletSdk.updateBiometricPreference( userId , enable ,workflow )
 ```
 
 # SDK WorkFlow Callbacks
@@ -685,132 +637,16 @@ verifyData( ostWorkflowContext, ostContextEntity, ostVerifyData)
 | **OstContextEntity**	| Information about the entity |
 | **OstVerifyData**	| **ostVerifyData.dataVerified()** should be called if the data is verified successfully. <br>In case data is not verified the current workflow should be canceled by developer by calling **ostVerifyData.cancelFlow()** |
 
+## OST Wallet SDK Getter Methods
+The Sdk provides getter methods that application can use for various purposes. 
+These methods provide the application with data as available in the device's database.
+Please refer [OstWalletSdk Getter Methods](./documentation/OstWalletSdkGetMethods.md) for documentation.
+
 
 ## OST JSON APIs
-
-To access APIs defined in OstWalletSdk import OstJsonApi
-```
-import {OstJsonApi} from '@ostdotcom/ost-wallet-sdk-react-native';
-```
-
-### User Balance
-
-Api to get user balance. Balance of only current logged-in user can be fetched.
-
-```javascript
-/**
-   * Api to get user balance
-   * @param {String} userId - Ost User id
-   * @param {function} Success callback with success data
-   * @param {function} Failure callback with error and failure response
-   * @public
-   */
-OstJsonApi.getBalanceForUserId(
-    userId,  
-    (data) => {},
-    (error, response) => {} 
-) 
-```
-
-### Price Points
-
-Api to get Price Points. 
-It will provide latest conversion rates of base token to fiat currency.
-
-```javascript
-/**
-   * Api to get Price Points. 
-   * @param {String} userId - Ost User id
-   * @param {function} Success callback with success data
-   * @param {function} Failure callback with error and failure response
-   * @public
-   */
-OstJsonApi.getPricePointForUserId(
-    userId,  
-    (data) => {},
-    (error, response) => {} 
-) 
-```
-
-### Balance With Price Points
-
-Api to get user balance and Price Points. Balance of only current logged-in user can be fetched.
-It will also provide latest conversion rates of base token to fiat currency.
-```javascript
-/**
-   * Api to get user balance and Price Points. 
-   * @param {String} userId - Ost User id
-   * @param {function} Success callback with success data
-   * @param {function} Failure callback with error and failure response
-   * @public
-   */
-OstJsonApi.getBalanceWithPricePointForUserId(
-    userId,  
-    (data) => {},
-    (error, response) => {} 
-) 
-```
-
-### Transactions
-
-Api to get user transactions. Transactions of only current logged-in user can be fetched.
-
-```javascript
-/**
-   * Api to get user transactions
-   * @param {String} userId - Ost User id
-   * @param {object} params - transaction params
-   * @param {function} Success callback with success data
-   * @param {function} Failure callback with error and failure response
-   * @public
-   */
-OstJsonApi.getTransactionsForUserId(
-    userId,  
-    params,
-    (data) => {},
-    (error, response) => {} 
-) 
-```
-### Pending Recovery
-
-Api to get pending recovery. Pending recovery of only current logged-in user can be fetched.
-
-```javascript
-/**
-* Api to get pending recovery.
-* @param {String} userId - Ost User id
-* @param {function} Success callback with success data
-* @param {function} Failure callback with error and failure response
-* @public
-*/
-OstJsonApi.getPendingRecoveryForUserId(
-    userId,  
-    (data) => {},
-    (error, response) => {} 
-) 
-```
-
-### Device List
-
-Api to get device list of current user. Device list of only current logged-in user can be fetched.
-
-```javascript
-/**
-* Api to get device list
-* @param {String} userId - Ost User id
-* @param {object} params - device list params
-* @param {function} Success callback with success data
-* @param {function} Failure callback with error and failure response
-* @public
-*/
-OstJsonApi.getDeviceListForUserId(
-    userId,  
-    params,
-    (data) => {},
-    (error, response) => {} 
-) 
-```
+While the getter methods provide application with data stored in device's database, the JSON API methods make API calls to OST Platform servers. 
+Please refer [OstJsonApi](./documentation/OstJsonApi.md) for documentation.
 
 ## OstWalletSdkUI
 
-You can use available UI from OstWalletSdk. Please refer [OstWalletSdkUI](README-UI.md) - `Beta Version`
+For quick and easy integration with SDK, developers can use built-in User Interface Components which are themeable and support content customization. Please refer [OstWalletSdkUI](./documentation/OstWalletUI.md) for documentation.

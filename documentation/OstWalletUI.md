@@ -6,14 +6,15 @@ For quick and easy integration with SDK, developers can use built-in User Interf
 
 ## Setup
 
-To setup OstWalletSdkUI, please refer [setup](README.md#setup).
+To setup OstWalletSdkUI, please refer [setup](../README.md#installing-react-native-sdk).
+
+
+## Before We Begin
+- App must [initialize](../README.md#initialize) the sdk <em><b>before</b></em> initiating any UI workflows.
+- App must perform [setupDevice](../README.md#setupdevice) workflow <em><b>before</b></em> initiating any UI workflows.
 
 
 ## OstWalletSdkUI SDK APIs
-### Important Notes
-1. App must [initialize](README.md#installing-react-native-sdk) the sdk <em><b>before</b></em> initiating any UI workflows.
-2. App must perform [setupDevice](README.md#1--subscribe-to-ostwalletsdkevents-in-your-top-most-level-component) workflow <em><b>before</b></em> initiating any UI workflows.
-
 
 To use OstWalletSdkUI 
 ```
