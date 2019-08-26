@@ -137,6 +137,19 @@ public class OstRNSdkJsonApiModule extends ReactContextBaseJavaModule {
         }
     }
 
+    public void getCurrentDeviceForUserId(
+            String userId,
+            Callback successCallback,
+            Callback errorCallback
+    ) {
+        try {
+            OstJsonApi.getCurrentDevice(userId, new OstJsonApiCallbackImpl(successCallback, errorCallback));
+        } catch (Throwable e) {
+            errorCallback.invoke(Utils.getError(e, "rn_orsjam_gcdui_1"));
+            return;
+        }
+    }
+
 
     private static class OstJsonApiCallbackImpl implements OstJsonApiCallback {
 
