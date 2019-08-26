@@ -39,20 +39,6 @@ public class OstWalletUiRnSdkModule extends ReactContextBaseJavaModule {
         return "OstWalletSdkUI";
     }
 
-    @ReactMethod
-    public void initialize(
-            String BASE_URL,
-            Callback callback
-    ) {
-        try{
-            OstWalletUI.initialize(getReactApplicationContext(), BASE_URL);
-        } catch(Throwable e){
-            callback.invoke( Utils.getError( e , "rn_owunsm_i_1")  );
-            return;
-        }
-        callback.invoke();
-    }
-
 
     @ReactMethod
     public void activateUser(String userId, String expiresAfterInSecs, String spendingLimit, String uuid ){
