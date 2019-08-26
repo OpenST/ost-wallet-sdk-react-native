@@ -19,11 +19,13 @@ RCT_EXPORT_MODULE(OstWalletSdk) ;
 
 #pragma mark - Initialize
 
-RCT_EXPORT_METHOD(initialize:(NSString *)url config:(NSDictionary *) config callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(initialize:(NSString *)url
+                  config: (NSDictionary *) config
+                  callback:(RCTResponseSenderBlock)callback)
 {
   __weak NSError *error = nil;
   
-  [OstWalletSdk initializeWithApiEndPoint:url error:&error];
+  [OstWalletSdk initializeWithApiEndPoint:url config: config error:&error];
   
   if (error != nil) {
     NSDictionary *err = [OstRNErrorUtils errorToJson: error internalCode: @"rn_owrs_init_1"];
