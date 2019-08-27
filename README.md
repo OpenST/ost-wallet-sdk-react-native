@@ -82,6 +82,7 @@ You must initialize the SDK before start using it.
             (error, success) => {})
 ```
 
+### Initializing SDK With Config
 Starting version `2.3.1` application can also pass SDK config in the initialize method
 > If config is passed in `initialize` method, the configs specified in `OstWalletSdk.plist` and `ost-mobilesdk.json` are ignored. 
 > It is no longer mandatory to define `ost-mobilesdk.json` and `OstWalletSdk.plist` files.
