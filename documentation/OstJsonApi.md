@@ -313,24 +313,26 @@ OstJsonApi.getPendingRecoveryForUserId(
 <a id="sample-response-4"></a>
 ##### Sample Response
 ```json
-{
-  "balance": {
-    "updated_timestamp": 1566832497,
-    "unsettled_debit": "0",
-    "available_balance": "10000000",
-    "total_balance": "10000000",
-    "user_id": "71c59448-ff77-484c-99d8-abea8a419836"
-  },
-  "price_point": {
-    "USDC": {
-      "updated_timestamp": 1566834913,
-      "decimals": 18,
-      "GBP": 0.8201717727,
-      "EUR": 0.9028162679,
-      "USD": 1.0025110673
+ {
+  "devices": [
+    {
+      "updated_timestamp": 1566902100,
+      "status": "REVOKING",
+      "api_signer_address": "0x903ad1a1017c14b8e6b0bb1dd32d3f65a8741732",
+      "linked_address": "0x73722b0c0a6b6418893737e0ca33dd567e33f6aa",
+      "address": "0x629e13063a2aa24e2fb2a49697ef871806071550",
+      "user_id": "71c59448-ff77-484c-99d8-abea8a419836"
+    },
+    {
+      "updated_timestamp": 1566902100,
+      "status": "RECOVERING",
+      "api_signer_address": "0x6f5b1b8df95cbc3bd8d18d6c378cef7c34644729",
+      "linked_address": "null",
+      "address": "0x33e736a4761bc07ed54b1ceb82e44dfb497f478c",
+      "user_id": "71c59448-ff77-484c-99d8-abea8a419836"
     }
-  },
-  "result_type": "balance"
+  ],
+  "result_type": "devices"
 }
 ```
 
