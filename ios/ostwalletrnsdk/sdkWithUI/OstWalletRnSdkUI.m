@@ -168,7 +168,8 @@ RCT_EXPORT_METHOD(scanQRCodeToExecuteTransaction: (NSString * _Nonnull) userId
   
   OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
     
-  NSString *worklfowId = [OstWalletUI scanQRCodeToExecuteTransactionWithUserId: userId];
+  NSString *worklfowId = [OstWalletUI scanQRCodeToExecuteTransactionWithUserId: userId
+                                                      passphrasePrefixDelegate: uiCallbackImpl];
   
   [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
 }
