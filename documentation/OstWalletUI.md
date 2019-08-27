@@ -248,6 +248,121 @@ This method can be used to enable or disable the biometric.
   }
 ```
 
+#### Authorize Current Device With Mnemonics
+
+This workflow should be used to add a new device using 12 words recovery phrase.
+
+```js
+/**
+   * Authorize user device with mnemonics
+   * @param {String} userId - Ost User id
+   * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication
+   * @public
+   */
+    authorizeCurrentDeviceWithMnemonics(userId, uiCallback) {
+        let coreUiCallback = this._getCoreUiCallback(uiCallback);
+        OstWalletSdkUI.authorizeCurrentDeviceWithMnemonics(userId, coreUiCallback.uuid);
+
+        return coreUiCallback.uuid;
+    }
+```
+
+#### Get Add Device QR-Code
+
+This workflow show QR-Code to scan from another authorized device
+
+```js
+/**
+   * Get add device QR code
+   *
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+   getAddDeviceQRCode(userId, uiCallback) {
+        let coreUiCallback = this._getCoreUiCallback(uiCallback);
+        OstWalletSdkUI.getAddDeviceQRCode( userId, coreUiCallback.uuid );
+        return coreUiCallback.uuid;
+    }
+```
+
+### Authorize Device via QR-Code
+
+This workflow can be used to authorize device by scanning device QR-Code. 
+
+QR-Code Sample:
+```json
+{
+    "dd":"AD",
+    "ddv":"1.1.0",
+    "d":{
+        "da": "0x7701af46018fc57c443b63e839eb24872755a2f8"
+    }
+}
+```
+
+```js
+/**
+   * Authorize device via QR code
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+   authorizeDeviceViaQR(userId, uiCallback) {
+       let coreUiCallback = this._getCoreUiCallback(uiCallback);
+       OstWalletSdkUI.authorizeDeviceViaQR( userId, coreUiCallback.uuid );
+       return coreUiCallback.uuid;
+    }
+```
+
+#### Execute Transaction Via QR-Code
+
+This workflow can be used to execute transaction via device by scanning device QR-Code.
+
+QR-Code Sample:
+```json
+{
+    "dd":"TX",
+    "ddv":"1.1.0",
+    "d":{
+        "rn":"direct transfer",
+        "ads":[
+            "0x7701af46018fc57c443b63e839eb24872755a2f8",
+            "0xed09dc167a72d939ecf3d3854ad0978fb13a8fe9"
+        ],
+        "ams":[
+            "1000000000000000000",
+            "1000000000000000000"
+        ],
+        "tid": 1140,
+        "o":{
+                "cs":"USD",
+                "s": "$"
+        }
+    },
+    "m":{
+        "tn":"comment",
+        "tt":"user_to_user",
+        "td":"Thanks for comment"
+    }
+}
+```
+
+```js
+/**
+   * Execute transaction via QR code
+   *
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+   executeTransactionViaQR(userId, uiCallback) {
+        let coreUiCallback = this._getCoreUiCallback(uiCallback);
+        OstWalletSdkUI.executeTransactionViaQR( userId, coreUiCallback.uuid );
+        return coreUiCallback.uuid;
+    }
+```
+
 ##  Ost Wallet UI Events and Listeners
 
 ### Subscribe
