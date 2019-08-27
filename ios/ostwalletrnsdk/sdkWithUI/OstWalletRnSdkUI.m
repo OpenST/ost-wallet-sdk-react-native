@@ -152,23 +152,23 @@ RCT_EXPORT_METHOD(getAddDeviceQRCode: (NSString * _Nonnull) userId
   [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
 }
 
-RCT_EXPORT_METHOD(authorizeDeviceViaQR: (NSString * _Nonnull) userId
+RCT_EXPORT_METHOD(scanQRCodeToAuthorizeDevice: (NSString * _Nonnull) userId
                   uuid:(NSString *)uuid) {
   
   OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
   
-  NSString *worklfowId = [OstWalletUI authorizeDeviceViaQRWithUserId:userId
-                                            passphrasePrefixDelegate:uiCallbackImpl];
+  NSString *worklfowId = [OstWalletUI scanQRCodeToAuthorizeDeviceWithUserId: userId
+                                                   passphrasePrefixDelegate: uiCallbackImpl];
   
   [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
 }
   
-RCT_EXPORT_METHOD(executeTransactionViaQR: (NSString * _Nonnull) userId
+RCT_EXPORT_METHOD(scanQRCodeToExecuteTransaction: (NSString * _Nonnull) userId
                   uuid:(NSString *)uuid) {
   
   OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
     
-  NSString *worklfowId = [OstWalletUI executeTransactionViaQRWithUserId: userId];
+  NSString *worklfowId = [OstWalletUI scanQRCodeToExecuteTransactionWithUserId: userId];
   
   [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
 }

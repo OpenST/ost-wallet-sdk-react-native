@@ -286,7 +286,7 @@ This workflow show QR-Code to scan from another authorized device
     }
 ```
 
-### Authorize Device via QR-Code
+### Scan QR-Code to Authorize Device
 
 This workflow can be used to authorize device by scanning device QR-Code. 
 
@@ -303,19 +303,19 @@ QR-Code Sample:
 
 ```js
 /**
-   * Authorize device via QR code
+   * Scan QR-Code to authorize device
    * @param {String} userId - Ost User id
    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
    * @public
    */
-   authorizeDeviceViaQR(userId, uiCallback) {
+   scanQRCodeToAuthorizeDevice(userId, uiCallback) {
        let coreUiCallback = this._getCoreUiCallback(uiCallback);
-       OstWalletSdkUI.authorizeDeviceViaQR( userId, coreUiCallback.uuid );
+       OstWalletSdkUI.scanQRCodeToAuthorizeDevice( userId, coreUiCallback.uuid );
        return coreUiCallback.uuid;
     }
 ```
 
-#### Execute Transaction Via QR-Code
+#### Scan QR-Code to Execute Transaction
 
 This workflow can be used to execute transaction via device by scanning device QR-Code.
 
@@ -350,15 +350,15 @@ QR-Code Sample:
 
 ```js
 /**
-   * Execute transaction via QR code
+   * Scan QR-Code to execute transaction
    *
    * @param {String} userId - Ost User id
    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
    * @public
    */
-   executeTransactionViaQR(userId, uiCallback) {
+   scanQRCodeToExecuteTransaction(userId, uiCallback) {
         let coreUiCallback = this._getCoreUiCallback(uiCallback);
-        OstWalletSdkUI.executeTransactionViaQR( userId, coreUiCallback.uuid );
+        OstWalletSdkUI.scanQRCodeToExecuteTransaction( userId, coreUiCallback.uuid );
         return coreUiCallback.uuid;
     }
 ```

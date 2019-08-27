@@ -170,9 +170,9 @@ class OstWalletRNSdkUI {
    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
    * @public
    */
-  authorizeDeviceViaQR(userId, uiCallback) {
+  scanQRCodeToAuthorizeDevice(userId, uiCallback) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    OstWalletSdkUI.authorizeDeviceViaQR( userId, coreUiCallback.uuid );
+    OstWalletSdkUI.scanQRCodeToAuthorizeDevice( userId, coreUiCallback.uuid );
     return coreUiCallback.uuid;
   }
 
@@ -183,9 +183,9 @@ class OstWalletRNSdkUI {
    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
    * @public
    */
-  executeTransactionViaQR(userId, uiCallback) {
+  scanQRCodeToExecuteTransaction(userId, uiCallback) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    OstWalletSdkUI.executeTransactionViaQR( userId, coreUiCallback.uuid );
+    OstWalletSdkUI.scanQRCodeToExecuteTransaction( userId, coreUiCallback.uuid );
     return coreUiCallback.uuid;
   }
 
