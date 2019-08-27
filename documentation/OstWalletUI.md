@@ -10,7 +10,7 @@ To setup OstWalletSdkUI, please refer [setup](../README.md#installing-react-nati
 
 
 ## Before We Begin
-- App must [initialize](../README.md#initialize) the sdk <em><b>before</b></em> initiating any UI workflows.
+- App must [initialize](../README.md#initializing-the-sdk) the sdk <em><b>before</b></em> initiating any UI workflows.
 - App must perform [setupDevice](../README.md#setupdevice) workflow <em><b>before</b></em> initiating any UI workflows.
 
 

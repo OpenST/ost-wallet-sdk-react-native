@@ -25,7 +25,7 @@
 
 <a id="before-we-begin"></a>
 ## Before We Begin
-- App must [initialize](../README.md#initialize) the sdk <em><b>before</b></em> initiating any UI workflows.
+- App must [initialize](../README.md#initializing-the-sdk) the sdk <em><b>before</b></em> initiating getter methods.
 - We recommend using these methods *after* [setupDevice](../README.md#setupdevice) workflow has been performed.
 - The getter methods provide the data as available with the device. 
   - The methods may return `null` if the data is not available.
