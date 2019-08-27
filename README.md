@@ -40,25 +40,83 @@ The sdk needs [eventemitter3](https://github.com/primus/eventemitter3) as peer-d
  react-native link @ostdotcom/ost-wallet-sdk-react-native
 ```
 
-4. [Android setup for OST React Native SDK](android_setup.md)
+4. [Android setup for OST React Native SDK](./documentation/android_setup.md)
 
-5. [iOS setup for OST React Native SDK](ios_setup.md)
+5. [iOS setup for OST React Native SDK](./documentation/ios_setup.md)
+
+## Migrating to another version
+If you decide you change the SDK's version, please make sure to update downsteam native SDKs.
+
+For Android, please run:
+```shell
+react-native link
+react-native run-android
+```
+
+For iOS, please update the `ios/Cartfile` with desired version and run:
+```shell
+carthage update --cache-builds --platform ios
+```
+After updating the SDK, please delete `ostwalletrnsdk` using the **Remove References** option and add it back by following [this step](./documentation/ios_setup.md#5-add-additional-sdk-files).
+
 
 ## SDK Usage
+* Initialize the SDK
+* Subscribe to events
+* Implement `OstWalletWorkFlowCallback` for a workflow
+* Execute workflow
 
-1. Subscribe to events
-2. Implement `OstWalletWorkFlowCallback` for a workflow
-3. Execute workflow
 
+### Initializing the SDK
+You must initialize the SDK before start using it.
+> Initialize the SDK in using BASE_URL (OST Platform endpoint) inside App.js `constructor()` method.
 
-### 1.  Subscribe to `OstWalletSdkEvents` in your top most level component
+```javascript
+/**
+   * Initialize wallet sdk
+   * @param {String} endpoint - OST Platform endpoint
+   * @param {function} Callback function with error and success status.
+   * @public
+   */
+  OstWalletSdk.initialize( endpoint, 
+            (error, success) => {})
+```
+
+Starting version `2.3.1` application can also pass SDK config in the initialize method
+> If config is passed in `initialize` method, the configs specified in `OstWalletSdk.plist` and `ost-mobilesdk.json` are ignored. 
+> It is no longer mandatory to define `ost-mobilesdk.json` and `OstWalletSdk.plist` files.
+
+```javascript
+  let sdkConfig = {
+    "BLOCK_GENERATION_TIME": 3,
+    "PIN_MAX_RETRY_COUNT": 3,
+    "REQUEST_TIMEOUT_DURATION": 60,
+    "SESSION_BUFFER_TIME": 3600,
+    "PRICE_POINT_CURRENCY_SYMBOL": "USD",
+    "USE_SEED_PASSWORD": false
+  };
+
+  /**
+  * Initialize wallet sdk
+  * @param {String} endpoint - OST Platform endpoint
+  * @param {Object} config (optional) - SDK Config. Supported from version 2.3.1
+  * @param {function} callback -   A typical node-style, error-first callback.
+  * @callback params {Object}error , {Boolean} success
+  * @public
+  */
+  OstWalletSdk.initialize( endpoint, sdkConfig, (error, success) => {
+
+  });
+```
+
+### Subscribe to `OstWalletSdkEvents` in your top most level component
 
 In the most top level component (mostly `App.js`) import like this:
 ```javascript
 import { OstWalletSdkEvents, OstWalletSdk, OstWalletSdkUI, OstJsonApi } from '@ostdotcom/ost-wallet-sdk-react-native';
 ```
 
-In `componentDidMount()` subscribe to OstWalletSdkEvents and in `componentWillUnmount()` unsubscribe to OstWalletSdkEvents. Also initiate the SDK in using BASE_URL (OST Platform endpoint) `constructor()`:
+In `componentDidMount()` subscribe to OstWalletSdkEvents and in `componentWillUnmount()` unsubscribe to OstWalletSdkEvents. Also initialize the SDK in using BASE_URL (OST Platform endpoint) `constructor()` method:
 
 ```javascript
 class App extends Component {
@@ -87,10 +145,9 @@ class App extends Component {
 }
 ```
 
-### 2. Implement `OstWalletWorkFlowCallback` for a workflow
+### Implement `OstWalletWorkFlowCallback` for a workflow
 
 For communication between OST React Native SDK and your application, you need to implement callbacks. A base callback class `OstWalletWorkFlowCallback` is given as a part of the SDK. The base callback class gives only declaration of callback functions. A detail overview of callback functions is available in later part of this readme.
-
 
 
 **Developers are expected to implement a new class for each workflow.**
@@ -173,7 +230,7 @@ export default OstWalletSdkCallbackImplementation;
 
 ```
 
-### 3. Execute a workflow
+### Execute a workflow
 
 To execute a workflow, we need to pass an instance of `OstWalletSdkCallbackImplementation` class. The callback implementation will be different for each workflow available in this SDK.
 
@@ -202,22 +259,6 @@ import {OstWalletSdk} from '@ostdotcom/ost-wallet-sdk-react-native';
 ```
 
 You would need to pass a new instance of the workflow callback implementation for each of the below methods. 
-
-
-
-### initialize
-You must initialize the SDK before start using it. 
-
-```javascript
-/**
-   * Initialize wallet sdk
-   * @param {String} endpoint - OST Platform endpoint
-   * @param {function} Callback function with error and success status.
-   * @public
-   */
-  OstWalletSdk.initialize( endpoint , 
-            (error, success) => {})
-```
 
 
 ### setupDevice

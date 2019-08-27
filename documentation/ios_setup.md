@@ -15,7 +15,7 @@ Carthage looks at a file called `Cartfile` to determine which libraries to insta
 
 Add following entry in your `Cartfile`
 ```bash
- github "ostdotcom/ost-wallet-sdk-ios" == 2.3.0-beta.1
+ github "ostdotcom/ost-wallet-sdk-ios" == 2.3.1
 ```
 
 Now to actually install everything run the following in your terminal:
@@ -128,6 +128,6 @@ Create `OstWalletSdk.plist` file. This file has configuration attributes used by
 
 # Next Steps
 
-1. [SDK Usage](README.md#sdk-usage)
-2. [SDK Methods](README.md#sdk-methods)
-3. [SDK Callbacks](README.md#sdk-workflow-callbacks)
+1. [SDK Usage](../README.md#sdk-usage)
+2. [SDK Methods](../README.md#sdk-methods)
+3. [SDK Callbacks](../README.md#sdk-workflow-callbacks)

@@ -16,6 +16,7 @@ class OstWalletRNSdk {
      /**
      * Initialize wallet sdk
      * @param {String} endpoint - OST Platform endpoint
+     * @param {Object} config - SDK Config
      * @param {function} callback -   A typical node-style, error-first callback.
      * @callback params {Object}error , {Boolean} success
      * @public
