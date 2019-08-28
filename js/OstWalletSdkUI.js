@@ -128,7 +128,6 @@ class OstWalletRNSdkUI {
   /**
    * Authorize user device with mnemonics
    * @param {String} userId - Ost User id
-   * @param {String} mnemonics - string of mnemonics
    * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication
    * @public
    */
@@ -144,6 +143,7 @@ class OstWalletRNSdkUI {
    *
    * @param {String} userId - Ost User id
    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
    */
   resetPin(userId, uiCallback) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
@@ -151,6 +151,47 @@ class OstWalletRNSdkUI {
     return coreUiCallback.uuid;
   }
 
+  /**
+   * Get add device QR code
+   *
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+  getAddDeviceQRCode(userId, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.getAddDeviceQRCode( userId, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
+  }
+
+  /**
+   * Authorize device via QR code
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+  scanQRCodeToAuthorizeDevice(userId, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.scanQRCodeToAuthorizeDevice( userId, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
+  }
+
+  /**
+   * Execute transaction via QR code
+   *
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+  scanQRCodeToExecuteTransaction(userId, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.scanQRCodeToExecuteTransaction( userId, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
+  }
+
+  /**
+   * Show device component sheet
+   */
   showComponentSheet() {
     OstWalletSdkUI.showComponentSheet()
   }
