@@ -6,14 +6,15 @@ For quick and easy integration with SDK, developers can use built-in User Interf
 
 ## Setup
 
-To setup OstWalletSdkUI, please refer [setup](README.md#setup).
+To setup OstWalletSdkUI, please refer [setup](../README.md#installing-react-native-sdk).
+
+
+## Before We Begin
+- App must [initialize](../README.md#initializing-the-sdk) the sdk <em><b>before</b></em> initiating any UI workflows.
+- App must perform [setupDevice](../README.md#setupdevice) workflow <em><b>before</b></em> initiating any UI workflows.
 
 
 ## OstWalletSdkUI SDK APIs
-### Important Notes
-1. App must [initialize](README.md#installing-react-native-sdk) the sdk <em><b>before</b></em> initiating any UI workflows.
-2. App must perform [setupDevice](README.md#1--subscribe-to-ostwalletsdkevents-in-your-top-most-level-component) workflow <em><b>before</b></em> initiating any UI workflows.
-
 
 To use OstWalletSdkUI 
 ```
@@ -245,6 +246,121 @@ This method can be used to enable or disable the biometric.
     OstWalletSdkUI.updateBiometricPreference( userId,  enable,  coreUiCallback.uuid  );
     return coreUiCallback.uuid;
   }
+```
+
+#### Authorize Current Device With Mnemonics
+
+This workflow should be used to add a new device using 12 words recovery phrase.
+
+```js
+/**
+   * Authorize user device with mnemonics
+   * @param {String} userId - Ost User id
+   * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication
+   * @public
+   */
+    authorizeCurrentDeviceWithMnemonics(userId, uiCallback) {
+        let coreUiCallback = this._getCoreUiCallback(uiCallback);
+        OstWalletSdkUI.authorizeCurrentDeviceWithMnemonics(userId, coreUiCallback.uuid);
+
+        return coreUiCallback.uuid;
+    }
+```
+
+#### Get Add Device QR-Code
+
+This workflow show QR-Code to scan from another authorized device
+
+```js
+/**
+   * Get add device QR code
+   *
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+   getAddDeviceQRCode(userId, uiCallback) {
+        let coreUiCallback = this._getCoreUiCallback(uiCallback);
+        OstWalletSdkUI.getAddDeviceQRCode( userId, coreUiCallback.uuid );
+        return coreUiCallback.uuid;
+    }
+```
+
+### Scan QR-Code to Authorize Device
+
+This workflow can be used to authorize device by scanning device QR-Code. 
+
+QR-Code Sample:
+```json
+{
+    "dd":"AD",
+    "ddv":"1.1.0",
+    "d":{
+        "da": "0x7701af46018fc57c443b63e839eb24872755a2f8"
+    }
+}
+```
+
+```js
+/**
+   * Scan QR-Code to authorize device
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+   scanQRCodeToAuthorizeDevice(userId, uiCallback) {
+       let coreUiCallback = this._getCoreUiCallback(uiCallback);
+       OstWalletSdkUI.scanQRCodeToAuthorizeDevice( userId, coreUiCallback.uuid );
+       return coreUiCallback.uuid;
+    }
+```
+
+#### Scan QR-Code to Execute Transaction
+
+This workflow can be used to execute transaction via device by scanning device QR-Code.
+
+QR-Code Sample:
+```json
+{
+    "dd":"TX",
+    "ddv":"1.1.0",
+    "d":{
+        "rn":"direct transfer",
+        "ads":[
+            "0x7701af46018fc57c443b63e839eb24872755a2f8",
+            "0xed09dc167a72d939ecf3d3854ad0978fb13a8fe9"
+        ],
+        "ams":[
+            "1000000000000000000",
+            "1000000000000000000"
+        ],
+        "tid": 1140,
+        "o":{
+                "cs":"USD",
+                "s": "$"
+        }
+    },
+    "m":{
+        "tn":"comment",
+        "tt":"user_to_user",
+        "td":"Thanks for comment"
+    }
+}
+```
+
+```js
+/**
+   * Scan QR-Code to execute transaction
+   *
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+   scanQRCodeToExecuteTransaction(userId, uiCallback) {
+        let coreUiCallback = this._getCoreUiCallback(uiCallback);
+        OstWalletSdkUI.scanQRCodeToExecuteTransaction( userId, coreUiCallback.uuid );
+        return coreUiCallback.uuid;
+    }
 ```
 
 ##  Ost Wallet UI Events and Listeners

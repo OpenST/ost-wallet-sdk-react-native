@@ -54,6 +54,6 @@ Create file `./android/app/src/main/assets/ost-mobilesdk.json` with application 
 
 # Next Steps
 
-1. [SDK Usage](README.md#sdk-usage)
-2. [SDK Methods](README.md#sdk-methods)
-3. [SDK Callbacks](README.md#sdk-workflow-callbacks)
+1. [SDK Usage](../README.md#sdk-usage)
+2. [SDK Methods](../README.md#sdk-methods)
+3. [SDK Callbacks](../README.md#sdk-workflow-callbacks)
