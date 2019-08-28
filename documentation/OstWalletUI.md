@@ -2,11 +2,11 @@
 
 ## Introduction
 
-For quick and easy integration with SDK, developers can use built-in User Interface Components which are themeable and support content customization.
+For quick and easy integration with SDK, developers can use built-in User Interface Components which are themeable and support content customization. All OstWalletSdkUI workflows return `workflow-id`. The application can subscribe to the events of the workflow using the `workflow-id`.
 
 ## Setup
 
-To setup OstWalletSdkUI, please refer [setup](../README.md#installing-react-native-sdk).
+`OstWalletSdkUI` is packaged along with OstWalletSdk. There are no additional steps for using `OstWalletSdkUI`. To setup OstWalletSdk, please refer [setup](../README.md#installing-react-native-sdk).
 
 
 ## Before We Begin
@@ -25,16 +25,21 @@ import {OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-native';
 
 Theme for OstWalletSdkUI can be initialized by calling `setThemeConfig` API which setup OstWalletSdkUI theme config. To define custom theme config, please refer [ThemeConfig](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/release-2.3/documentation/ThemeConfig.md) documentation.
 
-
 ```js
-/**
-* Set theme config for UI
-* config: Config to use for UI
-*/
-OstWalletSdkUI.setThemeConfig(theme_config);
+    // Define the content config
+    const theme_config = {
+        "nav_bar_logo_image": { 
+            "asset_name": "YOUR_LOGO_ASSET_NAME"
+        }
+    };
+
+    /**
+    * Set theme config for UI
+    * config: Config to use for UI
+    */
+    OstWalletSdkUI.setThemeConfig(theme_config);
 ```
-<b>important</b><br/>
-`asset_name` is name of asset which is present in the respective assets folder for iOS/android.
+> * In the above example, `asset_name` is name of asset which is present in the respective assets folder for iOS/android.
 
 
 ### Set Content Config
@@ -42,14 +47,32 @@ OstWalletSdkUI.setThemeConfig(theme_config);
 Content for OstWalletSdkUI can be initialized by calling `setContentConfig` API which setup OstWalletSdkUI content config.
 To define custom content config, please refer [ContentConfig](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/release-2.3/documentation/ContentConfig.md) documentation.
 
-While activating user `create_pin["terms_and_condition_url"]` url is used to show terms and conditions, where as while confirming pin `confirm_pin["terms_and_condition_url"]` url is used.
-
 ```js
-/**
-* Set content config for UI
-* config: Config to use for UI
-*/
-OstWalletSdkUI.setContentConfig(content_config);
+    // Please update terms_and_condition.url as per your needs.
+    const content_config = {
+        "activate_user": {
+            "create_pin": {
+                "placeholders": {
+                    "terms_and_condition": {
+                        "url": "https://YOUR-WEB-SITE.com/terms-page"
+                    }
+                }
+            },
+            "confirm_pin": {
+                "placeholders": {
+                    "terms_and_condition": {
+                        "url": "https://YOUR-WEB-SITE.com/terms-page"
+                    }
+                }
+            }
+        }
+    };
+
+    /**
+    * Set content config for UI
+    * config: Config to use for UI
+    */
+    OstWalletSdkUI.setContentConfig(content_config);
 ```
 
 ### Setup your Passphrase Prefix Delegate
@@ -60,16 +83,17 @@ stored in memory or on deivce. When the UI workflow need's to ask for user's Pin
 The delegate must be derived from `OstWalletUIWorkflowCallback` class.
 
 Here is an example:
-```js
+```javascript
 import { OstWalletUIWorkflowCallback } from '@ostdotcom/ost-wallet-sdk-react-native';
 class UserPassphrasePrefixDelegate extends OstWalletUIWorkflowCallback {
   constructor() {
     super();
   }
+
   getPassphrase(userId, ostWorkflowContext, OstPassphrasePrefixAccept) {
     let fetchPromise = new Promise((resolve,reject) => {
         //Write code here to validate userId. 
-        //If it is not same as that of the logged-in user, reject the promise.
+        //If it is not the same as that of the logged-in user, reject the promise.
         
         //Write code here to fetch the salt from your server.
         //Read the passphrasePrefix from response and resolve the Promise. 
@@ -85,6 +109,77 @@ class UserPassphrasePrefixDelegate extends OstWalletUIWorkflowCallback {
           OstPassphrasePrefixAccept.cancelFlow();
       });
   }
+
+  /**
+   *  Optional Callback Implementation
+   *  --------------------------------
+   *  
+   *  Application can also define and use following callback methods:
+   *  - requestAcknowledged(ostWorkflowContext , ostContextEntity )
+   *  - flowComplete(ostWorkflowContext , ostContextEntity )
+   *  - flowInterrupt(ostWorkflowContext , ostError)
+   *
+   *  Note:
+   *  These methods can be helpful for debugging. 
+   *  Defining these methods does NOT impact ui workflow event subscription in any way.
+   *  If application subscribes to events and also defines these callbacks, both shall be invoked.
+   */
+
+  requestAcknowledged(ostWorkflowContext , ostContextEntity ) {
+      console.log("Received requestAcknowledged callback");
+
+      let contextWorkflowId = ostWorkflowContext.WORKFLOW_ID;
+      let workflowType = ostWorkflowContext.WORKFLOW_TYPE;
+      let entityType = ostContextEntity.entityType;
+      let entityData = ostContextEntity.entity;
+
+      console.log("- Workflow Id:", contextWorkflowId);
+      console.log("- Workflow Type:", workflowType);
+      console.log("- OstContextEntity type:", entityType)
+      console.log("- OstContextEntity entityData:", entityData);
+  }
+
+  flowComplete(ostWorkflowContext , ostContextEntity ) { 
+      console.log("Received flowComplete callback");
+
+      let contextWorkflowId = ostWorkflowContext.WORKFLOW_ID;
+      let workflowType = ostWorkflowContext.WORKFLOW_TYPE;
+      let entityType = ostContextEntity.entityType;
+      let entityData = ostContextEntity.entity;
+
+      console.log("- Workflow Id:", contextWorkflowId);
+      console.log("- Workflow Type:", workflowType);
+      console.log("- OstContextEntity type:", entityType)
+      console.log("- OstContextEntity entityData:", entityData);
+  }
+
+  flowInterrupt(ostWorkflowContext , ostError) {
+      console.log("Received flowInterrupt callback");
+
+      let contextWorkflowId = ostWorkflowContext.WORKFLOW_ID;
+      let workflowType = ostWorkflowContext.WORKFLOW_TYPE;
+      let errorData = ostError.error;
+      let errorCode = ostError.getErrorCode();
+      
+      // If you would like to reach out to Ost Devs for support, 
+      // we request you to collect internalErrorCode
+      let internalErrorCode = ostError.getInternalErrorCode();
+      let isApiError = ostError.isApiError();
+
+      console.log("- Workflow Id:", contextWorkflowId);
+      console.log("- Workflow Type:", workflowType);
+      console.log("- Error");
+      console.log("  - Error Code:", errorCode);
+      console.log("  - Is Api Error:", isApiError);
+      console.log("  - Sdk Internal Error Code", internalErrorCode);
+      console.log("  - error data", errorData);
+
+      if ( isApiError && ostError.isApiSignerUnauthorized() ) {
+          console.log("- This device has either been revoked or not yet registered.");
+      } else if ("WORKFLOW_CANCELED" === errorCode.toUpperCase() ) {
+          console.log("- This error can be ignored. The workflow has been canceled by the user or application");
+      }
+  }
 }
 export default UserPassphrasePrefixDelegate;
 ```
@@ -95,6 +190,9 @@ export default UserPassphrasePrefixDelegate;
 User activation refers to the deployment of smart-contracts that form the user's Brand Token wallet. An activated user can engage with a Brand Token economy.
 
 ```javascript
+
+let uiCallback = new UserPassphrasePrefixDelegate()
+
 /**
 * Activate user
 * @param {String} userId - Ost User id
@@ -103,18 +201,37 @@ User activation refers to the deployment of smart-contracts that form the user's
 * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
 * @public
 */
-OstWalletSdkUI.activateUser(
+let workflowId = OstWalletSdkUI.activateUser(
     userId,     
     expiresAfterInSecs,
     spendingLimit, 
     uiCallback
-)
+);
+
+// Subscribe to events
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.requestAcknowledged, () => {
+  // User is being activated. At this point, user can neither receive or send tokens.
+});
+
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext , ostContextEntity) => {
+  // Show success message to user.
+  // User has been activated. User can now start receiving tokens.
+});
+
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWorkflowContext , ostError) => {
+  // Show error to user.
+  // An error occoured during the workflow. The user has NOT been activated.
+});
+
 ```
 
 #### Add Session
 
 A session is a period of time during which a sessionKey is authorized to sign transactions under a pre-set limit on behalf of the user. The device manager, which controls the tokens, authorizes sessions.
 ```js
+
+let uiCallback = new UserPassphrasePrefixDelegate()
+
 /**
    * Add user session
    * @param {String} userId - Ost User id
@@ -123,45 +240,90 @@ A session is a period of time during which a sessionKey is authorized to sign tr
    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
    * @public
    */
-  addSession(userId, expiresAfterInSecs, spendingLimit, uiCallback) {
-    let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    OstWalletSdkUI.addSession(userId, String(expiresAfterInSecs), String(spendingLimit), coreUiCallback.uuid);
-    return coreUiCallback.uuid;
-  }
+let workflowId = OstWalletSdkUI.addSession(
+    userId, 
+    expiresAfterInSecs, 
+    spendingLimit, 
+    uiCallback
+) 
+
+// Subscribe to events
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.requestAcknowledged, () => {
+  // Session is being added.
+});
+
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext , ostContextEntity) => {
+  // Show success message to user.
+  // Session has been added.
+});
+
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWorkflowContext , ostError) => {
+  // Show error to user.
+  // An error occoured during the workflow. The Session has NOT been added.
+});
 ```
 
 #### Get Mnemonic Phrase
 
 The mnemonic phrase represents a human-readable way to authorize a new device. This phrase is 12 words long.
 ```js
+let uiCallback = new UserPassphrasePrefixDelegate()
+
 /**
    * Get device mnemonics
    * @param {String} userId - Ost User id
    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
    * @public
    */
-  getDeviceMnemonics(userId, uiCallback) {
-    let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    OstWalletSdkUI.getDeviceMnemonics( userId, coreUiCallback.uuid );
-    return coreUiCallback.uuid;
-  }
+let workflowId = OstWalletSdkUI.getDeviceMnemonics(
+    userId, 
+    uiCallback
+)
+
+// Subscribe to events
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext , ostContextEntity) => {
+  // Show success message to user.
+  // User has seen the mnemonics
+});
+
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWorkflowContext , ostError) => {
+  // Show error to user.
+  // An error occoured during the workflow.
+});
 ```
 
 #### Reset a User's PIN
 
 The user's PIN is set when activating the user. This method supports re-setting a PIN and re-creating the recoveryOwner as part of that.
 ```js
+
+let uiCallback = new UserPassphrasePrefixDelegate()
+
 /**
    * Reset pin
    *
    * @param {String} userId - Ost User id
    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
    */
-  resetPin(userId, uiCallback) {
-    let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    OstWalletSdkUI.resetPin( userId, coreUiCallback.uuid );
-    return coreUiCallback.uuid;
-  }
+let workflowId = OstWalletSdkUI.resetPin(
+    userId, 
+    uiCallback
+)
+
+// Subscribe to events
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.requestAcknowledged, () => {
+  // Pin is being reset.
+});
+
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext , ostContextEntity) => {
+  // Show success message to user.
+  // Workflow completed successfully.
+});
+
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWorkflowContext , ostError) => {
+  // Show error to user.
+  // An error occoured during the workflow. 
+});
 ```
 
 #### Initiate Recovery
@@ -171,6 +333,9 @@ A user can control their Brand Tokens using their authorized devices. If they lo
 If application set `recoverDeviceAddress` then OstWalletUI ask for `pin` to initiate device recovery. Else it displays authorized device list for given `userId` to select device from. 
 
 ```javascript
+
+let uiCallback = new UserPassphrasePrefixDelegate();
+
 /**
 * Initiate device recovery 
 * @param {String} userId - Ost User id
@@ -178,11 +343,29 @@ If application set `recoverDeviceAddress` then OstWalletUI ask for `pin` to init
 * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication 
 * @public
 */
-OstWalletSdkUI.initiateDeviceRecovery(
+let workflowId = OstWalletSdkUI.initiateDeviceRecovery(
     userId,
     recoverDeviceAddress,
     uiCallback 
 )
+
+// Subscribe to events
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.requestAcknowledged, () => {
+  // Device recovery has been initiated. 
+  // The device will be recovered after 12 hours.
+});
+
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext , ostContextEntity) => {
+  // Show success message to user.
+  // Device recovery has been initiated. 
+  // The device will be recovered after 12 hours.
+});
+
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWorkflowContext , ostError) => {
+  // Show error to user.
+  // An error occoured during the workflow. 
+});
+
 ```
 
 > `recoverDeviceAddress` can be `null`. <br/> 
@@ -195,34 +378,68 @@ OstWalletSdkUI.initiateDeviceRecovery(
 To abort initiated device recovery.
 
 ```javascript
-/**
-* Abort device recovery 
-* @param {String} userId - Ost User id
-* @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication 
-* @public
-*/
-OstWalletSdkUI.abortDeviceRecovery( 
-    userId, 
-    uiCallback
-) 
+
+  let uiCallback = new UserPassphrasePrefixDelegate();
+
+  /**
+  * Abort device recovery 
+  * @param {String} userId - Ost User id
+  * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication 
+  * @public
+  */
+  OstWalletSdkUI.abortDeviceRecovery( 
+      userId, 
+      uiCallback
+  ) 
+
+  // Subscribe to events
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.requestAcknowledged, () => {
+    // Request has been acknowledged by OST Platform.
+  });
+
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext , ostContextEntity) => {
+    // Show success message to user.
+    // Device recovery has been aborted.
+  });
+
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWorkflowContext , ostError) => {
+    // Show error to user.
+    // An error occoured during the workflow. 
+  });
+
 ```
 
 #### Revoke Device
 
 To revoke device access.
 ```js
-/**
+
+  let uiCallback = new UserPassphrasePrefixDelegate();
+
+  /**
    * Revoke device
    * @param {String} userId - Ost User id
    * @param {String} deviceAddressToRevoke - Device address which wants to recover
    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
    * @public
    */
-  revokeDevice(userId, deviceAddressToRevoke, uiCallback ) {
-    let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    OstWalletSdkUI.revokeDevice( userId, deviceAddressToRevoke, coreUiCallback.uuid );
-    return coreUiCallback.uuid;
-  }
+  let workflowId = OstWalletSdkUI.revokeDevice(userId, deviceAddressToRevoke, uiCallback );
+
+  // Subscribe to events
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.requestAcknowledged, () => {
+    // Request has been acknowledged by OST Platform.
+  });
+
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext , ostContextEntity) => {
+    // Show success message to user.
+    // Device has been revoked.
+  });
+
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWorkflowContext , ostError) => {
+    // Show error to user.
+    // An error occoured during the workflow. 
+  });
+
 ```
 > `deviceAddressToRevoke` can be `null`. <br/> 
 > If you have your own UI to select the device to revoke, set `deviceAddressToRevoke` to the selected device address.<br/> 
@@ -233,19 +450,29 @@ To revoke device access.
 
 This method can be used to enable or disable the biometric.
 ```js
-/**
-   * Update biometric prederence
+
+  let uiCallback = new UserPassphrasePrefixDelegate();
+  let shouldEnable = true;
+
+  /**
+   * Update biometric preference
    * @param {String} userId - Ost User id
-   * @param {boolean} enable - to enable biometric prefernce
+   * @param {boolean} shouldEnable - pass true to enable biometic preference, false to disable.
    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
    * @public
    */
-  updateBiometricPreference( userId, enable, uiCallback ){
-    let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    enable =  !!enable;
-    OstWalletSdkUI.updateBiometricPreference( userId,  enable,  coreUiCallback.uuid  );
-    return coreUiCallback.uuid;
-  }
+  let workflowId = OstWalletSdkUI.updateBiometricPreference( userId, shouldEnable, uiCallback );
+
+  // Subscribe to events
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext , ostContextEntity) => {
+    // Show success message to user.
+    // Preference has been updated.
+  });
+
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWorkflowContext , ostError) => {
+    // Show error to user.
+    // An error occoured during the workflow. 
+  });
 ```
 
 #### Authorize Current Device With Mnemonics
@@ -253,18 +480,30 @@ This method can be used to enable or disable the biometric.
 This workflow should be used to add a new device using 12 words recovery phrase.
 
 ```js
-/**
+
+  let uiCallback = new UserPassphrasePrefixDelegate();
+  /**
    * Authorize user device with mnemonics
    * @param {String} userId - Ost User id
    * @param {OstWalletWorkFlowCallback} workflow - callback implementation instances for application communication
    * @public
    */
-    authorizeCurrentDeviceWithMnemonics(userId, uiCallback) {
-        let coreUiCallback = this._getCoreUiCallback(uiCallback);
-        OstWalletSdkUI.authorizeCurrentDeviceWithMnemonics(userId, coreUiCallback.uuid);
+  let workflowId = OstWalletSdkUI.authorizeCurrentDeviceWithMnemonics(userId, uiCallback);
 
-        return coreUiCallback.uuid;
-    }
+  // Subscribe to events
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.requestAcknowledged, () => {
+    // Request has been acknowledged by OST Platform.
+  });
+
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext , ostContextEntity) => {
+    // Show success message to user.
+    // Device has been authorized.
+  });
+
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWorkflowContext , ostError) => {
+    // Show error to user.
+    // An error occoured during the workflow. 
+  });
 ```
 
 #### Get Add Device QR-Code
@@ -272,18 +511,32 @@ This workflow should be used to add a new device using 12 words recovery phrase.
 This workflow show QR-Code to scan from another authorized device
 
 ```js
-/**
+
+  let uiCallback = new UserPassphrasePrefixDelegate();
+
+  /**
    * Get add device QR code
    *
    * @param {String} userId - Ost User id
    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
    * @public
    */
-   getAddDeviceQRCode(userId, uiCallback) {
-        let coreUiCallback = this._getCoreUiCallback(uiCallback);
-        OstWalletSdkUI.getAddDeviceQRCode( userId, coreUiCallback.uuid );
-        return coreUiCallback.uuid;
-    }
+   let workflowId = OstWalletSdkUI.getAddDeviceQRCode(userId, uiCallback);
+
+  // Subscribe to events
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.requestAcknowledged, () => {
+    // Current Device is being authorized.
+  });
+
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext , ostContextEntity) => {
+    // Show success message to user.
+    // Current Device has been authorized.
+  });
+
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWorkflowContext , ostError) => {
+    // Show error to user.
+    // An error occoured during the workflow. 
+  });
 ```
 
 ### Scan QR-Code to Authorize Device
@@ -302,17 +555,30 @@ QR-Code Sample:
 ```
 
 ```js
-/**
+  let uiCallback = new UserPassphrasePrefixDelegate();
+
+  /**
    * Scan QR-Code to authorize device
    * @param {String} userId - Ost User id
    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
    * @public
    */
-   scanQRCodeToAuthorizeDevice(userId, uiCallback) {
-       let coreUiCallback = this._getCoreUiCallback(uiCallback);
-       OstWalletSdkUI.scanQRCodeToAuthorizeDevice( userId, coreUiCallback.uuid );
-       return coreUiCallback.uuid;
-    }
+   let workflowId = OstWalletSdkUI.scanQRCodeToAuthorizeDevice(userId, uiCallback);
+
+  // Subscribe to events
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.requestAcknowledged, () => {
+    // Device is being authorized.
+  });
+
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext , ostContextEntity) => {
+    // Show success message to user.
+    // Device has been authorized.
+  });
+
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWorkflowContext , ostError) => {
+    // Show error to user.
+    // An error occoured during the workflow. 
+  });
 ```
 
 #### Scan QR-Code to Execute Transaction
@@ -349,18 +615,32 @@ QR-Code Sample:
 ```
 
 ```js
-/**
+
+  let uiCallback = new UserPassphrasePrefixDelegate();
+
+  /**
    * Scan QR-Code to execute transaction
    *
    * @param {String} userId - Ost User id
    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
    * @public
    */
-   scanQRCodeToExecuteTransaction(userId, uiCallback) {
-        let coreUiCallback = this._getCoreUiCallback(uiCallback);
-        OstWalletSdkUI.scanQRCodeToExecuteTransaction( userId, coreUiCallback.uuid );
-        return coreUiCallback.uuid;
-    }
+   let workflowId = OstWalletSdkUI.scanQRCodeToExecuteTransaction(userId, uiCallback);
+
+  // Subscribe to events
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.requestAcknowledged, () => {
+    // Transaction is being executed.
+  });
+
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext , ostContextEntity) => {
+    // Show success message to user.
+    // Transaction has been executed successfully.
+  });
+
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWorkflowContext , ostError) => {
+    // Show error to user.
+    // An error occoured during the workflow. 
+  });
 ```
 
 ##  Ost Wallet UI Events and Listeners
