@@ -16,13 +16,25 @@ class OstWalletRNSdk {
      /**
      * Initialize wallet sdk
      * @param {String} endpoint - OST Platform endpoint
+     * @param {Object} config - SDK Config
      * @param {function} callback -   A typical node-style, error-first callback.
      * @callback params {Object}error , {Boolean} success
      * @public
      */
-    initialize( endpoint , callback ){
-        OstWalletSdk.initialize( endpoint , (error)=>{
-          callback( error , !error );
+    initialize( endpoint , config, callback ) {
+        let fCallback, fConfig;
+        if ( typeof config === 'object') {
+            fConfig = config;
+        } 
+
+        if ( callback && typeof callback === 'function') {
+            fCallback = callback;
+        } else if ( typeof config === 'function' ) {
+            fCallback = config;
+        }
+
+        OstWalletSdk.initialize( endpoint , fConfig, (error)=>{
+          fCallback && fCallback( error , !error );
         });
     }
 
@@ -119,7 +131,7 @@ class OstWalletRNSdk {
     /**
      * Get device QR code
      * @param {String} userId - Ost User id
-     * @param {function} successCallback - returns string.
+     * @param {function} successCallback - returns image as base64 string.
      * @param {function} errorCallback.
      * @public
      */
@@ -209,6 +221,19 @@ class OstWalletRNSdk {
         OstWalletSdk.logoutAllSessions( userId ,  workflow.uuid  ); 
     }
 
+    /**
+    * Get token object for provided userId
+    * @param {String} tokenId - Ost Token id
+    * @param {function} callback - Gets token object if present else nil
+    * @callback params {Object}token
+    * @public
+    */
+    getToken(tokenId, callback) {
+        OstWalletSdk.getToken(tokenId, (tokenEntity)=>{
+            callback( tokenEntity );
+        });
+    }
+
   /**
    * Get user object for provided userId
    * @param {String} userId - Ost User id
@@ -222,16 +247,51 @@ class OstWalletRNSdk {
         });
     }
 
-    /**
-    * Get token object for provided userId
-    * @param {String} userId - Ost User id
-    * @param {function} callback - Gets object if present else nil
-    * @callback params {Object}token
-    * @public
-    */
-    getToken(tokenId, callback) {
-        OstWalletSdk.getToken(tokenId, (tokenEntity)=>{
-            callback( tokenEntity );
+  /**
+   * Get current device object for provided userId
+   * @param {String} userId - Ost User id
+   * @param {function} callback - Gets current device object if present else nil
+   * @callback params {Object} device
+   * @public
+   */
+    getCurrentDeviceForUserId(userId, callback) {
+        OstWalletSdk.getCurrentDeviceForUserId(userId, (device)=>{
+          callback( device );
+        });
+    }
+
+  /**
+   * Get biometric preference for user
+   *
+   * @param userId - Ost User id
+   * @param callback - Gets biometric preference boolean value
+   */
+  isBiometricEnabled(userId, callback) {
+    OstWalletSdk.isBiometricEnabled(userId, (status) => {
+      callback( status );
+    })
+  }
+
+  /**
+   * Get user object for provided userId
+   * @param {String} userId - Ost User id
+   * @param {String} minimumSpendingLimitInWei - 
+   * @param {function} callback - Gets array of current device sessions.
+   * @callback params {Array} array of sessions
+   * @public
+   */
+    getActiveSessionsForUserId(userId, minimumSpendingLimitInWei, callback) {
+        let theCallback;
+        if ( typeof minimumSpendingLimitInWei === 'function' ) {
+            theCallback = minimumSpendingLimitInWei;
+            minimumSpendingLimitInWei = "0";
+        } else {
+            theCallback = callback;
+            minimumSpendingLimitInWei = String( minimumSpendingLimitInWei );
+        }
+        console.log("getActiveSessionsForUserId userId", userId);
+        OstWalletSdk.getActiveSessionsForUserId(userId, minimumSpendingLimitInWei, (activeSessions)=>{
+          theCallback && theCallback( activeSessions );
         });
     }
 }

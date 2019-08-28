@@ -41,7 +41,7 @@
     errorDataDict = errorData;
   }
   
-  self.errorCallback(@[ errorDict,
+  self.errorCallback(@[ [errorDict userInfo],
                         errorDataDict ]);
   [self cleanUp];
 }

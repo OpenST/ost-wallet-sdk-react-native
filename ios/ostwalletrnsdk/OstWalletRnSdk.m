@@ -19,12 +19,13 @@ RCT_EXPORT_MODULE(OstWalletSdk) ;
 
 #pragma mark - Initialize
 
-RCT_EXPORT_METHOD(initialize:(NSString *)url callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(initialize:(NSString *)url
+                  config: (NSDictionary *) config
+                  callback:(RCTResponseSenderBlock)callback)
 {
- 
   __weak NSError *error = nil;
   
-  [OstWalletSdk initializeWithApiEndPoint:url error:&error];
+  [OstWalletSdk initializeWithApiEndPoint:url config: config error:&error];
   
   if (error != nil) {
     NSDictionary *err = [OstRNErrorUtils errorToJson: error internalCode: @"rn_owrs_init_1"];
@@ -58,6 +59,56 @@ RCT_EXPORT_METHOD(getToken: (NSString *)tokenId
   }
 
   callback( @[] );
+}
+
+RCT_EXPORT_METHOD(getActiveSessionsForUserId: (NSString * _Nonnull) userId
+                  spendingLimit:(NSString * _Nullable) spendingLimit
+                  callback:(RCTResponseSenderBlock)callback) {
+  
+  NSMutableArray <NSDictionary *> *response = [[NSMutableArray alloc]init];
+  if ( nil == userId ) {
+    callback( @[response] );
+    return;
+  }
+  
+  NSArray<OstSession *> *sessions = [OstWalletSdk getActiveSessionsWithUserId: userId spendingLimit: spendingLimit];
+  if ( nil == sessions || sessions.count < 1 ) {
+    callback( @[response] );
+    return;
+  }
+  
+  for(OstSession *s in sessions) {
+    NSDictionary *data = s.data;
+    [response addObject: data];
+  }
+  callback( @[response] );
+}
+
+RCT_EXPORT_METHOD(getCurrentDeviceForUserId: (NSString * _Nonnull) userId
+                  callback:(RCTResponseSenderBlock)callback) {
+  if ( nil == userId ) {
+    callback( @[] );
+    return;
+  }
+  OstUser *user = [OstWalletSdk getUser:userId];
+  if ( nil == user ) {
+    callback( @[] );
+    return;
+  }
+  OstDevice *device = [user getCurrentDevice];
+  if ( nil == device ) {
+    callback( @[] );
+    return;
+  }
+
+  callback( @[device.data]);
+}
+
+RCT_EXPORT_METHOD(isBiometricEnabled: (NSString *)userId
+                  callback:(RCTResponseSenderBlock)callback) {
+  
+  BOOL isBiometricEnabled = [OstWalletSdk isBiometricEnabledWithUserId:userId];
+  callback( @[@(isBiometricEnabled)] );
 }
 
 #pragma mark - Workflows
