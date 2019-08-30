@@ -241,7 +241,7 @@ onLogoutAllSessions() {
 
 ```
 
-# SDK Methods
+## SDK Methods
 
 To use the APIs you will first need to import the `OstWalletSdk` from '@ostdotcom/ost-wallet-sdk-react-native' as below:
 
@@ -485,7 +485,7 @@ To enable or disable biometrics.
   OstWalletSdk.updateBiometricPreference( userId , enable ,workflow )
 ```
 
-# SDK WorkFlow Callbacks
+## SDK WorkFlow Callbacks
 Implement the `OstWalletWorkFlowCallback` class before calling any of the above workflows.
 
 ```javascript
@@ -631,7 +631,7 @@ verifyData( ostWorkflowContext, ostContextEntity, ostVerifyData)
 | **OstContextEntity**	| Information about the entity |
 | **OstVerifyData**	| **ostVerifyData.dataVerified()** should be called if the data is verified successfully. <br>In case data is not verified, the current workflow should be canceled by developer by calling **ostVerifyData.cancelFlow()** |
 
-# Getter Methods
+## Getter Methods
 The SDK provides getter methods that applications can use for various purposes. 
 These methods provide the application with data as available in the device's database.
 Please refer to [OST Wallet SDK Getter Methods](./documentation/OstWalletSdkGetMethods.md) for documentation.
@@ -640,6 +640,6 @@ Please refer to [OST Wallet SDK Getter Methods](./documentation/OstWalletSdkGetM
 While the getter methods provide application with data stored in device's database, the JSON API methods make API calls to OST Platform servers. 
 Please refer to [OST JSON API](./documentation/OstJsonApi.md) for documentation.
 
-## OstWalletSdkUI
+## OST Wallet SDK UI
 For quick and easy integration with SDK, developers can use built-in user-interface components which are configurable and support content and theme customization. 
 Please refer to [OST Wallet SDK UI ](./documentation/OstWalletUI.md) for documentation.
