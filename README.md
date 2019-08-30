@@ -443,7 +443,7 @@ The user's PIN is set when activating the user. This method supports re-setting 
 ```
 
 ### initiateDeviceRecovery
-A user can control their tokens using their authorized device(s). If a user loses an authorized device, she can recover access to their tokens by authorizing a new device via the recovery process.
+A user can control their tokens using their authorized device(s). If a user loses their authorized device, the user can recover access to her tokens by authorizing a new device by initiating the recovery process.
 
 ```javascript
 /**
@@ -682,4 +682,5 @@ Please refer to [OST JSON API](./documentation/OstJsonApi.md) for documentation.
 
 ## OST Wallet SDK UI
 For quick and easy integration with SDK, developers can use built-in user-interface components which are configurable and support content and theme customization. 
+
 Please refer to [OST Wallet SDK UI ](./documentation/OstWalletUI.md) for documentation.
