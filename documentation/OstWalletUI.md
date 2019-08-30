@@ -1,18 +1,14 @@
-# OST Wallet Sdk UI react native
+# OST Wallet React Native SDK UI
 
 ## Introduction
-
-For quick and easy integration with SDK, developers can use built-in User Interface Components which are themeable and support content customization. All OstWalletSdkUI workflows return `workflow-id`. The application can subscribe to the events of the workflow using the `workflow-id`.
+For quick and easy integration with SDK, developers can use built-in user interface components which are configurable and support content and theme customization. All OstWalletSdkUI workflows return `workflow-id`. The application can subscribe to the events of the workflow using the `workflow-id`.
 
 ## Setup
-
-`OstWalletSdkUI` is packaged along with OstWalletSdk. There are no additional steps for using `OstWalletSdkUI`. To setup OstWalletSdk, please refer [setup](../README.md#installing-react-native-sdk).
-
+`OstWalletSdkUI` is packaged along with OstWalletSdk. There are no additional steps for using `OstWalletSdkUI`. To setup OstWalletSdk, please refer to [setup](../README.md#installing-react-native-sdk).
 
 ## Before We Begin
 - App must [initialize](../README.md#initializing-the-sdk) the sdk <em><b>before</b></em> initiating any UI workflows.
 - App must perform [setupDevice](../README.md#setupdevice) workflow <em><b>before</b></em> initiating any UI workflows.
-
 
 ## OstWalletSdkUI SDK APIs
 
@@ -22,8 +18,7 @@ import {OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-native';
 ```
 
 ### Set Theme Config
-
-Theme for OstWalletSdkUI can be initialized by calling `setThemeConfig` API which setup OstWalletSdkUI theme config. To define custom theme config, please refer [ThemeConfig](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/release-2.3/documentation/ThemeConfig.md) documentation.
+Theme for OstWalletSdkUI can be initialized by calling `setThemeConfig` API which setup OstWalletSdkUI theme config. To define custom theme config, please refer to [Theme Config](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/release-2.3/documentation/ThemeConfig.md) documentation.
 
 ```js
     // Define the content config
@@ -43,9 +38,8 @@ Theme for OstWalletSdkUI can be initialized by calling `setThemeConfig` API whic
 
 
 ### Set Content Config
-
-Content for OstWalletSdkUI can be initialized by calling `setContentConfig` API which setup OstWalletSdkUI content config.
-To define custom content config, please refer [ContentConfig](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/release-2.3/documentation/ContentConfig.md) documentation.
+Content for OstWalletSdkUI can be initialized by calling `setContentConfig` API which set-up OstWalletSdkUI content config.
+To define custom content config, please refer to [Content Config](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/release-2.3/documentation/ContentConfig.md) documentation.
 
 ```js
     // Please update terms_and_condition.url as per your needs.
@@ -76,10 +70,9 @@ To define custom content config, please refer [ContentConfig](https://github.com
 ```
 
 ### Setup your Passphrase Prefix Delegate
+`Passphrase Prefix` is a salt provided by your application that assists in generation of User's recovery key using user's PIN.
+This salt should be _unique_ for each user, is immutable and needs to be associated with the user. The salt should not be stored in memory or on deivce unencrypted. When the UI workflow need's to ask for user's PIN, delegate's getPassphrase method is invoked.
 
-`Passphrase Prefix` is a salt provided by your application that assists in generation of User's recovery key using user's Pin.
-This salt should be _unique_ for each user, is immutable and needs to be associated with the user. The salt should not unencrypted be 
-stored in memory or on deivce. When the UI workflow need's to ask for user's Pin, delegate's getPassphrase method is invoked.
 The delegate must be derived from `OstWalletUIWorkflowCallback` class.
 
 Here is an example:
@@ -187,7 +180,7 @@ export default UserPassphrasePrefixDelegate;
 ### Ost Wallet UI Workflows
 
 #### Activate User
-User activation refers to the deployment of smart-contracts that form the user's Brand Token wallet. An activated user can engage with a Brand Token economy.
+User activation refers to the deployment of smart-contracts that form the user's token wallet. An activated user can engage with a token.
 
 ```javascript
 
@@ -226,8 +219,7 @@ OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWo
 ```
 
 #### Add Session
-
-A session is a period of time during which a sessionKey is authorized to sign transactions under a pre-set limit on behalf of the user. The device manager, which controls the tokens, authorizes sessions.
+A session is a period of time during which a sessionKey is authorized to sign transactions under a pre-set limit per transaction on behalf of the user. The device manager, which controls the tokens, authorizes sessions.
 ```js
 
 let uiCallback = new UserPassphrasePrefixDelegate()
@@ -264,7 +256,6 @@ OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWo
 ```
 
 #### Get Mnemonic Phrase
-
 The mnemonic phrase represents a human-readable way to authorize a new device. This phrase is 12 words long.
 ```js
 let uiCallback = new UserPassphrasePrefixDelegate()
@@ -293,7 +284,6 @@ OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWo
 ```
 
 #### Reset a User's PIN
-
 The user's PIN is set when activating the user. This method supports re-setting a PIN and re-creating the recoveryOwner as part of that.
 ```js
 
@@ -327,8 +317,7 @@ OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWo
 ```
 
 #### Initiate Recovery
-
-A user can control their Brand Tokens using their authorized devices. If they lose their authorized device, they can recover access to their BrandTokens by authorizing a new device via the recovery process.
+A user can control their tokens using their authorized device(s). If the user loses their authorized device, she can recover access to their tokens by authorizing a new device via the recovery process.
 
 If application set `recoverDeviceAddress` then OstWalletUI ask for `pin` to initiate device recovery. Else it displays authorized device list for given `userId` to select device from. 
 
@@ -374,7 +363,6 @@ OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWo
 
 
 #### Abort Device Recovery
-
 To abort initiated device recovery.
 
 ```javascript
@@ -410,7 +398,6 @@ To abort initiated device recovery.
 ```
 
 #### Revoke Device
-
 To revoke device access.
 ```js
 
@@ -447,8 +434,7 @@ To revoke device access.
 
 
 #### Update Biometric Preference
-
-This method can be used to enable or disable the biometric.
+To enable or disable the biometric.
 ```js
 
   let uiCallback = new UserPassphrasePrefixDelegate();
@@ -476,8 +462,7 @@ This method can be used to enable or disable the biometric.
 ```
 
 #### Authorize Current Device With Mnemonics
-
-This workflow should be used to add a new device using 12 words recovery phrase.
+To add a new device using 12 words recovery phrase.
 
 ```js
 
@@ -507,8 +492,7 @@ This workflow should be used to add a new device using 12 words recovery phrase.
 ```
 
 #### Get Add Device QR-Code
-
-This workflow show QR-Code to scan from another authorized device
+To show QR-Code to scan from another authorized device
 
 ```js
 
@@ -540,8 +524,7 @@ This workflow show QR-Code to scan from another authorized device
 ```
 
 ### Scan QR-Code to Authorize Device
-
-This workflow can be used to authorize device by scanning device QR-Code. 
+To authorize device by scanning device QR-Code. 
 
 QR-Code Sample:
 ```json
@@ -582,8 +565,7 @@ QR-Code Sample:
 ```
 
 #### Scan QR-Code to Execute Transaction
-
-This workflow can be used to execute transaction via device by scanning device QR-Code.
+To execute transaction via device by scanning device QR-Code.
 
 QR-Code Sample:
 ```json
@@ -699,7 +681,6 @@ OstWalletSdkUI.subscribeOnce(
 
 
 ### Unsubscribe
-
 Unsubscribes the listener from the specified event of UI Workflow.
 
 ```javascript
@@ -764,5 +745,3 @@ Acknowledge application about the request which is going to made by SDK.
     //ostWorkflowContext.WORKFLOW_TYPE gives the type of the workflow.
   }
 ```
-
-
