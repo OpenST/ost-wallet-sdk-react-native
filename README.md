@@ -11,6 +11,46 @@ OST React Native Wallet SDK...
 * Signs ethereum transactions and data as defined by contracts using EIP-1077
 * Enables users to recover access to their Brand Tokens in case the user loses their authorized device
 
+
+## Table of Contents
+
+- [Installing React-native SDK](#installing-react-native-sdk)
+- [Migrating to another version](#migrating-to-another-version)
+- [SDK Usage](#sdk-usage)
+  * [Initializing the SDK](#initializing-the-sdk)
+  * [Initializing SDK With Config](#initializing-sdk-with-config)
+  * [Subscribe to `OstWalletSdkEvents` in your top most level component](#subscribe-to--ostwalletsdkevents--in-your-top-most-level-component)
+  * [Implement `OstWalletWorkFlowCallback` for a workflow](#implement--ostwalletworkflowcallback--for-a-workflow)
+    + [An example of callback implementation](#an-example-of-callback-implementation)
+  * [Execute a workflow](#execute-a-workflow)
+- [SDK Methods](#sdk-methods)
+  * [setupDevice](#setupdevice)
+  * [activateUser](#activateuser)
+  * [addSession](#addsession)
+  * [executeTransaction](#executetransaction)
+  * [getDeviceMnemonics](#getdevicemnemonics)
+  * [authorizeCurrentDeviceWithMnemonics](#authorizecurrentdevicewithmnemonics)
+  * [performQRAction](#performqraction)
+  * [resetPin](#resetpin)
+  * [initiateDeviceRecovery](#initiatedevicerecovery)
+  * [abortDeviceRecovery](#abortdevicerecovery)
+  * [logoutAllSessions](#logoutallsessions)
+  * [revokeDevice](#revokedevice)
+  * [updateBiometricPreference](#updatebiometricpreference)
+- [SDK WorkFlow Callbacks](#sdk-workflow-callbacks)
+  * [flowComplete](#flowcomplete)
+  * [flowInterrupt](#flowinterrupt)
+  * [requestAcknowledged](#requestacknowledged)
+  * [getPin](#getpin)
+  * [pinValidated](#pinvalidated)
+  * [invalidPin](#invalidpin)
+  * [registerDevice](#registerdevice)
+  * [verifyData](#verifydata)
+- [Getter Methods](#getter-methods)
+- [OST JSON APIs](#ost-json-apis)
+- [OST Wallet SDK UI](#ost-wallet-sdk-ui)
+
+
 ## Installing React-native SDK
 
 1. Install React Native and create a react-native project
