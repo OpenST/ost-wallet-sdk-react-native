@@ -3,26 +3,21 @@
 
 ## Introduction
 
-OST React Native Wallet SDK is official OST Wallet SDK for react-native platform. OST React Native Wallet SDK is a mobile application development SDK that enables developers to integrate the functionality of a non-custodial crypto-wallet into consumer applications. 
+OST React Native Wallet SDK is the official OST Wallet SDK for react-native platform. The SDK is a mobile application development SDK that enables developers to integrate the functionality of a non-custodial crypto-wallet into consumer applications. 
 
-
-
-The OST React Native Wallet SDK:
+OST React Native Wallet SDK...
 
 * Safely generates and stores keys on the user's mobile device
 * Signs ethereum transactions and data as defined by contracts using EIP-1077
 * Enables users to recover access to their Brand Tokens in case the user loses their authorized device
 
-
-
-
 ## Installing React-native SDK
 
-1. Install React native and create a react native project
+1. Install React Native and create a react-native project
 
 Follow this [official react-native getting started guide](https://facebook.github.io/react-native/docs/0.59/getting-started) to install react native and create a react-native project
 
-2. Install the OST React Native SDK in your project
+2. Install OST React Native SDK in your project
 Run following command in your react-native project root
 
 ```bash
@@ -34,18 +29,18 @@ The sdk needs [eventemitter3](https://github.com/primus/eventemitter3) as peer-d
  npm install eventemitter3
 ```
 
-3. Linking the OST React native SDk with your project
+3. Linking the OST React Native SDk with your project
 
 ```bash
  react-native link @ostdotcom/ost-wallet-sdk-react-native
 ```
 
-4. [Android setup for OST React Native SDK](./documentation/android_setup.md)
+4. [Android set-up for OST React Native SDK](./documentation/android_setup.md)
 
-5. [iOS setup for OST React Native SDK](./documentation/ios_setup.md)
+5. [iOS Set-up for OST React Native SDK](./documentation/ios_setup.md)
 
 ## Migrating to another version
-If you decide you change the SDK's version, please make sure to update downsteam native SDKs.
+If you decide to change the SDK version, please make sure to update the downsteam native SDKs.
 
 For Android, please run:
 ```shell
@@ -59,16 +54,14 @@ carthage update --cache-builds --platform ios
 ```
 After updating the SDK, please delete `ostwalletrnsdk` using the **Remove References** option and add it back by following [this step](./documentation/ios_setup.md#5-add-additional-sdk-files).
 
-
 ## SDK Usage
 * Initialize the SDK
 * Subscribe to events
 * Implement `OstWalletWorkFlowCallback` for a workflow
 * Execute workflow
 
-
 ### Initializing the SDK
-You must initialize the SDK before start using it.
+You must initialize the SDK before using it.
 > Initialize the SDK in using BASE_URL (OST Platform endpoint) inside App.js `constructor()` method.
 
 ```javascript
@@ -148,8 +141,7 @@ class App extends Component {
 
 ### Implement `OstWalletWorkFlowCallback` for a workflow
 
-For communication between OST React Native SDK and your application, you need to implement callbacks. A base callback class `OstWalletWorkFlowCallback` is given as a part of the SDK. The base callback class gives only declaration of callback functions. A detail overview of callback functions is available in later part of this readme.
-
+For communication between OST React Native SDK and your application, you need to implement callbacks. A base callback class `OstWalletWorkFlowCallback` is given as a part of the SDK. The base callback class gives only declaration of callback functions. A detailed overview of callback functions is available in the later part of this readme.
 
 **Developers are expected to implement a new class for each workflow.**
 
@@ -233,7 +225,7 @@ export default OstWalletSdkCallbackImplementation;
 
 ### Execute a workflow
 
-To execute a workflow, we need to pass an instance of `OstWalletSdkCallbackImplementation` class. The callback implementation will be different for each workflow available in this SDK.
+To execute a workflow, you need to pass an instance of `OstWalletSdkCallbackImplementation` class. The callback implementation will be different for each workflow available in the SDK.
 
 ```javascript
 
@@ -249,8 +241,6 @@ onLogoutAllSessions() {
 
 ```
 
-
-
 # SDK Methods
 
 To use the APIs you will first need to import the `OstWalletSdk` from '@ostdotcom/ost-wallet-sdk-react-native' as below:
@@ -259,8 +249,7 @@ To use the APIs you will first need to import the `OstWalletSdk` from '@ostdotco
 import {OstWalletSdk} from '@ostdotcom/ost-wallet-sdk-react-native';
 ```
 
-You would need to pass a new instance of the workflow callback implementation for each of the below methods. 
-
+You will need to pass a new instance of the workflow callback implementation for each of the below methods. 
 
 ### setupDevice
 This workflow needs userId and tokenId so setupDevice may be called after the user logs in to the application. Using a mapping between userId in OST Platform and the app user, you have access to userId and tokenId.
@@ -278,11 +267,8 @@ If the user is logged in, then setupDevice should be called every time the app l
   OstWalletSdk.setupDevice(userId, tokenId, workflow)
 ```
 
-
-
-
 ### activateUser
-User activation refers to the deployment of smart-contracts that form the user's Brand Token wallet. An activated user can engage with a Brand Token economy. 
+User activation refers to the deployment of smart-contracts that form the user's token wallet. An activated user can engage with a token. 
 
 ```javascript
 /**
@@ -302,9 +288,8 @@ User activation refers to the deployment of smart-contracts that form the user's
 
 ```
 
-
 ### addSession
-A session is a period of time during which a sessionKey is authorized to sign transactions under a pre-set limit on behalf of the user. The device manager, which controls the tokens, authorizes sessions.
+A session is a period of time during which a sessionKey is authorized to sign transactions under a pre-set limit per transaction on behalf of the user. The device manager, which controls the tokens, authorizes sessions.
 
 ```javascript
 /**
@@ -323,7 +308,7 @@ A session is a period of time during which a sessionKey is authorized to sign tr
 
 
 ### executeTransaction
-A transaction where Brand Tokens are transferred from a user to another actor within the Brand Token economy are signed using sessionKey if there is an active session. In the absence of an active session, a new session is authorized.
+A transaction where tokens are transferred from a user to another actor within are signed using sessionKey if there is an active session. In the absence of an active session, a new session is authorized.
 
 ```javascript
 
@@ -348,7 +333,6 @@ A transaction where Brand Tokens are transferred from a user to another actor wi
 ```
 
 
-
 ### getDeviceMnemonics
 The mnemonic phrase represents a human-readable way to authorize a new device. This phrase is 12 words long. 
 
@@ -365,7 +349,7 @@ The mnemonic phrase represents a human-readable way to authorize a new device. T
 ```
 
 ### authorizeCurrentDeviceWithMnemonics
-A user that has stored their mnemonic phrase can enter it into an appropriate user interface on a new mobile device and authorize that device to be able to control their Brand Tokens.
+A user that has stored their mnemonic phrase can enter it on a new mobile device and authorize that device to be able to control their tokens.
 
 ```javascript
  /**
@@ -383,7 +367,7 @@ A user that has stored their mnemonic phrase can enter it into an appropriate us
 ```
 
 ### performQRAction
-QR codes can be used to encode transaction data for authorizing devices, making purchases via webstores, etc.This method can be used to process the information scanned off a QR code and act on it.
+QR codes can be used to encode transaction data for authorizing devices and making purchases via webstores, etc. This method can be used to process the information scanned off a QR code and act on it.
 
 ```javascript
 /**
@@ -419,7 +403,7 @@ The user's PIN is set when activating the user. This method supports re-setting 
 ```
 
 ### initiateDeviceRecovery
-A user can control their Brand Tokens using their authorized devices. If they lose their authorized device, they can recover access to their BrandTokens by authorizing a new device via the recovery process .
+A user can control their tokens using their authorized device(s). If a user loses an authorized device, she can recover access to their tokens by authorizing a new device via the recovery process.
 
 ```javascript
 /**
@@ -439,7 +423,7 @@ OstWalletSdk.initiateDeviceRecovery( userId,
 ```
 
 ### abortDeviceRecovery
-To abort initiated device recovery.
+To abort an initiated device recovery.
 
 ```javascript
 /**
@@ -457,7 +441,7 @@ OstWalletSdk.abortDeviceRecovery(userId,
 ```
 
 ### logoutAllSessions
-It will revoke all the sessions associated with provided userId
+To revoke all sessions associated with provided userId.
 
 ```javascript
 /**
@@ -470,9 +454,8 @@ OstWalletSdk.logoutAllSessions(userId,
                   workflow )
 ```
 
-
 ### revokeDevice
-This method will unauthorize the current device.
+To unauthorize the current device.
 
 ```javascript
 /**
@@ -488,9 +471,8 @@ This method will unauthorize the current device.
 
 ```
 
-
 ### updateBiometricPreference
-This method can be used to enable or disable the biometric.
+To enable or disable biometrics.
 
 ```javascript
 /**
@@ -504,8 +486,7 @@ This method can be used to enable or disable the biometric.
 ```
 
 # SDK WorkFlow Callbacks
-
-Implement the `OstWalletWorkFlowCallback` class before calling any of the above WorkFlows.
+Implement the `OstWalletWorkFlowCallback` class before calling any of the above workflows.
 
 ```javascript
 import { OstWalletWorkFlowCallback } from '@ostdotcom/ost-wallet-sdk-react-native';
@@ -520,7 +501,6 @@ class OstWalletSdkCallbackImplementation extends OstWalletWorkFlowCallback {
     getPin(ostWorkflowContext, ostContextEntity, ostPinAccept) {}
 
     invalidPin(ostWorkflowContext, ostContextEntity, ostPinAccept) {}
-
 
     pinValidated(ostWorkflowContext, ostContextEntity) {}
 
@@ -539,8 +519,7 @@ export default OstWalletSdkCallbackImplementation;
 The callback functions provided by the interface are as follows-
 
 ### flowComplete
-
-This function will be called by wallet SDK when a workflow is completed. The details of workflow and the entity that was updated during the workflow will be available in arguments.
+This function will be called by SDK when a workflow is completed. The details of workflow and the entity that was updated during the workflow will be available in the arguments.
 
 ```
 flowComplete( ostWorkflowContext, ostContextEntity)
@@ -551,15 +530,10 @@ flowComplete( ostWorkflowContext, ostContextEntity)
 | **OstWorkflowContext**	|	Information about the workflow	|
 | **OstContextEntity**	| Information about the entity |
 
-
-
 <br>
 
-
-
-
 ### flowInterrupt
-This function will be called by wallet SDK when a workflow is cancelled. The workflow details and error details will be available in arguments.
+This function will be called by SDK when a workflow is cancelled. The workflow details and error details will be available in the arguments.
 
 ```
 flowInterrupt( ostWorkflowContext, ostError)
@@ -570,15 +544,10 @@ flowInterrupt( ostWorkflowContext, ostError)
 | **OstWorkflowContext**	| Information about the workflow |
 | **OstError**	| ostError object will have details about the error that interrupted the flow |
 
-
-
 <br>
 
-
-
-
 ### requestAcknowledged
-This function will be called by wallet SDK when the core API request was successful which happens during the execution of workflows. At this stage the workflow is not completed but it shows that the main communication between the wallet SDK and OST Platform server is complete. <br>Once the workflow is complete the `app` will receive the details in `flowComplete` (described below) function. 
+This function will be called by SDK when the core API request was successful which happens during the execution of workflows. At this stage the workflow is not completed but it shows that the main communication between the wallet SDK and OST Platform server is complete. <br>Once the workflow is complete the `app` will receive the details in `flowComplete` (described below) function. 
 
 ```
 requestAcknowledged( ostWorkflowContext, ostContextEntity)
@@ -592,11 +561,9 @@ requestAcknowledged( ostWorkflowContext, ostContextEntity)
 <br>
 
 
-
-
 ### getPin
-This function will be called by wallet SDK when it needs to get the PIN from the `app` user to authenticate any authorised action.
-<br>**Expected Function Definition:** Developers of client company are expected to launch their user interface to get the PIN from the user and pass back this PIN to SDK by calling **ostPinAccept.pinEntered()** 
+This function will be called by SDK when it needs to get the PIN from the `app` user to authenticate any authorised action.
+<br>**Expected Function Definition:** Developers of client company are expected to launch their user interface to get the PIN from the user and pass this PIN back to SDK by calling **ostPinAccept.pinEntered()** 
 
 ```
 getPin( userId, ostPinAccept)
@@ -607,14 +574,10 @@ getPin( userId, ostPinAccept)
 | **userId**	| Unique identifier of the user |
 | **OstPinAccept**	| **ostPinAccept.pinEntered()** should be called to pass the PIN back to SDK. <br> For some reason if the developer wants to cancel the current workflow they can do it by calling **ostPinAccept.cancelFlow()** |
 
-
 <br>
 
-
-
-
 ### pinValidated
-This function will be called by wallet SDK when the last entered PIN is validated. 
+This function will be called by SDK when the last entered PIN is validated. 
 
 ```
 pinValidated(userId)
@@ -624,15 +587,10 @@ pinValidated(userId)
 |---|---|
 | **userId**	| Unique identifier of the user |
 
-
-
-
 <br>
 
-
-
 ### invalidPin
-This function will be called by wallet SDK when the last entered PIN was wrong and `app` user has to provide the PIN again. Developers are expected to repeat the `getPin` method here and pass back the PIN again back to the SDK by calling  **ostPinAccept.pinEntered()** .
+This function will be called by SDK when the last entered PIN was incorrect and `app` user has to provide the PIN again. Developers are expected to repeat the `getPin` method here and pass back the PIN again to the SDK by calling  **ostPinAccept.pinEntered()** .
 
 ```
 invalidPin( userId, ostPinAccept)
@@ -641,15 +599,13 @@ invalidPin( userId, ostPinAccept)
 | Argument | Description |
 |---|---|
 | **userId**	|	Unique identifier of the user	|
-| **OstPinAccept**	| **ostPinAccept.pinEntered()** should be called to again pass the PIN back to SDK. <br> For some reason if the developer wants to cancel the current workflow they can do it by calling **ostPinAccept.cancelFlow()**  |
-
+| **OstPinAccept**	| **ostPinAccept.pinEntered()** should be called to again pass the PIN back to SDK. <br>If, for some reason, the developer wants to cancel the current workflow they can do it by calling **ostPinAccept.cancelFlow()**  |
 
 <br>
 
-
 ### registerDevice
-This function will be called by wallet SDK to register the device.<br>**Expected Function Definition:** Developers of client company are expected to register the device by communicating with client company's server. On client company's server they can use `Server SDK` to register this device in OST Platform. Once the device is registered on OST Platform client company's server will receive the newly created `device` entity. This device entity should be passed back to the `app`.<br>
-Finally they should pass back this newly created device entity back to the wallet SDK by calling **OstDeviceRegistered.deviceRegistered( newDeviceEntity )**.
+This function will be called by SDK to register the device. <br>**Expected Function Definition:** Developers of client company are expected to register the device by communicating with client company's server. On client company's server they can use `Server SDK` to register the device in OST Platform. Once the device is registered on OST Platform client company's server will receive the newly created `device` entity. This device entity should be passed back to the `app`.<br>
+Finally developers should pass back the newly created device entity to the Wallet SDK by calling **OstDeviceRegistered.deviceRegistered( newDeviceEntity )**.
 
 ```
 registerDevice( apiParams, ostDeviceRegistered)
@@ -658,37 +614,32 @@ registerDevice( apiParams, ostDeviceRegistered)
 | Argument | Description |
 |---|---|
 | **apiParams**	|	Device information for registration	|
-| **OstDeviceRegistered**	| **OstDeviceRegistered.deviceRegistered( newDeviceEntity )** should be called to pass the newly created device entity back to SDK. <br>In case data is not verified the current workflow should be canceled by developer by calling **OstDeviceRegistered.cancelFlow()**  |
-
-
+| **OstDeviceRegistered**	| **OstDeviceRegistered.deviceRegistered( newDeviceEntity )** should be called to pass the newly created device entity back to SDK. <br>In case data is not verified, the current workflow should be canceled by developer by calling **OstDeviceRegistered.cancelFlow()**  |
 
 <br>
 
 ### verifyData
-This function will be called by wallet SDK to verify data during `performQRAction` workflow.
-
+This function will be called by SDK to verify data during the `performQRAction` workflow.
 
 ```
 verifyData( ostWorkflowContext, ostContextEntity, ostVerifyData)
 ```
 
-
 | Argument | Description |
 |---|---|
 | **OstWorkflowContext**	| Information about the current workflow during which this callback will be called	|
 | **OstContextEntity**	| Information about the entity |
-| **OstVerifyData**	| **ostVerifyData.dataVerified()** should be called if the data is verified successfully. <br>In case data is not verified the current workflow should be canceled by developer by calling **ostVerifyData.cancelFlow()** |
+| **OstVerifyData**	| **ostVerifyData.dataVerified()** should be called if the data is verified successfully. <br>In case data is not verified, the current workflow should be canceled by developer by calling **ostVerifyData.cancelFlow()** |
 
-## OST Wallet SDK Getter Methods
-The Sdk provides getter methods that application can use for various purposes. 
+# Getter Methods
+The SDK provides getter methods that applications can use for various purposes. 
 These methods provide the application with data as available in the device's database.
-Please refer [OstWalletSdk Getter Methods](./documentation/OstWalletSdkGetMethods.md) for documentation.
-
+Please refer to [OST Wallet SDK Getter Methods](./documentation/OstWalletSdkGetMethods.md) for documentation.
 
 ## OST JSON APIs
 While the getter methods provide application with data stored in device's database, the JSON API methods make API calls to OST Platform servers. 
-Please refer [OstJsonApi](./documentation/OstJsonApi.md) for documentation.
+Please refer to [OST JSON API](./documentation/OstJsonApi.md) for documentation.
 
 ## OstWalletSdkUI
-
-For quick and easy integration with SDK, developers can use built-in User Interface Components which are themeable and support content customization. Please refer [OstWalletSdkUI](./documentation/OstWalletUI.md) for documentation.
+For quick and easy integration with SDK, developers can use built-in user-interface components which are configurable and support content and theme customization. 
+Please refer to [OST Wallet SDK UI ](./documentation/OstWalletUI.md) for documentation.
