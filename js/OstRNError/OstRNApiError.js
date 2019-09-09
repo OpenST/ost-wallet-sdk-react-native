@@ -1,13 +1,13 @@
 /*
  Copyright © 2019 OST.com Inc
- 
+
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
- 
+
  http://www.apache.org/licenses/LICENSE-2.0
  */
- 
+
 import OstRNError from "./OstRNError";
 
 const ErrorCodes = {
@@ -26,51 +26,51 @@ const ErrorCodes = {
 
 
 class OstRNApiError extends  OstRNError{
-  
+
   constructor( error ){
     super(error);
   }
-  
+
   static get ApiErrorCodes() {
     return ErrorCodes;
   }
-  
+
   getApiError(){
-    return this.error && this.error.apiError || {} ;
+    return this.error && (this.error.apiError || this.error.api_error) || {};
   }
-  
+
   getApiInternalId(){
     return this.getApiError().internal_id;
   }
-  
+
   getApiErrorCode(){
     return this.getApiError().code;
   }
-  
+
   getApiErrorData(){
     return this.getApiError().error_data;
   }
-  
+
   getApiErrorMessage(){
     return this.getApiError().msg;
   }
-  
+
   isBadRequest(){
     return this.getApiErrorCode() == ErrorCodes['BAD_REQUEST'];
   }
-  
+
   isNotFound(){
     return this.getApiErrorCode() == ErrorCodes['NOT_FOUND'];
   }
-  
+
   isDeviceTimeOutOfSync(){
     return this.isErrorParameterKey( "api_request_timestamp" );
   }
-  
+
   isApiSignerUnauthorized(){
     return this.isErrorParameterKey( "api_key" );
   }
-  
+
    isErrorParameterKey( key ){
       if(!key) return false ;
       let errorData = this.getApiErrorData() || [];
@@ -82,7 +82,7 @@ class OstRNApiError extends  OstRNError{
       }
       return false ;
   }
-  
+
 }
 
 export default OstRNApiError ;
