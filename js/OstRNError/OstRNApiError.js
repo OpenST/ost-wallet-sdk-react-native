@@ -36,7 +36,7 @@ class OstRNApiError extends  OstRNError{
   }
 
   getApiError(){
-    return this.error && (this.error.apiError || this.error.api_error) || {};
+      return this.error && (this.error.apiError || this.error.api_error) || {};
   }
 
   getApiInternalId(){
