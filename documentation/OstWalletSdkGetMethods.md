@@ -1,5 +1,4 @@
-# OstWalletSdk Getter Methods
-
+# OST Wallet React Native SDK Getter Methods
 
 ## Table of Contents
 
@@ -22,16 +21,14 @@
   - [Usage](#usage-5)
   - [Sample Render Method](#sample-render-method)
 
-
 <a id="before-we-begin"></a>
 ## Before We Begin
-- App must [initialize](../README.md#initializing-the-sdk) the sdk <em><b>before</b></em> initiating getter methods.
+- App must [initialize](../README.md#initializing-the-sdk) the SDK <em><b>before</b></em> initiating getter methods.
 - We recommend using these methods *after* [setupDevice](../README.md#setupdevice) workflow has been performed.
 - The getter methods provide the data as available with the device. 
   - The methods may return `null` if the data is not available.
-- These methods are *synchronous* in the native sdk. Because of react-native's bridge they behave *asynchronous* in the react-native SDK. 
+- These methods are *synchronous* in the native SDK. Because of react-native's bridge they behave *asynchronous* in the react-native SDK. 
   - These methods do not make any API calls.
-
 
 <a id="get-token"></a>
 ## Get Token
@@ -60,7 +57,7 @@ Method to get token information.
 ```
 <a id="sample-response"></a>
 ##### Sample Response
-Please refer [Token Object](https://dev.ost.com/platform/docs/api/#token) for detailed description.
+Please refer to the [Token Object](https://dev.ost.com/platform/docs/api/#token) for a detailed description.
 ```json
 {
   "updated_timestamp": 1560167796,
@@ -103,14 +100,15 @@ Please refer [Token Object](https://dev.ost.com/platform/docs/api/#token) for de
 
 <a id="get-user"></a>
 ## Get User
-Method to get token information.
+Method to get user information.
 > `getUser` method will return partial data if device has not been registered.
+
 <a id="usage-1"></a>
 ##### Usage
 ```js
   /*
     Please update userId as per your needs. 
-    Since this userId does not belong to your economy, you may get an error if you do not change it.
+    Since this userId does not belong to your economy, you will get an error if you do not change it.
   */
   let userId = "71c59448-ff77-484c-99d8-abea8a419836";
 
@@ -294,11 +292,9 @@ Method to get active sessions available with device.
 ]
 ```
 
-
-
 <a id="qr-code-for-authorizing-device"></a>
 ## QR Code for Authorizing Device
-Method to generate QR code that can be scanned by **authorized** device. Scanning this QR code with an authorized mobile device will result in this device (from where the QR code has been generated) being authorized.
+Method to generate QR code that can be scanned by an **authorized** device. Scanning this QR code with an authorized mobile device will result in this device (from where the QR code has been generated) being authorized.
 > App should use this method only when the current device status is `REGISTERED`.
 
 <a id="usage-5"></a>
@@ -345,4 +341,3 @@ Method to generate QR code that can be scanned by **authorized** device. Scannin
     return null;
   }
 ```
-
