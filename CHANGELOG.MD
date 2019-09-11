@@ -1,5 +1,9 @@
 # OST Wallet SDK Changelog
 
+## Version 2.3.3
+### Bug Fix:
+* OstWalletUIDelegateCallback signature updated.
+
 ## Version 2.3.2
 ### Bug Fix:
 * Fixed a bug, where `ostApiError.getApiError` always returned an empty object.
