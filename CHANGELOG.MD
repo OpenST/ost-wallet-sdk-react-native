@@ -2,7 +2,7 @@
 
 ## Version 2.3.3
 ### Bug Fix:
-* OstWalletUIDelegateCallback signature updated.
+* OstWalletUIWorkflowCallback signature updated.
 
 ## Version 2.3.2
 ### Bug Fix:
