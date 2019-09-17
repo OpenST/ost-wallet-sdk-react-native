@@ -31,30 +31,27 @@ class OstWalletUIWorkFlowCallback {
   getPassphrase(userId, ostWorkflowContext, OstPassphrasePrefixAccept) { }
   /**
    * Request acknowledged
-   * @param {String} workflowId - Workflow id
    * @param {Object} ostWorkflowContext - info about workflow type
    * @param ostContextEntity - info about entity
    * @override
    */
-  requestAcknowledged(workflowId, ostWorkflowContext , ostContextEntity ) {}
+  requestAcknowledged(ostWorkflowContext , ostContextEntity ) {}
 
   /**
    * Flow complete
-   * @param {String} workflowId - Workflow id
    * @param ostWorkflowContext - workflow type
    * @param ostContextEntity -  status of the flow
    * @override
    */
-  flowComplete(workflowId, ostWorkflowContext , ostContextEntity ) {   }
+  flowComplete(ostWorkflowContext , ostContextEntity ) {   }
 
   /**
    * Flow interrupt
-   * @param {String} workflowId - Workflow id
    * @param ostWorkflowContext workflow type
    * @param ostError reason of interruption
    * @override
    */
-  flowInterrupt(workflowId, ostWorkflowContext , ostError)  {   }
+  flowInterrupt(ostWorkflowContext , ostError)  {   }
 }
 
 export default OstWalletUIWorkFlowCallback;
