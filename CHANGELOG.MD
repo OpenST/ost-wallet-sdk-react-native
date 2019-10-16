@@ -1,5 +1,14 @@
 # OST Wallet SDK Changelog
 
+## Version 2.3.6
+* Downstream Android Sdk updated to `v2.3.5`
+
+## Version 2.3.5
+* Downstream Android Sdk updated to `v2.3.4`
+
+## Version 2.3.4
+* Downstream Android Sdk updated to `v2.3.2`
+
 ## Version 2.3.3
 ### Bug Fix:
 * OstWalletUIWorkflowCallback signature updated.
