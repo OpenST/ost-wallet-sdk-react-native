@@ -1,5 +1,11 @@
 # OST Wallet SDK Changelog
 
+## Version 2.3.9
+* Downstream iOS Sdk updated to `v2.3.4`
+
+## Version 2.3.8
+* Removed jitpack.io dependency.
+
 ## Version 2.3.7
 * Downstream iOS Sdk updated to `v2.3.3`
 
