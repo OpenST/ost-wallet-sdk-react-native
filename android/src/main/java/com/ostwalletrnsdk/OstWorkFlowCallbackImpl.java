@@ -17,6 +17,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.ost.walletsdk.OstSdk;
+import com.ost.walletsdk.annotations.Nullable;
 import com.ost.walletsdk.models.entities.OstBaseEntity;
 import com.ost.walletsdk.workflows.OstContextEntity;
 import com.ost.walletsdk.workflows.OstWorkflowContext;
@@ -33,8 +34,6 @@ import com.ostwalletrnsdk.sdkIntracts.OstVerifyDataWrap;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-
-import javax.annotation.Nullable;
 
 public class OstWorkFlowCallbackImpl implements OstWorkFlowCallback {
 

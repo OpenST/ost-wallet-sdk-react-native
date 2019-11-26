@@ -11,8 +11,6 @@
 package com.ostwalletrnsdk;
 
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Base64;
 
 import android.util.Log;
@@ -22,6 +20,8 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.ost.walletsdk.OstSdk;
+import com.ost.walletsdk.annotations.NonNull;
+import com.ost.walletsdk.annotations.Nullable;
 import com.ost.walletsdk.ecKeyInteracts.UserPassphrase;
 import com.ost.walletsdk.models.entities.OstDevice;
 import com.ost.walletsdk.models.entities.OstSession;
