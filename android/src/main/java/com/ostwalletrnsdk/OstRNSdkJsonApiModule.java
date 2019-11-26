@@ -15,6 +15,8 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
+import com.ost.walletsdk.annotations.NonNull;
+import com.ost.walletsdk.annotations.Nullable;
 import com.ost.walletsdk.network.OstJsonApi;
 import com.ost.walletsdk.network.OstJsonApiCallback;
 import com.ost.walletsdk.workflows.errors.OstError;
@@ -24,9 +26,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class OstRNSdkJsonApiModule extends ReactContextBaseJavaModule {
 
@@ -174,7 +173,7 @@ public class OstRNSdkJsonApiModule extends ReactContextBaseJavaModule {
         }
 
         @Override
-        public void onOstJsonApiError(@Nonnull OstError err, @Nullable JSONObject data) {
+        public void onOstJsonApiError(@NonNull OstError err, @Nullable JSONObject data) {
             try {
                 if (null == data) data = new JSONObject();
 

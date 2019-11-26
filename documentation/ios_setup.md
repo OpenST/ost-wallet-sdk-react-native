@@ -15,7 +15,7 @@ Carthage looks at a file called `Cartfile` to determine which libraries to insta
 
 Add following entry in your `Cartfile`
 ```bash
- github "ostdotcom/ost-wallet-sdk-ios" == 2.3.4
+ github "ostdotcom/ost-wallet-sdk-ios" == 2.3.5
 ```
 
 Now to actually install everything run the following in your terminal:
@@ -95,35 +95,39 @@ Create `OstWalletSdk.plist` file. This file has configuration attributes used by
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-    <plist version="1.0">
-        <dict>
-            <key>BlockGenerationTime</key>
-            <integer>3</integer>
-            <key>PricePointCurrencySymbol</key>
-            <string>USD</string>
-            <key>RequestTimeoutDuration</key>
-            <integer>30</integer>
-            <key>PinMaxRetryCount</key>
-            <integer>3</integer>
-            <key>SessionBufferTime</key>
-            <integer>3600</integer>
-            <key>UseSeedPassword</key>
-            <false/>
-        </dict>
-    </plist>
+ <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+ <plist version="1.0">
+ <dict>
+    <key>BlockGenerationTime</key>
+    <integer>3</integer>
+    <key>PricePointTokenSymbol</key>
+    <string>OST</string>
+    <key>PricePointCurrencySymbol</key>
+    <string>USD</string>
+    <key>RequestTimeoutDuration</key>
+    <integer>30</integer>
+    <key>PinMaxRetryCount</key>
+    <integer>3</integer>
+    <key>SessionBufferTime</key>
+    <integer>3600</integer>
+    <key>UseSeedPassword</key>
+	<false/>
+    <key>EnableIOSDeviceRestore</key>
+	<false/>
+ </dict>
+ </plist>
 ```
 
 1. BlockGenerationTime: The time in seconds it takes to mine a block on auxiliary chain.
-2. PricePointCurrencySymbol: It is the symbol of quote currency used in price conversion.
-3. RequestTimeoutDuration: Request timeout in seconds for https calls made by ostWalletSdk.
-4. PinMaxRetryCount: Maximum retry count to get the wallet Pin from user.
-5. SessionBufferTime: Buffer expiration time for session keys in seconds.
-6. UseSeedPassword: Uses mnemonics and password to generate seed.
+2. PricePointTokenSymbol: This is the symbol of base currency. So its value will be OST.
+3. PricePointCurrencySymbol: It is the symbol of quote currency used in price conversion.
+4. RequestTimeoutDuration: Request timeout in seconds for https calls made by ostWalletSdk.
+5. PinMaxRetryCount: Maximum retry count to get the wallet Pin from user.
+6. SessionBufferTime: Buffer expiration time for session keys in seconds. Default value is 3600 seconds.
+7. UseSeedPassword: The seed password is salt to PBKDF2 used to generate seed from the mnemonic. When UseSeedPassword set to `true`, different deterministic salts are used for different keys.
+8. EnableIOSDeviceRestore: When EnableIOSDeviceRestore is set to `true`, After app re-installation, SDK checks for available device key in Keychain for given user id.
 
 **These configurations are MANDATORY for successful operation. Failing to set them will significantly impact usage.**
-
-
 
 
 # Next Steps
