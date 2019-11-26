@@ -71,7 +71,7 @@ To define custom content config, please refer to [Content Config](https://github
 ### Set Loader Manager
 
 Application loader for OstWalletUI can be initialized by calling `setLoaderManager` API. This API is available in native SDK. <br/><br/>
-Custom loader is supported from OstWalletSdk-native version 2.4.0<br/>
+Custom loader is supported from OstWalletSdk-native version `2.4.0`<br/>
 Please, verify OstWalletSdk version in `Cartfile`.
 <br/><br/>
 Custom loader should develop in native-code(iOS/Android) only.<br/>
