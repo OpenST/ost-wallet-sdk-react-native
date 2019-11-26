@@ -68,6 +68,15 @@ To define custom content config, please refer to [Content Config](https://github
     */
     OstWalletSdkUI.setContentConfig(content_config);
 ```
+### Set Loader Manager
+
+Application loader for OstWalletUI can be initialized by calling `setLoaderManager` API. This API is available in native SDK. <br/><br/>
+Custom loader is supported from OstWalletSdk-native version 2.4.0<br/>
+Please, verify OstWalletSdk version in `Cartfile`.
+<br/><br/>
+Custom loader should develop in native-code(iOS/Android) only.<br/>
+Sample code setup for custom loader is present in respective directory. For [iOS]( https://github.com/ostdotcom/ost-wallet-sdk-ios/blob/tem/customLoader/Samples/CustomLoader/OstMockCustomLoader.md) and [Android](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/tem/customLoader/Samples/CustomLoader/OstMockCustomLoader.md)
+
 
 ### Setup your Passphrase Prefix Delegate
 `Passphrase Prefix` is a salt provided by your application that assists in generation of User's recovery key using user's PIN.
