@@ -71,11 +71,11 @@ To define custom content config, please refer to [Content Config Android](https:
 ### Set Loader Manager
 
 Application loader for OstWalletUI can be initialized by calling `setLoaderManager` API. This API is available in native SDK. <br/><br/>
-Custom loader is supported from OstWalletSdk-native version `2.4.0`<br/>
+Custom loader is supported from OstWalletSdk-native version Android v`2.3.6` Or iOS v`2.3.5`<br/>
 Please, verify OstWalletSdk version in `Cartfile`.
 <br/><br/>
-Custom loader should develop in native-code(iOS/Android) only.<br/>
-Sample code setup for custom loader is present in respective directory. For [iOS](https://github.com/ostdotcom/ost-wallet-sdk-ios/blob/release-2.3/Samples/CustomLoader/OstMockCustomLoader.md) and [Android](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/tem/customLoader/Samples/CustomLoader/OstMockCustomLoader.md)
+Custom loader needs to be written in native code (java, swift/Objective-C).<br/>
+Sample code for custom loader is available in respective platform directory. For [iOS](https://github.com/ostdotcom/ost-wallet-sdk-ios/blob/release-2.3/Samples/CustomLoader/OstMockCustomLoader.md) and [Android](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/tem/customLoader/Samples/CustomLoader/OstMockCustomLoader.md)
 
 
 ### Setup your Passphrase Prefix Delegate

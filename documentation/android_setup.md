@@ -49,6 +49,15 @@ Create file `./android/app/src/main/assets/ost-mobilesdk.json` with application 
   "USE_SEED_PASSWORD": false
 }
 ```
+
+1. BlockGenerationTime: The time in seconds it takes to mine a block on auxiliary chain.
+2. PricePointTokenSymbol: This is the symbol of base currency. So its value will be OST.
+3. PricePointCurrencySymbol: It is the symbol of quote currency used in price conversion.
+4. RequestTimeoutDuration: Request timeout in seconds for https calls made by ostWalletSdk.
+5. PinMaxRetryCount: Maximum retry count to get the wallet Pin from user.
+6. SessionBufferTime: Buffer expiration time for session keys in seconds. Default value is 3600 seconds.
+7. UseSeedPassword: The seed password is salt to PBKDF2 used to generate seed from the mnemonic. When UseSeedPassword set to `true`, different deterministic salts are used for different keys.
+
 **NOTE: These configurations are MANDATORY for successful operation. Failing to set them will significantly impact usage.**
 
 
