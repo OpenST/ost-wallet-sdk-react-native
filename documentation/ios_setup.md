@@ -125,7 +125,7 @@ Create `OstWalletSdk.plist` file. This file has configuration attributes used by
 5. PinMaxRetryCount: Maximum retry count to get the wallet Pin from user.
 6. SessionBufferTime: Buffer expiration time for session keys in seconds. Default value is 3600 seconds.
 7. UseSeedPassword: The seed password is salt to PBKDF2 used to generate seed from the mnemonic. When UseSeedPassword set to `true`, different deterministic salts are used for different keys.
-8. EnableIOSDeviceRestore: When EnableIOSDeviceRestore set to `true`, After reinstallation, SDK check for available device key in Keychain for given user id.
+8. EnableIOSDeviceRestore: When EnableIOSDeviceRestore is set to `true`, After app re-installation, SDK checks for available device key in Keychain for given user id.
 
 **These configurations are MANDATORY for successful operation. Failing to set them will significantly impact usage.**
 
