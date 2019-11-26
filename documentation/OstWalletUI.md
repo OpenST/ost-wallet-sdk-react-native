@@ -18,7 +18,7 @@ import {OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-native';
 ```
 
 ### Set Theme Config
-Theme for OstWalletSdkUI can be initialized by calling `setThemeConfig` API which setup OstWalletSdkUI theme config. To define custom theme config, please refer to [Theme Config](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/release-2.3/documentation/ThemeConfig.md) documentation.
+Theme for OstWalletSdkUI can be initialized by calling `setThemeConfig` API which setup OstWalletSdkUI theme config. To define custom theme config, please refer to [Theme Config Android](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/release-2.3/documentation/ThemeConfig.md)/[Theme Config iOS](https://github.com/ostdotcom/ost-wallet-sdk-ios/blob/release-2.3/documentation/ThemeConfig.md) documentation.
 
 ```js
     // Define the content config
@@ -39,7 +39,7 @@ Theme for OstWalletSdkUI can be initialized by calling `setThemeConfig` API whic
 
 ### Set Content Config
 Content for OstWalletSdkUI can be initialized by calling `setContentConfig` API which set-up OstWalletSdkUI content config.
-To define custom content config, please refer to [Content Config](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/release-2.3/documentation/ContentConfig.md) documentation.
+To define custom content config, please refer to [Content Config Android](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/release-2.3/documentation/ContentConfig.md)/[Content Config iOS](https://github.com/ostdotcom/ost-wallet-sdk-ios/blob/release-2.3/documentation/ContentConfig.md) documentation.
 
 ```js
     // Please update terms_and_condition.url as per your needs.
@@ -68,6 +68,15 @@ To define custom content config, please refer to [Content Config](https://github
     */
     OstWalletSdkUI.setContentConfig(content_config);
 ```
+### Set Loader Manager
+
+Application loader for OstWalletUI can be initialized by calling `setLoaderManager` API. This API is available in native SDK. <br/><br/>
+Custom loader is supported from OstWalletSdk-native version Android v`2.3.6` Or iOS v`2.3.5`<br/>
+Please, verify OstWalletSdk version in `Cartfile`.
+<br/><br/>
+Custom loader needs to be written in native code (java, swift/Objective-C).<br/>
+Sample code for custom loader is available in respective platform directory. For [iOS](https://github.com/ostdotcom/ost-wallet-sdk-ios/blob/release-2.3/Samples/CustomLoader/OstMockCustomLoader.md) and [Android](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/tem/customLoader/Samples/CustomLoader/OstMockCustomLoader.md)
+
 
 ### Setup your Passphrase Prefix Delegate
 `Passphrase Prefix` is a salt provided by your application that assists in generation of User's recovery key using user's PIN.
