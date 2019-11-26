@@ -127,7 +127,9 @@ Starting version `2.3.1` application can also pass SDK config in the initialize 
     "REQUEST_TIMEOUT_DURATION": 60,
     "SESSION_BUFFER_TIME": 3600,
     "PRICE_POINT_CURRENCY_SYMBOL": "USD",
-    "USE_SEED_PASSWORD": false
+    "USE_SEED_PASSWORD": false,
+    "NO_OF_SESSIONS_ON_ACTIVATE_USER": 1,
+    "ENABLE_IOS_DEVICE_RESTORE": false
   };
 
   /**
