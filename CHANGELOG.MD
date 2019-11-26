@@ -2,8 +2,8 @@
 
 ## Version 2.3.10
 * OstWalletSdk supports custom loader for OstWalletUI. To use custom loader, please update downstream sdk.<br/>
-iOS: 2.3.5<br/>
-* Downstream Android Sdk updated to `v2.3.6`
+iOS:`v2.3.5`<br/>
+Android:`v2.3.6`
 
 ## Version 2.3.9
 * Downstream iOS Sdk updated to `v2.3.4`
