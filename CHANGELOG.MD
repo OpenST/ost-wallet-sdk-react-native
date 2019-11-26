@@ -1,5 +1,8 @@
 # OST Wallet SDK Changelog
 
+## Version 2.4.0
+* OstWalletSdk supports custom loader for OstWalletUI.
+
 ## Version 2.3.9
 * Downstream iOS Sdk updated to `v2.3.4`
 
