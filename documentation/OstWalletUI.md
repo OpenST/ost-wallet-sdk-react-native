@@ -18,7 +18,7 @@ import {OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-native';
 ```
 
 ### Set Theme Config
-Theme for OstWalletSdkUI can be initialized by calling `setThemeConfig` API which setup OstWalletSdkUI theme config. To define custom theme config, please refer to [Theme Config](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/release-2.3/documentation/ThemeConfig.md) documentation.
+Theme for OstWalletSdkUI can be initialized by calling `setThemeConfig` API which setup OstWalletSdkUI theme config. To define custom theme config, please refer to [Theme Config Android](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/release-2.3/documentation/ThemeConfig.md)/[Theme Config iOS](https://github.com/ostdotcom/ost-wallet-sdk-ios/blob/release-2.3/documentation/ThemeConfig.md) documentation.
 
 ```js
     // Define the content config
@@ -39,7 +39,7 @@ Theme for OstWalletSdkUI can be initialized by calling `setThemeConfig` API whic
 
 ### Set Content Config
 Content for OstWalletSdkUI can be initialized by calling `setContentConfig` API which set-up OstWalletSdkUI content config.
-To define custom content config, please refer to [Content Config](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/release-2.3/documentation/ContentConfig.md) documentation.
+To define custom content config, please refer to [Content Config Android](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/release-2.3/documentation/ContentConfig.md)/[Content Config iOS](https://github.com/ostdotcom/ost-wallet-sdk-ios/blob/release-2.3/documentation/ContentConfig.md) documentation.
 
 ```js
     // Please update terms_and_condition.url as per your needs.
