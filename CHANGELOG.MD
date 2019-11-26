@@ -1,5 +1,8 @@
 # OST Wallet SDK Changelog
 
+## Version 2.4.0
+* Downstream iOS and android Sdk updated to `v2.4.0`
+
 ## Version 2.3.9
 * Downstream iOS Sdk updated to `v2.3.4`
 
