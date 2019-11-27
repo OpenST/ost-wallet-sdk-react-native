@@ -75,7 +75,7 @@ Custom loader is supported from OstWalletSdk-native version Android v`2.3.6` Or 
 Please, verify OstWalletSdk version in `Cartfile`.
 <br/><br/>
 Custom loader needs to be written in native code (java, swift/Objective-C).<br/>
-Sample code for custom loader is available in respective platform directory. For [iOS](https://github.com/ostdotcom/ost-wallet-sdk-ios/blob/release-2.3/Samples/CustomLoader/OstMockCustomLoader.md) and [Android](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/tem/customLoader/Samples/CustomLoader/OstMockCustomLoader.md)
+Sample code for custom loader is available in respective platform directory. For [iOS](https://github.com/ostdotcom/ost-wallet-sdk-ios/blob/release-2.3/Samples/CustomLoader/OstMockCustomLoader.md) and [Android](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/develop/Samples/customloader/OstCustomLoader.md)
 
 
 ### Setup your Passphrase Prefix Delegate
