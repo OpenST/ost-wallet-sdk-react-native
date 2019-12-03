@@ -1,9 +1,5 @@
 # OST Wallet SDK Changelog
 
-## Version 2.3.11
-### Bug Fix:
-* Fixed a bug, Android Sdk `v2.3.6` now exposed to react-native application to set custom loader.
-
 ## Version 2.3.10
 * OstWalletSdk supports custom loader for OstWalletUI. To use custom loader, please update downstream sdk.<br/>
 iOS:`v2.3.5`<br/>
