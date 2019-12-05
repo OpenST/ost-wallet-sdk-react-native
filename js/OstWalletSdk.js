@@ -46,7 +46,8 @@ class OstWalletRNSdk {
      * @public
      */
     setupDevice(userId, tokenId, workflow) {
-        OstWalletSdk.setupDevice(userId, tokenId, workflow.uuid);
+        let tokenIdString = tokenId.toString()
+        OstWalletSdk.setupDevice(userId, tokenIdString, workflow.uuid);
     }
 
      /**
