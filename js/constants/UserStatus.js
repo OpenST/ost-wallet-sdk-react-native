@@ -1,4 +1,4 @@
-import helpers from "./helpers";
+import helpers from "../helpers/constantsHelper";
 
 const userStatusMap = {
   CREATED: "CREATED",

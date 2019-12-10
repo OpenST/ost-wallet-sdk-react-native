@@ -109,7 +109,7 @@ class WalletDetails extends PureComponent {
     }, ( error ) => {
       let ostError = OstWalletSdkHelper.jsonToOstRNError( error );
       let errorMessage = ostSdkErrors.getErrorMessage( null, ostError );
-      LoadingModal.showFailureAlert(errorMessage, "", "OK", ()=> {
+      LoadingModal.showFailureAlert(errorMessage, "", "OK", () => {
         // Close this view.
         this.props.navigation.goBack(null);
       });
@@ -124,7 +124,7 @@ class WalletDetails extends PureComponent {
       this._buildList();
 
     }else {
-      LoadingModal.showFailureAlert("Something went wrong", "", "OK", ()=> {
+      LoadingModal.showFailureAlert("Something went wrong", "", "OK", () => {
         // Close this view.
         this.props.navigation.goBack(null);
       });

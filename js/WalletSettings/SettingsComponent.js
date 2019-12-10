@@ -1,26 +1,18 @@
 import React, {PureComponent} from 'react';
 import {Alert, FlatList, Linking, Platform, Text, TouchableWithoutFeedback, View} from 'react-native';
 import inlineStyle from './styles'
-
-
-
-
-
+import {optionIds, walletSettingController} from './WalletSettingController';
+import {LoadingModal} from '../../theme/components/LoadingModalCover';
+import Colors from "../../theme/styles/Colors";
+import BackArrow from '../CommonComponents/BackArrow';
+import OstWalletSdkHelper from "../../helpers/OstWalletSdkHelper";
+import {ostSdkErrors} from "../../services/OstSdkErrors";
+import CurrentUser from "../../models/CurrentUser";
+import CameraPermissionsApi from "../../services/CameraPermissionsApi";
 import DeviceInfo from 'react-native-device-info';
 import AndroidOpenSettings from 'react-native-android-open-settings';
-import {optionIds, WalletSettingController} from './WalletSettingController';
 
-
-import {ostSdkErrors} from "../../services/OstSdkErrors";
-import CameraPermissionsApi from "../../services/CameraPermissionsApi";
-
-
-import CurrentUser from "../../models/CurrentUser";
-import BackArrow from '../CommonComponents/BackArrow';
-import Colors from "../../theme/styles/Colors";
-import {LoadingModal} from '../../theme/components/LoadingModalCover';
-
-class WalletSettingList extends PureComponent {
+class SettingsComponent extends PureComponent {
   static navigationOptions = (options) => {
     return {
       title: 'Wallet Settings',
@@ -312,4 +304,4 @@ class WalletSettingList extends PureComponent {
   }
 }
 
-export default WalletSettingList;
+export default SettingsComponent;

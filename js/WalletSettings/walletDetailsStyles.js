@@ -50,4 +50,3 @@ let stylesMap = {
   }
 };
 export default styles = DefaultStyleGenerator.generate(stylesMap);
-

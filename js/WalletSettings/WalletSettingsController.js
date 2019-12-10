@@ -4,7 +4,8 @@ import OstJsonApi from '../OstJsonApi';
 import OstUserStatus from "../constants/UserStatus";
 import OstDeviceStatus from "../constants/DeviceStatus";
 import OstWalletSettings from "./OstWalletSettings";
-import OstWalletSdkHelper from './helpers';
+import OstWalletSdkHelper from '../helpers/OstWalletSdkHelper';
+import InternalWorkflowDelegate from "../delegates/InternalWorkflowDelegate"
 
 const optionIds = {
   walletDetails: "wallet-details",
@@ -30,6 +31,11 @@ class WalletSettingController {
     this.deviceStatusMap = OstDeviceStatus;
     this.currentWorkflow = null;
     this.uiDelegate = null;
+    if ( !ostWalletUIWorkflowCallback || !(ostWalletUIWorkflowCallback instanceof OstWalletUIWorkflowCallback) ) {
+      let err = new Error("Delegate must be an instanceof OstWalletUIWorkflowCallback");
+      throw err;
+    }
+    this.externalDelegate = ostWalletUIWorkflowCallback;
   }
 
   _initialize(ostUserId) {
@@ -389,7 +395,7 @@ class WalletSettingController {
   }
 
   _getWorkflowDelegate() {
-    let delegate = CurrentUser.newPassphraseDelegate();
+    let delegate = new InternalWorkflowDelegate( this.userId, this.externalDelegate);
     //
     delegate.requestAcknowledged = (ostWorkflowContext , ostContextEntity) => {
       if ( this.uiDelegate ) {
