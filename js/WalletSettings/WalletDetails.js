@@ -1,21 +1,24 @@
 import React, {PureComponent} from 'react';
-import {Alert, FlatList, Linking, Platform, Text, TouchableWithoutFeedback, View, Image, Clipboard} from 'react-native';
+import {Alert, FlatList, Linking, Platform, Text, TouchableWithoutFeedback, View, Image, Clipboard, Modal} from 'react-native';
 import inlineStyle from './walletDetailsStyles';
-import {LoadingModal} from '../../theme/components/LoadingModalCover';
-import Colors from "../../theme/styles/Colors";
-import BackArrow from '../CommonComponents/BackArrow';
+// import {LoadingModal} from '../../theme/components/LoadingModalCover';
+// import Colors from "../../theme/styles/Colors";
+// import BackArrow from '../CommonComponents/BackArrow';
 
-import iconCopy from '../../assets/icon-copy.png';
-import viewIcon from '../../assets/open-view.png';
+// import iconCopy from '../../assets/icon-copy.png';
+// import viewIcon from '../../assets/open-view.png';
 
-import { OstWalletSdk, OstWalletSdkUI, OstJsonApi} from '@ostdotcom/ost-wallet-sdk-react-native';
-import OstWalletSdkHelper from "../../helpers/OstWalletSdkHelper";
-import {ostSdkErrors} from "../../services/OstSdkErrors";
-import CurrentUser from "../../models/CurrentUser";
-import {IS_STAGING, TOKEN_ID, VIEW_END_POINT} from "../../constants";
+import OstWalletSdk from '../OstWalletSdk';
+import OstWalletSdkUI from '../OstWalletSdkUI';
+import OstJsonApi from '../OstJsonApi';
+import OstWalletSdkHelper from "../helpers/OstWalletSdkHelper";
 
-import InAppBrowser from '../../services/InAppBrowser';
-import Toast from '../../theme/components/NotificationToast';
+// import {ostSdkErrors} from "../../services/OstSdkErrors";
+// import CurrentUser from "../../models/CurrentUser";
+// import {IS_STAGING, TOKEN_ID, VIEW_END_POINT} from "../../constants";
+
+// import InAppBrowser from '../../services/InAppBrowser';
+// import Toast from '../../theme/components/NotificationToast';
 
 
 
@@ -25,7 +28,7 @@ class WalletDetails extends PureComponent {
       title: 'Wallet Details',
       headerBackTitle: null,
       headerStyle: {
-        backgroundColor: Colors.white,
+        backgroundColor: '#fff',
         borderBottomWidth: 0,
         shadowColor: '#000',
         shadowOffset: {
@@ -34,11 +37,7 @@ class WalletDetails extends PureComponent {
         },
         shadowOpacity: 0.1,
         shadowRadius: 3
-      },
-      headerTitleStyle: {
-        fontFamily: 'AvenirNext-Medium'
-      },
-      headerBackImage: <BackArrow />
+      }
     };
   };
 
@@ -48,17 +47,17 @@ class WalletDetails extends PureComponent {
       list: [],
       refreshing: false
     };
+
+    this.userId = props.userId;
   }
 
   componentDidMount() {
-    this.userId   = CurrentUser.getOstUserId();
     this.ostUser = null;
     this.ostDevice = null;
     this.token = null;
     this.cells = null;
     this.onRefresh();
   }
-
 
   onRefresh = () => {
     if( this.state.refreshing ) {
@@ -67,16 +66,8 @@ class WalletDetails extends PureComponent {
     this.setState({
       refreshing: true
     });
-    this._fetchToken();
+    this._fetchUser();
   };
-
-  _fetchToken() {
-    OstWalletSdk.getToken(TOKEN_ID, (token) => {
-      this.token = token;
-
-      this._fetchUser();
-    })
-  }
 
   _fetchUser() {
     OstWalletSdk.getUser(this.userId, (userData) => {
@@ -88,8 +79,16 @@ class WalletDetails extends PureComponent {
       this.ostUser = userData;
 
       // Get the device.
-      this._fetchDevice();
+      this._fetchToken(userData.token_id);
     });
+  }
+
+  _fetchToken(tokenId) {
+    OstWalletSdk.getToken(tokenId.toString(), (token) => {
+      this.token = token;
+
+      this._fetchDevice();
+    })
   }
 
   _fetchDevice() {
@@ -133,10 +132,7 @@ class WalletDetails extends PureComponent {
 
   _buildList() {
     let cells = [];
-    //Ordering Cells Logic.
-    if ( IS_STAGING ) {
-        cells.push( this._buildUserIdData() );
-    }
+
     cells.push( this._buildUserStatusData() );
     cells.push( this._buildTokenIdData() );
     cells.push( this._buildTokenHolderAddressData() );
@@ -156,7 +152,7 @@ class WalletDetails extends PureComponent {
     return {
       "cellType": "text",
       "heading": "Token ID",
-      "text": TOKEN_ID
+      "text": this.token.id
     };
   }
 
@@ -177,22 +173,22 @@ class WalletDetails extends PureComponent {
   }
 
   _buildTokenHolderAddressData() {
-    let link = VIEW_END_POINT + 'token/th-'+ this._getAuxChainId() + '-' + this._getUtilityBandedToken() + '-' + this.ostUser.token_holder_address;
+    // let link = VIEW_END_POINT + 'token/th-'+ this._getAuxChainId() + '-' + this._getUtilityBandedToken() + '-' + this.ostUser.token_holder_address;
     return {
       "cellType": "link",
       "heading": "Token Holder Address",
       "text": this.ostUser.token_holder_address,
-      "link": link
+      "link": ''
     };
   }
 
   _buildDeviceManagerAddressData() {
-    let link = VIEW_END_POINT + 'address/ad-'+ this._getAuxChainId() + '-' + this.ostUser.device_manager_address;
+    // let link = VIEW_END_POINT + 'address/ad-'+ this._getAuxChainId() + '-' + this.ostUser.device_manager_address;
     return {
       "cellType": "link",
       "heading": "Device Manager Address",
       "text": this.ostUser.device_manager_address,
-      "link": link
+      "link": ''
     };
   }
 
@@ -205,12 +201,12 @@ class WalletDetails extends PureComponent {
   }
 
   _buildRecoveryOwnerAddressData() {
-    let link = VIEW_END_POINT + 'address/ad-'+ this._getAuxChainId() + '-' + this.ostUser.recovery_owner_address;
+    // let link = VIEW_END_POINT + 'address/ad-'+ this._getAuxChainId() + '-' + this.ostUser.recovery_owner_address;
     return {
       "cellType": "link",
       "heading": "Recovery Owner Address",
       "text": this.ostUser.recovery_owner_address,
-      "link": link
+      "link": ''
     };
   }
 
@@ -249,7 +245,11 @@ class WalletDetails extends PureComponent {
 
   render() {
     return (
-      <View style= {inlineStyle.list}>
+      <Modal
+        style= {inlineStyle.list}
+        animationType="fade"
+        transparent={false}
+        visible={this.props.modalVisible}>
         <FlatList
           onRefresh={this.onRefresh}
           data={this.state.list}
@@ -258,7 +258,7 @@ class WalletDetails extends PureComponent {
           keyExtractor={this._keyExtractor}
           visible={false}
         />
-      </View>
+      </Modal>
     );
   }
 
@@ -306,7 +306,7 @@ class WalletDetails extends PureComponent {
             <View style={[inlineStyle.linkView, {marginRight: 10}]}>
               <Text style={inlineStyle.text}>{item.text}</Text>
             </View>
-            <Image style={{ height: 22, width: 22 }} source={iconCopy} />
+            {/*<Image style={{ height: 22, width: 22 }} source={iconCopy} />*/}
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -322,7 +322,7 @@ class WalletDetails extends PureComponent {
             <View style={[inlineStyle.linkView, {marginRight: 10}]}>
               <Text style={inlineStyle.linkText}>{item.text}</Text>
             </View>
-            <Image style={{ height: 16, width: 24}} source={viewIcon} />
+            {/*<Image style={{ height: 16, width: 24}} source={viewIcon} />*/}
           </View>
         </View>
       </TouchableWithoutFeedback>

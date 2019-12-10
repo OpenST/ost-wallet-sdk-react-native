@@ -1,31 +1,27 @@
-import DefaultStyleGenerator from "../../theme/styles/DefaultStyleGenerator";
-import Colors from '../../theme/styles/Colors';
+import { StyleSheet } from 'react-native';
 
-let stylesMap = {
+let stylesMap = StyleSheet.create({
 
   list: {
     flex: 1,
-    backgroundColor: Colors.white
+    backgroundColor: "#fff"
   },
   title: {
-    color: Colors.grey,
+    color: "#888888",
     fontSize: 13,
-    marginTop: 15,
-    fontFamily: 'AvenirNext-DemiBold'
+    marginTop: 15
   },
   text: {
-    color: Colors.valhalla,
+    color: "#2A293B",
     fontSize: 15,
-    marginBottom: 15,
-    fontFamily: 'AvenirNext-Regular'
+    marginBottom: 15
   },
 
   statusText: {
-    color: Colors.green,
+    color: "#8000FF",
     fontSize: 15,
     marginTop: 5,
-    marginBottom: 15,
-    fontFamily: 'AvenirNext-Regular'
+    marginBottom: 15
   },
 
   linkView: {
@@ -35,18 +31,17 @@ let stylesMap = {
   },
 
   linkText: {
-    color: Colors.azureBlue,
+    color: "#007aff",
     marginBottom: 15,
     fontSize: 15,
-    flexWrap: 'wrap',
-    fontFamily: 'AvenirNext-Regular'
+    flexWrap: 'wrap'
   },
 
   listComponent: {
     flex: 1,
     marginHorizontal: 20,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.whisper
+    borderBottomColor: "#ECECEC"
   }
-};
-export default styles = DefaultStyleGenerator.generate(stylesMap);
+});
+export default styles = stylesMap;

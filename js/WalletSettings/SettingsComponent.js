@@ -2,6 +2,7 @@
 import React, {PureComponent} from 'react';
 import {Alert, FlatList, Linking, Platform, Text, TouchableWithoutFeedback, View} from 'react-native';
 import OstWalletSdkHelper from "../helpers/OstWalletSdkHelper";
+import WalletDetails from './WalletDetails'
 
 // To-Be-Reomved.
 import inlineStyle from './styles'
@@ -30,6 +31,7 @@ class SettingsComponent extends PureComponent {
     this.state = {
       list: [],
       refreshing: false,
+      modalVisible: false
     };
 
     
@@ -172,7 +174,10 @@ class SettingsComponent extends PureComponent {
 
   async _processTappedOption(item) {
     if ( optionIds.walletDetails === item.id ) {
-      this.props.navigation.navigate('WalletDetails');
+      // this.props.navigation.navigate('WalletDetails');
+      this.setState({
+        modalVisible: true
+      })
       return;
     } else if (item.id === optionIds.authorizeWithQR) {
       /// TODO bubble CameraPermissionsApi.requestPermission was here.
@@ -307,6 +312,8 @@ class SettingsComponent extends PureComponent {
 
   render() {
     return (
+      <>
+        <WalletDetails modalVisible={this.state.modalVisible} userId={this.controller.userId}/>
       <View style= {inlineStyle.list}>
         <FlatList
           data={this.state.list}
@@ -317,6 +324,7 @@ class SettingsComponent extends PureComponent {
           onRefresh={this.refreshList}
         />
       </View>
+      </>
     );
   }
 }
