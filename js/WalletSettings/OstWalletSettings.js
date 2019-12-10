@@ -1,7 +1,7 @@
 import WalletSettingsConfig from "./ost-wallet-settings-config";
 import objectMerge from "lodash.merge";
 
-const ItemsThatNeedCamera = ["add-another-device"];
+const ItemsThatNeedCamera = ["add_another_device"];
 
 class OstWalletSettingsClass {
   constructor() {
@@ -18,8 +18,8 @@ class OstWalletSettingsClass {
     this.masterConfig = masterConfig;
 
     // As deep merge may also merge Arrays.
-    if ( externalConfig[ "item-display-order" ] ) {
-      this.masterConfig[ "item-display-order" ] = externalConfig[ "item-display-order" ];
+    if ( externalConfig[ "item_display_order" ] ) {
+      this.masterConfig[ "item_display_order" ] = externalConfig[ "item_display_order" ];
     }
 
     this._processDisplayOrder();
@@ -30,11 +30,11 @@ class OstWalletSettingsClass {
   }
 
   getAllItemConfigs() {
-    return this.masterConfig["item-configs"];
+    return this.masterConfig["item_configs"];
   }
 
   getDisplayOrder() {
-    return this.masterConfig[ "item-display-order" ];
+    return this.masterConfig[ "item_display_order" ];
   }
 
   getItemConfig( itemId ) {
@@ -45,21 +45,21 @@ class OstWalletSettingsClass {
   getItemContentConfig( itemId ) {
     let config = this.getItemConfig( itemId );
     if ( config ) {
-      return config[ "content-config" ];
+      return config[ "content_config" ];
     }
     return null;
   }
 
   getSessionSpendingLimit() {
-    let itemConfig = this.getItemConfig( "add-session" ) || {};
+    let itemConfig = this.getItemConfig( "add_session" ) || {};
     let config = itemConfig.config || {};
-    return config[ "spending-limit" ] || "0";
+    return config[ "spending_limit" ] || "0";
   }
 
   getSessionExpirationTime() {
-    let itemConfig = this.getItemConfig( "add-session" ) || {};
+    let itemConfig = this.getItemConfig( "add_session" ) || {};
     let config = itemConfig.config || {};
-    return config[ "expiration-time" ] || "0";
+    return config[ "expiration_time" ] || "0";
   }
 
   _processDisplayOrder() {

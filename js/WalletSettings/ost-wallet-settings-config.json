@@ -1,84 +1,84 @@
 {
-  "item-display-order": [
-    "wallet-details",
-    "recover-device", 
-    "abort-recovery", 
-    "add-session", 
-    "reset-pin", 
-    "show-mnemonics", 
-    "authorize-device-with-mnemonics", 
-    "add-another-device",
-    "show-device-qr-code",
-    "enable-biometrics",
-    "disable-biometrics"
+  "item_display_order": [
+    "wallet_details",
+    "recover_device", 
+    "abort_recovery", 
+    "add_session", 
+    "reset_pin", 
+    "show_mnemonics", 
+    "authorize_device_with_mnemonics", 
+    "add_another_device",
+    "show_device_qr_code",
+    "enable_biometrics",
+    "disable_biometrics"
   ],
-  "item-configs": {
-    "wallet-details": {
-      "content-config": {
+  "item_configs": {
+    "wallet_details": {
+      "content_config": {
         "heading": "Wallet Details",
         "description": "View your wallet details."
       }
     },
-    "recover-device": {
-      "content-config": {
+    "recover_device": {
+      "content_config": {
         "heading": "Recover Device",
         "description": "Recover your device."
       }
     },
-    "abort-recovery": {
-      "content-config": {
+    "abort_recovery": {
+      "content_config": {
         "heading": "Abort Device Recovery",
         "description": "Abort Device Recovery."
       }
     },
-    "add-session": {
-      "content-config": {
+    "add_session": {
+      "content_config": {
         "heading": "Add Session",
         "description": "Add Session to do transaction."
       },
       "config": {
-        "spending-limit": "0",
-        "expiration-time": "0"
+        "spending_limit": "0",
+        "expiration_time": "0"
       }
     },
-    "reset-pin": {
-      "content-config": {
+    "reset_pin": {
+      "content_config": {
         "heading": "Reset Pin",
         "description": "View your wallet details"
       }
     },
-    "show-mnemonics": {
-      "content-config": {
+    "show_mnemonics": {
+      "content_config": {
         "heading": "Show Mnemonics",
         "description": "While not required, writing down your 12 word mnemonic phrase provides an additional backup in case you forget your PIN."
       }
     },
-    "authorize-device-with-mnemonics": {
-      "content-config": {
+    "authorize_device_with_mnemonics": {
+      "content_config": {
         "heading": "Authorize Device with Mnemonics",
         "description": "Authorize current device by using mnemonics."
       }
     },
-    "add-another-device": {
-      "content-config": {
+    "add_another_device": {
+      "content_config": {
         "heading": "Add Another Device",
         "description": "Scan QR Code to add another device."
       }
     },
-    "show-device-qr-code": {
-      "content-config": {
+    "show_device_qr_code": {
+      "content_config": {
         "heading": "Show Device QR Code",
         "description": "Scan QR Code from the device authorized device to authorize this device."
       }
     },
-    "enable-biometrics": {
-      "content-config": {
+    "enable_biometrics": {
+      "content_config": {
         "heading": "Enable Biometrics",
         "description": "Use biometrics to authorize new Sessions and to confirm high value transactions."
       }
     },
-    "disable-biometrics": {
-      "content-config": {
+    "disable_biometrics": {
+      "content_config": {
         "heading": "Disable Biometrics",
         "description": "Turn off biometrics and use PIN to authorize new Sessions and to confirm high value transactions."
       }

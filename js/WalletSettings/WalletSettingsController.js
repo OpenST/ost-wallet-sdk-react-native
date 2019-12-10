@@ -9,17 +9,17 @@ import OstWalletUIWorkflowCallback from '../OstWalletUIWorkflowCallback';
 import InternalWorkflowDelegate from "../delegates/InternalWorkflowDelegate"
 
 const optionIds = {
-  walletDetails: "wallet-details",
-  recoverDevice: "recover-device",
-  abortRecovery: "abort-recovery",
-  addSession: "add-session",
-  resetPin: "reset-pin",
-  viewMnemonics: "show-mnemonics",
-  authorizeWithMnemonics: "authorize-device-with-mnemonics",
-  authorizeWithQR: "add-another-device",
-  showQR: "show-device-qr-code",
-  enableBiometrics: "enable-biometrics",
-  disableBiometrics: "disable-biometrics"
+  walletDetails: "wallet_details",
+  recoverDevice: "recover_device",
+  abortRecovery: "abort_recovery",
+  addSession: "add_session",
+  resetPin: "reset_pin",
+  viewMnemonics: "show_mnemonics",
+  authorizeWithMnemonics: "authorize_device_with_mnemonics",
+  authorizeWithQR: "add_another_device",
+  showQR: "show_device_qr_code",
+  enableBiometrics: "enable_biometrics",
+  disableBiometrics: "disable_biometrics"
 };
 
 class WalletSettingsController {
