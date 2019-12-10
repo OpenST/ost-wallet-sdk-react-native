@@ -1,5 +1,5 @@
-import {OstWalletUIWorkflowCallback} from "@ostdotcom/ost-wallet-sdk-react-native";
 import OstWalletSdkHelper from "../helpers/OstWalletSdkHelper";
+import OstWalletUIWorkflowCallback from '../OstWalletUIWorkflowCallback';
 
 class InternalWorkflowDelegate extends OstWalletUIWorkflowCallback {
   constructor(userId, externalDelegate) {

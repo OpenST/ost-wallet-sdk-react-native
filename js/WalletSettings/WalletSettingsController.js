@@ -5,6 +5,7 @@ import OstUserStatus from "../constants/UserStatus";
 import OstDeviceStatus from "../constants/DeviceStatus";
 import OstWalletSettings from "./OstWalletSettings";
 import OstWalletSdkHelper from '../helpers/OstWalletSdkHelper';
+import OstWalletUIWorkflowCallback from '../OstWalletUIWorkflowCallback';
 import InternalWorkflowDelegate from "../delegates/InternalWorkflowDelegate"
 
 const optionIds = {
@@ -35,6 +36,11 @@ class WalletSettingsController {
       let err = new Error("ostWalletUIWorkflowCallback can not be null and must be an instanceof OstWalletUIWorkflowCallback");
       throw err;
     }
+
+    if ( !ostUserId ) {
+      let err = new Error("ostUserId can not be null and must be a String");
+      throw err;
+    }
     this.externalDelegate = ostWalletUIWorkflowCallback;
   }
 
@@ -45,7 +51,7 @@ class WalletSettingsController {
 
   _initializeOptions() {
     for( optionId in optionIds ) {
-      this._createOptionsData(optionId);
+      this._createOptionsData( optionIds[optionId] );
     }
   }
 
@@ -222,8 +228,8 @@ class WalletSettingsController {
   }
 
   _isUserIdValid() {
-    let delegate = this._getWorkflowDelegate();
-    if ( typeof delegate.getCurrentUserOstId === 'function' ) {
+    let delegate = this.externalDelegate;
+    if ( delegate && typeof delegate.getCurrentUserOstId === 'function' ) {
       let appOstUserId = delegate.getCurrentUserOstId();
       return appOstUserId === this.userId;
     }
@@ -234,13 +240,13 @@ class WalletSettingsController {
 
   _createOptionsData(id){
 
-    let itemConfig = OstWalletSettings.getItemConfig();
+    let itemConfig = OstWalletSettings.getItemConfig( id );
     if ( !itemConfig ) {
-      const err = new Error(`Content configuration for itemId ${id} is not defined.`)
+      const err = new Error(`Item configuration for itemId ${id} is not defined.`)
       throw err;
     }
 
-    let contentConfig = OstWalletSettings.getItemContentConfig();
+    let contentConfig = OstWalletSettings.getItemContentConfig( id );
     if ( !contentConfig ) {
       const err = new Error(`Content configuration for itemId ${id} is not defined.`);
       throw err;
@@ -395,6 +401,7 @@ class WalletSettingsController {
   }
 
   _getWorkflowDelegate() {
+    console.trace();
     let delegate = new InternalWorkflowDelegate( this.userId, this.externalDelegate);
     //
     delegate.requestAcknowledged = (ostWorkflowContext , ostContextEntity) => {
