@@ -21,7 +21,7 @@ const optionIds = {
   disableBiometrics: "disable-biometrics"
 };
 
-class WalletSettingController {
+class WalletSettingsController {
 
   constructor(ostUserId, ostWalletUIWorkflowCallback) {
     this.userId = ostUserId;
@@ -452,4 +452,4 @@ class WalletSettingController {
 
 };
 
-export  {WalletSettingController , optionIds}
+export  {WalletSettingsController , optionIds}
