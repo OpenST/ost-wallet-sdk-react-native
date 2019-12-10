@@ -20,6 +20,7 @@ class InternalWorkflowDelegate extends OstWalletUIWorkflowCallback {
   }
 
   getPassphrase(userId, ostWorkflowContext, passphrasePrefixAccept) {
+    let externalDelegate = this.externalDelegate;
     return externalDelegate.getPassphrase(userId, ostWorkflowContext, passphrasePrefixAccept);
   }
 

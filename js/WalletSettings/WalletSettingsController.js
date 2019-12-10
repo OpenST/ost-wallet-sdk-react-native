@@ -164,8 +164,11 @@ class WalletSettingsController {
         this._updateOptionsData(optionIds.authorizeWithQR, false, true);
         this._updateOptionsData(optionIds.resetPin, false, true);
 
-        let biometricMessage = (this.isBiometricEnabled || false) ? 'Disable Biometrics' : 'Enable Biometric';
-        this._updateOptionsData(optionIds.updateBiometricPreference, false, true, biometricMessage);
+        if (this.isBiometricEnabled || false) {
+          this._updateOptionsData(optionIds.disableBiometrics, false, true, "Disable Biometrics");
+        }else {
+          this._updateOptionsData(optionIds.enableBiometrics, false, true, "Enable Biometric");
+        }
       }
 
       if (deviceStatus == this.deviceStatusMap.registered) {

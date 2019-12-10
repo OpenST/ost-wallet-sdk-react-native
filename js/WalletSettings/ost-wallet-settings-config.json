@@ -43,7 +43,7 @@
     },
     "reset-pin": {
       "content-config": {
-        "heading": "Wallet Details",
+        "heading": "Reset Pin",
         "description": "View your wallet details"
       }
     },

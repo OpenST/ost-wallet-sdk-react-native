@@ -145,27 +145,24 @@ class SettingsComponent extends PureComponent {
   }
 
   componentDidMount() {
-    /// TODO bubble LoadingModal was here.
-    // LoadingModal.show("Fetching Settings...");
     this.refreshList();
   }
 
   refreshList = (onFetch) => {
-    let refreshState = this.state.refreshing;
-
+    if (this.state.refreshing) {
+      return
+    }
+    this.setState({
+      refreshing: true
+    })
     this.controller.refresh((optionsData) => {
       this.setState({
         list: optionsData,
-        refreshing: !refreshState
+        refreshing: false
       });
-
       if (onFetch) {
-        onFetch()
-      }else {
-        /// TODO bubble LoadingModal was here.
-        // LoadingModal.hide()
+        onFetch(optionsData)
       }
-
     }, true);
   };
 
@@ -317,6 +314,7 @@ class SettingsComponent extends PureComponent {
           renderItem={this._renderItem}
           keyExtractor={this._keyExtractor}
           visible={false}
+          onRefresh={this.refreshList}
         />
       </View>
     );
