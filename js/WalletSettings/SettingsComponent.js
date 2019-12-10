@@ -14,6 +14,8 @@ import {optionIds, WalletSettingsController} from './WalletSettingsController';
 let AndroidOpenSettings = null;
 import('react-native-android-open-settings').then((pack) => {
   AndroidOpenSettings = pack.default;
+}).catch( (err) => {
+  //Ignore. 
 });
 
 /// REMOVED

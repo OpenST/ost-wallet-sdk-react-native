@@ -294,7 +294,7 @@ class WalletSettingsController {
     if ( this.ostUser ) {
       uStatus = this.ostUser.status || uStatus;
     }
-    return uStatus.toLowerCase();
+    return uStatus.toUpperCase();
   }
 
   _getDeviceStatus() {
@@ -302,7 +302,7 @@ class WalletSettingsController {
     if ( this.ostDevice ) {
       dStatus = this.ostDevice.status || dStatus;
     }
-    return dStatus.toLowerCase();
+    return dStatus.toUpperCase();
   }
 
   /**

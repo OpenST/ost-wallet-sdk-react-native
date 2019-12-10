@@ -51,11 +51,11 @@ class OstWalletSdkHelper {
       return false;
     }
     switch( device.status ) {
-      case DeviceStatus.REGISTERED:
-      case DeviceStatus.AUTHORIZING:
-      case DeviceStatus.AUTHORIZED:
-      case DeviceStatus.REVOKING:
-      case DeviceStatus.RECOVERING:
+      case OstDeviceStatus.REGISTERED:
+      case OstDeviceStatus.AUTHORIZING:
+      case OstDeviceStatus.AUTHORIZED:
+      case OstDeviceStatus.REVOKING:
+      case OstDeviceStatus.RECOVERING:
         return true;
       default:
         return false;
@@ -83,4 +83,4 @@ class OstWalletSdkHelper {
   }
 }
 
-export default new OstWalletSdkHelper();
+export default OstWalletSdkHelper;
