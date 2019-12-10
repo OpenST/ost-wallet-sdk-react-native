@@ -1,4 +1,3 @@
-import DefaultStyleGenerator from "../../theme/styles/DefaultStyleGenerator";
 import { StyleSheet } from 'react-native';
 
 let stylesMap = StyleSheet.create({
@@ -24,7 +23,7 @@ let stylesMap = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.whisper
+    borderBottomColor: 'red'
   }
 });
 export default styles = stylesMap

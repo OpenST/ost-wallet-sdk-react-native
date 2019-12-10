@@ -33,7 +33,7 @@ class OstWalletRNSdk {
             fCallback = config;
         }
 
-        OstWalletSdk.initialize( endpoint , fConfig, (error)=>{
+        OstWalletSdk.initialize( endpoint , fConfig, (error) => {
           fCallback && fCallback( error , !error );
         });
     }
@@ -230,7 +230,7 @@ class OstWalletRNSdk {
     * @public
     */
     getToken(tokenId, callback) {
-        OstWalletSdk.getToken(tokenId, (tokenEntity)=>{
+        OstWalletSdk.getToken(tokenId, (tokenEntity) => {
             callback( tokenEntity );
         });
     }
@@ -243,7 +243,7 @@ class OstWalletRNSdk {
    * @public
    */
     getUser(userId, callback) {
-        OstWalletSdk.getUser(userId, (userEntity)=>{
+        OstWalletSdk.getUser(userId, (userEntity) => {
           callback( userEntity );
         });
     }
@@ -256,7 +256,7 @@ class OstWalletRNSdk {
    * @public
    */
     getCurrentDeviceForUserId(userId, callback) {
-        OstWalletSdk.getCurrentDeviceForUserId(userId, (device)=>{
+        OstWalletSdk.getCurrentDeviceForUserId(userId, (device) => {
           callback( device );
         });
     }
@@ -291,7 +291,7 @@ class OstWalletRNSdk {
             minimumSpendingLimitInWei = String( minimumSpendingLimitInWei );
         }
         console.log("getActiveSessionsForUserId userId", userId);
-        OstWalletSdk.getActiveSessionsForUserId(userId, minimumSpendingLimitInWei, (activeSessions)=>{
+        OstWalletSdk.getActiveSessionsForUserId(userId, minimumSpendingLimitInWei, (activeSessions) => {
           theCallback && theCallback( activeSessions );
         });
     }

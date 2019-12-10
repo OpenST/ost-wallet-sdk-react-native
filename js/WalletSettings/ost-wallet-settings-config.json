@@ -1,0 +1,87 @@
+{
+  "item-display-order": [
+    "wallet-details",
+    "recover-device", 
+    "abort-recovery", 
+    "add-session", 
+    "reset-pin", 
+    "show-mnemonics", 
+    "authorize-device-with-mnemonics", 
+    "add-another-device",
+    "show-device-qr-code",
+    "enable-biometrics",
+    "disable-biometrics"
+  ],
+  "item-configs": {
+    "wallet-details": {
+      "content-config": {
+        "heading": "Wallet Details",
+        "description": "View your wallet details."
+      }
+    },
+    "recover-device": {
+      "content-config": {
+        "heading": "Recover Device",
+        "description": "Recover your device."
+      }
+    },
+    "abort-recovery": {
+      "content-config": {
+        "heading": "Abort Device Recovery",
+        "description": "Abort Device Recovery."
+      }
+    },
+    "add-session": {
+      "content-config": {
+        "heading": "Add Session",
+        "description": "Add Session to do transaction."
+      },
+      "config": {
+        "spending-limit": "0",
+        "expiration-time": "0"
+      }
+    },
+    "reset-pin": {
+      "content-config": {
+        "heading": "Wallet Details",
+        "description": "View your wallet details"
+      }
+    },
+    "show-mnemonics": {
+      "content-config": {
+        "heading": "Show Mnemonics",
+        "description": "While not required, writing down your 12 word mnemonic phrase provides an additional backup in case you forget your PIN."
+      }
+    },
+    "authorize-device-with-mnemonics": {
+      "content-config": {
+        "heading": "Authorize Device with Mnemonics",
+        "description": "Authorize current device by using mnemonics."
+      }
+    },
+    "add-another-device": {
+      "content-config": {
+        "heading": "Add Another Device",
+        "description": "Scan QR Code to add another device."
+      }
+    },
+    "show-device-qr-code": {
+      "content-config": {
+        "heading": "Show Device QR Code",
+        "description": "Scan QR Code from the device authorized device to authorize this device."
+      }
+    },
+    "enable-biometrics": {
+      "content-config": {
+        "heading": "Enable Biometrics",
+        "description": "Use biometrics to authorize new Sessions and to confirm high value transactions."
+      }
+    },
+    "disable-biometrics": {
+      "content-config": {
+        "heading": "Disable Biometrics",
+        "description": "Turn off biometrics and use PIN to authorize new Sessions and to confirm high value transactions."
+      }
+    }
+  }
+}

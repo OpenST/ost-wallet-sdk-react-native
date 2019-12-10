@@ -1,16 +1,24 @@
 import React, {PureComponent} from 'react';
 import {Alert, FlatList, Linking, Platform, Text, TouchableWithoutFeedback, View} from 'react-native';
-import inlineStyle from './style'
-import {optionIds, walletSettingController} from './WalletSettingController';
-import {LoadingModal} from '../../theme/components/LoadingModalCover';
-import Colors from "../../theme/styles/Colors";
-import BackArrow from '../CommonComponents/BackArrow';
-import OstWalletSdkHelper from "../../helpers/OstWalletSdkHelper";
-import {ostSdkErrors} from "../../services/OstSdkErrors";
-import CurrentUser from "../../models/CurrentUser";
-import CameraPermissionsApi from "../../services/CameraPermissionsApi";
+import inlineStyle from './styles'
+
+
+
+
+
 import DeviceInfo from 'react-native-device-info';
 import AndroidOpenSettings from 'react-native-android-open-settings';
+import {optionIds, WalletSettingController} from './WalletSettingController';
+
+
+import {ostSdkErrors} from "../../services/OstSdkErrors";
+import CameraPermissionsApi from "../../services/CameraPermissionsApi";
+
+
+import CurrentUser from "../../models/CurrentUser";
+import BackArrow from '../CommonComponents/BackArrow';
+import Colors from "../../theme/styles/Colors";
+import {LoadingModal} from '../../theme/components/LoadingModalCover';
 
 class WalletSettingList extends PureComponent {
   static navigationOptions = (options) => {
@@ -282,8 +290,8 @@ class WalletSettingList extends PureComponent {
     return (
       <TouchableWithoutFeedback onPress={() => this.onSettingItemTapped(item)}>
         <View style={inlineStyle.listComponent}>
-          <Text style={inlineStyle.title}>{item.heading}</Text>
-          <Text style={inlineStyle.subtitle}>{item.description}</Text>
+        <Text style={inlineStyle.title}>{item.heading}</Text>
+        <Text style={inlineStyle.subtitle}>{item.description}</Text>
         </View>
       </TouchableWithoutFeedback>
     );

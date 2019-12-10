@@ -25,6 +25,7 @@
   "license": " Apache-2.0",
   "peerDependencies": {
     "react-native": "^0.41.2",
-    "eventemitter3": "~4.0.0"
+    "eventemitter3": "~4.0.0",
+    "lodash.merge": "^4.6.2"
   }
 }
