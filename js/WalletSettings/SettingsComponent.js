@@ -10,7 +10,11 @@ import {ostSdkErrors} from "../../services/OstSdkErrors";
 
 import CameraPermissionsApi from "../../services/CameraPermissionsApi";
 
-import AndroidOpenSettings from 'react-native-android-open-settings';
+
+let AndroidOpenSettings = null;
+import('react-native-android-open-settings').then((pack) => {
+  AndroidOpenSettings = pack.default;
+});
 
 /// REMOVED
 // import DeviceInfo from 'react-native-device-info';
