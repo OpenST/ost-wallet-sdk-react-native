@@ -32,7 +32,7 @@ class WalletSettingController {
     this.currentWorkflow = null;
     this.uiDelegate = null;
     if ( !ostWalletUIWorkflowCallback || !(ostWalletUIWorkflowCallback instanceof OstWalletUIWorkflowCallback) ) {
-      let err = new Error("Delegate must be an instanceof OstWalletUIWorkflowCallback");
+      let err = new Error("ostWalletUIWorkflowCallback can not be null and must be an instanceof OstWalletUIWorkflowCallback");
       throw err;
     }
     this.externalDelegate = ostWalletUIWorkflowCallback;
