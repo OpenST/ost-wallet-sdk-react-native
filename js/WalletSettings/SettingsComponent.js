@@ -1,16 +1,18 @@
+// Working IMPORTS.
 import React, {PureComponent} from 'react';
 import {Alert, FlatList, Linking, Platform, Text, TouchableWithoutFeedback, View} from 'react-native';
+import OstWalletSdkHelper from "../../helpers/OstWalletSdkHelper";
+
+// To-Be-Fixed.
 import inlineStyle from './styles'
-import {optionIds, walletSettingController} from './WalletSettingController';
 import {LoadingModal} from '../../theme/components/LoadingModalCover';
 import Colors from "../../theme/styles/Colors";
 import BackArrow from '../CommonComponents/BackArrow';
-import OstWalletSdkHelper from "../../helpers/OstWalletSdkHelper";
 import {ostSdkErrors} from "../../services/OstSdkErrors";
-
 import CameraPermissionsApi from "../../services/CameraPermissionsApi";
 
-
+// Fixed.
+import {optionIds, WalletSettingController} from './WalletSettingController';
 let AndroidOpenSettings = null;
 import('react-native-android-open-settings').then((pack) => {
   AndroidOpenSettings = pack.default;
@@ -50,6 +52,7 @@ class SettingsComponent extends PureComponent {
       refreshing: false,
     };
 
+    this.controller = new WalletSettingController(this.props.ostUserId, this.props.delegate);
     this._initiateEventTextMap()
   }
 
@@ -156,7 +159,7 @@ class SettingsComponent extends PureComponent {
   refreshList = (onFetch) => {
     let refreshState = this.state.refreshing;
 
-    walletSettingController.refresh((optionsData) => {
+    this.controller.refresh((optionsData) => {
       this.setState({
         list: optionsData,
         refreshing: !refreshState
@@ -194,7 +197,7 @@ class SettingsComponent extends PureComponent {
   }
 
   _perfromWorkflow(item) {
-    let workflowInfo = walletSettingController.perform(item.id);
+    let workflowInfo = this.controller.perform(item.id);
     if ( workflowInfo ) {
       this.onWorkflowStarted( workflowInfo );
     } else {
@@ -227,7 +230,7 @@ class SettingsComponent extends PureComponent {
     //LoadingModal.show('');
 
     // Subscribe to events.
-    walletSettingController.setUIDelegate(this);
+    this.controller.setUIDelegate(this);
   };
 
   requestAcknowledged = (ostWorkflowContext , ostContextEntity) => {
@@ -259,7 +262,7 @@ class SettingsComponent extends PureComponent {
   saltFetchFailed = (ostWorkflowContext , ostError) => {
     LoadingModal.showFailureAlert("There is some issue while fetching salt. Please retry", null, "Retry", (isButtonTapped) => {
       if (isButtonTapped) {
-        let retryItem = walletSettingController.optionsMap[this.workflowInfo.workflowOptionId];
+        let retryItem = this.controller.optionsMap[this.workflowInfo.workflowOptionId];
         this.onSettingItemTapped(retryItem);
       }
     })
