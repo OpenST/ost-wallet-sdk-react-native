@@ -1,50 +1,28 @@
 // Working IMPORTS.
 import React, {PureComponent} from 'react';
 import {Alert, FlatList, Linking, Platform, Text, TouchableWithoutFeedback, View} from 'react-native';
-import OstWalletSdkHelper from "../../helpers/OstWalletSdkHelper";
+import OstWalletSdkHelper from "../helpers/OstWalletSdkHelper";
 
-// To-Be-Fixed.
+// To-Be-Reomved.
 import inlineStyle from './styles'
-import {LoadingModal} from '../../theme/components/LoadingModalCover';
-import Colors from "../../theme/styles/Colors";
-import BackArrow from '../CommonComponents/BackArrow';
-import {ostSdkErrors} from "../../services/OstSdkErrors";
-import CameraPermissionsApi from "../../services/CameraPermissionsApi";
+// import {LoadingModal} from '../../theme/components/LoadingModalCover';
+// import {ostSdkErrors} from "../../services/OstSdkErrors";
+// import CameraPermissionsApi from "../../services/CameraPermissionsApi";
 
 // Fixed.
-import {optionIds, WalletSettingController} from './WalletSettingController';
+import {optionIds, WalletSettingsController} from './WalletSettingsController';
 let AndroidOpenSettings = null;
 import('react-native-android-open-settings').then((pack) => {
   AndroidOpenSettings = pack.default;
 });
 
 /// REMOVED
+// import BackArrow from '../CommonComponents/BackArrow';
+// import Colors from "../../theme/styles/Colors";
 // import DeviceInfo from 'react-native-device-info';
 // import CurrentUser from "../../models/CurrentUser";
 
 class SettingsComponent extends PureComponent {
-  static navigationOptions = (options) => {
-    return {
-      title: 'Wallet Settings',
-      headerBackTitle: null,
-      headerStyle: {
-        backgroundColor: Colors.white,
-        borderBottomWidth: 0,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 1
-        },
-        shadowOpacity: 0.1,
-        shadowRadius: 3
-      },
-      headerTitleStyle: {
-        fontFamily: 'AvenirNext-Medium'
-      },
-      headerBackImage: <BackArrow />
-    };
-  };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -63,7 +41,7 @@ class SettingsComponent extends PureComponent {
       delegate  = delegate || navigation.getParam("ostWalletUIWorkflowCallback");
     }
 
-    this.controller = new WalletSettingController(ostUserId, delegate);
+    this.controller = new WalletSettingsController(ostUserId, delegate);
     this._initiateEventTextMap()
   }
 
@@ -159,11 +137,14 @@ class SettingsComponent extends PureComponent {
   }
 
   _getFlowFailedText(workflowContext, ostError) {
-    return ostSdkErrors.getErrorMessage(workflowContext, ostError)
+    /// TODO bubble ostSdkErrors was here.
+    // return ostSdkErrors.getErrorMessage(workflowContext, ostError)
+    return "";
   }
 
   componentDidMount() {
-    LoadingModal.show("Fetching Settings...");
+    /// TODO bubble LoadingModal was here.
+    // LoadingModal.show("Fetching Settings...");
     this.refreshList();
   }
 
@@ -179,7 +160,8 @@ class SettingsComponent extends PureComponent {
       if (onFetch) {
         onFetch()
       }else {
-        LoadingModal.hide()
+        /// TODO bubble LoadingModal was here.
+        // LoadingModal.hide()
       }
 
     }, true);
@@ -194,13 +176,18 @@ class SettingsComponent extends PureComponent {
       this.props.navigation.navigate('WalletDetails');
       return;
     } else if (item.id === optionIds.authorizeWithQR) {
-      let cameraResult = await CameraPermissionsApi.requestPermission('camera');
+      /// TODO bubble CameraPermissionsApi.requestPermission was here.
+      // let cameraResult = await CameraPermissionsApi.requestPermission('camera');
+      let cameraResult = "";
       if ((cameraResult == 'denied' || cameraResult == 'restricted')) {
-        LoadingModal.showFailureAlert("Allow access to your camera to scan QR", '', 'Enable Camera Access', (isBtnTapped) => {
-          if (isBtnTapped) {
-            this.enableAccess();
-          }
-        });
+        /// TODO bubble LoadingModal was here.
+
+        // LoadingModal.showFailureAlert("Allow access to your camera to scan QR", '', 'Enable Camera Access', (isBtnTapped) => {
+        //   if (isBtnTapped) {
+        //     this.enableAccess();
+        //   }
+        // });
+
         return;
       }
     }
@@ -261,26 +248,32 @@ class SettingsComponent extends PureComponent {
   };
 
   onUnauthorized = (ostWorkflowContext , ostError) => {
-    LoadingModal.showFailureAlert("Device is not authorized. Please authorize device again.", null, "Logout", () => {
-      //TODO bubble - Deal with this.
+    /// TODO bubble LoadingModal was here.
+    
+    // LoadingModal.showFailureAlert("Device is not authorized. Please authorize device again.", null, "Logout", () => {
+    //   //TODO bubble - Deal with this.
       
-      // CurrentUser.logout({
-      //   device_id: DeviceInfo.getUniqueID()
-      // });
-    })
+    //   // CurrentUser.logout({
+    //   //   device_id: DeviceInfo.getUniqueID()
+    //   // });
+    // })
   };
 
   saltFetchFailed = (ostWorkflowContext , ostError) => {
-    LoadingModal.showFailureAlert("There is some issue while fetching salt. Please retry", null, "Retry", (isButtonTapped) => {
-      if (isButtonTapped) {
-        let retryItem = this.controller.optionsMap[this.workflowInfo.workflowOptionId];
-        this.onSettingItemTapped(retryItem);
-      }
-    })
+    /// TODO bubble LoadingModal was here.
+
+    // LoadingModal.showFailureAlert("There is some issue while fetching salt. Please retry", null, "Retry", (isButtonTapped) => {
+    //   if (isButtonTapped) {
+    //     let retryItem = this.controller.optionsMap[this.workflowInfo.workflowOptionId];
+    //     this.onSettingItemTapped(retryItem);
+    //   }
+    // })
   };
 
   userCancelled = (ostWorkflowContext , ostError) => {
-    LoadingModal.hide();
+    /// TODO bubble LoadingModal was here.
+
+    // LoadingModal.hide();
   };
 
   deviceTimeOutOfSync = (ostWorkflowContext , ostError) => {
