@@ -2,6 +2,10 @@ import { StyleSheet } from 'react-native';
 
 let stylesMap = StyleSheet.create({
 
+  navigationBar:{
+    borderBottomWidth: 1,
+    borderBottomColor: "#DBDBDB"
+  },
   list: {
     flex: 1,
     backgroundColor: "#fff"
@@ -18,7 +22,7 @@ let stylesMap = StyleSheet.create({
   },
 
   statusText: {
-    color: "#8000FF",
+    color: "#0F9D58",
     fontSize: 15,
     marginTop: 5,
     marginBottom: 15

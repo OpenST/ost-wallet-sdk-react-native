@@ -36,7 +36,6 @@ class SettingsComponent extends PureComponent {
     }
 
     this.controller = new WalletSettingsController(ostUserId, delegate);
-    this.themeConfigHelper = new OstThemeConfigHelper()
     this._initiateEventTextMap()
   }
 
@@ -166,12 +165,22 @@ class SettingsComponent extends PureComponent {
   async _processTappedOption(item) {
     if ( optionIds.walletDetails === item.id ) {
       // this.props.navigation.navigate('WalletDetails');
-      this.setState({
-        modalVisible: true
-      })
+      this.showWalletDetails();
       return;
     }
     this._perfromWorkflow(item)
+  }
+
+  showWalletDetails() {
+    this.setState({
+      modalVisible: true
+    })
+  }
+
+  hideWalletDetails() {
+    this.setState({
+      modalVisible: false
+    })
   }
 
   _perfromWorkflow(item) {
@@ -276,12 +285,12 @@ class SettingsComponent extends PureComponent {
   _keyExtractor = (item, index) => `id_${item.id}`;
 
   _renderItem = ({ item, index }) => {
-    let config = this.themeConfigHelper
+    const config = OstThemeConfigHelper;
     return (
       <TouchableWithoutFeedback onPress={() => this.onSettingItemTapped(item)}>
-        <View style={inlineStyle.listComponent}>
-        <Text style={[inlineStyle.title, {color: config.getH1Color(), fontSize: config.getH1Size()}]}>{item.heading}</Text>
-        <Text style={[inlineStyle.subtitle, {color: config.getH4Color(), fontSize: config.getH4Size()}]}>{item.description}</Text>
+        <View style={[inlineStyle.listComponent, config.getBorderBottomColor()]}>
+          <Text style={[inlineStyle.title, config.getC1Config()]}>{item.heading}</Text>
+          <Text style={[inlineStyle.subtitle, config.getC2Config()]}>{item.description}</Text>
         </View>
       </TouchableWithoutFeedback>
     );
@@ -290,7 +299,7 @@ class SettingsComponent extends PureComponent {
   render() {
     return (
       <>
-        <WalletDetails modalVisible={this.state.modalVisible} userId={this.controller.userId}/>
+        <WalletDetails modalVisible={this.state.modalVisible} userId={this.controller.userId} themeConfigHelper={this.themeConfigHelper} onBackButtonPress={() => this.hideWalletDetails()}/>
       <View style= {inlineStyle.list}>
         <FlatList
           data={this.state.list}

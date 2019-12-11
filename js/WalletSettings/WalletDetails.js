@@ -1,46 +1,14 @@
 import React, {PureComponent} from 'react';
 import {Alert, FlatList, Linking, Platform, Text, TouchableWithoutFeedback, View, Image, Clipboard, Modal} from 'react-native';
 import inlineStyle from './walletDetailsStyles';
-// import {LoadingModal} from '../../theme/components/LoadingModalCover';
-// import Colors from "../../theme/styles/Colors";
-// import BackArrow from '../CommonComponents/BackArrow';
-
-// import iconCopy from '../../assets/icon-copy.png';
-// import viewIcon from '../../assets/open-view.png';
 
 import OstWalletSdk from '../OstWalletSdk';
 import OstWalletSdkUI from '../OstWalletSdkUI';
 import OstJsonApi from '../OstJsonApi';
 import OstWalletSdkHelper from "../helpers/OstWalletSdkHelper";
 
-// import {ostSdkErrors} from "../../services/OstSdkErrors";
-// import CurrentUser from "../../models/CurrentUser";
-// import {IS_STAGING, TOKEN_ID, VIEW_END_POINT} from "../../constants";
-
-// import InAppBrowser from '../../services/InAppBrowser';
-// import Toast from '../../theme/components/NotificationToast';
-
-
 
 class WalletDetails extends PureComponent {
-  static navigationOptions = (options) => {
-    return {
-      title: 'Wallet Details',
-      headerBackTitle: null,
-      headerStyle: {
-        backgroundColor: '#fff',
-        borderBottomWidth: 0,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 1
-        },
-        shadowOpacity: 0.1,
-        shadowRadius: 3
-      }
-    };
-  };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -243,13 +211,24 @@ class WalletDetails extends PureComponent {
     InAppBrowser.openBrowser(item.link);
   };
 
+  backButtonTapped = () => {
+   this.props.onBackButtonPress()
+  }
+
   render() {
     return (
       <Modal
         style= {inlineStyle.list}
-        animationType="fade"
+        animationType="slide"
         transparent={false}
         visible={this.props.modalVisible}>
+        <View style={[inlineStyle.navigationBar,{height: 64, justifyContent: 'flex-end'}]}>
+          <TouchableWithoutFeedback onPress={this.backButtonTapped}>
+          <View style={{width: 44, height: 44, alignItems: 'center', justifyContent: 'center', marginRight: 20}}>
+            <Text style={{color: '#2A293B', fontSize: 24 }}>X</Text>
+          </View>
+          </TouchableWithoutFeedback>
+        </View>
         <FlatList
           onRefresh={this.onRefresh}
           data={this.state.list}
@@ -291,7 +270,7 @@ class WalletDetails extends PureComponent {
   _renderStatusCell = ({item, index}) => {
     return (
       <View style={inlineStyle.listComponent}>
-        <Text style={inlineStyle.title}>{item.heading}</Text>
+        <Text style={[inlineStyle.title, {fontSize: this.props.themeConfigHelper.getC1Size()}]}>{item.heading}</Text>
         <Text style={inlineStyle.statusText}>{item.text}</Text>
       </View>
     );

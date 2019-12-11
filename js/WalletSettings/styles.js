@@ -4,21 +4,20 @@ let stylesMap = StyleSheet.create({
 
   list: {
     flex: 1,
-    backgroundColor: "#fff",
-    paddingTop: 15
+    backgroundColor: "#fff"
   },
   title: {
     marginTop: 15,
-    marginRight: 15
+    marginHorizontal: 15
   },
   subtitle: {
     marginTop: 5,
     marginBottom: 15,
-    marginRight: 15
+    marginHorizontal: 15
   },
   listComponent: {
     flex: 1,
-    marginLeft: 20,
+    marginLeft: 0,
     borderBottomWidth: 1,
     borderBottomColor: "#DBDBDB"
   }
