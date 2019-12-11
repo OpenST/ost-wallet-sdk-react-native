@@ -1,17 +1,14 @@
-// Working IMPORTS.
 import React, {PureComponent} from 'react';
 import {Alert, FlatList, Linking, Platform, Text, TouchableWithoutFeedback, View} from 'react-native';
 import OstWalletSdkHelper from "../helpers/OstWalletSdkHelper";
 import WalletDetails from './WalletDetails'
 
-// To-Be-Reomved.
 import inlineStyle from './styles'
-// import {LoadingModal} from '../../theme/components/LoadingModalCover';
-// import {ostSdkErrors} from "../../services/OstSdkErrors";
-// import CameraPermissionsApi from "../../services/CameraPermissionsApi";
 
-// Fixed.
 import {optionIds, WalletSettingsController} from './WalletSettingsController';
+import OstThemeConfigHelper from '../helpers/OstThemeConfigHelper'
+import Colors from "../../../../../src/theme/styles/Colors";
+
 let AndroidOpenSettings = null;
 import('react-native-android-open-settings').then((pack) => {
   AndroidOpenSettings = pack.default;
@@ -19,22 +16,15 @@ import('react-native-android-open-settings').then((pack) => {
   //Ignore. 
 });
 
-/// REMOVED
-// import BackArrow from '../CommonComponents/BackArrow';
-// import Colors from "../../theme/styles/Colors";
-// import DeviceInfo from 'react-native-device-info';
-// import CurrentUser from "../../models/CurrentUser";
-
 class SettingsComponent extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       list: [],
       refreshing: false,
-      modalVisible: false
+      modalVisible: false,
     };
 
-    
     let ostUserId = this.props.ostUserId;
     let delegate = this.props.ostWalletUIWorkflowCallback;
 
@@ -46,6 +36,7 @@ class SettingsComponent extends PureComponent {
     }
 
     this.controller = new WalletSettingsController(ostUserId, delegate);
+    this.themeConfigHelper = new OstThemeConfigHelper()
     this._initiateEventTextMap()
   }
 
@@ -179,21 +170,6 @@ class SettingsComponent extends PureComponent {
         modalVisible: true
       })
       return;
-    } else if (item.id === optionIds.authorizeWithQR) {
-      /// TODO bubble CameraPermissionsApi.requestPermission was here.
-      // let cameraResult = await CameraPermissionsApi.requestPermission('camera');
-      let cameraResult = "";
-      if ((cameraResult == 'denied' || cameraResult == 'restricted')) {
-        /// TODO bubble LoadingModal was here.
-
-        // LoadingModal.showFailureAlert("Allow access to your camera to scan QR", '', 'Enable Camera Access', (isBtnTapped) => {
-        //   if (isBtnTapped) {
-        //     this.enableAccess();
-        //   }
-        // });
-
-        return;
-      }
     }
     this._perfromWorkflow(item)
   }
@@ -300,11 +276,12 @@ class SettingsComponent extends PureComponent {
   _keyExtractor = (item, index) => `id_${item.id}`;
 
   _renderItem = ({ item, index }) => {
+    let config = this.themeConfigHelper
     return (
       <TouchableWithoutFeedback onPress={() => this.onSettingItemTapped(item)}>
         <View style={inlineStyle.listComponent}>
-        <Text style={inlineStyle.title}>{item.heading}</Text>
-        <Text style={inlineStyle.subtitle}>{item.description}</Text>
+        <Text style={[inlineStyle.title, {color: config.getH1Color(), fontSize: config.getH1Size()}]}>{item.heading}</Text>
+        <Text style={[inlineStyle.subtitle, {color: config.getH4Color(), fontSize: config.getH4Size()}]}>{item.description}</Text>
         </View>
       </TouchableWithoutFeedback>
     );

@@ -8,22 +8,19 @@ let stylesMap = StyleSheet.create({
     paddingTop: 15
   },
   title: {
-    color: "#2A293B",
-    fontSize: 18,
-    marginTop: 15
+    marginTop: 15,
+    marginRight: 15
   },
   subtitle: {
-    color: "#2A293B",
-    fontSize: 12,
     marginTop: 5,
-    marginBottom: 15
+    marginBottom: 15,
+    marginRight: 15
   },
   listComponent: {
     flex: 1,
     marginLeft: 20,
-    marginRight: 20,
     borderBottomWidth: 1,
-    borderBottomColor: 'red'
+    borderBottomColor: "#DBDBDB"
   }
 });
 export default styles = stylesMap

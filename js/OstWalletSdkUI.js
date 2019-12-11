@@ -14,9 +14,6 @@ import OstWalletUIWorkflowCallback from './OstWalletUIWorkflowCallback';
 import OstWalletUICoreCallback from './OstWalletUICoreCallback';
 import * as OstWalletSdkUICallbackManager from './callbackHandlers/OstWalletSdkUICallbackManager';
 
-/// TEMP-CODE: Code to intercept theme-config.
-let themeConfig = null;
-
 class OstWalletRNSdkUI {
 
   /**
@@ -24,18 +21,15 @@ class OstWalletRNSdkUI {
    * @param {object} config - Config for theme
    */
   setThemeConfig(config) {
-    /// TEMP-CODE: Code to intercept theme-config.
-    themeConfig = config;
-
     OstWalletSdkUI.setThemeConfig(config);
   }
 
-  getThemeConfig() {
-    return new Promise((resolve,reject) => {
-      /// TEMP-CODE: Code to intercept theme-config.
-      /// @Aniket/@Sachin: Please expose proper-getters.
-      resolve(themeConfig);
-    });
+  getThemeConfig(callback) {
+    OstWalletSdkUI.getThemeConfig((config) => {
+      if (callback && typeof callback === 'function') {
+        callback(config);
+      }
+    })
   }
 
   /**
