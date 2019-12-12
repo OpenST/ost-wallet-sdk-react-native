@@ -37,6 +37,8 @@ class SettingsComponent extends PureComponent {
 
     this.controller = new WalletSettingsController(ostUserId, delegate);
     this._initiateEventTextMap()
+
+    OstThemeConfigHelper.updateConfig();
   }
 
   _initiateEventTextMap() {
