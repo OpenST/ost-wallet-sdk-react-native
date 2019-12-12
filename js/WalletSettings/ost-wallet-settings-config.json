@@ -33,7 +33,7 @@
     },
     "add_session": {
       "content_config": {
-        "heading": "Add Session",
+        "heading": "Authorize New Session",
         "description": "Add Session to do transaction."
       },
       "config": {

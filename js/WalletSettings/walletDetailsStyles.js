@@ -11,21 +11,22 @@ let stylesMap = StyleSheet.create({
     backgroundColor: "#fff"
   },
   title: {
-    color: "#888888",
-    fontSize: 13,
-    marginTop: 15
+    marginTop: 15,
+    marginLeft: 15
   },
   text: {
     color: "#2A293B",
     fontSize: 15,
-    marginBottom: 15
+    marginBottom: 15,
+    marginLeft: 15
   },
 
   statusText: {
     color: "#0F9D58",
     fontSize: 15,
     marginTop: 5,
-    marginBottom: 15
+    marginBottom: 15,
+    marginLeft: 15
   },
 
   linkView: {
@@ -38,14 +39,13 @@ let stylesMap = StyleSheet.create({
     color: "#007aff",
     marginBottom: 15,
     fontSize: 15,
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    marginLeft: 15
   },
 
   listComponent: {
     flex: 1,
-    marginHorizontal: 20,
     borderBottomWidth: 1,
-    borderBottomColor: "#ECECEC"
   }
 });
 export default styles = stylesMap;

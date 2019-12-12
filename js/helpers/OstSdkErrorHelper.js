@@ -1,4 +1,4 @@
-import OstWalletSdkHelper from "../helper/OstWalletSdkHelper"
+import OstWalletSdkHelper from "./OstWalletSdkHelper"
 
 import SdkErrorMessages from "../OstSdkErrorMessages";
 

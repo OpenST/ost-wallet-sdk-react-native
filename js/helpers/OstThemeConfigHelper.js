@@ -56,10 +56,6 @@ class OstThemeConfigHelper {
       borderBottomColor: this.themeConfig.cell_separator.color
     }
   }
-
-
-
 }
-
 
 export default new OstThemeConfigHelper()

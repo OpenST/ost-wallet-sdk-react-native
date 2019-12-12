@@ -25,6 +25,8 @@ class SettingsComponent extends PureComponent {
       modalVisible: false,
     };
 
+    OstThemeConfigHelper.updateConfig();
+
     let ostUserId = this.props.ostUserId;
     let delegate = this.props.ostWalletUIWorkflowCallback;
 
@@ -37,24 +39,28 @@ class SettingsComponent extends PureComponent {
 
     this.controller = new WalletSettingsController(ostUserId, delegate);
     this._initiateEventTextMap()
-
-    OstThemeConfigHelper.updateConfig();
   }
 
   _initiateEventTextMap() {
     this.eventLoaderTextMap = {};
 
     this._createEventLoaderData(
-      optionIds.addSession,
+      "Authorize New Session",
       "Adding Session",
       "Waiting for confirmation",
       "Session added");
 
     this._createEventLoaderData(
-      optionIds.updateBiometricPreference,
-      "Updating Biometric",
+      optionIds.enableBiometrics,
+      "Enabling Biometric Preference",
       "Waiting for confirmation",
-      "Biometric updated");
+      "Biometric enabled");
+
+    this._createEventLoaderData(
+      optionIds.disableBiometrics,
+      "Disabling Biometric Preference",
+      "Waiting for confirmation",
+      "Biometric disabled");
 
     this._createEventLoaderData(
       optionIds.resetPin,
@@ -301,7 +307,7 @@ class SettingsComponent extends PureComponent {
   render() {
     return (
       <>
-        <WalletDetails modalVisible={this.state.modalVisible} userId={this.controller.userId} themeConfigHelper={this.themeConfigHelper} onBackButtonPress={() => this.hideWalletDetails()}/>
+        <WalletDetails modalVisible={this.state.modalVisible} userId={this.controller.userId} onBackButtonPress={() => this.hideWalletDetails()}/>
       <View style= {inlineStyle.list}>
         <FlatList
           data={this.state.list}

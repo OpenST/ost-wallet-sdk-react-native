@@ -6,6 +6,7 @@ import OstWalletSdk from '../OstWalletSdk';
 import OstWalletSdkUI from '../OstWalletSdkUI';
 import OstJsonApi from '../OstJsonApi';
 import OstWalletSdkHelper from "../helpers/OstWalletSdkHelper";
+import OstThemeConfigHelper from '../helpers/OstThemeConfigHelper'
 
 
 class WalletDetails extends PureComponent {
@@ -260,17 +261,17 @@ class WalletDetails extends PureComponent {
 
   _renderTextCell = ({item, index}) => {
     return (
-      <View style={inlineStyle.listComponent}>
-        <Text style={inlineStyle.title}>{item.heading}</Text>
-        <Text style={inlineStyle.text}>{item.text}</Text>
+      <View style={[inlineStyle.listComponent, OstThemeConfigHelper.getBorderBottomColor()]}>
+        {this.getHeadingComponent(item)}
+        <Text style={[inlineStyle.text,{marginTop: 5}]}>{item.text}</Text>
       </View>
     );
   };
 
   _renderStatusCell = ({item, index}) => {
     return (
-      <View style={inlineStyle.listComponent}>
-        <Text style={[inlineStyle.title, {fontSize: this.props.themeConfigHelper.getC1Size()}]}>{item.heading}</Text>
+      <View style={[inlineStyle.listComponent, OstThemeConfigHelper.getBorderBottomColor()]}>
+        {this.getHeadingComponent(item)}
         <Text style={inlineStyle.statusText}>{item.text}</Text>
       </View>
     );
@@ -279,8 +280,8 @@ class WalletDetails extends PureComponent {
   _renderCopyCell = ({item, index}) => {
     return (
       <TouchableWithoutFeedback onPress={() => this.onCopyCellTapped(item)}>
-        <View style={inlineStyle.listComponent}>
-          <Text style={inlineStyle.title}>{item.heading}</Text>
+        <View style={[inlineStyle.listComponent, OstThemeConfigHelper.getBorderBottomColor()]}>
+          {this.getHeadingComponent(item)}
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <View style={[inlineStyle.linkView, {marginRight: 10}]}>
               <Text style={inlineStyle.text}>{item.text}</Text>
@@ -295,8 +296,8 @@ class WalletDetails extends PureComponent {
   _renderLinkCell = ({item, index}) => {
     return (
       <TouchableWithoutFeedback onPress={() => this.onLinkCellTapped(item)}>
-        <View style={inlineStyle.listComponent}>
-          <Text style={inlineStyle.title}>{item.heading}</Text>
+        <View style={[inlineStyle.listComponent, OstThemeConfigHelper.getBorderBottomColor()]}>
+          {this.getHeadingComponent(item)}
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <View style={[inlineStyle.linkView, {marginRight: 10}]}>
               <Text style={inlineStyle.linkText}>{item.text}</Text>
@@ -307,6 +308,11 @@ class WalletDetails extends PureComponent {
       </TouchableWithoutFeedback>
     );
   };
+
+
+  getHeadingComponent(item) {
+    return(<Text style={[inlineStyle.title, OstThemeConfigHelper.getC1Config()]}>{item.heading}</Text>)
+  }
 }
 
 export default WalletDetails;

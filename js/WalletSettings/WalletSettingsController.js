@@ -326,8 +326,8 @@ class WalletSettingsController {
     }
 
     let delegate = this._getWorkflowDelegate(),
-        workflowId = null,
-        userId = this.userId
+      workflowId = null,
+      userId = this.userId
     ;
 
     console.log("WalletSettings ost userId", userId);
@@ -365,8 +365,12 @@ class WalletSettingsController {
         workflowId = OstWalletSdkUI.getAddDeviceQRCode(userId, delegate);
         break;
 
-      case optionIds.updateBiometricPreference:
-        workflowId = OstWalletSdkUI.updateBiometricPreference(userId, !this.isBiometricEnabled, delegate);
+      case optionIds.enableBiometrics:
+        workflowId = OstWalletSdkUI.updateBiometricPreference(userId, true, delegate);
+        break;
+
+      case optionIds.disableBiometrics:
+        workflowId = OstWalletSdkUI.updateBiometricPreference(userId, false, delegate);
         break;
 
       default:
