@@ -38,110 +38,6 @@ class SettingsComponent extends PureComponent {
     }
 
     this.controller = new WalletSettingsController(ostUserId, delegate);
-    this._initiateEventTextMap()
-  }
-
-  _initiateEventTextMap() {
-    this.eventLoaderTextMap = {};
-
-    this._createEventLoaderData(
-      "Authorize New Session",
-      "Adding Session",
-      "Waiting for confirmation",
-      "Session added");
-
-    this._createEventLoaderData(
-      optionIds.enableBiometrics,
-      "Enabling Biometric Preference",
-      "Waiting for confirmation",
-      "Biometric enabled");
-
-    this._createEventLoaderData(
-      optionIds.disableBiometrics,
-      "Disabling Biometric Preference",
-      "Waiting for confirmation",
-      "Biometric disabled");
-
-    this._createEventLoaderData(
-      optionIds.resetPin,
-      "Resetting PIN...",
-      "Waiting for confirmation",
-      "PIN has been successfully reset");
-
-    this._createEventLoaderData(
-      optionIds.recoverDevice,
-      "Recovering device",
-      "Waiting for confirmation",
-      "Device recovery initiated");
-
-    this._createEventLoaderData(
-      optionIds.abortRecovery,
-      "Cancelling recovery",
-      "Waiting for confirmation",
-      "Aborted recovery");
-
-    this._createEventLoaderData(
-      optionIds.viewMnemonics,
-      "",
-      "",
-      "");
-
-    this._createEventLoaderData(
-      optionIds.authorizeWithQR,
-      "Authorizing device",
-      "Waiting for confirmation",
-      "Device authorized");
-
-
-    this._createEventLoaderData(
-      optionIds.authorizeWithMnemonics,
-      "Authorizing device",
-      "Waiting for confirmation",
-      "Device authorized");
-
-    this._createEventLoaderData(
-      optionIds.showQR,
-      "",
-      "Waiting for confirmation",
-      "Device authorized");
-  }
-
-  _createEventLoaderData(id, startText, ackText, successText){
-    let loaderData = {
-      id: id,
-
-      startText: startText,
-
-      // Acknowledgement text
-      acknowledgedText: ackText,
-
-      // Success Text
-      successText: successText,
-    };
-
-    this.eventLoaderTextMap[ id ] = loaderData;
-    return loaderData;
-  }
-
-  _getFlowCompleteText() {
-    let text = this.eventLoaderTextMap[this.workflowInfo.workflowOptionId].successText;
-    return text
-  }
-
-  _getFlowStartedText() {
-    let text = this.eventLoaderTextMap[this.workflowInfo.workflowOptionId].startText;
-    return text
-  }
-
-  _getRequestAcknowledgedText() {
-    let text = this.eventLoaderTextMap[this.workflowInfo.workflowOptionId].acknowledgedText;
-    return text
-  }
-
-  _getFlowFailedText(workflowContext, ostError) {
-    /// TODO bubble ostSdkErrors was here.
-    // return ostSdkErrors.getErrorMessage(workflowContext, ostError)
-    return "";
   }
 
   componentDidMount() {
@@ -235,7 +131,6 @@ class SettingsComponent extends PureComponent {
   flowComplete = (ostWorkflowContext , ostContextEntity) => {
     this.refreshList(() => {
       if (this.canShowAlert(ostWorkflowContext)) {
-        let text = this._getFlowCompleteText();
         // LoadingModal.showSuccessAlert(text);
       }else {
         // LoadingModal.hide()
@@ -268,9 +163,7 @@ class SettingsComponent extends PureComponent {
   };
 
   userCancelled = (ostWorkflowContext , ostError) => {
-    /// TODO bubble LoadingModal was here.
 
-    // LoadingModal.hide();
   };
 
   deviceTimeOutOfSync = (ostWorkflowContext , ostError) => {
