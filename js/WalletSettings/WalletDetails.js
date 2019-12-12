@@ -7,7 +7,14 @@ import OstWalletSdkUI from '../OstWalletSdkUI';
 import OstJsonApi from '../OstJsonApi';
 import OstWalletSdkHelper from "../helpers/OstWalletSdkHelper";
 import OstThemeConfigHelper from '../helpers/OstThemeConfigHelper'
+import OstWalletSettings from './OstWalletSettings'
 
+let InAppBrowser = null;
+// import('react-native-inappbrowser-reborn').then((pack) => {
+//   return InAppBrowser = pack.default
+// }).catch((err) => {
+//   //
+// })
 
 class WalletDetails extends PureComponent {
   constructor(props) {
@@ -142,22 +149,32 @@ class WalletDetails extends PureComponent {
   }
 
   _buildTokenHolderAddressData() {
-    // let link = VIEW_END_POINT + 'token/th-'+ this._getAuxChainId() + '-' + this._getUtilityBandedToken() + '-' + this.ostUser.token_holder_address;
+    let viewEndPoint = OstWalletSettings.getOstViewEndpoint()
+    let link = null
+    if (viewEndPoint) {
+      link = viewEndPoint + 'token/th-'+ this._getAuxChainId() + '-' + this._getUtilityBandedToken() + '-' + this.ostUser.token_holder_address;
+    }
+
     return {
       "cellType": "link",
       "heading": "Token Holder Address",
       "text": this.ostUser.token_holder_address,
-      "link": ''
+      "link": link
     };
   }
 
   _buildDeviceManagerAddressData() {
-    // let link = VIEW_END_POINT + 'address/ad-'+ this._getAuxChainId() + '-' + this.ostUser.device_manager_address;
+    let viewEndPoint = OstWalletSettings.getOstViewEndpoint()
+    let link = null
+    if (viewEndPoint) {
+      link = viewEndPoint + 'address/ad-'+ this._getAuxChainId() + '-' + this.ostUser.device_manager_address;
+    }
+
     return {
       "cellType": "link",
       "heading": "Device Manager Address",
       "text": this.ostUser.device_manager_address,
-      "link": ''
+      "link": link
     };
   }
 
@@ -170,12 +187,16 @@ class WalletDetails extends PureComponent {
   }
 
   _buildRecoveryOwnerAddressData() {
-    // let link = VIEW_END_POINT + 'address/ad-'+ this._getAuxChainId() + '-' + this.ostUser.recovery_owner_address;
+    let viewEndPoint = OstWalletSettings.getOstViewEndpoint()
+    let link = null
+    if (viewEndPoint) {
+      link = viewEndPoint + 'address/ad-'+ this._getAuxChainId() + '-' + this.ostUser.recovery_owner_address;
+    }
     return {
       "cellType": "link",
       "heading": "Recovery Owner Address",
       "text": this.ostUser.recovery_owner_address,
-      "link": ''
+      "link": link
     };
   }
 
@@ -205,15 +226,20 @@ class WalletDetails extends PureComponent {
 
   onCopyCellTapped = async (item) => {
     await Clipboard.setString(item.text);
-    Toast.show({text: "Copied to Clipboard", icon:'success'});
   };
 
-  onLinkCellTapped = (item) => {
-    InAppBrowser.openBrowser(item.link);
+  onLinkCellTapped = async (item) => {
+    if (item.link) {
+      if(InAppBrowser && await InAppBrowser.isAvailable()) {
+
+      }else {
+        Linking.openURL(item.link)
+      }
+    }
   };
 
   backButtonTapped = () => {
-   this.props.onBackButtonPress()
+    this.props.onBackButtonPress()
   }
 
   render() {
@@ -225,9 +251,9 @@ class WalletDetails extends PureComponent {
         visible={this.props.modalVisible}>
         <View style={[inlineStyle.navigationBar,{height: 64, justifyContent: 'flex-end'}]}>
           <TouchableWithoutFeedback onPress={this.backButtonTapped}>
-          <View style={{width: 44, height: 44, alignItems: 'center', justifyContent: 'center', marginRight: 20}}>
-            <Text style={{color: '#2A293B', fontSize: 24 }}>X</Text>
-          </View>
+            <View style={{width: 44, height: 44, alignItems: 'center', justifyContent: 'center', marginRight: 20}}>
+              <Text style={{color: '#2A293B', fontSize: 24 }}>X</Text>
+            </View>
           </TouchableWithoutFeedback>
         </View>
         <FlatList
@@ -263,7 +289,7 @@ class WalletDetails extends PureComponent {
     return (
       <View style={[inlineStyle.listComponent, OstThemeConfigHelper.getBorderBottomColor()]}>
         {this.getHeadingComponent(item)}
-        <Text style={[inlineStyle.text,{marginTop: 5}]}>{item.text}</Text>
+        <Text style={[inlineStyle.text]}>{item.text}</Text>
       </View>
     );
   };
@@ -280,15 +306,7 @@ class WalletDetails extends PureComponent {
   _renderCopyCell = ({item, index}) => {
     return (
       <TouchableWithoutFeedback onPress={() => this.onCopyCellTapped(item)}>
-        <View style={[inlineStyle.listComponent, OstThemeConfigHelper.getBorderBottomColor()]}>
-          {this.getHeadingComponent(item)}
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={[inlineStyle.linkView, {marginRight: 10}]}>
-              <Text style={inlineStyle.text}>{item.text}</Text>
-            </View>
-            {/*<Image style={{ height: 22, width: 22 }} source={iconCopy} />*/}
-          </View>
-        </View>
+        {this.getActionCell(item, false)}
       </TouchableWithoutFeedback>
     );
   };
@@ -296,22 +314,27 @@ class WalletDetails extends PureComponent {
   _renderLinkCell = ({item, index}) => {
     return (
       <TouchableWithoutFeedback onPress={() => this.onLinkCellTapped(item)}>
-        <View style={[inlineStyle.listComponent, OstThemeConfigHelper.getBorderBottomColor()]}>
-          {this.getHeadingComponent(item)}
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={[inlineStyle.linkView, {marginRight: 10}]}>
-              <Text style={inlineStyle.linkText}>{item.text}</Text>
-            </View>
-            {/*<Image style={{ height: 16, width: 24}} source={viewIcon} />*/}
-          </View>
-        </View>
+        {this.getActionCell(item, true)}
       </TouchableWithoutFeedback>
     );
   };
 
-
   getHeadingComponent(item) {
     return(<Text style={[inlineStyle.title, OstThemeConfigHelper.getC1Config()]}>{item.heading}</Text>)
+  }
+
+  getActionCell = (item, isLinkCell) => {
+    return(
+      <View style={[inlineStyle.listComponent, OstThemeConfigHelper.getBorderBottomColor()]}>
+        {this.getHeadingComponent(item)}
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View>
+            <Text style={isLinkCell ? inlineStyle.linkText : inlineStyle.text}>{item.text}</Text>
+          </View>
+          {/*<Image style={{ height: 16, width: 24}} source={isLinkCell ? viewIcon : iconCopy} />*/}
+        </View>
+      </View>
+    )
   }
 }
 

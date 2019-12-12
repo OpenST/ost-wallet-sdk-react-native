@@ -68,6 +68,17 @@ class OstWalletSettingsClass {
     return config[ "expiration_time" ] || "0";
   }
 
+  getOstViewEndpoint() {
+    let itemConfig = this.getItemConfig( "wallet_details" ) || {};
+    let config = itemConfig.config || {};
+    let viewEndpoint = config[ "ost_view_endpoint" ]
+
+    if (viewEndpoint && viewEndpoint.length > 0 && typeof viewEndpoint === 'string') {
+      return viewEndpoint
+    }
+    return null
+  }
+
   _processDisplayOrder() {
     const allItemConfigs = this.getAllItemConfigs();
     const displayOrder = this.getDisplayOrder();

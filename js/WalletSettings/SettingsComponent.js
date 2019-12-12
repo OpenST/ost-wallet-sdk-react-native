@@ -16,6 +16,12 @@ import('react-native-android-open-settings').then((pack) => {
   //Ignore. 
 });
 
+// try {
+//   console.log(require.resolve("react-native-android-open-settings"));
+// } catch(e) {
+//   console.error("react-native-android-open-settings is not found");
+// }
+
 class SettingsComponent extends PureComponent {
   constructor(props) {
     super(props);

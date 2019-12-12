@@ -17,6 +17,9 @@
       "content_config": {
         "heading": "Wallet Details",
         "description": "View your wallet details."
+      },
+      "config": {
+        "ost_view_endpoint": ''
       }
     },
     "recover_device": {
