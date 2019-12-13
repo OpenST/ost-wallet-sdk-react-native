@@ -55,18 +55,11 @@ class OstSdkErrorHelper {
       let errorCode = ostError.getErrorCode();
 
       let workflowType = ostWorkflowContext ? ostWorkflowContext.WORKFLOW_TYPE : null;
-      workflowType = workflowType || DEFAULT_CONTEXT;
 
       if (OstWalletSdkHelper.isDeviceTimeOutOfSync(ostError)) {
         errorCode = DEVICE_OUT_OF_SYNC;
 
-        if ( this.errorMessages[workflowType] ) {
-          errMsg = this.errorMessages[workflowType][ errorCode ];
-        }
-
-        if ( !errMsg ) {
-          errMsg = this.errorMessages[DEFAULT_CONTEXT][ errorCode ];
-        }
+        errMsg = this.getMessageString(workflowType, errorCode)
 
         if ( developerMode ) {
           errMsg = errMsg + "\n\n(" + ostError.getApiInternalId() + ")"
@@ -77,14 +70,8 @@ class OstSdkErrorHelper {
 
       if ( OstWalletSdkHelper.isDeviceUnauthorizedError(ostError)) {
         errorCode = USER_UNAUTHORIZED;
-      
-        if ( this.errorMessages[workflowType] ) {
-          errMsg = this.errorMessages[workflowType][ errorCode ];
-        }
-      
-        if ( !errMsg ) {
-          errMsg = this.errorMessages[DEFAULT_CONTEXT][ errorCode ];
-        }
+
+        errMsg = this.getMessageString(workflowType, errorCode)
       
         if ( developerMode ) {
           errMsg = errMsg + "\n\n(" + ostError.getApiInternalId() + ")"
@@ -115,13 +102,7 @@ class OstSdkErrorHelper {
         return DEFAULT_ERROR_MSG;
       }
 
-      if ( this.errorMessages[workflowType] ) {
-        errMsg = this.errorMessages[workflowType][ errorCode ];
-      }
-
-      if ( !errMsg ) {
-        errMsg = this.errorMessages[DEFAULT_CONTEXT][ errorCode ];
-      }
+      errMsg = this.getMessageString(workflowType, errorCode)
 
       if ( developerMode && errorCode) {
         if ( !errMsg ) {
@@ -133,6 +114,20 @@ class OstSdkErrorHelper {
 
       return errMsg || DEFAULT_ERROR_MSG;
     }
-}
 
-export default new OstSdkErrorHelper();
+
+    getMessageString(workflowType, errorCode) {
+      let errMsg = null
+      if (workflowType && this.errorMessages[workflowType] ) {
+        errMsg = this.errorMessages[workflowType][ errorCode ];
+      }
+
+      if ( !errMsg ) {
+        errMsg = this.errorMessages[DEFAULT_CONTEXT][ errorCode ];
+      }
+
+      return errMsg
+    }
+}
+const sdkErrorHelper = new OstSdkErrorHelper()
+export {sdkErrorHelper, DEFAULT_CONTEXT, DEVICE_OUT_OF_SYNC,  USER_UNAUTHORIZED};

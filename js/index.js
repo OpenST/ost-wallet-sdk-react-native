@@ -19,6 +19,7 @@ import OstWalletSdkUI from './OstWalletSdkUI';
 import {OstWalletSettings, OstWalletSettingsComponent, OstWalletSettingsDefaultConfig} from './WalletSettings';
 import OstUserStatus from "./constants/UserStatus";
 import OstDeviceStatus from "./constants/DeviceStatus";
+import OstTransactionHelper from "./TransactionHelper/OstTransactionHelper";
 
 export {
     OstWalletSdk,
@@ -33,5 +34,6 @@ export {
     OstWalletSettings,
     OstWalletSettingsComponent,
     OstUserStatus,
-    OstDeviceStatus
+    OstDeviceStatus,
+    OstTransactionHelper
 }

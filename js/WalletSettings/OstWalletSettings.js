@@ -1,7 +1,7 @@
 import WalletSettingsConfig from "./ost-wallet-settings-config";
 import objectMerge from "lodash.merge";
 
-import OstSdkErrorHelper from '../helpers/OstSdkErrorHelper'
+import {sdkErrorHelper} from '../helpers/OstSdkErrorHelper'
 
 const ItemsThatNeedCamera = ["add_another_device"];
 
@@ -28,7 +28,7 @@ class OstWalletSettingsClass {
   }
 
   setErrorMessages(externalErrorMessages) {
-    OstSdkErrorHelper.setErrorMessages(externalErrorMessages);
+    sdkErrorHelper.setErrorMessages(externalErrorMessages);
   }
 
   getMasterConfig() {

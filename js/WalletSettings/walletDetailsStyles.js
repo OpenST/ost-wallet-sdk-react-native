@@ -5,7 +5,7 @@ let stylesMap = StyleSheet.create({
   navigationBar:{
     borderBottomWidth: 1,
     borderBottomColor: "#DBDBDB",
-    
+
     paddingLeft: 10,
     justifyContent: 'flex-end'
   },
@@ -24,11 +24,6 @@ let stylesMap = StyleSheet.create({
 
   title: {
     marginBottom: 8
-  },
-
-  statusText: {
-    color: "#0F9D58",
-    fontSize: 15,
   },
 
   text: {

@@ -299,7 +299,7 @@ class WalletDetails extends PureComponent {
     return (
       <View style={[inlineStyle.listComponent, OstThemeConfigHelper.getBorderBottomColor()]}>
         {this.getHeadingComponent(item)}
-        <Text style={inlineStyle.statusText}>{item.text}</Text>
+        <Text style={OstThemeConfigHelper.getStConfig()}>{item.text}</Text>
       </View>
     );
   };
@@ -307,7 +307,15 @@ class WalletDetails extends PureComponent {
   _renderCopyCell = ({item, index}) => {
     return (
       <TouchableWithoutFeedback onPress={() => this.onCopyCellTapped(item)}>
-        {this.getActionCell(item, false)}
+        <View style={[inlineStyle.listComponent, OstThemeConfigHelper.getBorderBottomColor()]}>
+          {this.getHeadingComponent(item)}
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View>
+              <Text style={inlineStyle.text}>{item.text}</Text>
+            </View>
+            {/*<Image style={{ height: 16, width: 24}} source={iconCopy} />*/}
+          </View>
+        </View>
       </TouchableWithoutFeedback>
     );
   };
@@ -315,27 +323,21 @@ class WalletDetails extends PureComponent {
   _renderLinkCell = ({item, index}) => {
     return (
       <TouchableWithoutFeedback onPress={() => this.onLinkCellTapped(item)}>
-        {this.getActionCell(item, true)}
+        <View style={[inlineStyle.listComponent, OstThemeConfigHelper.getBorderBottomColor()]}>
+          {this.getHeadingComponent(item)}
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View>
+              <Text style={[inlineStyle.linkText, OstThemeConfigHelper.getCl1Config()]}>{item.text}</Text>
+            </View>
+            {/*<Image style={{ height: 16, width: 24}} source={viewIcon} />*/}
+          </View>
+        </View>
       </TouchableWithoutFeedback>
     );
   };
 
   getHeadingComponent(item) {
     return(<Text style={[inlineStyle.title, OstThemeConfigHelper.getC1Config()]}>{item.heading}</Text>)
-  }
-
-  getActionCell = (item, isLinkCell) => {
-    return(
-      <View style={[inlineStyle.listComponent, OstThemeConfigHelper.getBorderBottomColor()]}>
-        {this.getHeadingComponent(item)}
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <View>
-            <Text style={isLinkCell ? inlineStyle.linkText : inlineStyle.text}>{item.text}</Text>
-          </View>
-          {/*<Image style={{ height: 16, width: 24}} source={isLinkCell ? viewIcon : iconCopy} />*/}
-        </View>
-      </View>
-    )
   }
 }
 
