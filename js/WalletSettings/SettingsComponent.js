@@ -13,7 +13,7 @@ let AndroidOpenSettings = null;
 import('react-native-android-open-settings').then((pack) => {
   AndroidOpenSettings = pack.default;
 }).catch( (err) => {
-  //Ignore. 
+
 });
 
 // try {
@@ -30,6 +30,8 @@ class SettingsComponent extends PureComponent {
       refreshing: false,
       modalVisible: false,
     };
+
+    this.flatListLayout = null
 
     OstThemeConfigHelper.updateConfig();
 
@@ -206,7 +208,7 @@ class SettingsComponent extends PureComponent {
   render() {
     return (
       <>
-        <WalletDetails modalVisible={this.state.modalVisible} userId={this.controller.userId} onBackButtonPress={() => this.hideWalletDetails()}/>
+        <WalletDetails modalVisible={this.state.modalVisible} userId={this.controller.userId} onBackButtonPress={() => this.hideWalletDetails()} flatlistLayout={this.flatListLayout}/>
       <View style= {inlineStyle.list}>
         <FlatList
           data={this.state.list}
@@ -215,6 +217,11 @@ class SettingsComponent extends PureComponent {
           keyExtractor={this._keyExtractor}
           visible={false}
           onRefresh={this.refreshList}
+          onLayout={(event) => {
+            const {x, y, width, height} = event.nativeEvent.layout;
+            this.flatListLayout = event.nativeEvent.layout;
+            // do something here like set your initial animated value for the height
+          }}
         />
       </View>
       </>

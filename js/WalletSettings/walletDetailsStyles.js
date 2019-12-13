@@ -4,7 +4,10 @@ let stylesMap = StyleSheet.create({
 
   navigationBar:{
     borderBottomWidth: 1,
-    borderBottomColor: "#DBDBDB"
+    borderBottomColor: "#DBDBDB",
+    
+    paddingLeft: 10,
+    justifyContent: 'flex-end'
   },
 
   list: {

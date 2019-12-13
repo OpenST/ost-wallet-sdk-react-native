@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Alert, FlatList, Linking, Platform, Text, TouchableWithoutFeedback, View, Image, Clipboard, Modal} from 'react-native';
+import {Alert, FlatList, Linking, Platform, Text, TouchableWithoutFeedback, View, Image, Clipboard, Modal, Dimensions, SafeAreaView} from 'react-native';
 import inlineStyle from './walletDetailsStyles';
 
 import OstWalletSdk from '../OstWalletSdk';
@@ -249,13 +249,14 @@ class WalletDetails extends PureComponent {
         animationType="slide"
         transparent={false}
         visible={this.props.modalVisible}>
-        <View style={[inlineStyle.navigationBar,{height: 64, justifyContent: 'flex-end'}]}>
+        <SafeAreaView style={inlineStyle.navigationBar}>
           <TouchableWithoutFeedback onPress={this.backButtonTapped}>
-            <View style={{width: 44, height: 44, alignItems: 'center', justifyContent: 'center', marginRight: 20}}>
+            <View style={{width: 44, height: 44, alignItems: 'center', justifyContent: 'center'}}>
               <Text style={{color: '#2A293B', fontSize: 24 }}>X</Text>
             </View>
           </TouchableWithoutFeedback>
-        </View>
+        </SafeAreaView>
+
         <FlatList
           onRefresh={this.onRefresh}
           data={this.state.list}
