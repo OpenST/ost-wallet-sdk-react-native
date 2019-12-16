@@ -10,14 +10,27 @@ import uuidv4 from 'uuid/v4';
 import { setInstance } from '../callbackHandlers/OstWalletSdkUICallbackManager';
 import OstWalletUIWorkFlowCallback from "../OstWalletUICoreCallback";
 
+let transactionConfig = {};
 
 class OstTransactionHelper {
   constructor() {
-    this.transactionConfig = {}
+
+  }
+
+  sortConfig(sortData) {
+    sortData.sort((a, b) => {
+      let aBnSpendingLimit = new BigNumber(a.spending_limit);
+      let bBnSpendingLimit = new BigNumber(b.spending_limit);
+      return aBnSpendingLimit.minus(bBnSpendingLimit);
+    });
+
+    return sortData;
   }
 
   setTxConfig(externalConfig) {
-    this.transactionConfig = externalConfig
+    let sortedData = this.sortConfig(externalConfig.session_buckets);
+    externalConfig.session_buckets = sortedData
+    transactionConfig = externalConfig
   }
 
   executeDirectTransfer(userId, amounts, addresses, txMeta = null) {
@@ -86,8 +99,12 @@ class OstTransactionExecutor {
   }
   createNewSession() {
     return new Promise((resolve, reject) => {
-      let spendingLimit = this.getSpedingLimit();
-      let sessionKeyExpiryTime = this.getExpiryTime();
+      let bucketForTx = this.getSpedingLimitAndExpiryTimeBucket()
+      if (!bucketForTx) {
+        reject();
+      }
+      let spendingLimit = bucketForTx.spending_limit;
+      let sessionKeyExpiryTime = parseInt(bucketForTx.expiry_time);
       let delegate = new OstWalletUIDelegate()
 
       delegate.flowComplete = (ostWorkflowContext, ostContextEntity) => {
@@ -103,12 +120,18 @@ class OstTransactionExecutor {
     })
   }
 
-  getSpedingLimit() {
-    return this.totalTxAmount.des
-  }
+  getSpedingLimitAndExpiryTimeBucket(val) {
+    this.totalTxAmount = new BigNumber(val);
+    let validBucket = null;
+    for(bucket of transactionConfig.session_buckets) {
+      let bucketSpendingLimit = new BigNumber(bucket.spending_limit);
+      if (this.totalTxAmount.lte(bucketSpendingLimit)) {
+        validBucket = bucket
+        break;
+      }
+    }
 
-  getExpiryTime() {
-    return 0;
+    return validBucket
   }
 
   executeTransfer() {
