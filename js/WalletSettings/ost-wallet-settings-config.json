@@ -1,12 +1,14 @@
 {
   "item_display_order": [
+    "activate_user",
     "wallet_details",
     "recover_device", 
-    "abort_recovery", 
+    "abort_recovery",
     "add_session", 
     "reset_pin", 
     "show_mnemonics", 
-    "authorize_device_with_mnemonics", 
+    "authorize_device_with_mnemonics",
+    "revoke_device",
     "add_another_device",
     "show_device_qr_code",
     "enable_biometrics",
@@ -22,6 +24,12 @@
         "ost_view_endpoint": ''
       }
     },
+    "activate_user": {
+      "content_config": {
+        "heading": "Activate User",
+        "description": "Activate user."
+      }
+    },
     "recover_device": {
       "content_config": {
         "heading": "Recover Device",
@@ -32,6 +40,12 @@
       "content_config": {
         "heading": "Abort Device Recovery",
         "description": "Abort Device Recovery."
+      }
+    },
+    "revoke_device": {
+      "content_config": {
+        "heading": "Revoke Device",
+        "description": "Revoke Device."
       }
     },
     "add_session": {

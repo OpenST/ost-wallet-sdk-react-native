@@ -9,6 +9,7 @@ import OstWalletUIWorkflowCallback from '../OstWalletUIWorkflowCallback';
 import InternalWorkflowDelegate from "../delegates/InternalWorkflowDelegate"
 
 const optionIds = {
+  activateUser: "activate_user",
   walletDetails: "wallet_details",
   recoverDevice: "recover_device",
   abortRecovery: "abort_recovery",
@@ -19,7 +20,8 @@ const optionIds = {
   authorizeWithQR: "add_another_device",
   showQR: "show_device_qr_code",
   enableBiometrics: "enable_biometrics",
-  disableBiometrics: "disable_biometrics"
+  disableBiometrics: "disable_biometrics",
+  revokeDevice: "revoke_device"
 };
 
 class WalletSettingsController {
@@ -153,7 +155,7 @@ class WalletSettingsController {
 
     this._resetOptions();
 
-    if (userStatus == this.userStatusMap.activated) {
+    if ((userStatus == this.userStatusMap.activated) && (deviceStatus !== this.deviceStatusMap.revoked)) {
       if (deviceStatus) {
         this._updateOptionsData(optionIds.walletDetails, false, true);
       }
@@ -163,6 +165,7 @@ class WalletSettingsController {
         this._updateOptionsData(optionIds.viewMnemonics, false, true);
         this._updateOptionsData(optionIds.authorizeWithQR, false, true);
         this._updateOptionsData(optionIds.resetPin, false, true);
+        this._updateOptionsData(optionIds.revokeDevice, false, true);
 
         if (this.isBiometricEnabled || false) {
           this._updateOptionsData(optionIds.disableBiometrics, false, true, "Disable Biometrics");
@@ -183,12 +186,8 @@ class WalletSettingsController {
         this._updateOptionsData(optionIds.abortRecovery, false, false);
       }
 
-      if (deviceStatus == this.deviceStatusMap.revoked) {
-        this._initializeOptions()
-      }
-
     }else {
-      this._initializeOptions()
+      //this._updateOptionsData(optionIds.activateUser, false, true);
     }
 
     let data = this._getData(this.onlyPerformable);
@@ -200,8 +199,10 @@ class WalletSettingsController {
     for ( cnt=0; cnt< len; cnt++ ) {
       let optionKey = this.optionsOrdering[cnt];
       let option = this.optionsMap[optionKey];
-      option.inProgress = false;
-      option.canPerform = false;
+      if (option) {
+        option.inProgress = false;
+        option.canPerform = false;
+      }
     }
   }
 
@@ -211,6 +212,9 @@ class WalletSettingsController {
     for ( cnt=0; cnt< len; cnt++ ) {
       let optionKey = this.optionsOrdering[ cnt ];
       let option = this.optionsMap[optionKey];
+      if (!option) {
+        continue;
+      }
       if (onlyPerformable) {
         if ( !option.canPerform || !option.shouldShow ){
           // Skip this.
@@ -371,6 +375,10 @@ class WalletSettingsController {
 
       case optionIds.disableBiometrics:
         workflowId = OstWalletSdkUI.updateBiometricPreference(userId, false, delegate);
+        break;
+
+      case optionIds.revokeDevice:
+        workflowId = OstWalletSdkUI.revokeDevice(userId, null, delegate);
         break;
 
       default:
