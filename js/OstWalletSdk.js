@@ -230,7 +230,7 @@ class OstWalletRNSdk {
     * @public
     */
     getToken(tokenId, callback) {
-        OstWalletSdk.getToken(tokenId, (tokenEntity) => {
+        OstWalletSdk.getToken(tokenId.toString(), (tokenEntity) => {
             callback( tokenEntity );
         });
     }

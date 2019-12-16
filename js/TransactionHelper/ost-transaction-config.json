@@ -1,0 +1,16 @@
+{
+  session_buckets: [
+    {
+      expiry_time: 60*60*24*30*2, //2 months
+      spending_limit: '10'
+    },
+    {
+      expiry_time: 60*60*24*30, //1 months
+      spending_limit: '50'
+    },
+    {
+      expiry_time: 60*60*24, //24 hours
+      spending_limit: '100'
+    }
+  ]
+}

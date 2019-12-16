@@ -5,16 +5,19 @@ import {sdkErrorHelper, USER_UNAUTHORIZED, DEFAULT_CONTEXT} from '../helpers/Ost
 import OstWalletUIDelegate from '../OstWalletUIWorkflowCallback'
 import OstWalletDelegate  from '../OstWalletWorkFlowCallback'
 import EventEmitter from 'eventemitter3';
+import objectMerge from "lodash.merge";
 
 import uuidv4 from 'uuid/v4';
 import { setInstance } from '../callbackHandlers/OstWalletSdkUICallbackManager';
 import OstWalletUIWorkFlowCallback from "../OstWalletUICoreCallback";
 
+import defaultTransactionConfig from "./ost-transaction-config";
+
 let transactionConfig = {};
 
 class OstTransactionHelper {
   constructor() {
-
+    this.setTxConfig();
   }
 
   sortConfig(sortData) {
@@ -28,9 +31,16 @@ class OstTransactionHelper {
   }
 
   setTxConfig(externalConfig) {
-    let sortedData = this.sortConfig(externalConfig.session_buckets);
-    externalConfig.session_buckets = sortedData
-    transactionConfig = externalConfig
+    externalConfig = externalConfig || {};
+    let masterConfig = JSON.parse(JSON.stringify(defaultTransactionConfig));
+
+    // Deep Merge.
+    objectMerge(masterConfig, externalConfig);
+
+    let sortedSessionBuckets = this.sortConfig(masterConfig.session_buckets);
+    masterConfig.session_buckets = sortedSessionBuckets;
+
+    transactionConfig = masterConfig;
   }
 
   executeDirectTransfer(userId, amounts, addresses, txMeta = null) {
@@ -47,9 +57,13 @@ class OstTransactionExecutor {
     this.ee = new EventEmitter();
     this.userId = userId;
     this.amounts = amounts;
+    this.decimalAmounts = [];
     this.addresses = addresses;
     this.txMeta = txMeta;
     this.ruleName = ruleName
+    this.token = null;
+    this.user = null;
+
 
     this.totalTxAmount = new BigNumber('0')
 
@@ -58,6 +72,17 @@ class OstTransactionExecutor {
 
   async perform() {
     try {
+
+
+      //getUser
+      await this.getOstUser()
+      if (!this.user) {
+        //throw error
+      }
+
+      //getToken
+      await this.getToken()
+
       //get final tx amount
       this.totalTxAmount = this.getTotalTransctionAmount();
 
@@ -75,11 +100,37 @@ class OstTransactionExecutor {
     }
   }
 
+  getOstUser() {
+    return new Promise((resolve, reject) => {
+      OstWalletSdk.getUser(this.userId, (ostUser) => {
+        this.user = ostUser;
+        resolve(ostUser);
+      });
+    });
+  }
+
+  getToken() {
+    return new Promise((resolve, reject) => {
+      let tokenId = this.user.token_id;
+      OstWalletSdk.getToken(tokenId, (ostToken) => {
+        this.token = ostToken;
+        resolve(ostToken);
+      })
+    });
+  }
+
+  getTokenDecimal() {
+    return this.token.decimals;
+  }
+
   getTotalTransctionAmount() {
     let totalAmount = new BigNumber('0');
 
     for (amount of this.amounts) {
-      let bnAmount = new BigNumber(amount);
+      let decimalAmount = this.toDecimal(amount);
+      this.decimalAmounts.push(decimalAmount)
+
+      let bnAmount = new BigNumber(decimalAmount);
       totalAmount = totalAmount.plus(bnAmount);
     }
 
@@ -97,6 +148,7 @@ class OstTransactionExecutor {
       });
     });
   }
+
   createNewSession() {
     return new Promise((resolve, reject) => {
       let bucketForTx = this.getSpedingLimitAndExpiryTimeBucket()
@@ -116,22 +168,29 @@ class OstTransactionExecutor {
         reject(errObject)
       };
 
-      OstWalletSdkUI.addSession(userId, sessionKeyExpiryTime, spendingLimit, workflowDelegate);
+      OstWalletSdkUI.addSession(this.userId, sessionKeyExpiryTime, spendingLimit, delegate);
     })
   }
 
-  getSpedingLimitAndExpiryTimeBucket(val) {
-    this.totalTxAmount = new BigNumber(val);
-    let validBucket = null;
+  getSpedingLimitAndExpiryTimeBucket() {
+    let validBucket = {};
     for(bucket of transactionConfig.session_buckets) {
-      let bucketSpendingLimit = new BigNumber(bucket.spending_limit);
+      let decimalSpedingLimit = this.toDecimal(bucket.spending_limit)
+      let bucketSpendingLimit = new BigNumber(decimalSpedingLimit);
       if (this.totalTxAmount.lte(bucketSpendingLimit)) {
-        validBucket = bucket
+        Object.assign(validBucket, bucket)
+        validBucket.spending_limit = decimalSpedingLimit
         break;
       }
     }
 
     return validBucket
+  }
+
+  toDecimal(val) {
+    val = BigNumber(val);
+    let exp = BigNumber(10).exponentiatedBy(this.getTokenDecimal());
+    return val.multipliedBy(exp).toString(10);
   }
 
   executeTransfer() {
@@ -151,14 +210,14 @@ class OstTransactionExecutor {
       this.ee.emit(eName, workflowContext , contextEntity);
     }
 
-    OstWalletSdk.executeTransaction(
-      this.userId,
-      this.addresses,
-      this.amounts,
-      this.ruleName,
-      this.txMeta,
-      executeTxDelegate
-    )
+    // OstWalletSdk.executeTransaction(
+    //   this.userId,
+    //   this.addresses,
+    //   this.decimalAmounts,
+    //   this.ruleName,
+    //   this.txMeta,
+    //   executeTxDelegate
+    // )
   }
 
   getEventEmitter() {

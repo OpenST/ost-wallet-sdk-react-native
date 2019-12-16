@@ -90,7 +90,7 @@ class OstWalletRNSdkUI {
    */
   addSession(userId, expiresAfterInSecs, spendingLimit, uiCallback) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    OstWalletSdkUI.addSession(userId, String(expiresAfterInSecs), String(spendingLimit), coreUiCallback.uuid);
+    OstWalletSdkUI.addSession(userId.toString(), String(expiresAfterInSecs), String(spendingLimit), coreUiCallback.uuid);
     return coreUiCallback.uuid;
   }
 
