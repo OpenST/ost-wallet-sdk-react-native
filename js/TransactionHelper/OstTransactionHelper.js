@@ -210,14 +210,14 @@ class OstTransactionExecutor {
       this.ee.emit(eName, workflowContext , contextEntity);
     }
 
-    // OstWalletSdk.executeTransaction(
-    //   this.userId,
-    //   this.addresses,
-    //   this.decimalAmounts,
-    //   this.ruleName,
-    //   this.txMeta,
-    //   executeTxDelegate
-    // )
+    OstWalletSdk.executeTransaction(
+      this.userId,
+      this.addresses,
+      this.decimalAmounts,
+      this.ruleName,
+      this.txMeta,
+      executeTxDelegate
+    )
   }
 
   getEventEmitter() {
