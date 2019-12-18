@@ -156,7 +156,7 @@ class OstTransactionExecutor {
         reject();
       }
       let spendingLimit = bucketForTx.spending_limit;
-      let sessionKeyExpiryTime = parseInt(bucketForTx.expiry_time);
+      let sessionKeyExpiryTime = parseInt(bucketForTx.expiration_time);
       let delegate = new OstWalletUIDelegate()
 
       delegate.flowComplete = (ostWorkflowContext, ostContextEntity) => {

@@ -28,6 +28,10 @@
       "content_config": {
         "heading": "Activate User",
         "description": "Activate user."
+      },
+      "config": {
+        "spending_limit": "1",
+        "expiration_time": 60
       }
     },
     "recover_device": {
@@ -55,7 +59,7 @@
       },
       "config": {
         "spending_limit": "0",
-        "expiration_time": "0"
+        "expiration_time": 0
       }
     },
     "reset_pin": {

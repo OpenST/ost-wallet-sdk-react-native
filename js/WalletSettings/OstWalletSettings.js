@@ -65,8 +65,23 @@ class OstWalletSettingsClass {
   getSessionExpirationTime() {
     let itemConfig = this.getItemConfig( "add_session" ) || {};
     let config = itemConfig.config || {};
-    return config[ "expiration_time" ] || "0";
+    let expirationTime = config[ "expiration_time"] || 0
+    return parseInt(expirationTime)
   }
+
+  getActivateUserSpendingLimit() {
+    let itemConfig = this.getItemConfig( "activate_user" ) || {};
+    let config = itemConfig.config || {};
+    return config[ "spending_limit" ] || "1";
+  }
+
+  getActivateUserExpirationTime() {
+    let itemConfig = this.getItemConfig( "activate_user" ) || {};
+    let config = itemConfig.config || {};
+    let expirationTime = config[ "expiration_time"] || 1
+    return parseInt(expirationTime)
+  }
+
 
   getOstViewEndpoint() {
     let itemConfig = this.getItemConfig( "wallet_details" ) || {};

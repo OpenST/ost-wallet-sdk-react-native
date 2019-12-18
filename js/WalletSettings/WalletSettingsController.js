@@ -186,8 +186,8 @@ class WalletSettingsController {
         this._updateOptionsData(optionIds.abortRecovery, false, false);
       }
 
-    }else {
-      //this._updateOptionsData(optionIds.activateUser, false, true);
+    }else if ((userStatus == this.userStatusMap.created) && (deviceStatus === this.deviceStatusMap.registered)){
+      this._updateOptionsData(optionIds.activateUser, false, true);
     }
 
     let data = this._getData(this.onlyPerformable);
@@ -338,7 +338,11 @@ class WalletSettingsController {
 
     switch( optionId ) {
       case optionIds.addSession:
-        workflowId = OstWalletSdkUI.addSession(userId, OstWalletSettings.getSessionExpirationTime() , OstWalletSettings.getSessionSpendingLimit(), delegate);
+        workflowId = OstWalletSdkUI.addSession(
+          userId,
+          OstWalletSettings.getSessionExpirationTime() ,
+          OstWalletSettings.getSessionSpendingLimit(),
+          delegate);
         break;
 
       case optionIds.recoverDevice:
@@ -380,7 +384,15 @@ class WalletSettingsController {
       case optionIds.revokeDevice:
         workflowId = OstWalletSdkUI.revokeDevice(userId, null, delegate);
         break;
-
+        
+      case optionIds.activateUser:
+        workflowId = OstWalletSdkUI.activateUser(
+          userId,
+          OstWalletSettings.getActivateUserExpirationTime(),
+          OstWalletSettings.getActivateUserSpendingLimit(),
+          delegate)
+        break;
+        
       default:
         return null;
     }
