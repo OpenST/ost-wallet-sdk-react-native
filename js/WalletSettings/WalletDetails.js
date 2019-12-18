@@ -10,11 +10,6 @@ import OstThemeConfigHelper from '../helpers/OstThemeConfigHelper'
 import OstWalletSettings from './OstWalletSettings'
 
 let InAppBrowser = null;
-// import('react-native-inappbrowser-reborn').then((pack) => {
-//   return InAppBrowser = pack.default
-// }).catch((err) => {
-//   //
-// })
 
 class WalletDetails extends PureComponent {
   constructor(props) {
@@ -249,10 +244,10 @@ class WalletDetails extends PureComponent {
         animationType="slide"
         transparent={false}
         visible={this.props.modalVisible}>
-        <SafeAreaView style={inlineStyle.navigationBar}>
+        <SafeAreaView style={[inlineStyle.navigationBar, {backgroundColor: OstThemeConfigHelper.themeConfig.navigation_bar.tint_color}]}>
           <TouchableWithoutFeedback onPress={this.backButtonTapped}>
-            <View style={{width: 44, height: 44, alignItems: 'center', justifyContent: 'center'}}>
-              <Text style={{color: '#2A293B', fontSize: 24 }}>X</Text>
+            <View style={inlineStyle.closeContainer}>
+              <Text style={[inlineStyle.closeText, {color: OstThemeConfigHelper.themeConfig.navigation_bar_header.tint_color}]}>X</Text>
             </View>
           </TouchableWithoutFeedback>
         </SafeAreaView>
@@ -299,7 +294,7 @@ class WalletDetails extends PureComponent {
     return (
       <View style={[inlineStyle.listComponent, OstThemeConfigHelper.getBorderBottomColor()]}>
         {this.getHeadingComponent(item)}
-        <Text style={OstThemeConfigHelper.getStConfig()}>{item.text}</Text>
+        <Text style={OstThemeConfigHelper.getStatusConfig()}>{item.text}</Text>
       </View>
     );
   };
@@ -327,7 +322,7 @@ class WalletDetails extends PureComponent {
           {this.getHeadingComponent(item)}
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <View>
-              <Text style={[inlineStyle.linkText, OstThemeConfigHelper.getCl1Config()]}>{item.text}</Text>
+              <Text style={[inlineStyle.linkText, OstThemeConfigHelper.getLinkConfig()]}>{item.text}</Text>
             </View>
             {/*<Image style={{ height: 16, width: 24}} source={viewIcon} />*/}
           </View>

@@ -16,13 +16,26 @@ import('react-native-android-open-settings').then((pack) => {
 
 });
 
-// try {
-//   console.log(require.resolve("react-native-android-open-settings"));
-// } catch(e) {
-//   console.error("react-native-android-open-settings is not found");
-// }
-
 class SettingsComponent extends PureComponent {
+
+  static navigationOptions = ({ navigation, navigationOptions }) => {
+    let navigationParams = {
+      title: navigation.getParam('navTitle', 'Wallet Settings'),
+      headerStyle:  {
+        borderBottomWidth: 0,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 1
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 3
+      }
+    };
+
+    return Object.assign(navigationParams, OstThemeConfigHelper.getNavigationHeaderConfig());
+  };
+
   constructor(props) {
     super(props);
     this.state = {

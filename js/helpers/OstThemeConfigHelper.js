@@ -51,8 +51,8 @@ class OstThemeConfigHelper {
         fontFamily: c2Config.font}
   }
 
-  getCl1Config() {
-    let cl1Config = this.themeConfig.cl1;
+  getLinkConfig() {
+    let cl1Config = this.themeConfig.link;
     return {
       color: cl1Config.color,
       fontSize: cl1Config.size,
@@ -61,8 +61,8 @@ class OstThemeConfigHelper {
     }
   }
 
-  getStConfig() {
-    let st1Config = this.themeConfig.st;
+  getStatusConfig() {
+    let st1Config = this.themeConfig.status;
     return {
       color: st1Config.color,
       fontSize: st1Config.size,
@@ -74,6 +74,17 @@ class OstThemeConfigHelper {
   getBorderBottomColor() {
     return {
       borderBottomColor: this.themeConfig.cell_separator.color
+    }
+  }
+
+  getNavigationHeaderConfig() {
+    let config = this.themeConfig.navigation_bar;
+    let headerConfig = this.themeConfig.navigation_bar_header;
+    return {
+      headerStyle: {
+        backgroundColor: config.tint_color
+      },
+      headerTintColor: headerConfig.tint_color
     }
   }
 }

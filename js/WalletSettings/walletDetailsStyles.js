@@ -2,6 +2,18 @@ import { StyleSheet } from 'react-native';
 
 let stylesMap = StyleSheet.create({
 
+  closeContainer: {
+    width: 44,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
+  closeText: {
+    color: '#2A293B',
+    fontSize: 24
+  },
+
   navigationBar:{
     borderBottomWidth: 1,
     borderBottomColor: "#DBDBDB",
