@@ -72,13 +72,13 @@ class OstWalletSettingsClass {
   getActivateUserSpendingLimit() {
     let itemConfig = this.getItemConfig( "activate_user" ) || {};
     let config = itemConfig.config || {};
-    return config[ "spending_limit" ] || "1";
+    return config[ "spending_limit" ] || "0";
   }
 
   getActivateUserExpirationTime() {
     let itemConfig = this.getItemConfig( "activate_user" ) || {};
     let config = itemConfig.config || {};
-    let expirationTime = config[ "expiration_time"] || 1
+    let expirationTime = config[ "expiration_time"] || 0
     return parseInt(expirationTime)
   }
 

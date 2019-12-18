@@ -30,8 +30,8 @@
         "description": "Activate user."
       },
       "config": {
-        "spending_limit": "1",
-        "expiration_time": 60
+        "spending_limit": "0",
+        "expiration_time": 0
       }
     },
     "recover_device": {
