@@ -12,6 +12,7 @@ import { setInstance } from '../callbackHandlers/OstWalletSdkUICallbackManager';
 import OstWalletUIWorkFlowCallback from "../OstWalletUICoreCallback";
 
 import defaultTransactionConfig from "./ost-transaction-config";
+import OstWalletUIWorkflowCallback from "@ostdotcom/ost-wallet-sdk-react-native/js/OstWalletUIWorkflowCallback";
 
 let transactionConfig = {};
 
@@ -43,8 +44,8 @@ class OstTransactionHelper {
     transactionConfig = masterConfig;
   }
 
-  executeDirectTransfer(userId, amounts, addresses, txMeta = null) {
-    let obj = new OstTransactionExecutor(userId, 'direct transfer', amounts, addresses, txMeta)
+  executeDirectTransfer(userId, amounts, addresses, txMeta, transferDelegate) {
+    let obj = new OstTransactionExecutor(userId, 'direct transfer', amounts, addresses, txMeta, transferDelegate)
     obj.perform();
 
     return obj.uuid;
@@ -52,7 +53,7 @@ class OstTransactionHelper {
 }
 
 class OstTransactionExecutor {
-  constructor(userId, ruleName, amounts, addresses, txMeta = null) {
+  constructor(userId, ruleName, amounts, addresses, txMeta, transferDelegate) {
     this.uuid = uuidv4();
     this.ee = new EventEmitter();
     this.userId = userId;
@@ -63,6 +64,13 @@ class OstTransactionExecutor {
     this.ruleName = ruleName
     this.token = null;
     this.user = null;
+
+    if ( !transferDelegate || !(transferDelegate instanceof OstWalletUIWorkflowCallback) ) {
+      let err = new Error("transferDelegate can not be null and must be an instanceof OstWalletUIWorkflowCallback");
+      throw err;
+    }
+
+    this.delegate = transferDelegate;
 
 
     this.totalTxAmount = new BigNumber('0')
@@ -158,6 +166,10 @@ class OstTransactionExecutor {
       let spendingLimit = bucketForTx.spending_limit;
       let sessionKeyExpiryTime = parseInt(bucketForTx.expiration_time);
       let delegate = new OstWalletUIDelegate()
+
+      delegate.getPassphrase = (userId, ostWorkflowContext, OstPassphrasePrefixAccept) => {
+        this.delegate.getPassphrase(userId, ostWorkflowContext, OstPassphrasePrefixAccept);
+      }
 
       delegate.flowComplete = (ostWorkflowContext, ostContextEntity) => {
         resolve(ostWorkflowContext, ostContextEntity)
