@@ -62,7 +62,6 @@ class WalletSettingsController {
     onlyPerformable = onlyPerformable || false;
 
     if ( !this.userId ) {
-      //Ost user id is null.
       setTimeout(() => {
         let data = this._getData(onlyPerformable);
         callback( data );

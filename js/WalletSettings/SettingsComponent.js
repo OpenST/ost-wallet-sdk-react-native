@@ -89,7 +89,6 @@ class SettingsComponent extends PureComponent {
 
   async _processTappedOption(item) {
     if ( optionIds.walletDetails === item.id ) {
-      // this.props.navigation.navigate('WalletDetails');
       this.showWalletDetails();
       return;
     }
@@ -113,7 +112,6 @@ class SettingsComponent extends PureComponent {
     if ( workflowInfo ) {
       this.onWorkflowStarted( workflowInfo );
     } else {
-      //Some coding error occurred.
       console.log("PepoError", "ws_indx_osit_1", "Some coding error occurred");
     }
   }
@@ -138,49 +136,21 @@ class SettingsComponent extends PureComponent {
 
   onWorkflowStarted = (workflowInfo) => {
     this.workflowInfo = workflowInfo;
-    // Show loader.
-    //LoadingModal.show('');
-
-    // Subscribe to events.
     this.controller.setUIDelegate(this);
   };
 
   requestAcknowledged = (ostWorkflowContext , ostContextEntity) => {
-    // LoadingModal.show(this._getRequestAcknowledgedText())
   };
 
   flowComplete = (ostWorkflowContext , ostContextEntity) => {
     this.refreshList(() => {
-      if (this.canShowAlert(ostWorkflowContext)) {
-        // LoadingModal.showSuccessAlert(text);
-      }else {
-        // LoadingModal.hide()
-      }
-
     });
   };
 
   onUnauthorized = (ostWorkflowContext , ostError) => {
-    /// TODO bubble LoadingModal was here.
-    
-    // LoadingModal.showFailureAlert("Device is not authorized. Please authorize device again.", null, "Logout", () => {
-    //   //TODO bubble - Deal with this.
-      
-    //   // CurrentUser.logout({
-    //   //   device_id: DeviceInfo.getUniqueID()
-    //   // });
-    // })
   };
 
   saltFetchFailed = (ostWorkflowContext , ostError) => {
-    /// TODO bubble LoadingModal was here.
-
-    // LoadingModal.showFailureAlert("There is some issue while fetching salt. Please retry", null, "Retry", (isButtonTapped) => {
-    //   if (isButtonTapped) {
-    //     let retryItem = this.controller.optionsMap[this.workflowInfo.workflowOptionId];
-    //     this.onSettingItemTapped(retryItem);
-    //   }
-    // })
   };
 
   userCancelled = (ostWorkflowContext , ostError) => {
@@ -188,21 +158,10 @@ class SettingsComponent extends PureComponent {
   };
 
   deviceTimeOutOfSync = (ostWorkflowContext , ostError) => {
-    this.workflowFailed(ostWorkflowContext, ostError);
   };
 
   workflowFailed = (ostWorkflowContext , ostError) => {
-    // let text = this._getFlowFailedText(ostWorkflowContext, ostError);
-    // LoadingModal.showFailureAlert(text, null, "Dismiss");
   };
-
-  canShowAlert(workflowContext) {
-    if (workflowContext.WORKFLOW_TYPE === 'GET_DEVICE_MNEMONICS') {
-      return false
-    }
-
-    return true
-  }
 
   _keyExtractor = (item, index) => `id_${item.id}`;
 
@@ -233,7 +192,6 @@ class SettingsComponent extends PureComponent {
           onLayout={(event) => {
             const {x, y, width, height} = event.nativeEvent.layout;
             this.flatListLayout = event.nativeEvent.layout;
-            // do something here like set your initial animated value for the height
           }}
         />
       </View>

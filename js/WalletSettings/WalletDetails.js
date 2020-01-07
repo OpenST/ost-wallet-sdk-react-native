@@ -75,15 +75,16 @@ class WalletDetails extends PureComponent {
   }
 
   _fetchDeviceFromServer(localDevice) {
+
     OstJsonApi.getCurrentDeviceForUserId(this.userId,( deviceApiResponse ) => {
       this._onDeviceFetch(deviceApiResponse)
     }, ( error ) => {
-      let ostError = OstWalletSdkHelper.jsonToOstRNError( error );
-      let errorMessage = sdkErrorHelper.getErrorMessage( null, ostError );
-      LoadingModal.showFailureAlert(errorMessage, "", "OK", () => {
-        // Close this view.
-        this.props.navigation.goBack(null);
-      });
+      let deviceEntity = {
+        local_device: localDevice,
+        result_type: "local_device"
+      }
+
+      this._onDeviceFetch(deviceEntity);
     });
   }
 
@@ -95,10 +96,7 @@ class WalletDetails extends PureComponent {
       this._buildList();
 
     }else {
-      LoadingModal.showFailureAlert("Something went wrong", "", "OK", () => {
-        // Close this view.
-        this.props.navigation.goBack(null);
-      });
+
     }
   }
 
