@@ -6,8 +6,9 @@ import OstWalletSdk from '../OstWalletSdk';
 import OstWalletSdkUI from '../OstWalletSdkUI';
 import OstJsonApi from '../OstJsonApi';
 import OstWalletSdkHelper from "../helpers/OstWalletSdkHelper";
-import OstThemeConfigHelper from '../helpers/OstThemeConfigHelper'
-import OstWalletSettings from './OstWalletSettings'
+import OstThemeConfigHelper from '../helpers/OstThemeConfigHelper';
+import OstWalletSettings from './OstWalletSettings';
+import {sdkErrorHelper, DEFAULT_CONTEXT, DEVICE_OUT_OF_SYNC,  USER_UNAUTHORIZED} from "../helpers/OstSdkErrorHelper";
 
 let InAppBrowser = null;
 
@@ -78,7 +79,7 @@ class WalletDetails extends PureComponent {
       this._onDeviceFetch(deviceApiResponse)
     }, ( error ) => {
       let ostError = OstWalletSdkHelper.jsonToOstRNError( error );
-      let errorMessage = ostSdkErrors.getErrorMessage( null, ostError );
+      let errorMessage = sdkErrorHelper.getErrorMessage( null, ostError );
       LoadingModal.showFailureAlert(errorMessage, "", "OK", () => {
         // Close this view.
         this.props.navigation.goBack(null);

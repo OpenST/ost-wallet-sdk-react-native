@@ -155,11 +155,10 @@ class WalletSettingsController {
 
     this._resetOptions();
 
-    if ((userStatus == this.userStatusMap.activated) && (deviceStatus !== this.deviceStatusMap.revoked)) {
-      if (deviceStatus) {
-        this._updateOptionsData(optionIds.walletDetails, false, true);
-      }
+    // Always display wallet details if 
+    this._updateOptionsData(optionIds.walletDetails, false, true);
 
+    if ((userStatus == this.userStatusMap.activated) && (deviceStatus !== this.deviceStatusMap.revoked)) {
       if (deviceStatus == this.deviceStatusMap.authorized) {
         this._updateOptionsData(optionIds.addSession, false, true);
         this._updateOptionsData(optionIds.viewMnemonics, false, true);
