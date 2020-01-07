@@ -237,6 +237,7 @@ class WalletDetails extends PureComponent {
   }
 
   render() {
+
     return (
       <Modal
         style= {inlineStyle.list}
@@ -244,11 +245,17 @@ class WalletDetails extends PureComponent {
         transparent={false}
         visible={this.props.modalVisible}>
         <SafeAreaView style={[inlineStyle.navigationBar, {backgroundColor: OstThemeConfigHelper.themeConfig.navigation_bar.tint_color}]}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+
           <TouchableWithoutFeedback onPress={this.backButtonTapped}>
             <View style={inlineStyle.closeContainer}>
               <Text style={[inlineStyle.closeText, {color: OstThemeConfigHelper.themeConfig.navigation_bar_header.tint_color}]}>X</Text>
             </View>
           </TouchableWithoutFeedback>
+
+            <Text style={{fontSize: 17, fontWeight: '600', alignSelf: 'center', justifyContent:"center", color: OstThemeConfigHelper.themeConfig.navigation_bar_header.tint_color }}>{this.props.viewData.content_config.heading}</Text>
+            <View style={{marginLeft:50}}></View>
+          </View>
         </SafeAreaView>
 
         <FlatList

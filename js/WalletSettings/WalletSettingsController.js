@@ -332,8 +332,6 @@ class WalletSettingsController {
       userId = this.userId
     ;
 
-    console.log("WalletSettings ost userId", userId);
-
     switch( optionId ) {
       case optionIds.addSession:
         workflowId = OstWalletSdkUI.addSession(

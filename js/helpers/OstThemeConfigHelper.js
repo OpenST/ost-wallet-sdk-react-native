@@ -6,14 +6,18 @@ class OstThemeConfigHelper {
     this.updateConfig()
   }
 
+  getThemeConfig() {
+    return this.themeConfig;
+  }
+
   updateConfig() {
-    this.getThemeConfig()
+    this._getThemeConfig()
       .then((themeConfig) => {
         this.themeConfig = themeConfig
       })
   }
 
-  getThemeConfig() {
+  _getThemeConfig() {
     return new Promise((resolve, reject) => {
       OstWalletSdkUI.getThemeConfig((themeConfig) => {
         resolve(themeConfig)

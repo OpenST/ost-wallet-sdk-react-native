@@ -8,6 +8,7 @@ import inlineStyle from './styles'
 import {optionIds, WalletSettingsController} from './WalletSettingsController';
 import OstThemeConfigHelper from '../helpers/OstThemeConfigHelper'
 import Colors from "../../../../../src/theme/styles/Colors";
+import OstWalletSettings from "@ostdotcom/ost-wallet-sdk-react-native/js/WalletSettings/OstWalletSettings";
 
 let AndroidOpenSettings = null;
 import('react-native-android-open-settings').then((pack) => {
@@ -178,9 +179,10 @@ class SettingsComponent extends PureComponent {
   };
 
   render() {
+    let walletDetailsData = OstWalletSettings.getItemConfig("wallet_details")
     return (
       <>
-        <WalletDetails modalVisible={this.state.modalVisible} userId={this.controller.userId} onBackButtonPress={() => this.hideWalletDetails()} flatlistLayout={this.flatListLayout}/>
+        <WalletDetails viewData={walletDetailsData} modalVisible={this.state.modalVisible} userId={this.controller.userId} onBackButtonPress={() => this.hideWalletDetails()} flatlistLayout={this.flatListLayout}/>
       <View style= {inlineStyle.list}>
         <FlatList
           data={this.state.list}
