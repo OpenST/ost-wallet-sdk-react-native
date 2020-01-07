@@ -192,7 +192,7 @@ class SettingsComponent extends PureComponent {
   };
 
   workflowFailed = (ostWorkflowContext , ostError) => {
-    let text = this._getFlowFailedText(ostWorkflowContext, ostError);
+    // let text = this._getFlowFailedText(ostWorkflowContext, ostError);
     // LoadingModal.showFailureAlert(text, null, "Dismiss");
   };
 
