@@ -13,6 +13,7 @@ import OstWalletUIWorkFlowCallback from "../OstWalletUICoreCallback";
 
 import defaultTransactionConfig from "./ost-transaction-config";
 import OstWalletUIWorkflowCallback from "@ostdotcom/ost-wallet-sdk-react-native/js/OstWalletUIWorkflowCallback";
+import OstRNError from "@ostdotcom/ost-wallet-sdk-react-native/js/OstRNError/OstRNError";
 
 let transactionConfig = {};
 
@@ -160,9 +161,19 @@ class OstTransactionExecutor {
   createNewSession() {
     return new Promise((resolve, reject) => {
       let bucketForTx = this.getSpedingLimitAndExpiryTimeBucket()
+
       if (!bucketForTx) {
-        reject();
+        const ostWorkflowContext = {"WORKFLOW_TYPE": 'EXECUTE_TRANSACTION'}
+        const errorData = {
+          "error_code": "INVALID_BUCKET",
+          "internal_error_code": "rn_js_th_oth_1",
+          "error_message": "Valid bucket not found for given transaction value.",
+          "is_api_error": false
+        }
+        const ostError = new OstRNError(errorData)
+        return reject({"ostWorkflowContext": ostWorkflowContext, "ostError": ostError});
       }
+
       let spendingLimit = bucketForTx.spending_limit;
       let sessionKeyExpiryTime = parseInt(bucketForTx.expiration_time);
       let delegate = new OstWalletUIDelegate()
@@ -185,11 +196,12 @@ class OstTransactionExecutor {
   }
 
   getSpedingLimitAndExpiryTimeBucket() {
-    let validBucket = {};
+    let validBucket = null;
     for(bucket of transactionConfig.session_buckets) {
       let decimalSpedingLimit = this.toDecimal(bucket.spending_limit)
       let bucketSpendingLimit = new BigNumber(decimalSpedingLimit);
       if (this.totalTxAmount.lte(bucketSpendingLimit)) {
+        validBucket = {};
         Object.assign(validBucket, bucket)
         validBucket.spending_limit = decimalSpedingLimit
         break;
