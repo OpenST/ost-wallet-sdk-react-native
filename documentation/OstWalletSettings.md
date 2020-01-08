@@ -35,7 +35,7 @@ let settingsStack = createStackNavigator(
 );
 ```
 
-Passing `ostUserId` and `ostWalletUIWorkflowCallback` to settings page is mandetory.
+While navigating to Settings page, passing `ostUserId` and `ostWalletUIWorkflowCallback` are mandetory.
 
 <b>eg. with react-navigation:</b>
 ```js
