@@ -25,8 +25,13 @@ public class OstDeviceRegisteredWrap extends BaseSdkInteract {
         return (OstDeviceRegisteredWrap) map.get( uuid );
     }
 
-    void deviceRegistered(JSONObject jsonMethodParams) {
-        ((OstDeviceRegisteredInterface)getSdkCallbackForAction()).deviceRegistered( jsonMethodParams );
+    void deviceRegistered(final JSONObject jsonMethodParams) {
+        postOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                ((OstDeviceRegisteredInterface)getSdkCallbackForAction()).deviceRegistered( jsonMethodParams );
+            }
+        });
     }
 
     @Override

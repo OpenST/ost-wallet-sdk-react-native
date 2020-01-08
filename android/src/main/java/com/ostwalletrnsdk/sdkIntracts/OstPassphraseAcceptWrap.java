@@ -13,8 +13,14 @@ public class OstPassphraseAcceptWrap extends BaseSdkInteract {
         return (OstPassphraseAcceptor) map.get( uuid );
     }
 
-    void setPassphrase( String passphrase ){
-        ((OstPassphraseAcceptor)getSdkCallbackForAction()).setPassphrase( passphrase );
+    void setPassphrase( final String passphrase ){
+        postOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                ((OstPassphraseAcceptor)getSdkCallbackForAction()).setPassphrase( passphrase );
+            }
+        });
+
     }
 
     public boolean messageReceived(String methodName, String passphrase ) {
