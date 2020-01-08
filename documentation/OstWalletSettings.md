@@ -39,7 +39,9 @@ While navigating to Settings page, passing `ostUserId` and `ostWalletUIWorkflowC
 
 <b>eg. with react-navigation:</b>
 ```js
-this.props.navigation.push("WalletSettingScreen", {'ostUserId': CurrentUser.getUserId(), 'ostWalletUIWorkflowCallback': appProvider.getOstSdkUIDelegate()});
+const ostUserId = <APPLICATION-USER-OST-USER-ID>
+const delegate = new UIWorkflowDelegate(ostUserId, {})
+this.props.navigation.push("WalletSettingScreen", {'ostUserId': ostUserId, 'ostWalletUIWorkflowCallback': delegate});
 ```
 
 ## UI Modification
