@@ -46,7 +46,7 @@ this.props.navigation.push("WalletSettingScreen", {'ostUserId': ostUserId, 'ostW
 
 ## UI Modification
 
-Navigation bar color scheme decided from [OstThemeConfig](). 
+Navigation bar color scheme decided from [OstThemeConfig](../configs/ost-sdk-theme-config.js). 
 
 OstWalletScreen component color schemes:
 
