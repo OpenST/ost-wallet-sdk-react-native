@@ -116,14 +116,15 @@ class WalletSettingsController {
       //ToDo: Show the error and close the wallet settings.
       this._onDeviceFetch({
         "local_device": localDevice,
-        "resut_type": "local_device"
+        "result_type": "local_device"
       });
     });
   }
 
   _onDeviceFetch(device) {
     if ( null == device) {
-
+      this._onDataFetched()
+      return;
     }
     let resultType = device["result_type"]
       , data = device[resultType]

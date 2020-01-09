@@ -93,11 +93,8 @@ class WalletDetails extends PureComponent {
       let resultType = deviceApiResponse["result_type"];
       let device = deviceApiResponse[ resultType ];
       this.ostDevice = device;
-      this._buildList();
-
-    }else {
-
     }
+    this._buildList();
   }
 
   _buildList() {
@@ -122,7 +119,7 @@ class WalletDetails extends PureComponent {
     return {
       "cellType": "text",
       "heading": "Token ID",
-      "text": this.token.id
+      "text": this.token ? this.token.id : ''
     };
   }
 
@@ -130,7 +127,7 @@ class WalletDetails extends PureComponent {
     return {
       "cellType": "copy",
       "heading": "OST User ID",
-      "text": this.ostUser.id
+      "text": this.ostUser ? this.ostUser.id : ''
     };
   }
 
@@ -138,7 +135,7 @@ class WalletDetails extends PureComponent {
     return {
       "cellType": "status",
       "heading": "User Status",
-      "text": this.ostUser.status
+      "text": this.ostUser ? this.ostUser.status : ''
     };
   }
 
@@ -152,7 +149,7 @@ class WalletDetails extends PureComponent {
     return {
       "cellType": "link",
       "heading": "Token Holder Address",
-      "text": this.ostUser.token_holder_address,
+      "text": this.ostUser ? this.ostUser.token_holder_address : '',
       "link": link
     };
   }
@@ -167,7 +164,7 @@ class WalletDetails extends PureComponent {
     return {
       "cellType": "link",
       "heading": "Device Manager Address",
-      "text": this.ostUser.device_manager_address,
+      "text": this.ostUser ? this.ostUser.device_manager_address : '',
       "link": link
     };
   }
@@ -176,7 +173,7 @@ class WalletDetails extends PureComponent {
     return {
       "cellType": "copy",
       "heading": "Recovery Key Address",
-      "text": this.ostUser.recovery_address
+      "text": this.ostUser ? this.ostUser.recovery_address : ''
     };
   }
 
@@ -189,7 +186,7 @@ class WalletDetails extends PureComponent {
     return {
       "cellType": "link",
       "heading": "Recovery Owner Address",
-      "text": this.ostUser.recovery_owner_address,
+      "text": this.ostUser ? this.ostUser.recovery_owner_address : '',
       "link": link
     };
   }
@@ -198,7 +195,7 @@ class WalletDetails extends PureComponent {
     return {
       "cellType": "copy",
       "heading": "Device Address",
-      "text": this.ostDevice.address
+      "text": this.ostDevice ? this.ostDevice.address : ''
     };
   }
 
@@ -206,7 +203,7 @@ class WalletDetails extends PureComponent {
     return {
       "cellType": "status",
       "heading": "Device Status",
-      "text": this.ostDevice.status
+      "text": this.ostDevice ? this.ostDevice.status : ''
     };
   }
 
