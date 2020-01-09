@@ -40,9 +40,13 @@ While navigating to Settings page, passing `ostUserId` and `ostWalletUIWorkflowC
 <b>eg. with react-navigation:</b>
 ```js
 const ostUserId = <APPLICATION-USER-OST-USER-ID>
-const delegate = new UIWorkflowDelegate(ostUserId, {})
+const delegate = new OstWalletUIWorkflowCallback(ostUserId, {})
 this.props.navigation.push("WalletSettingScreen", {'ostUserId': ostUserId, 'ostWalletUIWorkflowCallback': delegate});
 ```
+
+><b>Note</b>
+> Developer needs to create a class extends from `OstWalletUIWorkflowCallback`.
+> Write logic to get passphrase prefix from mappy-server
 
 ## UI Modification
 
@@ -54,6 +58,8 @@ OstWalletScreen component color schemes:
 | -------------- | ------------ |
 | Navigation bar background color | navigation_bar --> tint_color |
 | Navigation bar title color | navigation_bar_header --> tint_color |
+| Option title | c1 |
+| Option description | c2 |
 | Option seperator | cell_separator --> color |
 | Wallet details link | link |
 | Wallet details stauts | status |
