@@ -12,12 +12,12 @@ The default configuration can be found [here](https://github.com/ostdotcom/ost-w
 
 Here is the small sample json representation of the configuration.
 
-```json
+```js
 {
-  session_buckets: [
+  "session_buckets": [
       {
-        expiration_time: 60*60*24*30*2, //2 months
-        spending_limit: '10'
+        "expiration_time": 60*60*24*30*2, //2 months
+        "spending_limit": "10"
       }
   ]
 }
