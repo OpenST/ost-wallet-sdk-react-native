@@ -44,9 +44,19 @@ const delegate = new OstWalletUIWorkflowCallback(ostUserId, {})
 this.props.navigation.push("WalletSettingScreen", {'ostUserId': ostUserId, 'ostWalletUIWorkflowCallback': delegate});
 ```
 
-><b>Note</b>
-> Developer needs to create a class extends from `OstWalletUIWorkflowCallback`.
-> Write logic to get passphrase prefix from mappy-server
+><b>Note</b> <br/>
+> Developer needs to create a class extends from `OstWalletUIWorkflowCallback`.<br/>
+> Write logic to get passphrase prefix from mappy-server.
+
+After receiving passphrase, call setPassphrase method of delegate `passphrasePrefixAccept`
+```js
+passphrasePrefixAccept.setPassphrase(passphrasePrefixString, currentUserOstId, () => {
+      passphrasePrefixAccept.cancelFlow();
+      workflowDelegate.saltFetchFailed(res);
+});
+```
+
+else call `passphrasePrefixAccept.cancelFlow();`
 
 ## UI Modification
 
