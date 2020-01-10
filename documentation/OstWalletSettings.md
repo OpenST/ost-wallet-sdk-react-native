@@ -2,7 +2,9 @@
 
 ## Introduction
 
-Application developer can incorporate in built `OstWalletSettings`. OstWalletSettings filters available workflows on the basis of current user and device status.
+OstWallet Settings is a pre-built UI Component available exclusively available in `ost-wallet-sdk-react-native` Sdk.
+It is a wallet settings page that can be used by end-users to perfrom different wallet operations.
+> <b>IMPORTANT:</b> This feature requires application to use [React Navigation](https://reactnavigation.org/docs/en/getting-started.html) package.
 
 OstWalletSettings supports 13 workflows:
 
@@ -22,22 +24,20 @@ OstWalletSettings supports 13 workflows:
 
 ## Usage
 
-Developer can integrate wallet settings into application by importing
+### Create wallet settings stack navigation
 
-<b>eg. with react-navigation:</b>
 ```js
 import {OstWalletSettingsComponent} from '@ostdotcom/ost-wallet-sdk-react-native';
 
 let settingsStack = createStackNavigator(
   {
-    WalletSettingScreen: OstWalletSettingsComponent
+    "WalletSettingScreen": OstWalletSettingsComponent
   }
 );
 ```
 
-While navigating to Settings page, passing `ostUserId` and `ostWalletUIWorkflowCallback` are mandetory.
-
-<b>eg. with react-navigation:</b>
+### Naviagte to settings page
+`ostUserId` and `ostWalletUIWorkflowCallback` are mandetory parameters that need to be passed as params to the `WalletSettingScreen` screen.
 ```js
 const ostUserId = <APPLICATION-USER-OST-USER-ID>
 const delegate = new OstWalletUIWorkflowCallback(ostUserId, {})
@@ -45,20 +45,10 @@ this.props.navigation.push("WalletSettingScreen", {'ostUserId': ostUserId, 'ostW
 ```
 
 ><b>Note</b> <br/>
-> Developer needs to create a class extends from `OstWalletUIWorkflowCallback`.<br/>
-> Write logic to get passphrase prefix from mappy-server.
+> Developer needs to create a class extends from `OstWalletUIWorkflowCallback` and write logic to get passphrase prefix from their application server.
+> Please refer [this](OstWalletUI.md#setup-your-passphrase-prefix-delegate) section for documentation.
 
-After receiving passphrase, call setPassphrase method of delegate `passphrasePrefixAccept`
-```js
-passphrasePrefixAccept.setPassphrase(passphrasePrefixString, currentUserOstId, () => {
-      passphrasePrefixAccept.cancelFlow();
-      workflowDelegate.saltFetchFailed(res);
-});
-```
-
-else call `passphrasePrefixAccept.cancelFlow();`
-
-## UI Modification
+## UI Customization
 
 Navigation bar color scheme decided from [OstThemeConfig](./configs/ost-sdk-theme-config.js). 
 
