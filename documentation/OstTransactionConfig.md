@@ -42,4 +42,4 @@ depends on `spending_limit`.
 * The second-level key `expiration_time` corresponds to expiry time of session.
 * The second-level key `spending_limit` corresponds to spending limit of session.
 
-Above configuration allows user to execute transction of spending limit `1000`. SDK throws error `INVALID_BUCKET` if user makes transaction above `1000`.
+Above configuration allows user to execute transction of spending limit `1000`. SDK throws error, if user makes transaction above `1000`.
