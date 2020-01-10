@@ -44,7 +44,7 @@ In the above example:
 OstWalletSettings supports 13 workflows
 
 | Configuration Keys                                      | Workflows                                                                      |
-| ------------------------------------------------ |:--------------------------------------------------------------:|
+| ------------------------------------------------ |:--------------------------------------------------------------|
 | activate_user      			 			  | Activate User              							 |
 | wallet_details                      			  | Wallet Details              							 |
 | recover_device    					  | Initialize Recovery        							 |
