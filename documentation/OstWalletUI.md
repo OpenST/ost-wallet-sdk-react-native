@@ -572,8 +572,9 @@ QR-Code Sample:
     // An error occoured during the workflow. 
   });
 ```
+### Execute Transaction
 
-#### Scan QR-Code to Execute Transaction
+* <b> By Scanning QR-Code </b> <br />
 To execute transaction via device by scanning device QR-Code.
 
 QR-Code Sample:
@@ -604,7 +605,6 @@ QR-Code Sample:
     }
 }
 ```
-
 ```js
 
   let uiCallback = new UserPassphrasePrefixDelegate();
@@ -633,6 +633,9 @@ QR-Code Sample:
     // An error occoured during the workflow. 
   });
 ```
+
+* <b>By Calling function</b> <br />
+Helper method creates session if active sessoin for transction amount is not available. To execute transaction via helper method, [ref here]()
 
 ##  Ost Wallet UI Events and Listeners
 
