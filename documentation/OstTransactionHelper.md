@@ -6,7 +6,7 @@ Developer can call functions of transaction helper to execute transaction and se
 
 ## Set Transaction Config
 
-Developer can set list of buckets for creating session. You can refer json object [here](../js/TransactionHelper/ost-transaction-config.json).
+Developer can set list of buckets for creating session. For details, Please refer [this](./OstTransactionConfig.md)
 
 ```js
 import {OstTransactionHelper} from "@ostdotcom/ost-wallet-sdk-react-native/js/index"
