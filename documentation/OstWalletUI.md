@@ -635,7 +635,7 @@ QR-Code Sample:
 ```
 
 * <b>By Calling function</b> <br />
-Helper method creates session if active sessoin for transction amount is not available. To execute transaction via helper method, [ref here]()
+Helper method creates session if active sessoin for transction amount is not available. To execute transaction via helper method, [ref here](./OstTransactionHelper.md)
 
 ##  Ost Wallet UI Events and Listeners
 
