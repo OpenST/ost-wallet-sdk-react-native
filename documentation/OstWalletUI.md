@@ -190,6 +190,9 @@ export default UserPassphrasePrefixDelegate;
 
 OstWallet Settings is a pre-built UI Component available exclusively available in `ost-wallet-sdk-react-native` Sdk. It is a wallet settings page that can be used by end-users to perfrom different wallet operations(Ost Wallet UI Workflows). For details [check here](./OstWalletSettings.md)
 
+><b>Note<b> <br />
+>`OstWalletSettings` is available from `ost-wallet-sdk-react-native` SKD version v2.3.12-beta.1
+
 ### Ost Wallet UI Workflows
 
 #### Activate User
