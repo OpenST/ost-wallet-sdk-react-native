@@ -1,0 +1,108 @@
+{
+  "item_display_order": [
+    "activate_user",
+    "wallet_details",
+    "recover_device", 
+    "abort_recovery",
+    "add_session", 
+    "reset_pin", 
+    "show_mnemonics", 
+    "authorize_device_with_mnemonics",
+    "revoke_device",
+    "add_another_device",
+    "show_device_qr_code",
+    "enable_biometrics",
+    "disable_biometrics"
+  ],
+  "item_configs": {
+    "wallet_details": {
+      "content_config": {
+        "heading": "Wallet Details",
+        "description": "View your wallet details."
+      },
+      "config": {
+        "ost_view_endpoint": ''
+      }
+    },
+    "activate_user": {
+      "content_config": {
+        "heading": "Activate User",
+        "description": "Activate user."
+      },
+      "config": {
+        "spending_limit": "0",
+        "expiration_time": 0
+      }
+    },
+    "recover_device": {
+      "content_config": {
+        "heading": "Recover Device",
+        "description": "Recover your device."
+      }
+    },
+    "abort_recovery": {
+      "content_config": {
+        "heading": "Abort Device Recovery",
+        "description": "Abort Device Recovery."
+      }
+    },
+    "revoke_device": {
+      "content_config": {
+        "heading": "Revoke Device",
+        "description": "Revoke Device."
+      }
+    },
+    "add_session": {
+      "content_config": {
+        "heading": "Authorize New Session",
+        "description": "Add Session to do transaction."
+      },
+      "config": {
+        "spending_limit": "0",
+        "expiration_time": 0
+      }
+    },
+    "reset_pin": {
+      "content_config": {
+        "heading": "Reset Pin",
+        "description": "View your wallet details"
+      }
+    },
+    "show_mnemonics": {
+      "content_config": {
+        "heading": "Show Mnemonics",
+        "description": "While not required, writing down your 12 word mnemonic phrase provides an additional backup in case you forget your PIN."
+      }
+    },
+    "authorize_device_with_mnemonics": {
+      "content_config": {
+        "heading": "Authorize Device with Mnemonics",
+        "description": "Authorize current device by using mnemonics."
+      }
+    },
+    "add_another_device": {
+      "content_config": {
+        "heading": "Add Another Device",
+        "description": "Scan QR Code to add another device."
+      }
+    },
+    "show_device_qr_code": {
+      "content_config": {
+        "heading": "Show Device QR Code",
+        "description": "Scan QR Code from the device authorized device to authorize this device."
+      }
+    },
+    "enable_biometrics": {
+      "content_config": {
+        "heading": "Enable Biometrics",
+        "description": "Use biometrics to authorize new Sessions and to confirm high value transactions."
+      }
+    },
+    "disable_biometrics": {
+      "content_config": {
+        "heading": "Disable Biometrics",
+        "description": "Turn off biometrics and use PIN to authorize new Sessions and to confirm high value transactions."
+      }
+    }
+  }
+}
