@@ -50,19 +50,10 @@ this.props.navigation.push("WalletSettingScreen", {'ostUserId': ostUserId, 'ostW
 
 ## UI Customization
 
-Navigation bar color scheme decided from [OstThemeConfig](./configs/ost-sdk-theme-config.js). 
+Developer can customize wallet settings by updating respective properties mentioned in image. OstTheme config shown [here](./configs/ost-sdk-theme-config.js)
 
-OstWalletScreen component color schemes:
-
-| Component | Property |
-| -------------- | ------------ |
-| Navigation bar background color | navigation_bar --> tint_color |
-| Navigation bar title color | navigation_bar_header --> tint_color |
-| Option title | c1 |
-| Option description | c2 |
-| Option seperator | cell_separator --> color |
-| Wallet details link | link |
-| Wallet details stauts | status |
+![copy-framework-file](images/wallet_settings.png)
+![copy-framework-file](images/wallet_details.png)
 
 ## Settings Content
 
