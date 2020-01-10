@@ -18,6 +18,9 @@ OstTransactionHelper.setTxConfig(ost-tx-config);
 
 Execute direct transfer can be performed by calling 
 
+><b>Note</b> <br />
+>Developer needs to create a class extends from OstWalletUIWorkflowCallback and write logic to get passphrase prefix from their application server. Please refer [this](./OstWalletUI.md) section for documentation.
+
 ```js 
 import {OstTransactionHelper} from "@ostdotcom/ost-wallet-sdk-react-native/js/index"
 
