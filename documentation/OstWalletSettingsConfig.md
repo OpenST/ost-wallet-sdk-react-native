@@ -6,7 +6,7 @@ App developers can configure the text shown on settings page.
 
 To configure the content, the sdk needs to be provided with [JSON object](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON).
 
-The default configuration can be found [here](https://github.com/ostdotcom/ost-wallet-sdk-react-native/blob/team/wallet_settings/js/WalletSettings/ost-wallet-settings-config.json).
+The default configuration can be found [here](../js/WalletSettings/ost-wallet-settings-config.json).
 
 ## Dictionary Data Structure
 
