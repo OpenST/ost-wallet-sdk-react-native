@@ -6,7 +6,7 @@ App developers can configure session `expiration_time` and `spending_limit` whil
 
 To configure the content, the sdk needs to be provided with [JSON object](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON).
 
-The default configuration can be found [here](https://github.com/ostdotcom/ost-wallet-sdk-react-native/blob/team/wallet_settings/js/TransactionHelper/ost-transaction-config.json).
+The default configuration can be found [here](../js/TransactionHelper/ost-transaction-config.json).
 
 ## Dictionary Data Structure
 
