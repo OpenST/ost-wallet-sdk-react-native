@@ -186,6 +186,10 @@ class UserPassphrasePrefixDelegate extends OstWalletUIWorkflowCallback {
 export default UserPassphrasePrefixDelegate;
 ```
 
+### Ost Wallet Settings
+
+OstWallet Settings is a pre-built UI Component available exclusively available in `ost-wallet-sdk-react-native Sdk`. It is a wallet settings page that can be used by end-users to perfrom different wallet operations(Ost Wallet UI Workflows). For details [check here](./OstWalletSettings.md)
+
 ### Ost Wallet UI Workflows
 
 #### Activate User
