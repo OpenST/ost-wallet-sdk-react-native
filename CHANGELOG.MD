@@ -1,6 +1,5 @@
 # OST Wallet SDK Changelog
 
-
 ## Version 2.3.11-beta.1
 * OstWalletSettings is now availabel in SDK. To use `OstWalletSettings`, please update downstream sdk.<br/>
 iOS:`v2.3.6-beta-1`<br/>
