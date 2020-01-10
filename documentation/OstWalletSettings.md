@@ -60,7 +60,7 @@ else call `passphrasePrefixAccept.cancelFlow();`
 
 ## UI Modification
 
-Navigation bar color scheme decided from [OstThemeConfig](../configs/ost-sdk-theme-config.js). 
+Navigation bar color scheme decided from [OstThemeConfig](./configs/ost-sdk-theme-config.js). 
 
 OstWalletScreen component color schemes:
 
@@ -76,7 +76,7 @@ OstWalletScreen component color schemes:
 
 ## Settings Content
 
-Developer can modify `header` and `description` of settings options. To modify contet, [refer here](../OstWalletSettingsConfig.md).
+Developer can modify `header` and `description` of settings options. To modify contet, [refer here](./OstWalletSettingsConfig.md).
 
 ```js
 import {OstWalletSettings} from "@ostdotcom/ost-wallet-sdk-react-native/js/index";
