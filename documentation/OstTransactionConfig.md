@@ -2,13 +2,9 @@
 
 ## Introduction
 
-App developers can configure session `expiration_time` and `spending_limit` while executing transaction.
+App developers can configure session `expiration_time` and `spending_limit` while executing transaction. To configure the session creation parameters (session buckets), provide the sdk with JSON object. The default configuration can be found [here](../js/TransactionHelper/ost-transaction-config.json).
 
-To configure the content, the sdk needs to be provided with [JSON object](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON).
-
-The default configuration can be found [here](../js/TransactionHelper/ost-transaction-config.json).
-
-## Dictionary Data Structure
+## Configuration Data Structure
 
 Here is the small sample json representation of the configuration.
 

@@ -13,16 +13,29 @@ Ost React Native Wallet SDK...
 
 
 ## Table of Contents
-
-- [Installing React-native SDK](#installing-react-native-sdk)
-- [Migrating to another version](#migrating-to-another-version)
-- [SDK Usage](#sdk-usage)
-  * [Initializing the SDK](#initializing-the-sdk)
-  * [Initializing SDK With Config](#initializing-sdk-with-config)
-- [Getter Methods](#getter-methods)
-- [Ost JSON APIs](#ost-json-apis)
-- [Intermediate Usage - Ost Wallet SDK UI](#intermediate-usage---ost-wallet-sdk-ui)
-- [Expert Usage - Ost Wallet Core Workflow APIs](#expert-usage---ost-wallet-core-workflow-apis)
+* [Installing React-native SDK](#installing-react-native-sdk)
+* [Migrating to another version](#migrating-to-another-version)
+* [SDK Usage](#sdk-usage)
+  + [Initializing the SDK](#initializing-the-sdk)
+  + [Initializing SDK With Config](#initializing-sdk-with-config)
+  + [Subscribe to `OstWalletSdkEvents` in your top most level component](#subscribe-to--ostwalletsdkevents--in-your-top-most-level-component)
+* [Getter Methods](#getter-methods)
+* [Ost JSON APIs](#ost-json-apis)
+* [Quick Start Guide - Ost Macro Workflows](#quick-start-guide---ost-macro-workflows)
+  + [Setup Device Core Workflow](#setup-device-core-workflow)
+    - [Workflow Details](#workflow-details)
+    - [Notes](#notes)
+    - [Implementation](#implementation)
+  + [Activate User UI Workflow](#activate-user-ui-workflow)
+    - [Blockchain Transactions Performed During Activate User Workflow](#blockchain-transactions-performed-during-activate-user-workflow)
+    - [Recovery Key Generation Using 6 Digit Pin](#recovery-key-generation-using-6-digit-pin)
+    - [Implementation](#implementation-1)
+  + [Wallet Settings UI Component](#wallet-settings-ui-component)
+    - [Implementation](#implementation-2)
+  + [OstTransactionHelper - Transaction and Session Integrated Workflow](#osttransactionhelper---transaction-and-session-integrated-workflow)
+    - [Implementation](#implementation-3)
+* [Intermediate Usage - Ost Wallet SDK UI](#intermediate-usage---ost-wallet-sdk-ui)
+* [Advance Usage - Ost Wallet Core Workflow APIs](#advance-usage---ost-wallet-core-workflow-apis)
 
 
 ## Installing React-native SDK
@@ -164,12 +177,82 @@ Please refer to [Ost Wallet SDK Getter Methods](./documentation/OstWalletSdkGetM
 While the getter methods provide application with data stored in device's database, the JSON API methods make API calls to Ost Platform servers. 
 Please refer to [Ost JSON API](./documentation/OstJsonApi.md) for documentation.
 
+## Quick Start Guide - Ost Macro Workflows
+Starting version 2.3.12-beta.1, developers can enable all the Ost wallet features implementing the Ost Macro Workflows.
+
+### Setup Device Core Workflow
+---
+The setup device workflow establishes trust between the device and Ost Platform. As application is responsible for user authentication, application servers must facilitate this workflow using the server side sdk.
+
+#### Workflow Details
+* When this workflow is initiated by the application, the Sdk creates the following keys:
+  - API key - the key used to sign API requests sent to Ost Platform from the sdk.
+  - Device key - the user's wallet device key. All device manager operations shall be performed using this key.
+* The Sdk asks the application to register the device entity with Ost Platform.
+* The application must send the device entity to the application server.
+* The application server must then use the server side sdk to register the device with Ost Plaform by using device service's create device Api.
+* Once the device is registered by the Ost Platform, the application server must send the response to the mobile application.
+* The mobile application must then use the `deviceRegistered` callbacks to provide the response to the Sdk.
+* The sdk validates the registration by making Api calls to the Ost Plaform.
+
+<img src="./documentation/images/setup_device_workflow.svg">
+
+#### Notes
+* Setup device workflow must be initiated **on every app launch**.
+* Setup device workflow must be initiated only **after the user has been autheniticated** by the application, including cookie based authentication for already logged-in users.
+* Each of user’s device creates its own API key and device key.
+* User’s Device and API keys are not shared across devices.
+* User’s API key & device key are stored in persistent storage on the device and created only if needed.
+* The Sdk shall request for device registration only when needed. `registerDevice` shall not be invoked if device is already authorized and sdk is able to make Api calls to Ost Platform.
+
+#### Implementation
+Please refer to [`setupDevice` core workflow documentation](./documentation/OstCoreWorkflows.md#setupdevice) for implementation details.
+
+### Activate User UI Workflow
+---
+Activate User workflow deploys user's wallet on the blockchain and whitelists the user's wallet and enables it to take part in application's brand token economy.
+
+#### Blockchain Transactions Performed During Activate User Workflow
+* Deploys user’s contracts
+  - Device-manager and token-holder contracts
+  - Set user’s recovery key address, device key address in device-manager contract
+  - Authorizes session key(s) in token-holder contract
+* Whitelists user’s contract in UBT (Utility Brand Token Contract).
+
+#### Recovery Key Generation Using 6 Digit Pin
+* User's recovery key is generated using [SCrypt](https://en.bitcoinwiki.org/wiki/Scrypt), a password-based key derivation function.
+* The ‘password’ provided to this function is a string created by concatenating:
+* A prefix provided by application server. 
+> Application server must generate and store prefix for each user, treat it as sensitive and immutable information.
+* User’s Pin
+* User’s OST-ID
+* The salt required for SCrypt is provided by OST Platform
+
+#### Implementation
+Please refer to [Activate User UI Workflow Documentation](./documentation/OstWalletUI.md#activate-user) for implementation details.
+
+### Wallet Settings UI Component 
+---
+OstWallet Settings is a pre-built UI Component available exclusively available in `ost-wallet-sdk-react-native` Sdk.
+It is a wallet settings page that can be used by end-users to perfrom 12 different wallet operations and view their wallet details.
+> <b>IMPORTANT:</b> This feature requires application to use [React Navigation](https://reactnavigation.org/docs/en/getting-started.html) package.
+
+#### Implementation
+Please refer to [OstWallet Settings Documentation](./documentation/OstWalletSettings.md) for implementation details.
+
+### OstTransactionHelper - Transaction and Session Integrated Workflow
+---
+`OstTransactionHelper` is a transaction helper provided by the sdk that creates session keys before performing a transaction if needed. App developers can configure the session creation parameters (session buckets) as per application's need.
+
+#### Implementation
+Please refer to [Ost Transaction Helper Documentation](./documentation/OstTransactionHelper.md) for implementation details.
+
 ## Intermediate Usage - Ost Wallet SDK UI
 For quick and easy integration with SDK, developers can use built-in user-interface components which are configurable and support content and theme customization. 
 
 Please refer to [Ost Wallet SDK UI ](./documentation/OstWalletUI.md) for documentation.
 
-## Expert Usage - Ost Wallet Core Workflow APIs
+## Advance Usage - Ost Wallet Core Workflow APIs
 Ost core workflows api do not use any UI components, thereby giving complete ux control to the developers. The [`OstWalletSdkUI`](./documentation/OstWalletUI.md) also uses Ost core workflows.
 
 Please refer to [Ost Core Workflow APIs](./documentation/OstCoreWorkflows.md) for documentation.
