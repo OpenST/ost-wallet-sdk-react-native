@@ -194,6 +194,18 @@ public class OstWalletUiRnSdkModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void getThemeConfig(Callback callback){
+        JSONObject jsonObject = OstWalletUI.getThemeConfig(getReactApplicationContext());
+        ReadableMap readableMap = null;
+        try {
+            readableMap = Utils.convertJsonToMap(jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        callback.invoke(readableMap);
+    }
+
+    @ReactMethod
     public void setContentConfig(ReadableMap contentConfig)  {
         JSONObject contentConfigObject = null;
         try {

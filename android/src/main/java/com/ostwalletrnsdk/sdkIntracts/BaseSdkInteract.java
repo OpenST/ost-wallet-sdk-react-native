@@ -10,6 +10,9 @@
 
 package com.ostwalletrnsdk.sdkIntracts;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import com.ost.walletsdk.workflows.errors.OstErrors;
 import com.ost.walletsdk.workflows.interfaces.*;
 import com.ostwalletrnsdk.OstWorkFlowCallbackImpl;
@@ -20,6 +23,8 @@ import java.util.UUID;
 public class BaseSdkInteract {
 
     public static HashMap<String, BaseSdkInteract> map = new HashMap<>();
+
+    private final Handler handler;
 
     OstBaseInterface sdkCallback;
 
@@ -39,6 +44,7 @@ public class BaseSdkInteract {
         this.uuid = UUID.randomUUID().toString();
         this.workflowCallbackId = workflowCallbackId;
         this.sdkCallback = sdkCallback;
+        this.handler = new Handler(Looper.getMainLooper());
         map.put(this.uuid, this);
     }
 
@@ -70,5 +76,9 @@ public class BaseSdkInteract {
     public void cleanUp() {
         this.sdkCallback = null;
         map.remove(this.uuid);
+    }
+
+    protected void postOnUIThread(Runnable runnable) {
+        handler.post(runnable);
     }
 }

@@ -16,6 +16,11 @@ import OstWalletError from './OstRNError/OstRNError';
 import OstJsonApi from './OstJsonApi';
 import OstWalletUIWorkflowCallback from './OstWalletUIWorkflowCallback';
 import OstWalletSdkUI from './OstWalletSdkUI';
+import {OstWalletSettings, OstWalletSettingsComponent, OstWalletSettingsDefaultConfig} from './WalletSettings';
+import OstUserStatus from "./constants/UserStatus";
+import OstDeviceStatus from "./constants/DeviceStatus";
+import OstTransactionHelper from "./TransactionHelper/OstTransactionHelper";
+
 export {
     OstWalletSdk,
     OstWalletSdkEvents,
@@ -25,4 +30,10 @@ export {
     OstJsonApi,
     OstWalletSdkUI,
     OstWalletUIWorkflowCallback,
+    OstWalletSettingsDefaultConfig,
+    OstWalletSettings,
+    OstWalletSettingsComponent,
+    OstUserStatus,
+    OstDeviceStatus,
+    OstTransactionHelper
 }

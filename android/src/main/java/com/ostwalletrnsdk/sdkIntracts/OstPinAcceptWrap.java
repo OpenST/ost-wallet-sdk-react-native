@@ -22,8 +22,13 @@ public class OstPinAcceptWrap  extends  BaseSdkInteract{
         return (OstPinAcceptWrap) map.get( uuid );
     }
 
-    void pinEntered( UserPassphrase passphrase ){
-        ((OstPinAcceptInterface)getSdkCallbackForAction()).pinEntered( passphrase );
+    void pinEntered(final UserPassphrase passphrase ){
+        postOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                ((OstPinAcceptInterface)getSdkCallbackForAction()).pinEntered( passphrase );
+            }
+        });
     }
 
 

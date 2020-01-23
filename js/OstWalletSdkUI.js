@@ -21,7 +21,15 @@ class OstWalletRNSdkUI {
    * @param {object} config - Config for theme
    */
   setThemeConfig(config) {
-    OstWalletSdkUI.setThemeConfig(config)
+    OstWalletSdkUI.setThemeConfig(config);
+  }
+
+  getThemeConfig(callback) {
+    OstWalletSdkUI.getThemeConfig((config) => {
+      if (callback && typeof callback === 'function') {
+        callback(config);
+      }
+    })
   }
 
   /**
@@ -82,7 +90,7 @@ class OstWalletRNSdkUI {
    */
   addSession(userId, expiresAfterInSecs, spendingLimit, uiCallback) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    OstWalletSdkUI.addSession(userId, String(expiresAfterInSecs), String(spendingLimit), coreUiCallback.uuid);
+    OstWalletSdkUI.addSession(userId.toString(), String(expiresAfterInSecs), String(spendingLimit), coreUiCallback.uuid);
     return coreUiCallback.uuid;
   }
 

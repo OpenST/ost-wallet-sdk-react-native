@@ -23,6 +23,12 @@ RCT_EXPORT_METHOD(setThemeConfig: (NSDictionary<NSString *, id> *)config) {
   [OstWalletUI setThemeConfig: config];
 }
 
+RCT_EXPORT_METHOD(getThemeConfig: (RCTResponseSenderBlock)callback) {
+  NSDictionary *themeConfig = [OstWalletUI getThemeConfig];
+  callback(@[themeConfig]);
+}
+
+
 RCT_EXPORT_METHOD(setContentConfig: (NSDictionary<NSString *, id> *)config) {
   [OstWalletUI setContentConfig: config];
 }
