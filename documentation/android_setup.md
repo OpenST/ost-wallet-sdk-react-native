@@ -1,6 +1,6 @@
-# Android setup required for OST React Native SDK
+# Android set-up required for Ost React Native SDK
 
-## 1. Linking the OST React Native SDK
+## 1. Linking the Ost React Native SDK
 
 ### Automatic Linking
 
@@ -64,7 +64,6 @@ Create file `./android/app/src/main/assets/ost-mobilesdk.json` with application 
 Starting with Android 9 (API level 28), [cleartext support](https://developer.android.com/training/articles/security-config#CleartextTrafficPermitted) is disabled by default. On the other hand, Ost Wallet Android Sdk leverages on **Public Key Pinning** to ensure the authenticity of a Ost Platform server's public key used in TLS sessions using [TrustKit](https://github.com/datatheorem/TrustKit-Android). As TrustKit can only be inititialized with application's [network security configuration](https://developer.android.com/training/articles/security-config), sdk initialization fails. To work-around this issues, application needs to have TrustKit as a dependency and initialize it. 
 
 Please refer to [Public Key Pinning Using TrustKit](https://github.com/ostdotcom/ost-wallet-sdk-android/blob/develop/documentation/TrustKitPublickeyPinning.md) documentation.
-
 
 # Next Steps
 
