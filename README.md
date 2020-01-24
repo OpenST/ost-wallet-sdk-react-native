@@ -56,7 +56,7 @@ The sdk needs [eventemitter3](https://github.com/primus/eventemitter3) as peer-d
  npm install eventemitter3
 ```
 
-3. Linking the Ost React Native SDk with your project
+3. Linking the Ost React Native SDK with your project
 
 ```bash
  react-native link @ostdotcom/ost-wallet-sdk-react-native
@@ -180,7 +180,7 @@ Please refer to [Ost JSON API](./documentation/OstJsonApi.md) for documentation.
 ## Quick Start Guide - Ost Macro Workflows
 Starting version 2.3.12-beta.1, developers can enable all the Ost wallet features implementing the Ost Macro Workflows.
 
-### Setup Device Core Workflow
+### 1. Setup Device Core Workflow
 ---
 The setup device workflow establishes trust between the device and Ost Platform. As application is responsible for user authentication, application servers must facilitate this workflow using the server side sdk.
 
@@ -208,7 +208,7 @@ The setup device workflow establishes trust between the device and Ost Platform.
 #### Implementation
 Please refer to [`setupDevice` core workflow documentation](./documentation/OstCoreWorkflows.md#setupdevice) for implementation details.
 
-### Activate User UI Workflow
+### 2. Activate User UI Workflow
 ---
 Activate User workflow deploys user's wallet on the blockchain and whitelists the user's wallet and enables it to take part in application's brand token economy.
 
@@ -224,25 +224,25 @@ Activate User workflow deploys user's wallet on the blockchain and whitelists th
 * The ‘password’ provided to this function is a string created by concatenating:
 * A prefix provided by application server. 
 > Application server must generate and store prefix for each user, treat it as sensitive and immutable information.
-* User’s Pin
-* User’s OST-ID
-* The salt required for SCrypt is provided by OST Platform
+* User’s PIN
+* User’s Ost-id
+* The salt required for SCrypt is provided by Ost Platform
 
 #### Implementation
 Please refer to [Activate User UI Workflow Documentation](./documentation/OstWalletUI.md#activate-user) for implementation details.
 
-### Wallet Settings UI Component 
+### 3. Wallet Settings UI Component 
 ---
-OstWallet Settings is a pre-built UI Component available exclusively available in `ost-wallet-sdk-react-native` Sdk.
+OstWallet Settings is a pre-built UI component available exclusively available in `ost-wallet-sdk-react-native` SDK.
 It is a wallet settings page that can be used by end-users to perfrom 12 different wallet operations and view their wallet details.
 > <b>IMPORTANT:</b> This feature requires application to use [React Navigation](https://reactnavigation.org/docs/en/getting-started.html) package.
 
 #### Implementation
 Please refer to [OstWallet Settings Documentation](./documentation/OstWalletSettings.md) for implementation details.
 
-### OstTransactionHelper - Transaction and Session Integrated Workflow
+### 4. OstvTransaction Helper - Transaction and Add Session Integrated Workflow
 ---
-`OstTransactionHelper` is a transaction helper provided by the sdk that creates session keys before performing a transaction if needed. App developers can configure the session creation parameters (session buckets) as per application's need.
+`OstTransactionHelper` is a transaction helper provided by the SDK that creates session keys before performing a transaction if needed. App developers can configure the session creation parameters (session buckets) as per application's need.
 
 #### Implementation
 Please refer to [Ost Transaction Helper Documentation](./documentation/OstTransactionHelper.md) for implementation details.
@@ -253,6 +253,6 @@ For quick and easy integration with SDK, developers can use built-in user-interf
 Please refer to [Ost Wallet SDK UI ](./documentation/OstWalletUI.md) for documentation.
 
 ## Advance Usage - Ost Wallet Core Workflow APIs
-Ost core workflows api do not use any UI components, thereby giving complete ux control to the developers. The [`OstWalletSdkUI`](./documentation/OstWalletUI.md) also uses Ost core workflows.
+Ost core workflows API do not use any UI components, thereby giving complete ux control to the developers. The [`OstWalletSdkUI`](./documentation/OstWalletUI.md) also uses Ost core workflows.
 
 Please refer to [Ost Core Workflow APIs](./documentation/OstCoreWorkflows.md) for documentation.
