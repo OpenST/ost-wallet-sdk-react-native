@@ -173,6 +173,17 @@ public class OstWalletUiRnSdkModule extends ReactContextBaseJavaModule {
         SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
     }
 
+
+    @ReactMethod
+    public void scanQRCodeToAuthorizeSession(String userId, String uuid) {
+        Activity currentActivity = getCurrentActivity();
+        OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
+                new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.AUTHORIZE_DEVICE_WITH_QR_CODE));
+        String workflowId = OstWalletUI.scanQRCodeToAuthorizeSession(currentActivity, userId, ostUICallback);
+        SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
+    }
+
+
     @ReactMethod
     public void scanQRCodeToExecuteTransaction(String userId, String uuid) {
         Activity currentActivity = getCurrentActivity();
