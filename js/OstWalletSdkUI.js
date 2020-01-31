@@ -192,7 +192,7 @@ class OstWalletRNSdkUI {
    */
   scanQRCodeToAuthorizeSession(userId, uiCallback) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    OstWalletSdkUI.scanQRCodeToAuthorizeDevice( userId, coreUiCallback.uuid );
+    OstWalletSdkUI.scanQRCodeToAuthorizeSession( userId, coreUiCallback.uuid );
     return coreUiCallback.uuid;
   }
 
