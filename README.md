@@ -45,15 +45,21 @@ Ost React Native Wallet SDK...
 Follow this [official react-native getting started guide](https://facebook.github.io/react-native/docs/0.59/getting-started) to install react native and create a react-native project
 
 2. Install Ost React Native SDK in your project
+The sdk needs following peer dependencies:
+* [eventemitter3](https://www.npmjs.com/package/eventemitter3)
+* [lodash.merge](https://www.npmjs.com/package/lodash.merge)
+* [bignumber.js](https://www.npmjs.com/package/bignumber.js)
+
+```bash
+  npm install --save lodash.merge
+  npm install --save eventemitter3
+  npm install --save bignumber.js
+```
+
 Run following command in your react-native project root
 
 ```bash
  npm install @ostdotcom/ost-wallet-sdk-react-native
-```
-
-The sdk needs [eventemitter3](https://github.com/primus/eventemitter3) as peer-dependency. To install `eventemitter3`, run following command in your react-native project root
-```bash
- npm install eventemitter3
 ```
 
 3. Linking the Ost React Native SDK with your project
