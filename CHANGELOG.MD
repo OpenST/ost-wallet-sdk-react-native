@@ -1,6 +1,6 @@
 # OST Wallet SDK Changelog
 
-## Version 2.3.13
+## Version 2.3.14
 * ReadMe updates<br/>
 * Removed unused imports<br/>
 * Peer dependency fixes<br/>
