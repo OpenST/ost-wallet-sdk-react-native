@@ -1,6 +1,6 @@
 {
   "name": "@ostdotcom/ost-wallet-sdk-react-native",
-  "version": "2.3.12",
+  "version": "2.3.13",
   "description": "OST Wallet SDK for React Native applications.",
   "main": "./js/index.js",
   "repository": {
