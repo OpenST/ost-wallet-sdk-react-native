@@ -1,5 +1,15 @@
 # OST Wallet SDK Changelog
 
+## Version 2.3.12
+* OstWalletSettings UI component is now available in SDK. To use `OstWalletSettings`, please update downstream sdk.<br/>
+iOS:`v2.3.6`<br/>
+Android:`v2.3.8`
+
+## Version 2.3.12-beta.1
+* OstWalletSettings UI component is now available in SDK. To use `OstWalletSettings`, please update downstream sdk.<br/>
+iOS:`v2.3.6-beta-1`<br/>
+Android:`v2.3.8-beta.1`
+
 ## Version 2.3.11
 ### Bug Fix:
 * In Android inaccurate error is thrown when application runs out of memory during recover device workflow.<br/>
