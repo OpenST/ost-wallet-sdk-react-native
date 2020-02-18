@@ -1,24 +1,20 @@
 import React from 'react';
 import { View, Image, Text, ScrollView, SafeAreaView, RefreshControl } from 'react-native';
+import HeaderRight from "../CommonComponents/Redeemption/HeaderRight";
+import ImageConfig from  "../CommonComponents/Redeemption/ImageConfig";
+import OstThemeConfigHelper from '../helpers/OstThemeConfigHelper';
 import styles from './styles';
 import SkusList from './SkusList';
 
-const HeaderRight = (props) => {
-    return (
-        <View style={styles.headerRightWrapper}>
-             {props.walletIcon ? <Image source={props.walletIcon} style={styles.walletImgSkipFont} /> : <React.Fragment/>}
-             <Text style={styles.balanceText}>156</Text>
-        </View>
-    )
-}
-
 class RedeemableSkusScreen extends React.PureComponent {
+   
     static navigationOptions = ({ navigation }) => {
-        let walletIcon = navigation.getParam('walletIcon');
-        return {
-          title: '',
-          headerStyle: {
-            backgroundColor: 'white',
+        const balance = navigation && navigation.getParam('balance')
+            isCustomBack = !!ImageConfig.getBackArrowUri()
+        ;
+        let navigationOption = {
+          title: navigation && navigation.getParam('navTitle')|| "",
+          headerStyle:  {
             borderBottomWidth: 0,
             shadowColor: '#000',
             shadowOffset: {
@@ -28,13 +24,18 @@ class RedeemableSkusScreen extends React.PureComponent {
             shadowOpacity: 0.1,
             shadowRadius: 3
           },
-          headerTitleStyle: {
-            fontFamily: 'AvenirNext-Medium'
-          },
-          headerBackImage: navigation.getParam('backImage') || null,
-          headerRight: <HeaderRight walletIcon={walletIcon}/>
+          headerRight: <HeaderRight balance={balance}/>
         };
-      };
+        if( isCustomBack ){
+          navigationOption["headerBackImage"] = ""; //TODO @Preshita
+        }
+
+        return Object.assign(navigationOption, OstThemeConfigHelper.getNavigationHeaderConfig());
+    };
+
+    static setImageConfig(config){
+      ImageConfig.setImageConfig(config);
+    }
     
     constructor( props ){
         super(props);
