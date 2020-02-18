@@ -8,7 +8,6 @@ import OstThemeConfigHelper from '../helpers/OstThemeConfigHelper';
 import styles from './styles';
 import SkusList from './SkusList';
 
-
 class RedeemableSkusScreen extends React.PureComponent {
    
     static navigationOptions = ({ navigation }) => {
@@ -51,29 +50,38 @@ class RedeemableSkusScreen extends React.PureComponent {
           props.navigation.setParams({
             balance
           })
-        }, (ostError) => {
-          console.log(ostError)
-        });
+        }, (ostError) => {});
+    }
+
+    componentWillUnmount(){
+      this.__setState = () => {};
+      this.listRef = null;
+      this.scrollViewRef = null;
     }
 
     onPullToRefresh = ()=> {
       this.listRef.refresh();
     }
 
+    __setState = (state) => {
+      if(!state) return;
+      this.setState(state);
+    }
+
     beforeRefresh = () => {
-      this.setState({
+      this.__setState({
         refreshing: true
-      })
+      });
     }
 
     onRefresh = ( res ) => {
-      this.setState({
+      this.__setState({
         refreshing: false
       })
     }
 
     onRefreshError = ( error ) => {
-      this.setState({
+      this.__setState({
         refreshing: false
       })
     }
@@ -82,15 +90,17 @@ class RedeemableSkusScreen extends React.PureComponent {
       this.listRef = ref;
     }
 
+    setScrollViewRef  = (ref) => {
+      this.scrollViewRef = ref
+    }
+
     render(){
         return (<SafeAreaView style={styles.container}>
-                <ScrollView
-                    ref = {(ref)=>{this.scrollViewRef = ref}}
-                    refreshControl={
-                        <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onPullToRefresh} />
-                    }
+                <ScrollView ref = {this.setScrollViewRef}
+                    refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.onPullToRefresh} />}
                 >
                     <View styles={styles.headingWrapper}>
+                      {/* TODO customise  */}
                         {this.props.logo ? <Image source={this.props.logo} style={styles.logoSkipFont} /> : <React.Fragment/>}
                         <Text style={styles.title}>{this.props.title}Decrypt Gift Card Options</Text>  
                         <Text style={styles.description}>{this.props.description}Buy coupons and get great deals by using the tokens you have earned</Text> 
