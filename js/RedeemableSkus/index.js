@@ -12,7 +12,7 @@ import SkusList from './SkusList';
 class RedeemableSkusScreen extends React.PureComponent {
    
     static navigationOptions = ({ navigation }) => {
-        const balance = navigation.getParam("balance") || 0 ,
+        const balance = navigation && navigation.getParam("balance") || 0 ,
              isCustomBack = !!ImageConfig.getBackArrowUri()
         ;
         let navigationOption = {
