@@ -1,20 +1,26 @@
 import React from 'react';
 import { View, Image, Text, ScrollView, SafeAreaView, RefreshControl } from 'react-native';
+import { OstJsonApi } from '@ostdotcom/ost-wallet-sdk-react-native';
+
 import styles from './styles';
 import SkusList from './SkusList';
+import BackArrow from '../CommonComponents/BackArrow';
 
 const HeaderRight = (props) => {
     return (
         <View style={styles.headerRightWrapper}>
              {props.walletIcon ? <Image source={props.walletIcon} style={styles.walletImgSkipFont} /> : <React.Fragment/>}
-             <Text style={styles.balanceText}>156</Text>
+             <Text style={styles.balanceText}>{props.balance}</Text>
         </View>
     )
 }
 
 class RedeemableSkusScreen extends React.PureComponent {
     static navigationOptions = ({ navigation }) => {
-        let walletIcon = navigation.getParam('walletIcon');
+        let walletIcon = navigation.getParam('walletIcon'),
+            userId = navigation.getParam("ostUserId"),
+            balance = navigation.getParam("balance") || 0;
+       
         return {
           title: '',
           headerStyle: {
@@ -31,17 +37,25 @@ class RedeemableSkusScreen extends React.PureComponent {
           headerTitleStyle: {
             fontFamily: 'AvenirNext-Medium'
           },
-          headerBackImage: navigation.getParam('backImage') || null,
-          headerRight: <HeaderRight walletIcon={walletIcon}/>
+          headerBackImage: navigation.getParam("headerBackComponent") || <BackArrow/>,
+          headerRight: <HeaderRight walletIcon={walletIcon} balance={balance}/>
         };
       };
     
     constructor( props ){
         super(props);
-        this.userId = this.props.userId || props.navigation.getParam("ostUserId");
+        this.userId = props.userId || props.navigation.getParam("ostUserId");
         this.state = {
             refreshing: false
         }
+        OstJsonApi.getBalanceForUserId(this.userId, (res) => {
+          let balance = res.balance && res.balance.available_balance;
+          props.navigation.setParams({
+            balance
+          })
+        }, (ostError) => {
+          console.log(ostError)
+        });
     }
 
     onPullToRefresh = ()=> {
