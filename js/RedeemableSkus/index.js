@@ -27,9 +27,6 @@ class RedeemableSkusScreen extends React.PureComponent {
             shadowOpacity: 0.1,
             shadowRadius: 3
           },
-          headerTitleStyle: {
-            fontFamily: 'AvenirNext-Medium'
-          },
           headerRight: <HeaderRight balance={balance}/>
         };
         if( isCustomBack ){
