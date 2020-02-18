@@ -1,14 +1,32 @@
 import React from 'react';
 import { View, Image, Text, ScrollView, SafeAreaView, RefreshControl } from 'react-native';
+import { OstJsonApi } from '@ostdotcom/ost-wallet-sdk-react-native';
+
 import HeaderRight from "../CommonComponents/Redeemption/HeaderRight";
 import ImageConfig from  "../CommonComponents/Redeemption/ImageConfig";
 import OstThemeConfigHelper from '../helpers/OstThemeConfigHelper';
 import styles from './styles';
 import SkusList from './SkusList';
+import BackArrow from '../CommonComponents/BackArrow';
+
+const HeaderRight = (props) => {
+    return (
+        <View style={styles.headerRightWrapper}>
+             {props.walletIcon ? <Image source={props.walletIcon} style={styles.walletImgSkipFont} /> : <React.Fragment/>}
+             <Text style={styles.balanceText}>{props.balance}</Text>
+        </View>
+    )
+}
 
 class RedeemableSkusScreen extends React.PureComponent {
    
     static navigationOptions = ({ navigation }) => {
+        let balance = navigation.getParam("balance") || 0;
+       
+        return {
+          title: '',
+          headerStyle: {
+            backgroundColor: 'white',
         const balance = navigation && navigation.getParam('balance')
             isCustomBack = !!ImageConfig.getBackArrowUri()
         ;
@@ -23,6 +41,9 @@ class RedeemableSkusScreen extends React.PureComponent {
             },
             shadowOpacity: 0.1,
             shadowRadius: 3
+          },
+          headerTitleStyle: {
+            fontFamily: 'AvenirNext-Medium'
           },
           headerRight: <HeaderRight balance={balance}/>
         };
@@ -39,13 +60,44 @@ class RedeemableSkusScreen extends React.PureComponent {
     
     constructor( props ){
         super(props);
+        this.userId = props.userId || props.navigation.getParam("ostUserId");
         this.state = {
             refreshing: false
         }
+        OstJsonApi.getBalanceForUserId(this.userId, (res) => {
+          let balance = res.balance && res.balance.available_balance;
+          props.navigation.setParams({
+            balance
+          })
+        }, (ostError) => {
+          console.log(ostError)
+        });
     }
 
     onPullToRefresh = ()=> {
+      this.listRef.refresh();
+    }
 
+    beforeRefresh = () => {
+      this.setState({
+        refreshing: true
+      })
+    }
+
+    onRefresh = ( res ) => {
+      this.setState({
+        refreshing: false
+      })
+    }
+
+    onRefreshError = ( error ) => {
+      this.setState({
+        refreshing: false
+      })
+    }
+
+    setListRef = (ref) => {
+      this.listRef = ref;
     }
 
     render(){
@@ -61,7 +113,9 @@ class RedeemableSkusScreen extends React.PureComponent {
                         <Text style={styles.title}>{this.props.title}Decrypt Gift Card Options</Text>  
                         <Text style={styles.description}>{this.props.description}Buy coupons and get great deals by using the tokens you have earned</Text> 
                     </View>
-                    <SkusList refreshing={this.state.refreshing}/>
+                    <SkusList onRef={this.setListRef} refreshing={this.state.refreshing} userId={this.userId}
+                              beforeRefresh={this.beforeRefresh} onRefresh={this.onRefresh} onRefreshError={this.onRefreshError}
+                    />
                 </ScrollView>
            </SafeAreaView>
         );}
