@@ -38,13 +38,36 @@ class RedeemableSkusScreen extends React.PureComponent {
     
     constructor( props ){
         super(props);
+        this.userId = this.props.userId || props.navigation.getParam("ostUserId");
         this.state = {
             refreshing: false
         }
     }
 
     onPullToRefresh = ()=> {
+      this.listRef.refresh();
+    }
 
+    beforeRefresh = () => {
+      this.setState({
+        refreshing: true
+      })
+    }
+
+    onRefresh = ( res ) => {
+      this.setState({
+        refreshing: false
+      })
+    }
+
+    onRefreshError = ( error ) => {
+      this.setState({
+        refreshing: false
+      })
+    }
+
+    setListRef = (ref) => {
+      this.listRef = ref;
     }
 
     render(){
@@ -60,7 +83,9 @@ class RedeemableSkusScreen extends React.PureComponent {
                         <Text style={styles.title}>{this.props.title}Decrypt Gift Card Options</Text>  
                         <Text style={styles.description}>{this.props.description}Buy coupons and get great deals by using the tokens you have earned</Text> 
                     </View>
-                    <SkusList refreshing={this.state.refreshing}/>
+                    <SkusList onRef={this.setListRef} refreshing={this.state.refreshing} userId={this.userId}
+                              beforeRefresh={this.beforeRefresh} onRefresh={this.onRefresh} onRefreshError={this.onRefreshError}
+                    />
                 </ScrollView>
            </SafeAreaView>
         );}

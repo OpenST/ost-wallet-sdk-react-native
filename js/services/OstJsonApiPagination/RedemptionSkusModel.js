@@ -1,7 +1,7 @@
 import OstJsonApi from "../../OstJsonApi";
-import FetchBase from "./BaseModel";
+import {BaseModel} from "./BaseModel";
 
-class FetchRedemptionSkus extends FetchBase {
+class RedemptionSkusModel extends BaseModel {
 
     constructor(userId , params, id, options ){
         super(params, id, options);
@@ -9,7 +9,7 @@ class FetchRedemptionSkus extends FetchBase {
     }
 
     fetchFromJsonApi(){
-      return new Promise((resolve, reject)=> {
+      return new Promise((resolve, reject) => {
           OstJsonApi.getRedeemableSkus(this.userId, this.getParams() , (respones) => {
             this.isFetching = true;
             return resolve(this.dataReceived(respones));
@@ -20,6 +20,11 @@ class FetchRedemptionSkus extends FetchBase {
       });
     }
 
+    clone() {
+      let Constructor = this.constructor;
+      return new Constructor(this.userId , this.extraParams, this.id, this.options);
+    }
+
 }
 
-export default FetchRedemptionSkus;
+export default RedemptionSkusModel;

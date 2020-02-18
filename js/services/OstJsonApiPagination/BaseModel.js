@@ -131,8 +131,8 @@ class BaseModel {
   }
 
   clone() {
-    let Constructor = this.constructor;
-    return new Constructor(this.extraParams, this.id, this.options);
+   //Overwrite
+   throw "clone";
   }
 
 }
