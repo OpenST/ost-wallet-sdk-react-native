@@ -7,28 +7,13 @@ import ImageConfig from  "../CommonComponents/Redeemption/ImageConfig";
 import OstThemeConfigHelper from '../helpers/OstThemeConfigHelper';
 import styles from './styles';
 import SkusList from './SkusList';
-import BackArrow from '../CommonComponents/BackArrow';
 
-const HeaderRight = (props) => {
-    return (
-        <View style={styles.headerRightWrapper}>
-             {props.walletIcon ? <Image source={props.walletIcon} style={styles.walletImgSkipFont} /> : <React.Fragment/>}
-             <Text style={styles.balanceText}>{props.balance}</Text>
-        </View>
-    )
-}
 
 class RedeemableSkusScreen extends React.PureComponent {
    
     static navigationOptions = ({ navigation }) => {
-        let balance = navigation.getParam("balance") || 0;
-       
-        return {
-          title: '',
-          headerStyle: {
-            backgroundColor: 'white',
-        const balance = navigation && navigation.getParam('balance')
-            isCustomBack = !!ImageConfig.getBackArrowUri()
+        const balance = navigation.getParam("balance") || 0 ,
+             isCustomBack = !!ImageConfig.getBackArrowUri()
         ;
         let navigationOption = {
           title: navigation && navigation.getParam('navTitle')|| "",
