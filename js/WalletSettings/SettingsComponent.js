@@ -7,7 +7,6 @@ import inlineStyle from './styles'
 
 import {optionIds, WalletSettingsController} from './WalletSettingsController';
 import OstThemeConfigHelper from '../helpers/OstThemeConfigHelper'
-import Colors from "../../../../../src/theme/styles/Colors";
 import OstWalletSettings from "@ostdotcom/ost-wallet-sdk-react-native/js/WalletSettings/OstWalletSettings";
 
 let AndroidOpenSettings = null;

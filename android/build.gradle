@@ -14,9 +14,12 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "https://jitpack.io" }
     }
 }
 
+apply plugin: 'maven'
+group = 'com.github.ostdotcom'
 apply plugin: 'com.android.library'
 
 android {
@@ -45,5 +48,5 @@ repositories {
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
-    api 'com.github.ostdotcom:ost-wallet-sdk-android:1add7c207f'
+    api 'com.github.ostdotcom:ost-wallet-sdk-android:a00326b87f9a04f44f66b32258660bb226a3b7bd'
 }
