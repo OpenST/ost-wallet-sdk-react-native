@@ -11,7 +11,8 @@ let stylesMap = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 30
+        padding: 30,
+        marginBottom: 50
     },
     walletImgSkipFont : {
         width: 10, 
@@ -50,10 +51,10 @@ let stylesMap = StyleSheet.create({
         textAlign: 'center',
         color: '#606060',
         fontFamily: 'AvenirNext-Regular',
-        fontSize: 14
+        fontSize: 14,
+        marginBottom: 40
     },
     list : {
-        marginTop: 20,
         padding: 10
     }
 });

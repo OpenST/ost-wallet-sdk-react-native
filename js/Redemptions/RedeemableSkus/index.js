@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Text, ScrollView, SafeAreaView, RefreshControl } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { OstJsonApi } from '@ostdotcom/ost-wallet-sdk-react-native';
 
 import HeaderRight from "../CommonComponents/HeaderRight";
@@ -38,9 +38,6 @@ class OstRedeemableSkus extends React.PureComponent {
     constructor( props ){
         super(props);
         this.userId = props.userId || props.navigation.getParam("ostUserId");
-        this.state = {
-            refreshing: false
-        }
         OstJsonApi.getBalanceForUserId(this.userId, (res) => {
           let balance = res.balance && res.balance.available_balance;
           props.navigation.setParams({
@@ -55,58 +52,24 @@ class OstRedeemableSkus extends React.PureComponent {
       this.scrollViewRef = null;
     }
 
-    onPullToRefresh = ()=> {
-      this.listRef.refresh();
-    }
-
     __setState = (state) => {
       if(!state) return;
       this.setState(state);
     }
 
-    beforeRefresh = () => {
-      this.__setState({
-        refreshing: true
-      });
-    }
-
-    onRefresh = ( res ) => {
-      this.__setState({
-        refreshing: false
-      })
-    }
-
-    onRefreshError = ( error ) => {
-      this.__setState({
-        refreshing: false
-      })
-    }
-
-    setListRef = (ref) => {
-      this.listRef = ref;
-    }
-
-    setScrollViewRef  = (ref) => {
-      this.scrollViewRef = ref
+    onItemClick = (item) => {
+      if(this.props.onItemClick){
+        this.props.onItemClick();
+      } else {
+        this.props.navigation.push('RedeemableSkuDetails', {'skuObj': item});
+      }
     }
 
     render(){
         return (<SafeAreaView style={styles.container}>
-                <ScrollView ref = {this.setScrollViewRef}
-                    refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.onPullToRefresh} />}
-                >
-                    <View styles={styles.headingWrapper}>
-                      {/* TODO customise  */}
-                        {this.props.logo ? <Image source={this.props.logo} style={styles.logoSkipFont} /> : <React.Fragment/>}
-                        <Text style={styles.title}>{this.props.title}Decrypt Gift Card Options</Text>  
-                        <Text style={styles.description}>{this.props.description}Buy coupons and get great deals by using the tokens you have earned</Text> 
-                    </View>
-                    <SkusList onRef={this.setListRef} refreshing={this.state.refreshing} userId={this.userId}
-                              beforeRefresh={this.beforeRefresh} onRefresh={this.onRefresh} onRefreshError={this.onRefreshError}
-                    />
-                </ScrollView>
-           </SafeAreaView>
-        );}
+                    <SkusList userId={this.userId} onItemClick={this.onItemClick}/>
+                </SafeAreaView>
+              );}
 }
 
 export default OstRedeemableSkus;
