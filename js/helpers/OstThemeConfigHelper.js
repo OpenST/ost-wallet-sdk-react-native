@@ -38,6 +38,14 @@ class OstThemeConfigHelper {
       return 'flex-end'
     }
   }
+  
+  getH1Config() {
+    let c1Config = this.themeConfig.h1
+    return {color: c1Config.color,
+      fontSize: c1Config.size,
+      alignSelf: this.getTextAlignment(c1Config.alignment),
+        fontFamily: c1Config.font}
+  }
 
   getC1Config() {
     let c1Config = this.themeConfig.c1
