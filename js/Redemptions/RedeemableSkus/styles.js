@@ -4,14 +4,15 @@ let stylesMap = StyleSheet.create({
     container : {
         flex: 1,
         backgroundColor: 'white',
-        padding: 4,
+        paddingVertical: 4,
         marginTop: 10
     },
     headingWrapper : {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 30
+        padding: 30,
+        marginBottom: 50
     },
     walletImgSkipFont : {
         width: 10, 
@@ -32,9 +33,6 @@ let stylesMap = StyleSheet.create({
         width: 100, 
         height: 100
     },
-    cell : {
-        
-    },
     title : {
         alignSelf: 'center',
         paddingHorizontal: 50,
@@ -50,11 +48,20 @@ let stylesMap = StyleSheet.create({
         textAlign: 'center',
         color: '#606060',
         fontFamily: 'AvenirNext-Regular',
-        fontSize: 14
+        fontSize: 14,
+        marginBottom: 40
     },
-    list : {
-        marginTop: 20,
-        padding: 10
+    item:{
+        flex: 1, 
+        margin: 10, 
+        backgroundColor: '#B3B3B3', 
+        alignItems:'center', 
+        justifyContent: 'center'
+    },
+    itemWrapper: {
+        flex: 0.5, 
+        width: 160, 
+        height: 160
     }
 });
 

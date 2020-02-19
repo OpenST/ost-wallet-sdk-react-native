@@ -1,8 +1,6 @@
 import React from 'react';
-import { FlatList, ActivityIndicator } from 'react-native';
-import { withNavigation } from 'react-navigation';
+import { FlatList, ActivityIndicator, View, Image, Text, TouchableWithoutFeedback } from 'react-native';
 
-import Cell from './SkusCell';
 import styles from './styles';
 import RedemptionSkusModel from "../../services/OstJsonApiPagination/RedemptionSkusModel";
 import Pagination from '../../services/OstJsonApiPagination/Pagination';
@@ -16,8 +14,12 @@ class SkusList extends React.PureComponent{
         this.pagination = null;
         this.init();
         this.state = {
-            list: [1,2,3],
-            loadingNext: false
+            list: null,
+            loadingNext: false,
+            refreshing: false
+        };
+        this.noDataCell = {
+            isEmpty: true
         }
     }
 
@@ -34,23 +36,41 @@ class SkusList extends React.PureComponent{
         this.pagination && this.pagination.initPagination();
     }
 
+    onItemClick = (item) => {
+        this.props.onItemClick && this.props.onItemClick(item);
+    }
+
     _renderItem = ({item, index}) => {
+        if(item.isEmpty){
+            return (<View>No items found!!!</View>);
+        }
+        let imageUrl = (item.image && item.image.list.original.url) || '';
         return (
-            <Cell/>
+            <TouchableWithoutFeedback onPress={()=>{this.onItemClick(item)}}>
+                <View style={styles.itemWrapper}>
+                    <View style={styles.item}>
+                        {imageUrl ? <Image source={{uri: imageUrl }} resizeMode={'cover'} style={{width: '100%', height: '100%'}} />: <React.Fragment/>}
+                    </View>
+                </View>
+            </TouchableWithoutFeedback>
         );
     };
 
+    getResults = () => {
+        let results = this.pagination.modelFetch.getAllResults();
+        return results.length == 0 ? [this.noDataCell] : results;
+    }
+
     beforeRefresh = ( ) => {
-        this.props.beforeRefresh && this.props.beforeRefresh();
+        this.setState({ refreshing : true });
     }
 
     onRefresh = ( res ) => {
-        this.props.onRefresh && this.props.onRefresh();
-        this.setState({ list : this.pagination.getList() });
+        this.setState({ refreshing : false, list : this.getResults() });
     }
 
     onRefreshError = ( error ) => {
-        this.props.onRefreshError && this.props.onRefreshError();
+        this.setState({ refreshing : false });
     }
 
     beforeNext =() => {
@@ -58,7 +78,7 @@ class SkusList extends React.PureComponent{
     }
 
     onNext = ( res  ) => {
-        this.setState({ loadingNext : false ,  list : this.pagination.getList() });
+        this.setState({ loadingNext : false ,  list : this.getResults() });
     }
 
     onNextError = ( error ) => {
@@ -82,17 +102,34 @@ class SkusList extends React.PureComponent{
         return <ActivityIndicator />;
     };
 
-    render = () => (<FlatList
+    render = () => {
+        return (
+                <FlatList
                     style={styles.list}
                     data={this.state.list}
                     onEndReached={this.getNext}
                     keyExtractor={this._keyExtractor}
+                    refreshing={this.state.refreshing}
+                    onRefresh={this.refresh}
                     onEndReachedThreshold={9}
                     renderItem={this._renderItem}
                     ListFooterComponent={this.renderFooter}
                     numColumns={2}
                     showsVerticalScrollIndicator={false}
-                />);
+                    ListHeaderComponent={ListHeaderComponent}
+                />
+        )
+    }
 }
 
-export default withNavigation(SkusList);
+
+const ListHeaderComponent = (props) => (
+    <View styles={styles.headingWrapper}>
+    {/* TODO customise  */}
+      {props.logo ? <Image source={props.logo} style={styles.logoSkipFont} /> : <React.Fragment/>}
+      <Text style={styles.title}>{props.title}Decrypt Gift Card Options</Text>  
+      <Text style={styles.description}>{props.description}Buy coupons and get great deals by using the tokens you have earned</Text> 
+    </View>
+)
+
+export default SkusList;

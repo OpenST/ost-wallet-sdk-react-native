@@ -43,7 +43,7 @@ let stylesMap = StyleSheet.create({
     color: '#4a4a4a',
   },
   wrapperPicker:{
-    marginBottom:30
+    marginBottom:20
   },
   errorText:{
     color:'red',
@@ -66,7 +66,33 @@ let stylesMap = StyleSheet.create({
   purchaseBtnText:{
     color:'#ffffff'
 
+  },
+  downArrow : {
+    height : 12,
+    width :20,
+    marginVertical : 17,
+    marginRight : 17
   }
 });
 
-export default styles = stylesMap;
+let inputBoxStyles = StyleSheet.create({
+  inputIOS : {
+    fontSize: 15,
+    paddingVertical: 13,
+    paddingHorizontal: 21,
+    borderWidth: 1,
+    borderColor: '#2a293b',
+    borderRadius: 4,
+    color: '#4a4a4a',
+  },
+  inputAndroid : {
+    fontSize: 15,
+    paddingVertical: 13,
+    paddingHorizontal: 21,
+    borderWidth: 1,
+    borderColor: '#2a293b',
+    borderRadius: 4,
+    color: '#4a4a4a',
+  }
+})
+export {stylesMap,inputBoxStyles};
