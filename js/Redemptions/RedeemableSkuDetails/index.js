@@ -1,89 +1,196 @@
 import React,{PureComponent} from 'react';
 import {View, Text, Image, ScrollView, Platform, TextInput, TouchableOpacity} from 'react-native';
+import OstJsonApi from "../../OstJsonApi";
 import RNPickerSelect from 'react-native-picker-select';
 
-
-import inlineStyes from './styles';
+import {stylesMap,inputBoxStyles} from './styles';
+import msgIcon from '../../../assets/msg-icon.png';
+import downArrow from '../../../assets/down-arrow.png';
 
 class OstRedeemableSkuDetails extends PureComponent{
   constructor(props){
     super(props);
-    this.skuDetails = this.props.navigation.getParam('obj');
+    this.navigation = this.props.navigation ;
+    this.userId = this.props.userId ||  this.navigation.getParam('userId');
+    this.skuDetails =this.navigation.getParam('redemptionSku');
+
+    if(!this.skuDetails) return;
+
     this.inputRefs = {
       countryPicker : null,
       currencyPicker : null,
       emailIdInput : null
-    }
+    };
 
     this.state={
-      selectedCountry : this.getFirstCountry(),
-      countrydata     : this.getAvailableCountryList(),
-      currencyData    : this.getAvailableCurrencyData()
-    }
+      refreshing : true ,
+      selectedAvailability : null,
+      selectedDenomination : null,
+      transactionSuccess: false,
+      error : null,
+      isPurchasing: false,
+      btnText : this.getBtnText()
+    };
+
+    this.fetchDetails();
 
   }
+
+  __setState = (state={}) => {
+    this.__setState(state);
+  };
+
+  //TODO @Sharaddha in componnent unmount clear refs,   this.navigation ,  set __setState to blank function
+
+  fetchDetails = () => {
+    OstJsonApi.getRedemptionSkuDetails(this.userId, this.skuDetails.id , this.onDetailsSuccess ,  this.onDetailsError)
+  };
+
+  onDetailsSuccess = (data={}) =>{
+    const resultType = data["result_type"] ;
+    this.skuDetails = data[resultType];
+    //get first country and
+    //get first Denomination of selected country
+    this.getFirstDenomination()
+    //Set state refeshing false here
+  };
+
+  onDetailsError =( error)=> {
+    //TODO lets discuss
+  };
+
+  getBtnText = () => {
+    //Logic
+    //If purchaing -  text to processing
+    //If not show value text
+  };
+
   getFirstCountry = () =>{
     let countryName = this.skuDetails.availability[0].country;
-    return{
-      label :countryName , value : countryName , color:"#9EA0A4"
-    }
-  }
+    return countryName ;
+  };
 
-  getAvailableCurrencyData = () =>{
-    let selectedCountry   = this.getFirstCountry().value,
+  getFirstDenomination = (country) => {
+    //TODO
+  };
+
+  getAvailableCountryList = () =>{
+    let availabilityData = this.skuDetails.availability,
+      countryData      = [];
+    for(let cnt = 0; cnt< availabilityData.length ; cnt++){
+      let country = availabilityData[cnt] ,
+        countryName = country &&  country.country
+      ;
+      countryData.push({label: countryName, value: country});
+    }
+    return countryData;
+  };
+
+
+  getAvailableCurrencyData = ( country) =>{
+
+    //Loop on state denomination
+    //Create selector Obj
+
+    let selectedCountry   = country,
         availabilityData  = this.skuDetails.availability,
-        currencyDataArray      = [],
-        currencyData      = [];
+        currencyDataArray = [],
+        currencyItems     = [],
+        currencyIsoCode   ='',
+        firstItemCurrency =null;
 
     for(let cnt = 0; cnt< availabilityData.length ; cnt++){
       let item = availabilityData[cnt];
       if(item.country == selectedCountry){
-        currencyDataArray = item.options
+        currencyDataArray = item.options;
+        firstItemCurrency = item.options[0];
+        currencyIsoCode    = item.currency_iso_code;
       }
     }
+    this.setState({
+      selectedCurrency:firstItemCurrency
+    })
+
 
     for(let cnt = 0 ; cnt < currencyDataArray.length ; cnt ++){
-      currencyData.push({label:currencyDataArray[cnt].toString(), value:currencyDataArray[cnt].toString()})
+      let label = `${currencyDataArray[cnt].toString()} ${currencyIsoCode}`;
+      currencyItems.push({label:label, value:currencyDataArray[cnt].toString()})
     }
-  return currencyData;
+  return currencyItems;
   }
 
-  getAvailableCountryList = () =>{
-    let availabilityData = this.skuDetails.availability,
-        countryData      = [];
-    for(let cnt = 0; cnt< availabilityData.length ; cnt++){
-      let country = availabilityData[cnt].country;
-      countryData.push({label: country, value: country});
-    }
-    return countryData;
+
+  onAvailabityChange = (value) =>{
+    let currencyData = this.getAvailableCurrencyData(value);
+    this.__setState({
+      selectedAvailability: value
+    })
   }
 
-  onValueChange = (value) =>{
-    this.setState({
-      selectedCountry : value
-    });
+  onDenominationChange = ( value ) =>{
+    this.__setState({
+      selectedCurrency : value
+    })
+  }
+
+  onEmailChange = () => {
 
   }
 
   onPurchaseClick = () =>{
+    //Validate inputs
+    //Show Alert
+  };
+
+  onAlertCancel = () => {
 
   }
 
+  onAlertConfrim = () => {
+    //Change button text to processing
+    //Disable form
+  }
+
+  excequteTranscaction = () => {
+    //@Ashutosh
+  }
+
+  onTransactionSuccess = () => {
+    //State change to show success message
+    //Enable form
+  }
+
+  onTransactionError =( )=> {
+    //Set state for error , enale form
+  }
+
+  onFormChange = () => {
+    //Clear state error
+    //Any value change in from Show button and hide success message //set state transactoion success false
+  }
+
+  onTransactionError = () => {
+    //Display error set state
+  }
+
+
   render(){
     return(
-      <ScrollView style={inlineStyes.container}>
-        <Text style={inlineStyes.heading}>{this.skuDetails.name}</Text>
+      <ScrollView style={stylesMap.container}>
+        <Text style={stylesMap.heading}>{this.skuDetails.name}</Text>
         <Image
-          style={inlineStyes.imageStyle}
+          style={stylesMap.imageStyle}
           source={{uri:this.skuDetails.images.purpose.size.url}}>
         </Image>
-        <Text style={inlineStyes.descText}>
+        <Text style={stylesMap.descText}>
           {this.skuDetails.description.text}
         </Text>
 
+        {/*//TODO if not availablity Dont render anything below */}
+
         {/* Country Selector */}
-        <View style={inlineStyes.wrapperPicker}>
-          <Text style={inlineStyes.labelStyle}> Select Country </Text>
+        <View style={stylesMap.wrapperPicker}>
+          <Text style={stylesMap.labelStyle}> Select Country </Text>
           <RNPickerSelect
             ref={ref =>{
               this.inputRefs.countryPicker = ref;
@@ -91,19 +198,20 @@ class OstRedeemableSkuDetails extends PureComponent{
             onDownArrow={() => {
               this.inputRefs.currencyPicker.togglePicker();
             }}
-            style={Platform.OS == 'ios'? inlineStyes.inputIOS : inlineStyes.inputIOS}
+            style={inputBoxStyles}
             placeholder={{}}
-            onValueChange={(value) => this.onValueChange}
-            items={this.state.countrydata}
+            onValueChange={(value) => this.onValueChange(value) }
+            items={this.getAvailableCountryList()}
             useNativeAndroidPickerStyle={false}
-
+            Icon={() => {
+              return <Image source={downArrow} style={stylesMap.downArrow} />;
+            }}
           />
         </View>
         {/* Country Selector ends */}
-
         {/* Currency Selector */}
-        <View style={inlineStyes.wrapperPicker}>
-          <Text style={inlineStyes.labelStyle}> Card Amount </Text>
+        <View style={stylesMap.wrapperPicker}>
+          <Text style={stylesMap.labelStyle}> Card Amount </Text>
           <RNPickerSelect
             ref={ref =>{
               this.inputRefs.currencyPicker = ref;
@@ -114,30 +222,29 @@ class OstRedeemableSkuDetails extends PureComponent{
             onDownArrow={() => {
               this.inputRefs.emailIdInput.focus();
             }}
-            style={Platform.OS == 'ios'? inlineStyes.inputIOS : inlineStyes.inputIOS}
+            style={inputBoxStyles}
             placeholder={{}}
-            onValueChange={(value) => this.onValueChange}
-            items={this.state.currencyData}
+            value = {this.state.selectedDenomination}
+            onValueChange={(value) => this.onValueChangeCurrency(value)}
+            items={this.getAvailableCurrencyData()}
             useNativeAndroidPickerStyle={false}
-
+            Icon={() => {
+              return <Image source={downArrow} style={stylesMap.downArrow} />;
+            }}
           />
         </View>
         {/* Currency Selector ends*/}
 
         {/* Email Id TextInput */}
         <View>
-          <Text style={inlineStyes.labelStyle}> Your mail id</Text>
+          <Text style={stylesMap.labelStyle}> Your mail id</Text>
           <TextInput
             ref={ref =>{
               this.inputRefs.emailIdInput = ref;
             }}
             returnKeyType="next"
             enablesReturnKeyAutomatically
-            style={
-              Platform.OS === 'ios'
-                ? inlineStyes.inputIOS
-                : inlineStyes.inputIOS
-            }
+            style={inputBoxStyles.inputIOS}
             blurOnSubmit={false}
           />
         </View>
@@ -145,15 +252,15 @@ class OstRedeemableSkuDetails extends PureComponent{
         {/* Email Id TextInput ends */}
 
         {/* Error Text */}
-        <Text style={inlineStyes.errorText}> error text will be seen here</Text>
+        <Text style={stylesMap.errorText}> error text will be seen here</Text>
         {/* Error Text ends */}
 
         {/* Submit Button */}
         <TouchableOpacity
           onPress={this.onPurchaseClick}
-          style={inlineStyes.purchaseBtn}
+          style={stylesMap.purchaseBtn}
         >
-          <Text style={inlineStyes.purchaseBtnText}>
+          <Text style={stylesMap.purchaseBtnText}>
             Purchase
           </Text>
         </TouchableOpacity>
