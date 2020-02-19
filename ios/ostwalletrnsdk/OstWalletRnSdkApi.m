@@ -75,24 +75,6 @@ RCT_EXPORT_METHOD(getCurrentDeviceForUserId: (NSString * _Nonnull)userId
   [OstJsonApi getCurrentDeviceForUserId:userId delegate:delegate];
 }
 
-RCT_EXPORT_METHOD(getRedemptions: (NSString * _Nonnull)userId
-                  params: (NSDictionary<NSString *, id> * _Nullable)params
-                  successCallback: (RCTResponseSenderBlock _Nonnull) successCallback
-                  errorCallback: (RCTResponseSenderBlock _Nonnull) errorCallback )
-{
-  OstJsonApiCallbackImpl *delegate = [[OstJsonApiCallbackImpl alloc]initWithSuccess:successCallback errorCallback:errorCallback];
-  [OstJsonApi getRedemptionsWithUserId:userId params:params delegate:delegate];
-}
-
-RCT_EXPORT_METHOD(getRedemptionDetails: (NSString * _Nonnull)userId
-                  redemptionId: (NSString * _Nonnull)redemptionId
-                  params: (NSDictionary<NSString *, id> * _Nullable)params
-                  successCallback: (RCTResponseSenderBlock _Nonnull) successCallback
-                  errorCallback: (RCTResponseSenderBlock _Nonnull) errorCallback )
-{
-  OstJsonApiCallbackImpl *delegate = [[OstJsonApiCallbackImpl alloc]initWithSuccess:successCallback errorCallback:errorCallback];
-  [OstJsonApi getRedemptionDetailsWithUserId:userId redemptionId:redemptionId params:params delegate:delegate];
-}
 
 RCT_EXPORT_METHOD(getRedeemableSkus: (NSString * _Nonnull)userId
                   params: (NSDictionary<NSString *, id> * _Nullable)params
