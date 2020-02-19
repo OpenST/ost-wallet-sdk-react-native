@@ -66,10 +66,6 @@ class OstRedeemableSkus extends React.PureComponent {
     }
 
     render(){
-      const storeLogo = OstRedemableCustomConfig.getStoreIconUri() ,
-            header = OstRedemableCustomConfig.getHeader(),
-            description = OstRedemableCustomConfig.getDescription()
-      ;
         return (<SafeAreaView style={styles.container}>
                     <SkusList userId={this.userId} onItemClick={this.onItemClick}/>
                 </SafeAreaView>
