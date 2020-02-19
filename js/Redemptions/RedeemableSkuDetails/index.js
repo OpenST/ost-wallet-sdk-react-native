@@ -2,7 +2,6 @@ import React,{PureComponent} from 'react';
 import {View, Text, Image, ScrollView, Platform, TextInput, TouchableOpacity} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
-
 import inlineStyes from './styles';
 
 class OstRedeemableSkuDetails extends PureComponent{

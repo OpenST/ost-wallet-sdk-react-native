@@ -91,15 +91,18 @@ class OstRedeemableSkus extends React.PureComponent {
     }
 
     render(){
+      const storeLogo = OstRedemableCustomConfig.getStoreIconUri() , 
+            header = OstRedemableCustomConfig.getHeader(),
+            description = OstRedemableCustomConfig.getDescription()
+      ;
         return (<SafeAreaView style={styles.container}>
                 <ScrollView ref = {this.setScrollViewRef}
                     refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.onPullToRefresh} />}
                 >
                     <View styles={styles.headingWrapper}>
-                      {/* TODO customise  */}
-                        {this.props.logo ? <Image source={this.props.logo} style={styles.logoSkipFont} /> : <React.Fragment/>}
-                        <Text style={styles.title}>{this.props.title}Decrypt Gift Card Options</Text>  
-                        <Text style={styles.description}>{this.props.description}Buy coupons and get great deals by using the tokens you have earned</Text> 
+                        {storeLogo && <Image source={storeLogo} style={styles.logoSkipFont} />}
+                        {header && <Text style={styles.title}>{header}</Text> }  
+                        {description && <Text style={styles.description}>{description}</Text> }
                     </View>
                     <SkusList onRef={this.setListRef} refreshing={this.state.refreshing} userId={this.userId}
                               beforeRefresh={this.beforeRefresh} onRefresh={this.onRefresh} onRefreshError={this.onRefreshError}

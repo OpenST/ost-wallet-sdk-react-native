@@ -1,0 +1,12 @@
+{
+  "common": {
+      "backArrow": null, 
+      "walletIcon": null,
+      "storeIcon": null
+  },
+  "skuListScreen": {
+      "header": null,
+      "description": "You can use your DCT Tokens to redeem amazing products and services." 
+  },
+  "skuDetailsScreen": { }  
+}

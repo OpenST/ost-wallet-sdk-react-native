@@ -1,37 +1,34 @@
+import OstRedmptionConfig from "./ost-redemption-config";
+import objectMerge from "lodash.merge";
+
 class OstRedemableCustomConfig {
     constructor(){
-        this.config ={
-            backArrow: null, 
-            walletIcon: null,
-            storeIcon: null,
-            header: null,
-            description: "" //@TODO Ashutosh set default description
-        };
+        this.defautlConfig  = JSON.parse(JSON.stringify(OstRedmptionConfig));
+        this.config = {};
     }
 
-    setConfig = (config) => {
-        if(!config) return;
-        this.config= config
+    setConfig = (externalConfig={}) => {
+        this.config = objectMerge(this.defautlConfig, externalConfig);
     }
 
     getBackArrowUri = () => {
-        return this.config["backArrow"];
+        return this.config && this.config.common && this.config.common["backArrow"];
     }
 
     getWalletIconUri = () => {
-        return this.config["walletIcon"];
+        return this.config && this.config.common && this.config.common["walletIcon"];
     }
 
     getStoreIconUri = () => {
-        return this.config["storeIcon"];
+        return this.config && this.config.common && this.config.common["storeIcon"];
     }
 
     getHeader = () => {
-        return this.config["header"];
+        return this.config && this.config.skuListScreen && this.config.skuListScreen["header"];
     }
 
     getDescription = () => {
-        return this.config["description"];
+        return this.config && this.config.skuListScreen && this.config.skuListScreen["description"];
     }
 
     

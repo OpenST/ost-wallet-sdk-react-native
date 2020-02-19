@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, Text } from 'react-native';
 import OstRedemableCustomConfig from "../RedemableCustomConfig";
-import styles from './styles'; //TODO @Preshita create a common style
+import styles from './styles';
 
 export default (props) => {
     const walletIcon = OstRedemableCustomConfig.getWalletIconUri()

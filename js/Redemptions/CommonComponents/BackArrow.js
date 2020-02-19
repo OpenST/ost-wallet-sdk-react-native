@@ -1,9 +1,10 @@
 import React from 'react';
-import {View , Image , Platform} from "react-native";
-import BackArrow from '../../assets/back-arrow.png';
+import {View , Image } from "react-native";
+import OstRedemableCustomConfig from "../RedemableCustomConfig";
+import inlineStyle from "./styles";
 
-export default ({forcePaddingLeft}) => (
-    <View style={{ paddingRight: 30, paddingVertical: 30, paddingLeft: Platform.OS === 'ios' || forcePaddingLeft ? 20 : 0 }}>
-        <Image source={BackArrow} style={{ width: 10, height: 18, paddingLeft: 8 }} />
+export default () => (
+    <View style={inlineStyle.backArrowImageWrapper}>
+        <Image source={OstRedemableCustomConfig.getBackArrowUri()} style={inlineStyle.backArrowStyle} />
     </View>
 );
