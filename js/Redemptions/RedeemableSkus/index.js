@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Image, Text, ScrollView, SafeAreaView, RefreshControl } from 'react-native';
 import { OstJsonApi } from '@ostdotcom/ost-wallet-sdk-react-native';
 
-import HeaderRight from "../CommonComponents/Redeemption/HeaderRight";
-import ImageConfig from  "../CommonComponents/Redeemption/ImageConfig";
-import OstThemeConfigHelper from '../helpers/OstThemeConfigHelper';
+import HeaderRight from "../CommonComponents/HeaderRight";
+import ImageConfig from  "../ImageConfig";
+import OstThemeConfigHelper from '../../helpers/OstThemeConfigHelper';
 import styles from './styles';
 import SkusList from './SkusList';
 
