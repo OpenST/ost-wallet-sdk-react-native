@@ -11,10 +11,10 @@ class RedemptionSkusModel extends BaseModel {
     fetchFromJsonApi(){
       return new Promise((resolve, reject) => {
           OstJsonApi.getRedeemableSkus(this.userId, this.getParams() , (respones) => {
-            this.isFetching = true;
+            this.isFetching = false;
             return resolve(this.dataReceived(respones));
           }, (error)=> {
-            this.isFetching = true;
+            this.isFetching = false;
             return reject(error);
           })
       });

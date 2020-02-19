@@ -1,7 +1,6 @@
 import React,{PureComponent} from 'react';
 import {View, Text, Image, ScrollView, Platform, TextInput, TouchableOpacity} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import { StyleSheet } from 'react-native';
 
 
 import inlineStyes from './styles';

@@ -4,8 +4,8 @@ import { withNavigation } from 'react-navigation';
 
 import Cell from './SkusCell';
 import styles from './styles';
-import RedemptionSkusModel from "../services/OstJsonApiPagination/RedemptionSkusModel";
-import Pagination from '../services/OstJsonApiPagination/Pagination';
+import RedemptionSkusModel from "../../services/OstJsonApiPagination/RedemptionSkusModel";
+import Pagination from '../../services/OstJsonApiPagination/Pagination';
 
 class SkusList extends React.PureComponent{
     constructor( props ){

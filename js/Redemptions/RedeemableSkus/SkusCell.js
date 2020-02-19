@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableWithoutFeedback, Image } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
-import Logo from '../../assets/logo.png';
+import Logo from '../../../assets/logo.png';
 import styles from './styles';
 
  SkusCell = (props)=> {

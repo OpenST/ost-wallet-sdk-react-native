@@ -66,8 +66,7 @@ class BaseModel {
   }
 
   dataReceived(response) {
-    let data = response.data;
-    let meta = data.meta;
+    let meta = response.meta;
     this.nextPagePayload = meta ? meta.next_page_payload : null;
     this.meta = meta;
     this.hasNextPage = this.nextPagePayload ? true : false;
@@ -77,14 +76,13 @@ class BaseModel {
   }
 
   processData(response) {
-    let data = response.data;
-    let resultType = data.result_type;
-    if (!resultType || !data[resultType]) {
+    let resultType = response.result_type;
+    if (!resultType || !response[resultType]) {
       response.code_error = VCErrors.InvalidApiResponse;
       // Invalid response.
       throw response;
     }
-    let results = data[resultType];
+    let results = response[resultType];
     if (!(results instanceof Array)) {
       response.code_error = VCErrors.InvalidApiResponse;
       // Invalid response.
@@ -101,7 +99,7 @@ class BaseModel {
       let result = results[cnt];
       let resultId = result.id;
 
-      // Format Data.
+      // Format response.
       result = this.formatResult(result, response);
       if (!result) {
         // Some wrong entry.
