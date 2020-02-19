@@ -17,7 +17,7 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.purchaseValue = 60;
     this.denominationData = [];
     this.countrydata = [];
-    this.btnText = "";
+    ;
     if(!this.skuDetails) return;
 
     this.inputRefs = {
@@ -33,10 +33,11 @@ class OstRedeemableSkuDetails extends PureComponent{
       transactionSuccess: false,
       errorText : null,
       isPurchasing: false,
-      emailId : null
+      emailId : null,
+      btnText : ""
     };
 
-    this.setBtnText();
+
 
 
   }
@@ -46,6 +47,7 @@ class OstRedeemableSkuDetails extends PureComponent{
   };
   componentDidMount(){
     this.fetchDetails();
+    this.setBtnText();
   }
 
   componentWillUnmount (){
@@ -125,9 +127,14 @@ class OstRedeemableSkuDetails extends PureComponent{
     //If purchaing -  text to processing
     //If not show value text
     if(this.state.isPurchasing){
-        this.btnText= 'Processing';
+      this.__setState({
+        btnText:'Processing'
+      });
+
     }else{
-      this.btnText=`Purchase for ${this.purchaseValue} ${this.tokenSymbol}`
+      this.__setState({
+        btnText:`Purchase for ${this.purchaseValue} ${this.tokenSymbol}`
+      });
     }
   };
 
@@ -228,29 +235,45 @@ class OstRedeemableSkuDetails extends PureComponent{
 
   onAlertConfirm = () => {
     //Change button text to processing
-    //Disable form
+    // isPurchasing flag takes care of disabling form
+    this.__setState({
+      isPurchasing: true
+    })
+    this.setBtnText();
+
   }
+
+
 
   excequteTranscaction = () => {
     //@Ashutosh
+
   }
 
   onTransactionSuccess = () => {
     //State change to show success message
     //Enable form
+    this.__setState({
+      isPurchasing: false
+    })
   }
 
   onTransactionError =( )=> {
-    //Set state for error , enale form
+    //Set state for error , enable form
+    this.__setState({
+      isPurchasing: false,
+      errorText : "Transaction Error"
+    })
   }
 
   onFormChange = () => {
     //Clear state error
-    //Any value change in from Show button and hide success message //set state transactoion success false
-  }
-
-  onTransactionError = () => {
-    //Display error set state
+    this.__setState({
+      isPurchasing: false,
+      errorText : ""
+    });
+    //Any value change in from Show button and hide success message
+    // set state transactoion success false
   }
 
   onEmailChange = (text) =>{
@@ -292,6 +315,7 @@ class OstRedeemableSkuDetails extends PureComponent{
                 Icon={() => {
                   return <Image source={downArrow} style={stylesMap.downArrow}/>;
                 }}
+                disabled = {this.state.isPurchasing}
               />
             </View>
 
@@ -316,6 +340,7 @@ class OstRedeemableSkuDetails extends PureComponent{
                 Icon={() => {
                   return <Image source={downArrow} style={stylesMap.downArrow}/>;
                 }}
+                disabled = {this.state.isPurchasing}
               />
             </View>
 
@@ -331,14 +356,16 @@ class OstRedeemableSkuDetails extends PureComponent{
                 blurOnSubmit={false}
                 value = {this.state.emailId}
                 onChangeText={this.onEmailChange}
+                editable = {!this.state.isPurchasing}
               />
             </View>
             <Text style={stylesMap.errorText}>{this.state.errorText}</Text>
             <TouchableOpacity
               onPress={this.onPurchaseClick}
-              style={stylesMap.purchaseBtn}>
+              style={stylesMap.purchaseBtn}
+              disabled = {this.state.isPurchasing}>
               <Text style={stylesMap.purchaseBtnText}>
-                {this.btnText}
+                {this.state.btnText}
               </Text>
             </TouchableOpacity>
 
