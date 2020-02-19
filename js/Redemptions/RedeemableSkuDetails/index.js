@@ -1,5 +1,5 @@
 import React,{PureComponent} from 'react';
-import {View, Text, Image, ScrollView, Platform, TextInput, TouchableOpacity} from 'react-native';
+import {View, Text, Image, ScrollView, Platform, TextInput, TouchableOpacity, Alert} from 'react-native';
 import OstJsonApi from "../../OstJsonApi";
 import RNPickerSelect from 'react-native-picker-select';
 
@@ -31,8 +31,9 @@ class OstRedeemableSkuDetails extends PureComponent{
       selectedAvailability : null,
       selectedDenomination : null,
       transactionSuccess: false,
-      error : null,
-      isPurchasing: false
+      errorText : null,
+      isPurchasing: false,
+      emailId : null
     };
 
     this.setBtnText();
@@ -41,26 +42,72 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
   __setState = (state={}) => {
-    this.__setState(state);
+    this.setState(state);
   };
   componentDidMount(){
     this.fetchDetails();
   }
 
-  //TODO @Sharaddha in componnent unmount clear refs,   this.navigation ,  set __setState to blank function
+  componentWillUnmount (){
+    //TODO @Sharaddha in componnent unmount clear refs,   this.navigation ,  set __setState to blank function
+  }
+
 
   fetchDetails = () => {
     OstJsonApi.getRedeemableSkuDetails(this.userId, this.skuDetails.id ,{}, this.onDetailsSuccess ,  this.onDetailsError)
   };
 
-  onDetailsSuccess = (data={}) =>{
+  onDetailsError = (data={}) =>{
     const resultType = data["result_type"] ;
-    this.skuDetails = data[resultType];
+    // this.skuDetails = data[resultType]; TODO remove this once Api is ready
+    this.skuDetails = {
+       id : 1,
+       name : "product name",
+      description: {text: "some description"}
+      ,images: {
+      product: {
+        original: {
+          url:"https://dummyimage.com/600x400/000/fff"
+        }
+      }},
+    availability: [
+      {
+        country: "INDIA",
+        country_iso_code: "INR",
+        currency_iso_code: "INR",
+        denominations: [
+          {
+            amount_in_fiat: '10',
+            amount_in_wei: '10',
+          },
+          {
+            amount_in_fiat: '20',
+            amount_in_wei: '20',
+          }
+        ]
+      },
+      {
+        country: "INDIA1",
+        country_iso_code: "INR1",
+        currency_iso_code: "INR1",
+        denominations: [
+          {
+            amount_in_fiat: '11',
+            amount_in_wei: '11',
+          },
+          {
+            amount_in_fiat: '21',
+            amount_in_wei: '21',
+          }
+        ]
+      }
+
+    ]
+    }
     //get first country and
     this.countrydata = this.getAvailableCountryList();
     //get first Denomination of selected country
     this.getFirstDenomination();
-    // this.getFirstDenomination();
     //Set state refeshing false here
     this.__setState({
       refreshing : false,
@@ -68,7 +115,7 @@ class OstRedeemableSkuDetails extends PureComponent{
 
   };
 
-  onDetailsError =( error)=> {
+  onDetailsSuccess =( error)=> {
     //TODO lets discuss
     console.log("in error ----",error);
   };
@@ -140,20 +187,46 @@ class OstRedeemableSkuDetails extends PureComponent{
     })
   }
 
-  onEmailChange = () => {
-
-  }
-
   onPurchaseClick = () =>{
     //Validate inputs
-    //Show Alert
+    if(this.isInputValid()){
+      //Show Alert
+      this.showConfirmationAlert();
+    }
+
   };
+
+  showConfirmationAlert = () =>{
+    Alert.alert(
+      '',
+      `We have received your order and will send an email shortly to ${this.state.emailId}`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {this.onAlertCancel()},
+          style: 'cancel',
+        },
+        {text: 'Confirm', onPress: () => {this.onAlertConfirm()}},
+      ],
+      {cancelable: false},
+    );
+  }
+
+  isInputValid = () =>{
+    if(this.state.emailId == null ){
+      this.__setState({
+        errorText:'Email Id is required'
+      })
+      return false;
+    }
+    return true
+  }
 
   onAlertCancel = () => {
 
   }
 
-  onAlertConfrim = () => {
+  onAlertConfirm = () => {
     //Change button text to processing
     //Disable form
   }
@@ -180,6 +253,12 @@ class OstRedeemableSkuDetails extends PureComponent{
     //Display error set state
   }
 
+  onEmailChange = (text) =>{
+    this.__setState({
+      emailId:text
+    })
+  }
+
 
   render(){
     return(
@@ -190,7 +269,7 @@ class OstRedeemableSkuDetails extends PureComponent{
           source={{uri:this.skuDetails.images.product.original.url}}>
         </Image>
         <Text style={stylesMap.descText}>
-          {this.skuDetails.description}
+          {this.skuDetails.description.text}
         </Text>
 
         {/*//TODO if not availablity Dont render anything below */}
@@ -250,9 +329,11 @@ class OstRedeemableSkuDetails extends PureComponent{
                 enablesReturnKeyAutomatically
                 style={inputBoxStyles.inputIOS}
                 blurOnSubmit={false}
+                value = {this.state.emailId}
+                onChangeText={this.onEmailChange}
               />
             </View>
-            <Text style={stylesMap.errorText}> error text will be seen here</Text>
+            <Text style={stylesMap.errorText}>{this.state.errorText}</Text>
             <TouchableOpacity
               onPress={this.onPurchaseClick}
               style={stylesMap.purchaseBtn}>
