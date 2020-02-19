@@ -16,7 +16,7 @@ class SkusList extends React.PureComponent{
         this.pagination = null;
         this.init();
         this.state = {
-            list: null,
+            list: [1,2,3],
             loadingNext: false
         }
     }
