@@ -13,7 +13,6 @@ class SkusList extends React.PureComponent{
         if(!this.userId) return;
         this.redemptionSkusModel = null ;
         this.pagination = null;
-        this.init();
         this.state = {
             list: null,
             loadingNext: false,
@@ -22,6 +21,7 @@ class SkusList extends React.PureComponent{
         this.noDataCell = {
             isEmpty: true
         }
+        this.init();
     }
 
     init(){
