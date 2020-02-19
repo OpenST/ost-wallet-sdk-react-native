@@ -4,6 +4,7 @@ import { FlatList, ActivityIndicator, View, Image, Text, TouchableWithoutFeedbac
 import styles from './styles';
 import RedemptionSkusModel from "../../services/OstJsonApiPagination/RedemptionSkusModel";
 import Pagination from '../../services/OstJsonApiPagination/Pagination';
+import OstRedemableCustomConfig from "../RedemableCustomConfig";
 
 class SkusList extends React.PureComponent{
     constructor( props ){
@@ -123,13 +124,16 @@ class SkusList extends React.PureComponent{
 }
 
 
-const ListHeaderComponent = (props) => (
-    <View styles={styles.headingWrapper}>
-    {/* TODO customise  */}
-      {props.logo ? <Image source={props.logo} style={styles.logoSkipFont} /> : <React.Fragment/>}
-      <Text style={styles.title}>{props.title}Decrypt Gift Card Options</Text>  
-      <Text style={styles.description}>{props.description}Buy coupons and get great deals by using the tokens you have earned</Text> 
-    </View>
-)
+const ListHeaderComponent = (props) => {
+    const storeLogo = OstRedemableCustomConfig.getStoreIconUri() , 
+            header = OstRedemableCustomConfig.getHeader(),
+            description = OstRedemableCustomConfig.getDescription()
+      ;
+    return (<View styles={styles.headingWrapper}>
+        {storeLogo && <Image source={storeLogo} style={styles.logoSkipFont}/> }
+        {header && <Text style={styles.title}>{header}</Text> }
+        {description && <Text style={styles.description}>{description}</Text> }
+    </View>)
+}
 
 export default SkusList;
