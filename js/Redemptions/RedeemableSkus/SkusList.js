@@ -5,6 +5,7 @@ import styles from './styles';
 import RedemptionSkusModel from "../../services/OstJsonApiPagination/RedemptionSkusModel";
 import Pagination from '../../services/OstJsonApiPagination/Pagination';
 import OstRedemableCustomConfig from "../RedemableCustomConfig";
+import multipleClickHandler from '../MultipleClickHandler';
 
 class SkusList extends React.PureComponent{
     constructor( props ){
@@ -47,7 +48,10 @@ class SkusList extends React.PureComponent{
         }
         let imageUrl = (item.images && item.images.list.original.url) || '';
         return (
-            <TouchableWithoutFeedback onPress={()=>{this.onItemClick(item)}}>
+            <TouchableWithoutFeedback onPress={multipleClickHandler(() => {
+                    this.onItemClick(item)
+                })}
+            >
                 <View style={styles.itemWrapper}>
                     <View style={styles.item}>
                         {imageUrl ? <Image source={{uri: imageUrl }} resizeMode={'cover'} style={{width: '100%', height: '100%'}} />: <React.Fragment/>}

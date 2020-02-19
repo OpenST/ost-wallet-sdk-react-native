@@ -72,6 +72,22 @@ let stylesMap = StyleSheet.create({
     width :20,
     marginVertical : 17,
     marginRight : 17
+  },
+  successMessageWrapper : {
+    borderWidth: 1,
+    borderColor: '#2a293b',
+    flex:1,
+    flexDirection:'row',
+    padding:10,
+    borderRadius:8
+  },
+  imageSuccessMessage:{
+    height:60,
+    width:60,
+    marginRight : 10
+  },
+  successText:{
+    flex:1
   }
 });
 
@@ -82,7 +98,7 @@ let inputBoxStyles = StyleSheet.create({
     paddingHorizontal: 21,
     borderWidth: 1,
     borderColor: '#2a293b',
-    borderRadius: 4,
+    borderRadius: 8,
     color: '#4a4a4a',
   },
   inputAndroid : {
@@ -91,7 +107,7 @@ let inputBoxStyles = StyleSheet.create({
     paddingHorizontal: 21,
     borderWidth: 1,
     borderColor: '#2a293b',
-    borderRadius: 4,
+    borderRadius: 8,
     color: '#4a4a4a',
   }
 })

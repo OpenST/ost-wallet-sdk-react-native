@@ -1,5 +1,5 @@
 import React,{PureComponent} from 'react';
-import {View, Text, Image, ScrollView, Platform, TextInput, TouchableOpacity} from 'react-native';
+import {View, Text, Image, ScrollView, Platform, TextInput, TouchableOpacity, Alert} from 'react-native';
 import OstJsonApi from "../../OstJsonApi";
 import RNPickerSelect from 'react-native-picker-select';
 
@@ -13,7 +13,11 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.navigation = this.props.navigation ;
     this.userId = this.props.userId ||  this.navigation.getParam('userId');
     this.skuDetails =this.navigation.getParam('redemptionSku');
-
+    this.tokenSymbol = 'DCT';
+    this.purchaseValue = 60;
+    this.denominationData = [];
+    this.countrydata = [];
+    ;
     if(!this.skuDetails) return;
 
     this.inputRefs = {
@@ -27,42 +31,111 @@ class OstRedeemableSkuDetails extends PureComponent{
       selectedAvailability : null,
       selectedDenomination : null,
       transactionSuccess: false,
-      error : null,
+      errorText : null,
       isPurchasing: false,
-      btnText : this.getBtnText()
+      emailId : null,
+      btnText : ""
     };
 
-    this.fetchDetails();
+
+
 
   }
 
   __setState = (state={}) => {
-    this.__setState(state);
+    this.setState(state);
   };
+  componentDidMount(){
+    this.fetchDetails();
+    this.setBtnText();
+  }
 
-  //TODO @Sharaddha in componnent unmount clear refs,   this.navigation ,  set __setState to blank function
+  componentWillUnmount (){
+    //TODO @Sharaddha in componnent unmount clear refs,   this.navigation ,  set __setState to blank function
+  }
+
 
   fetchDetails = () => {
-    OstJsonApi.getRedemptionSkuDetails(this.userId, this.skuDetails.id , this.onDetailsSuccess ,  this.onDetailsError)
+    OstJsonApi.getRedeemableSkuDetails(this.userId, this.skuDetails.id ,{}, this.onDetailsSuccess ,  this.onDetailsError)
   };
 
-  onDetailsSuccess = (data={}) =>{
+  onDetailsError = (data={}) =>{
     const resultType = data["result_type"] ;
-    this.skuDetails = data[resultType];
+    // this.skuDetails = data[resultType]; TODO remove this once Api is ready
+    this.skuDetails = {
+       id : 1,
+       name : "product name",
+      description: {text: "some description"}
+      ,images: {
+      product: {
+        original: {
+          url:"https://dummyimage.com/600x400/000/fff"
+        }
+      }},
+    availability: [
+      {
+        country: "INDIA",
+        country_iso_code: "INR",
+        currency_iso_code: "INR",
+        denominations: [
+          {
+            amount_in_fiat: '10',
+            amount_in_wei: '10',
+          },
+          {
+            amount_in_fiat: '20',
+            amount_in_wei: '20',
+          }
+        ]
+      },
+      {
+        country: "INDIA1",
+        country_iso_code: "INR1",
+        currency_iso_code: "INR1",
+        denominations: [
+          {
+            amount_in_fiat: '11',
+            amount_in_wei: '11',
+          },
+          {
+            amount_in_fiat: '21',
+            amount_in_wei: '21',
+          }
+        ]
+      }
+
+    ]
+    }
     //get first country and
+    this.countrydata = this.getAvailableCountryList();
     //get first Denomination of selected country
-    this.getFirstDenomination()
+    this.getFirstDenomination();
     //Set state refeshing false here
+    this.__setState({
+      refreshing : false,
+    })
+
   };
 
-  onDetailsError =( error)=> {
+  onDetailsSuccess =( error)=> {
     //TODO lets discuss
+    console.log("in error ----",error);
   };
 
-  getBtnText = () => {
+  setBtnText = () => {
     //Logic
     //If purchaing -  text to processing
     //If not show value text
+    if(this.state.isPurchasing){
+      this.__setState({
+        btnText:'Processing'
+      });
+
+    }else{
+      this.__setState({
+        btnText:`Purchase for ${this.purchaseValue} ${this.tokenSymbol}`
+      });
+    }
   };
 
   getFirstCountry = () =>{
@@ -70,13 +143,15 @@ class OstRedeemableSkuDetails extends PureComponent{
     return countryName ;
   };
 
-  getFirstDenomination = (country) => {
-    //TODO
+  getFirstDenomination = () => {
+    let availabilityData = this.skuDetails && this.skuDetails.availability && this.skuDetails.availability[0]
+    this.denominationData = this.getAvailableCurrencyData(availabilityData);
   };
 
   getAvailableCountryList = () =>{
-    let availabilityData = this.skuDetails.availability,
+    let availabilityData = this.skuDetails.availability || [],
       countryData      = [];
+    if(!availabilityData) return;
     for(let cnt = 0; cnt< availabilityData.length ; cnt++){
       let country = availabilityData[cnt] ,
         countryName = country &&  country.country
@@ -87,41 +162,27 @@ class OstRedeemableSkuDetails extends PureComponent{
   };
 
 
-  getAvailableCurrencyData = ( country) =>{
+  getAvailableCurrencyData = ( availabilityData ) =>{
 
     //Loop on state denomination
     //Create selector Obj
-
-    let selectedCountry   = country,
-        availabilityData  = this.skuDetails.availability,
-        currencyDataArray = [],
+    if(!availabilityData) return;
+    let selectedCountry   = availabilityData.country,
+        denominationsArray = availabilityData.denominations,
         currencyItems     = [],
-        currencyIsoCode   ='',
-        firstItemCurrency =null;
+        currencyIsoCode   =availabilityData.currency_iso_code;
 
-    for(let cnt = 0; cnt< availabilityData.length ; cnt++){
-      let item = availabilityData[cnt];
-      if(item.country == selectedCountry){
-        currencyDataArray = item.options;
-        firstItemCurrency = item.options[0];
-        currencyIsoCode    = item.currency_iso_code;
-      }
-    }
-    this.setState({
-      selectedCurrency:firstItemCurrency
-    })
-
-
-    for(let cnt = 0 ; cnt < currencyDataArray.length ; cnt ++){
-      let label = `${currencyDataArray[cnt].toString()} ${currencyIsoCode}`;
-      currencyItems.push({label:label, value:currencyDataArray[cnt].toString()})
+    for(let cnt = 0 ; cnt < denominationsArray.length ; cnt ++){
+      let label = `${denominationsArray[cnt].amount_in_fiat} ${currencyIsoCode}`;
+      currencyItems.push({label:label, value:denominationsArray[cnt].amount_in_fiat})
     }
   return currencyItems;
   }
 
 
-  onAvailabityChange = (value) =>{
+  onCountryChange = (value) =>{
     let currencyData = this.getAvailableCurrencyData(value);
+    this.denominationData = currencyData;
     this.__setState({
       selectedAvailability: value
     })
@@ -133,44 +194,92 @@ class OstRedeemableSkuDetails extends PureComponent{
     })
   }
 
-  onEmailChange = () => {
-
-  }
-
   onPurchaseClick = () =>{
     //Validate inputs
-    //Show Alert
+    if(this.isInputValid()){
+      //Show Alert
+      this.showConfirmationAlert();
+    }
+
   };
+
+  showConfirmationAlert = () =>{
+    Alert.alert(
+      '',
+      `We have received your order and will send an email shortly to ${this.state.emailId}`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {this.onAlertCancel()},
+          style: 'cancel',
+        },
+        {text: 'Confirm', onPress: () => {this.onAlertConfirm()}},
+      ],
+      {cancelable: false},
+    );
+  }
+
+  isInputValid = () =>{
+    if(this.state.emailId == null ){
+      this.__setState({
+        errorText:'Email Id is required'
+      })
+      return false;
+    }
+    return true
+  }
 
   onAlertCancel = () => {
 
   }
 
-  onAlertConfrim = () => {
+  onAlertConfirm = () => {
     //Change button text to processing
-    //Disable form
+    // isPurchasing flag takes care of disabling form
+    this.__setState({
+      isPurchasing: true
+    })
+    this.setBtnText();
+
   }
+
+
 
   excequteTranscaction = () => {
     //@Ashutosh
+
   }
 
   onTransactionSuccess = () => {
     //State change to show success message
     //Enable form
+    this.__setState({
+      isPurchasing: false
+    })
   }
 
   onTransactionError =( )=> {
-    //Set state for error , enale form
+    //Set state for error , enable form
+    this.__setState({
+      isPurchasing: false,
+      errorText : "Transaction Error"
+    })
   }
 
   onFormChange = () => {
     //Clear state error
-    //Any value change in from Show button and hide success message //set state transactoion success false
+    this.__setState({
+      isPurchasing: false,
+      errorText : ""
+    });
+    //Any value change in form Show button and hide success message
+    // set state transaction success false
   }
 
-  onTransactionError = () => {
-    //Display error set state
+  onEmailChange = (text) =>{
+    this.__setState({
+      emailId:text
+    })
   }
 
 
@@ -180,92 +289,96 @@ class OstRedeemableSkuDetails extends PureComponent{
         <Text style={stylesMap.heading}>{this.skuDetails.name}</Text>
         <Image
           style={stylesMap.imageStyle}
-          source={{uri:this.skuDetails.images.purpose.size.url}}>
+          source={{uri:this.skuDetails.images.product.original.url}}>
         </Image>
         <Text style={stylesMap.descText}>
           {this.skuDetails.description.text}
         </Text>
 
         {/*//TODO if not availablity Dont render anything below */}
+        {this.skuDetails.availability && (
+          <React.Fragment>
+            <View style={stylesMap.wrapperPicker}>
+              <Text style={stylesMap.labelStyle}> Select Country </Text>
+              <RNPickerSelect
+                ref={ref => {
+                  this.inputRefs.countryPicker = ref;
+                }}
+                onDownArrow={() => {
+                  this.inputRefs.currencyPicker.togglePicker();
+                }}
+                style={inputBoxStyles}
+                placeholder={{}}
+                onValueChange={(value) => this.onCountryChange(value)}
+                items={this.getAvailableCountryList()}
+                useNativeAndroidPickerStyle={false}
+                Icon={() => {
+                  return <Image source={downArrow} style={stylesMap.downArrow}/>;
+                }}
+                disabled = {this.state.isPurchasing}
+              />
+            </View>
 
-        {/* Country Selector */}
-        <View style={stylesMap.wrapperPicker}>
-          <Text style={stylesMap.labelStyle}> Select Country </Text>
-          <RNPickerSelect
-            ref={ref =>{
-              this.inputRefs.countryPicker = ref;
-            }}
-            onDownArrow={() => {
-              this.inputRefs.currencyPicker.togglePicker();
-            }}
-            style={inputBoxStyles}
-            placeholder={{}}
-            onValueChange={(value) => this.onValueChange(value) }
-            items={this.getAvailableCountryList()}
-            useNativeAndroidPickerStyle={false}
-            Icon={() => {
-              return <Image source={downArrow} style={stylesMap.downArrow} />;
-            }}
-          />
-        </View>
-        {/* Country Selector ends */}
-        {/* Currency Selector */}
-        <View style={stylesMap.wrapperPicker}>
-          <Text style={stylesMap.labelStyle}> Card Amount </Text>
-          <RNPickerSelect
-            ref={ref =>{
-              this.inputRefs.currencyPicker = ref;
-            }}
-            onUpArrow={() => {
-              this.inputRefs.countryPicker.togglePicker();
-            }}
-            onDownArrow={() => {
-              this.inputRefs.emailIdInput.focus();
-            }}
-            style={inputBoxStyles}
-            placeholder={{}}
-            value = {this.state.selectedDenomination}
-            onValueChange={(value) => this.onValueChangeCurrency(value)}
-            items={this.getAvailableCurrencyData()}
-            useNativeAndroidPickerStyle={false}
-            Icon={() => {
-              return <Image source={downArrow} style={stylesMap.downArrow} />;
-            }}
-          />
-        </View>
-        {/* Currency Selector ends*/}
+            <View style={stylesMap.wrapperPicker}>
+              <Text style={stylesMap.labelStyle}> Card Amount </Text>
+              <RNPickerSelect
+                ref={ref => {
+                  this.inputRefs.currencyPicker = ref;
+                }}
+                onUpArrow={() => {
+                  this.inputRefs.countryPicker.togglePicker();
+                }}
+                onDownArrow={() => {
+                  this.inputRefs.emailIdInput.focus();
+                }}
+                style={inputBoxStyles}
+                placeholder={{}}
+                value = {this.state.selectedDenomination}
+                onValueChange={(value) => this.onDenominationChange(value)}
+                items={this.denominationData}
+                useNativeAndroidPickerStyle={false}
+                Icon={() => {
+                  return <Image source={downArrow} style={stylesMap.downArrow}/>;
+                }}
+                disabled = {this.state.isPurchasing}
+              />
+            </View>
 
-        {/* Email Id TextInput */}
-        <View>
-          <Text style={stylesMap.labelStyle}> Your mail id</Text>
-          <TextInput
-            ref={ref =>{
-              this.inputRefs.emailIdInput = ref;
-            }}
-            returnKeyType="next"
-            enablesReturnKeyAutomatically
-            style={inputBoxStyles.inputIOS}
-            blurOnSubmit={false}
-          />
-        </View>
+            <View>
+              <Text style={stylesMap.labelStyle}> Your mail id</Text>
+              <TextInput
+                ref={ref => {
+                  this.inputRefs.emailIdInput = ref;
+                }}
+                returnKeyType="done"
+                enablesReturnKeyAutomatically
+                style={inputBoxStyles.inputIOS}
+                blurOnSubmit={false}
+                value = {this.state.emailId}
+                onChangeText={this.onEmailChange}
+                editable = {!this.state.isPurchasing}
+              />
+            </View>
+            <Text style={stylesMap.errorText}>{this.state.errorText}</Text>
+            {false &&
+              <View style={stylesMap.successMessageWrapper}>
+                <Image source={msgIcon} style={stylesMap.imageSuccessMessage}/>
+                <Text style={stylesMap.successText}>
+                  We have received your order and will send an email shortly to {this.state.emailId}
+                </Text>
+              </View>
+            }
 
-        {/* Email Id TextInput ends */}
+            <TouchableOpacity
+              onPress={this.onPurchaseClick}
+              style={stylesMap.purchaseBtn}
+              disabled = {this.state.isPurchasing}>
+              <Text style={stylesMap.purchaseBtnText}>
+                {this.state.btnText}
+              </Text>
+            </TouchableOpacity>
 
-        {/* Error Text */}
-        <Text style={stylesMap.errorText}> error text will be seen here</Text>
-        {/* Error Text ends */}
-
-        {/* Submit Button */}
-        <TouchableOpacity
-          onPress={this.onPurchaseClick}
-          style={stylesMap.purchaseBtn}
-        >
-          <Text style={stylesMap.purchaseBtnText}>
-            Purchase
-          </Text>
-        </TouchableOpacity>
-        {/* Submit Button ends */}
-
+          </React.Fragment>)}
       </ScrollView>
     )
   }

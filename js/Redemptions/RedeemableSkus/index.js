@@ -61,7 +61,7 @@ class OstRedeemableSkus extends React.PureComponent {
       if(this.props.onItemClick){
         this.props.onItemClick();
       } else {
-        this.props.navigation.push('RedeemableSkuDetails', {'skuObj': item});
+        this.props.navigation.push('RedeemableSkuDetails', {'redemptionSku': item,'userId':this.userId});
       }
     }
 
