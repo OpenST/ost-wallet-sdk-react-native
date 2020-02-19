@@ -272,8 +272,8 @@ class OstRedeemableSkuDetails extends PureComponent{
       isPurchasing: false,
       errorText : ""
     });
-    //Any value change in from Show button and hide success message
-    // set state transactoion success false
+    //Any value change in form Show button and hide success message
+    // set state transaction success false
   }
 
   onEmailChange = (text) =>{
@@ -360,6 +360,15 @@ class OstRedeemableSkuDetails extends PureComponent{
               />
             </View>
             <Text style={stylesMap.errorText}>{this.state.errorText}</Text>
+            {false &&
+              <View style={stylesMap.successMessageWrapper}>
+                <Image source={msgIcon} style={stylesMap.imageSuccessMessage}/>
+                <Text style={stylesMap.successText}>
+                  We have received your order and will send an email shortly to {this.state.emailId}
+                </Text>
+              </View>
+            }
+
             <TouchableOpacity
               onPress={this.onPurchaseClick}
               style={stylesMap.purchaseBtn}
