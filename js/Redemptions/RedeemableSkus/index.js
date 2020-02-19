@@ -3,7 +3,7 @@ import { View, Image, Text, ScrollView, SafeAreaView, RefreshControl } from 'rea
 import { OstJsonApi } from '@ostdotcom/ost-wallet-sdk-react-native';
 
 import HeaderRight from "../CommonComponents/HeaderRight";
-import ImageConfig from  "../ImageConfig";
+import OstRedemableCustomConfig from "../RedemableCustomConfig";
 import OstThemeConfigHelper from '../../helpers/OstThemeConfigHelper';
 import styles from './styles';
 import SkusList from './SkusList';
@@ -12,7 +12,7 @@ class OstRedeemableSkus extends React.PureComponent {
    
     static navigationOptions = ({ navigation }) => {
         const balance = navigation && navigation.getParam("balance") || 0 ,
-             isCustomBack = !!ImageConfig.getBackArrowUri()
+             isCustomBack = !!OstRedemableCustomConfig.getBackArrowUri()
         ;
         let navigationOption = {
           title: navigation && navigation.getParam('navTitle')|| "",
@@ -34,10 +34,6 @@ class OstRedeemableSkus extends React.PureComponent {
 
         return Object.assign(navigationOption, OstThemeConfigHelper.getNavigationHeaderConfig());
     };
-
-    static setImageConfig(config){
-      ImageConfig.setImageConfig(config);
-    }
     
     constructor( props ){
         super(props);
