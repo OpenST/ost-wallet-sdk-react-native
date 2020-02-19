@@ -47,8 +47,8 @@ class SkusList extends React.PureComponent{
         let imageUrl = (item.image && item.image.list.original.url) || '';
         return (
             <TouchableWithoutFeedback onPress={()=>{this.onItemClick(item)}}>
-                <View style={{flex: 0.5, width: 160, height: 160}}>
-                    <View style={{flex: 1, margin: 5, backgroundColor: '#B3B3B3', alignItems:'center', justifyContent: 'center'}}>
+                <View style={styles.itemWrapper}>
+                    <View style={styles.item}>
                         {imageUrl ? <Image source={{uri: imageUrl }} resizeMode={'cover'} style={{width: '100%', height: '100%'}} />: <React.Fragment/>}
                     </View>
                 </View>
