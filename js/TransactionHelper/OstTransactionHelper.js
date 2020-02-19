@@ -19,6 +19,7 @@ let transactionConfig = {};
 
 class OstTransactionHelper {
   constructor() {
+    this.isExternalConfig = false;
     this.setTxConfig();
   }
 
@@ -34,6 +35,7 @@ class OstTransactionHelper {
 
   setTxConfig(externalConfig) {
     externalConfig = externalConfig || {};
+    this.isExternalConfig = !!Object.keys(externalConfig).length;
     let masterConfig = JSON.parse(JSON.stringify(defaultTransactionConfig));
 
     // Deep Merge.
@@ -234,6 +236,10 @@ class OstTransactionExecutor {
       this.ee.emit(eName, workflowContext , contextEntity);
     }
 
+   this.callExecuteTransfer(executeTxDelegate);
+  }
+
+  callExecuteTransfer( executeTxDelegate ){
     OstWalletSdk.executeTransaction(
       this.userId,
       this.addresses,
@@ -249,4 +255,7 @@ class OstTransactionExecutor {
   }
 }
 
-export default new OstTransactionHelper()
+export {OstTransactionExecutor , OstTransactionHelper };
+
+export default new OstTransactionHelper(); 
+
