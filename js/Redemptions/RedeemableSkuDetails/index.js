@@ -5,7 +5,7 @@ import RNPickerSelect from 'react-native-picker-select';
 
 import inlineStyes from './styles';
 
-class RedeemableSkuDetails extends PureComponent{
+class OstRedeemableSkuDetails extends PureComponent{
   constructor(props){
     super(props);
     this.skuDetails = this.props.navigation.getParam('obj');
@@ -164,5 +164,5 @@ class RedeemableSkuDetails extends PureComponent{
   }
 }
 
-export default RedeemableSkuDetails;
+export default OstRedeemableSkuDetails;
 

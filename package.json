@@ -24,12 +24,12 @@
   "author": "OST.com Inc.",
   "license": " Apache-2.0",
   "peerDependencies": {
-    "react-native": "^0.60.0",
-    "eventemitter3": "^4.0.0",
-    "lodash.merge": "^4.6.2",
-    "bignumber.js": "^8.1.1"
+    "react-native": "0.60.0",
+    "eventemitter3": "4.0.0",
+    "lodash.merge": "4.6.2",
+    "bignumber.js": "8.1.1"
   },
   "dependencies": {
-    "react-native-picker-select": "^6.5.0"
+    "react-native-picker-select": "6.5.0"
   }
 }

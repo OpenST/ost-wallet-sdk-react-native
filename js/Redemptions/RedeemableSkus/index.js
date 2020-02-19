@@ -8,7 +8,7 @@ import OstThemeConfigHelper from '../../helpers/OstThemeConfigHelper';
 import styles from './styles';
 import SkusList from './SkusList';
 
-class RedeemableSkusScreen extends React.PureComponent {
+class OstRedeemableSkus extends React.PureComponent {
    
     static navigationOptions = ({ navigation }) => {
         const balance = navigation && navigation.getParam("balance") || 0 ,
@@ -113,4 +113,4 @@ class RedeemableSkusScreen extends React.PureComponent {
         );}
 }
 
-export default RedeemableSkusScreen;
+export default OstRedeemableSkus;
