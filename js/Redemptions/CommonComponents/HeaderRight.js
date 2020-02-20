@@ -10,7 +10,7 @@ export default (props) => {
     return (
         <View style={styles.headerRightWrapper}>
              {walletIcon ? <Image source={walletIcon} style={styles.walletImgSkipFont} /> : <React.Fragment/>}
-             <Text style={[styles.balanceText, OstThemeConfigHelper.getC1Config()]}>{props.balance}</Text>
+             <Text style={[ OstThemeConfigHelper.getC1Config(), styles.balanceText]}>{props.balance}</Text>
         </View>
     )
 }
