@@ -33,15 +33,6 @@ let stylesMap = StyleSheet.create({
     fontFamily:'Avenir-Book',
     marginBottom:5
   },
-  inputIOS :{
-    fontSize: 15,
-    paddingVertical: 13,
-    paddingHorizontal: 21,
-    borderWidth: 1,
-    borderColor: '#2a293b',
-    borderRadius: 4,
-    color: '#4a4a4a',
-  },
   wrapperPicker:{
     marginBottom:20
   },
@@ -89,27 +80,16 @@ let stylesMap = StyleSheet.create({
   },
   successText:{
     flex:1
+  },
+  input : {
+    fontSize: 15,
+    paddingVertical: 13,
+    paddingHorizontal: 21,
+    borderWidth: 1,
+    borderColor: '#2a293b',
+    borderRadius: 8,
+    color: '#4a4a4a',
   }
 });
 
-let inputBoxStyles = StyleSheet.create({
-  inputIOS : {
-    fontSize: 15,
-    paddingVertical: 13,
-    paddingHorizontal: 21,
-    borderWidth: 1,
-    borderColor: '#2a293b',
-    borderRadius: 8,
-    color: '#4a4a4a',
-  },
-  inputAndroid : {
-    fontSize: 15,
-    paddingVertical: 13,
-    paddingHorizontal: 21,
-    borderWidth: 1,
-    borderColor: '#2a293b',
-    borderRadius: 8,
-    color: '#4a4a4a',
-  }
-})
-export {stylesMap,inputBoxStyles};
+export {stylesMap};

@@ -7,7 +7,7 @@ import RedemptionController from "../RedemptionController";
 import OstJsonApi from "../../OstJsonApi";
 import RNPickerSelect from 'react-native-picker-select';
 
-import {stylesMap,inputBoxStyles} from './styles';
+import {stylesMap} from './styles';
 import msgIcon from '../../../assets/msg-icon.png';
 import downArrow from '../../../assets/down-arrow.png';
 import OstRedemableCustomConfig from "../RedemableCustomConfig";
@@ -352,6 +352,13 @@ class OstRedeemableSkuDetails extends PureComponent{
     }
   }
 
+  getRNPickerStyles = () => {
+    let styles = {...stylesMap.input, ...OstThemeConfigHelper.getNativeSelectConfig()};
+    return {
+      inputIOS : styles,
+      inputAndroid : styles
+    }
+  }
 
   render(){
     return(
@@ -372,11 +379,11 @@ class OstRedeemableSkuDetails extends PureComponent{
         {this.skuDetails.availability && (
           <React.Fragment>
             <View style={stylesMap.wrapperPicker}>
-              <Text style={[stylesMap.labelStyle, OstThemeConfigHelper.getH4Config()]}> Select Country </Text>
+              <Text style={[stylesMap.labelStyle, OstThemeConfigHelper.getC2Config()]}> Select Country </Text>
               <RNPickerSelect
                 ref={this.setCountryPickerRef}
                 onDownArrow={this.onDownArrowClickCountry}
-                style={[inputBoxStyles, OstThemeConfigHelper.getNativeSelectConfig() ]}
+                style={this.getRNPickerStyles()}
                 placeholder={{}}
                 onValueChange={this.onCountryChange}
                 items={this.getAvailableCountryList()}
@@ -389,7 +396,7 @@ class OstRedeemableSkuDetails extends PureComponent{
             </View>
 
             <View style={stylesMap.wrapperPicker}>
-              <Text style={[stylesMap.labelStyle, OstThemeConfigHelper.getH4Config()]}> Card Amount </Text>
+              <Text style={[stylesMap.labelStyle, OstThemeConfigHelper.getC2Config()]}> Card Amount </Text>
               <RNPickerSelect
                 ref={this.setDenominationPickerRef}
                 onUpArrow={() => {
@@ -398,7 +405,7 @@ class OstRedeemableSkuDetails extends PureComponent{
                 onDownArrow={() => {
                   this.inputRefs.emailIdInput.focus();
                 }}
-                style={[inputBoxStyles, OstThemeConfigHelper.getNativeSelectConfig() ]}
+                style={this.getRNPickerStyles()}
                 placeholder={{}}
                 value = {this.state.selectedDenomination}
                 onValueChange={(value) => this.onDenominationChange(value)}
@@ -412,12 +419,12 @@ class OstRedeemableSkuDetails extends PureComponent{
             </View>
 
             <View>
-              <Text style={[stylesMap.labelStyle, OstThemeConfigHelper.getH4Config()]}> Your mail id</Text>
+              <Text style={[stylesMap.labelStyle, OstThemeConfigHelper.getC2Config()]}> Your mail id</Text>
               <TextInput
                 ref={this.setEmailINputPickerRef}
                 returnKeyType="done"
                 enablesReturnKeyAutomatically
-                style={[inputBoxStyles.inputIOS, OstThemeConfigHelper.getTextFieldConfig()]}
+                style={[stylesMap.input, OstThemeConfigHelper.getTextFieldConfig()]}
                 blurOnSubmit={false}
                 value = {this.state.emailId}
                 onChangeText={this.onEmailChange}
