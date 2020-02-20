@@ -13,6 +13,7 @@ import downArrow from '../../../assets/down-arrow.png';
 import OstRedemableCustomConfig from "../RedemableCustomConfig";
 import OstThemeConfigHelper from '../../helpers/OstThemeConfigHelper';
 import HeaderRight from "../CommonComponents/HeaderRight";
+import tokenHelper from "../TokenHelper";
 
 class OstRedeemableSkuDetails extends PureComponent{
   static navigationOptions = ({ navigation }) => {
@@ -71,6 +72,27 @@ class OstRedeemableSkuDetails extends PureComponent{
       btnText : ""
     };
 
+    this.init();
+  }
+
+  init(){
+    if(!tokenHelper.token){
+      tokenHelper.init(this.ostUserId).then(()=>{
+        this.updateBalance();
+      }).catch(()=> {});
+    }else{
+      this.updateBalance();
+    }
+  }
+
+  updateBalance(){
+    OstJsonApi.getBalanceForUserId(this.ostUserId, (res) => {
+      let balance = res.balance && res.balance.available_balance;
+      balance = tokenHelper.toBtPrecision(tokenHelper.fromDecimal(balance));
+      this.props.navigation && this.props.navigation.setParams && this.props.navigation.setParams({
+        balance
+      })
+    }, () => {});
   }
 
   __setState = (state={}) => {
@@ -428,12 +450,16 @@ class OstRedeemableSkuDetails extends PureComponent{
     )
   }
 
-  geAmount(){
-    //TODO return array
+  getSelectedAmountInWei(){
+    return this.state.selectedDenomination && this.state.selectedDenomination["amount_in_wei"] || 0;
   }
 
-  getTokenHolderAddress(){
-  //TODO return array
+  getSelectedAmountInFiat(){
+    return this.state.selectedDenomination && this.state.selectedDenomination["amount_in_fiat"] || 0;
+  }
+
+  getSelectedCountry(){
+    return this.state.selectedAvailability && this.state.selectedAvailability["country_iso_code"] || "";
   }
 
   getTxMeta(){
@@ -443,19 +469,22 @@ class OstRedeemableSkuDetails extends PureComponent{
 
   getRedeemableDetails(){
     return  {
-       "redeemable_sku_id": "",
-       "amount": 10.25,
-       "currency": "USD",
+       "redeemable_sku_id": this.skuDetails.id,
+       "amount": this.getSelectedAmountInFiat(),
+       "country": this.getSelectedCountry(),
        "email": this.state.emailId
     }
   }
 
   executeTranscaction = () => {
     const controller = new RedemptionController(this.ostUserId, this, this.ostWalletUIWorkflowCallback) ;
-    const delegate = controller.getWorkflowDelegate();
+    const delegate = controller.getWorkflowDelegate() ,
+          amounts = [this.getSelectedAmountInWei()] ,
+          address = [tokenHelper.getTokenHolderAdresses()]
+    ;
     OstRedemptionTransactionHelper.executeDirectTransfer( this.ostUserId,
-                                                          this.geAmount(),
-                                                          this.getTokenHolderAddress(),
+                                                          amounts,
+                                                          address,
                                                           this.getTxMeta(),
                                                           this.getRedeemableDetails(),
                                                           delegate);
