@@ -7,6 +7,7 @@ import OstRedemableCustomConfig from "../RedemableCustomConfig";
 import OstThemeConfigHelper from '../../helpers/OstThemeConfigHelper';
 import styles from './styles';
 import SkusList from './SkusList';
+import Pricer from '../../helpers/Pricer';
 
 class OstRedeemableSkus extends React.PureComponent {
    
@@ -26,6 +27,7 @@ class OstRedeemableSkus extends React.PureComponent {
             shadowOpacity: 0.1,
             shadowRadius: 3
           },
+          headerBackTitle: null,
           headerRight: <HeaderRight balance={balance}/>
         };
         if( isCustomBack ){
@@ -40,6 +42,7 @@ class OstRedeemableSkus extends React.PureComponent {
         this.userId = props.userId || props.navigation.getParam("ostUserId");
         OstJsonApi.getBalanceForUserId(this.userId, (res) => {
           let balance = res.balance && res.balance.available_balance;
+          balance = Pricer.toBtPrecision(Pricer.fromDecimal(balance));
           props.navigation.setParams({
             balance
           })

@@ -8,6 +8,31 @@ import msgIcon from '../../../assets/msg-icon.png';
 import downArrow from '../../../assets/down-arrow.png';
 
 class OstRedeemableSkuDetails extends PureComponent{
+  static navigationOptions = ({ navigation }) => {
+    const balance = navigation && navigation.getParam("balance") || 0 ,
+         isCustomBack = !!OstRedemableCustomConfig.getBackArrowUri()
+    ;
+    let navigationOption = {
+      title: navigation && navigation.getParam('navTitle')|| "",
+      headerStyle:  {
+        borderBottomWidth: 0,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 1
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 3
+      },
+      headerBackTitle: null,
+      headerRight: <HeaderRight balance={balance}/>
+    };
+    if( isCustomBack ){
+      navigationOption["headerBackImage"] = ""; //TODO @Preshita
+    }
+
+    return Object.assign(navigationOption, OstThemeConfigHelper.getNavigationHeaderConfig());
+};
   constructor(props){
     super(props);
     this.navigation = this.props.navigation ;
@@ -49,7 +74,9 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
   componentWillUnmount (){
-    //TODO @Sharaddha in componnent unmount clear refs,   this.navigation ,  set __setState to blank function
+    this.__setState = () => {};
+    this.navigation = null;
+    this.inputRefs = null;
   }
 
 
