@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
-import { OstJsonApi } from '@ostdotcom/ost-wallet-sdk-react-native';
+import { OstJsonApi } from '../../OstJsonApi';;
 
 import HeaderRight from "../CommonComponents/HeaderRight";
 import OstRedemableCustomConfig from "../RedemableCustomConfig";
@@ -9,7 +9,7 @@ import OstWalletUIWorkflowCallback from '../../OstWalletUIWorkflowCallback';
 import styles from './styles';
 import SkusList from './SkusList';
 import BackArrow from '../CommonComponents/BackArrow';
-import Pricer from '../../helpers/Pricer';
+import tokenHelper from "../TokenHelper";
 
 function __getParam(navigation ,  paramName) {
   if(navigation && navigation.getParam){
@@ -18,6 +18,8 @@ function __getParam(navigation ,  paramName) {
   return null;
 }
 
+
+//TODO lets think on navigation checks
 
 class OstRedeemableSkus extends React.PureComponent {
    
@@ -61,17 +63,31 @@ class OstRedeemableSkus extends React.PureComponent {
         if( !this.ostWalletUIWorkflowCallback || !(this.ostWalletUIWorkflowCallback instanceof OstWalletUIWorkflowCallback)  ) {
           let err = new Error("ostWalletUIWorkflowCallback can not be null and must be an instanceof OstWalletUIWorkflowCallback");
           throw err;
-        }
-  
-       OstJsonApi.getBalanceForUserId(this.ostUserId, (res) => {
-        let balance = res.balance && res.balance.available_balance;
-        balance = Pricer.toBtPrecision(Pricer.fromDecimal(balance));
-        props.navigation.setParams({
-          balance
-        })
-      }, (ostError) => {});
+        }  
+
+        this.init();
     }
 
+    init(){
+      if(!tokenHelper.token){
+        tokenHelper.init(this.ostUserId).then(()=>{
+          this.updateBalance();
+        }).catch(()=>{})
+      }else{
+        this.updateBalance();
+      }
+    }
+
+    updateBalance(){
+      OstJsonApi.getBalanceForUserId(this.ostUserId, (res) => {
+        let balance = res.balance && res.balance.available_balance;
+        balance = tokenHelper.toBtPrecision(tokenHelper.fromDecimal(balance));
+        this.props.navigation && this.props.navigation.setParams && this.props.navigation.setParams({
+          balance
+        })
+      }, () => {});
+    }
+  
     componentWillUnmount(){
       this.__setState = () => {};
     }
@@ -85,7 +101,7 @@ class OstRedeemableSkus extends React.PureComponent {
       if(this.props.onItemClick){
         this.props.onItemClick(item , index);
       } else {
-        this.props.navigation.push('RedeemableSkuDetails', {'redemptionSku': item,
+        this.props.navigation && this.props.navigation.push && this.props.navigation.push('RedeemableSkuDetails', {'redemptionSku': item,
                                                             'ostUserId':this.ostUserId,
                                                             'ostWalletUIWorkflowCallback': this.ostWalletUIWorkflowCallback
                                                           });
