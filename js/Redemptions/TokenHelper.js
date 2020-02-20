@@ -1,5 +1,4 @@
 import  OstWalletSdk from '../OstWalletSdk';
-import { OstJsonApi } from '../OstJsonApi';
 import BigNumber from 'bignumber.js';
 
 class TokenHelper {

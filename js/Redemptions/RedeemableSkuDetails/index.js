@@ -62,7 +62,6 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.ostUserId = props.ostUserId || __getParam(props.navigation, "ostUserId") ;
     this.ostWalletUIWorkflowCallback = props.ostWalletUIWorkflowCallback || __getParam(props.navigation, "ostWalletUIWorkflowCallback");
     this.skuDetails = __getParam(props.navigation, "redemptionSku") || {};
-    this.denominationData = [];
 
     if(!this.skuDetails) return;
 
@@ -127,7 +126,7 @@ class OstRedeemableSkuDetails extends PureComponent{
   onDetailsSuccess = (data={}) =>{
     const resultType = data["result_type"] || {};
     this.skuDetails = data[resultType] || {};
-    this.setFirstDenomination();
+    this.setInitialAvailabilityAndDenomination();
     this.__setState({
       refreshing : false,
     })
@@ -148,10 +147,11 @@ class OstRedeemableSkuDetails extends PureComponent{
     }
   };
 
-  setFirstDenomination = () => {
-    let availabilityData = this.skuDetails.availability && this.skuDetails.availability[0];
-    this.denominationData = this.getAvailableCurrencyData(availabilityData);
-  };
+  setInitialAvailabilityAndDenomination = () => {
+    this.state.selectedAvailability =  this.skuDetails.availability && this.skuDetails.availability[0] || {} ;
+    const denominations = this.state.selectedAvailability["denominations"] || [];
+    this.state.selectedDenomination =  denominations[0] || {};
+  }
 
   getAvailableCountryList = () =>{
     let availabilityData = (this.skuDetails && this.skuDetails.availability) || [],
@@ -165,16 +165,16 @@ class OstRedeemableSkuDetails extends PureComponent{
     return countryData;
   };
 
-  getAvailableCurrencyData = ( availabilityData ) =>{
-    if(!availabilityData) return [];
-    let denominationsArray = availabilityData.denominations || [],
-        currencyIsoCode   = availabilityData.currency_iso_code,
+  getAvailableCurrencyData = ( ) =>{
+    if(!this.state.selectedAvailability) return [];
+    let denominationsArray = this.state.selectedAvailability.denominations || [],
+        currencyIsoCode   = this.state.selectedAvailability.currency_iso_code,
         currencyItems     = []
         ;
     for(let cnt = 0 ; cnt < denominationsArray.length ; cnt ++){
       let currentDenomination = denominationsArray[cnt] || {},
           label = `${currentDenomination.amount_in_fiat} ${currencyIsoCode}`,
-          value = currentDenomination.amount_in_fiat ;
+          value = currentDenomination ;
       currencyItems.push({label, value})
     }
    return currencyItems;
@@ -182,7 +182,6 @@ class OstRedeemableSkuDetails extends PureComponent{
 
 
   onCountryChange = (value) =>{
-    this.denominationData = this.getAvailableCurrencyData(value);
     this.__setState({
       selectedAvailability: value
     });
@@ -361,7 +360,7 @@ class OstRedeemableSkuDetails extends PureComponent{
                 placeholder={{}}
                 value = {this.state.selectedDenomination}
                 onValueChange={this.onDenominationChange}
-                items={this.denominationData}
+                items={this.getAvailableCurrencyData()}
                 useNativeAndroidPickerStyle={false}
                 Icon={this.getPickerIcon}
                 disabled = {this.state.isPurchasing}
