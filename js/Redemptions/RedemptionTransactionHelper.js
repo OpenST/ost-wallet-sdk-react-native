@@ -45,7 +45,7 @@ class OstRedemptionTransactionExecutor extends OstTransactionExecutor {
             this.ruleName,
             this.txMeta,
             executeTxDelegate,
-            {redemption_details: this.redemptionDetails}
+            {"redemption_meta": this.redemptionDetails}
           )
     }
 

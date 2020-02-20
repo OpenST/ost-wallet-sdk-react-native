@@ -416,8 +416,12 @@ class OstRedeemableSkuDetails extends PureComponent{
     return this.state.selectedDenomination && this.state.selectedDenomination["amount_in_fiat"] || 0;
   }
 
-  getSelectedCountry(){
+  getSelectedCountryISOCode(){
     return this.state.selectedAvailability && this.state.selectedAvailability["country_iso_code"] || "";
+  }
+
+  getSelectedCurrencyISOCode(){
+    return this.state.selectedAvailability && this.state.selectedAvailability["currency_iso_code"] || "";
   }
 
   getTxMeta(){
@@ -425,11 +429,12 @@ class OstRedeemableSkuDetails extends PureComponent{
     return config["transactionMeta"] || {};
   }
 
-  getRedeemableDetails(){
+  getRedemptionMeta(){
     return  {
        "redeemable_sku_id": this.skuDetails.id,
-       "amount": this.getSelectedAmountInFiat(),
-       "country": this.getSelectedCountry(),
+       "amount_in_fiat": this.getSelectedAmountInFiat(),
+       "country_iso_code": this.getSelectedCountryISOCode(),
+       "currency_iso_code": this.getSelectedCurrencyISOCode(),
        "email": this.state.emailId
     }
   }
@@ -444,7 +449,7 @@ class OstRedeemableSkuDetails extends PureComponent{
                                                           amounts,
                                                           address,
                                                           this.getTxMeta(),
-                                                          this.getRedeemableDetails(),
+                                                          this.getRedemptionMeta(),
                                                           delegate);
   }
 
