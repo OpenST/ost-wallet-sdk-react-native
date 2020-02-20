@@ -15,7 +15,7 @@ let stylesMap = StyleSheet.create({
     marginBottom:20
   },
   descText:{
-    marginBottom:50
+    marginBottom:30
   },
   labelStyle:{
     marginBottom:5
