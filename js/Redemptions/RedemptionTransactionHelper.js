@@ -1,5 +1,6 @@
 import TransactionHelper from "../TransactionHelper/OstTransactionHelper"
-import {OstTransactionHelper , OstTransactionExecutor} from "../TransactionHelper/OstTransactionHelper"
+import {OstTransactionHelper , OstTransactionExecutor} from "../TransactionHelper/OstTransactionHelper";
+import OstWalletSdk from '../OstWalletSdk';
 
 const duration = 60*10;
 

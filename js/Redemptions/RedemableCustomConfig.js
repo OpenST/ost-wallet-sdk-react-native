@@ -3,8 +3,9 @@ import objectMerge from "lodash.merge";
 
 class OstRedemableCustomConfig {
     constructor(){
-        this.defautlConfig  = JSON.parse(JSON.stringify(OstRedmptionConfig));
-        this.config = {};
+        const config        = JSON.parse(JSON.stringify(OstRedmptionConfig)) || {};
+        this.defautlConfig  = config["themeingConfig"];
+        this.config         = {};
     }
 
     setConfig = (externalConfig={}) => {

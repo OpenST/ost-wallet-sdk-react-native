@@ -10,10 +10,8 @@ import multipleClickHandler from '../MultipleClickHandler';
 class SkusList extends React.PureComponent{
     constructor( props ){
         super(props);
-        this.userId = this.props.userId;
-        if(!this.userId) return;
-        this.redemptionSkusModel = null ;
         this.pagination = null;
+        this.redemptionSkusModel = null ;
         this.state = {
             list: null,
             loadingNext: false,
@@ -22,11 +20,14 @@ class SkusList extends React.PureComponent{
         this.noDataCell = {
             isEmpty: true
         }
+    }
+
+    componentDidMount(){
         this.init();
     }
 
     init(){
-        this.redemptionSkusModel = new RedemptionSkusModel(this.userId);
+        this.redemptionSkusModel = new RedemptionSkusModel(this.props.ostUserId);
         this.pagination  = new Pagination( this.redemptionSkusModel ,{
             beforeRefresh : this.beforeRefresh ,
             onRefresh : this.onRefresh ,
@@ -38,23 +39,23 @@ class SkusList extends React.PureComponent{
         this.pagination && this.pagination.initPagination();
     }
 
-    onItemClick = (item) => {
-        this.props.onItemClick && this.props.onItemClick(item);
+    onItemClick = (item , index) => {
+        this.props.onItemClick && this.props.onItemClick(item , index);
     }
 
     _renderItem = ({item, index}) => {
         if(item.isEmpty){
             return (<View>No items found!!!</View>);
         }
-        let imageUrl = (item.images && item.images.list.original.url) || '';
+        let imageUrl = (item.images && item.images.list.original.url) || null;
         return (
             <TouchableWithoutFeedback onPress={multipleClickHandler(() => {
-                    this.onItemClick(item)
+                    this.onItemClick(item , index)
                 })}
             >
                 <View style={styles.itemWrapper}>
                     <View style={styles.item}>
-                        {imageUrl ? <Image source={{uri: imageUrl }} resizeMode={'cover'} style={{width: '100%', height: '100%'}} />: <React.Fragment/>}
+                        {imageUrl && <Image source={{uri: imageUrl }} resizeMode={'cover'} style={{width: '100%', height: '100%'}} />}
                     </View>
                 </View>
             </TouchableWithoutFeedback>

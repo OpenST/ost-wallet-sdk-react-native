@@ -1,12 +1,20 @@
 {
-  "common": {
-      "backArrow": null, 
-      "walletIcon": null,
-      "storeIcon": null
+  "themeingConfig": {
+    "common": {
+        "backArrow": null, 
+        "walletIcon": null,
+        "storeIcon": null
+    },
+    "skuListScreen": {
+        "header": null,
+        "description": null
+    },
+    "skuDetailsScreen": { }  
   },
-  "skuListScreen": {
-      "header": null,
-      "description": "You can use your DCT Tokens to redeem amazing products and services." 
-  },
-  "skuDetailsScreen": { }  
+  "transactionMeta" : {
+    "name": "",
+    "type": "user_to_company", 
+    "details": ""
+  }
 }
+

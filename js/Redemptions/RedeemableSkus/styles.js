@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+//@TODO cleanup
+
 let stylesMap = StyleSheet.create({
     container : {
         flex: 1,

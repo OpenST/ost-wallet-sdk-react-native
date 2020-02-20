@@ -5,17 +5,26 @@ import { OstJsonApi } from '@ostdotcom/ost-wallet-sdk-react-native';
 import HeaderRight from "../CommonComponents/HeaderRight";
 import OstRedemableCustomConfig from "../RedemableCustomConfig";
 import OstThemeConfigHelper from '../../helpers/OstThemeConfigHelper';
+import OstWalletUIWorkflowCallback from '../../OstWalletUIWorkflowCallback';
 import styles from './styles';
 import SkusList from './SkusList';
+import BackArrow from '../CommonComponents/BackArrow';
+
+function __getParam(navigation ,  paramName) {
+  if(navigation && navigation.getParam){
+    return navigation.getParam(paramName);
+  }
+  return null;
+}
 
 class OstRedeemableSkus extends React.PureComponent {
    
     static navigationOptions = ({ navigation }) => {
-        const balance = navigation && navigation.getParam("balance") || 0 ,
+        const balance = __getParam(navigation , "balance") || 0 ,
              isCustomBack = !!OstRedemableCustomConfig.getBackArrowUri()
         ;
         let navigationOption = {
-          title: navigation && navigation.getParam('navTitle')|| "",
+          title: __getParam(navigation , "navTitle") || "" ,
           headerStyle:  {
             borderBottomWidth: 0,
             shadowColor: '#000',
@@ -29,7 +38,7 @@ class OstRedeemableSkus extends React.PureComponent {
           headerRight: <HeaderRight balance={balance}/>
         };
         if( isCustomBack ){
-          navigationOption["headerBackImage"] = ""; //TODO @Preshita
+          navigationOption["headerBackImage"] = <BackArrow/>;
         }
 
         return Object.assign(navigationOption, OstThemeConfigHelper.getNavigationHeaderConfig());
@@ -37,9 +46,22 @@ class OstRedeemableSkus extends React.PureComponent {
     
     constructor( props ){
         super(props);
-        this.userId = props.userId || props.navigation.getParam("ostUserId");
-        OstJsonApi.getBalanceForUserId(this.userId, (res) => {
-          let balance = res.balance && res.balance.available_balance;
+    
+        this.ostUserId = props.ostUserId || __getParam(props.navigation , "ostUserId");
+        this.ostWalletUIWorkflowCallback = props.ostWalletUIWorkflowCallback || __getParam(props.navigation , "ostWalletUIWorkflowCallback");
+        
+        if( !this.ostUserId ) {
+          let err = new Error("ostUserId can not be null");
+          throw err;
+        }
+
+        if( !this.ostWalletUIWorkflowCallback || !(this.ostWalletUIWorkflowCallback instanceof OstWalletUIWorkflowCallback)  ) {
+          let err = new Error("ostWalletUIWorkflowCallback can not be null and must be an instanceof OstWalletUIWorkflowCallback");
+          throw err;
+        }
+
+        OstJsonApi.getBalanceForUserId(this.ostUserId, (res) => {
+          let balance = res && res.balance && res.balance.available_balance;
           props.navigation.setParams({
             balance
           })
@@ -48,8 +70,6 @@ class OstRedeemableSkus extends React.PureComponent {
 
     componentWillUnmount(){
       this.__setState = () => {};
-      this.listRef = null;
-      this.scrollViewRef = null;
     }
 
     __setState = (state) => {
@@ -57,17 +77,20 @@ class OstRedeemableSkus extends React.PureComponent {
       this.setState(state);
     }
 
-    onItemClick = (item) => {
+    onItemClick = (item , index) => {
       if(this.props.onItemClick){
-        this.props.onItemClick();
+        this.props.onItemClick(item , index);
       } else {
-        this.props.navigation.push('RedeemableSkuDetails', {'redemptionSku': item,'userId':this.userId});
+        this.props.navigation.push('RedeemableSkuDetails', {'redemptionSku': item,
+                                                            'ostUserId':this.ostUserId,
+                                                            'ostWalletUIWorkflowCallback': this.ostWalletUIWorkflowCallback
+                                                          });
       }
     }
 
     render(){
         return (<SafeAreaView style={styles.container}>
-                    <SkusList userId={this.userId} onItemClick={this.onItemClick}/>
+                    <SkusList ostUserId={this.ostUserId} onItemClick={this.onItemClick}/>
                 </SafeAreaView>
               );}
 }

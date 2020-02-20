@@ -1,5 +1,9 @@
 import React,{PureComponent} from 'react';
-import {View, Text, Image, ScrollView, Platform, TextInput, TouchableOpacity, Alert} from 'react-native';
+import {View, Text, Image, ScrollView, TextInput, TouchableOpacity, Alert} from 'react-native';
+import OstRedmptionConfig from "../ost-redemption-config";
+
+import OstRedemptionTransactionHelper from "../RedemptionTransactionHelper";
+import RedemptionController from "../RedemptionController";
 import OstJsonApi from "../../OstJsonApi";
 import RNPickerSelect from 'react-native-picker-select';
 
@@ -10,14 +14,16 @@ import downArrow from '../../../assets/down-arrow.png';
 class OstRedeemableSkuDetails extends PureComponent{
   constructor(props){
     super(props);
-    this.navigation = this.props.navigation ;
-    this.userId = this.props.userId ||  this.navigation.getParam('userId');
-    this.skuDetails =this.navigation.getParam('redemptionSku');
+    this.navigation = props.navigation ;
+    this.ostUserId = props.ostUserId || props.navigation.getParam("ostUserId");
+    this.ostWalletUIWorkflowCallback = props.ostWalletUIWorkflowCallback ||  props.navigation.getParam("ostWalletUIWorkflowCallback");
+    this.skuDetails = this.navigation.getParam('redemptionSku');
     this.tokenSymbol = 'DCT';
     this.purchaseValue = 60;
     this.denominationData = [];
     this.countrydata = [];
-    ;
+  
+    
     if(!this.skuDetails) return;
 
     this.inputRefs = {
@@ -37,14 +43,12 @@ class OstRedeemableSkuDetails extends PureComponent{
       btnText : ""
     };
 
-
-
-
   }
 
   __setState = (state={}) => {
     this.setState(state);
   };
+
   componentDidMount(){
     this.fetchDetails();
     this.setBtnText();
@@ -56,7 +60,7 @@ class OstRedeemableSkuDetails extends PureComponent{
 
 
   fetchDetails = () => {
-    OstJsonApi.getRedeemableSkuDetails(this.userId, this.skuDetails.id ,{}, this.onDetailsSuccess ,  this.onDetailsError)
+    OstJsonApi.getRedeemableSkuDetails(this.ostUserId, this.skuDetails.id ,{}, this.onDetailsSuccess ,  this.onDetailsError)
   };
 
   onDetailsError = (data={}) =>{
@@ -240,14 +244,7 @@ class OstRedeemableSkuDetails extends PureComponent{
       isPurchasing: true
     })
     this.setBtnText();
-
-  }
-
-
-
-  excequteTranscaction = () => {
-    //@Ashutosh
-
+    this.executeTranscaction();
   }
 
   onTransactionSuccess = () => {
@@ -382,6 +379,42 @@ class OstRedeemableSkuDetails extends PureComponent{
       </ScrollView>
     )
   }
+
+  geAmount(){
+    //TODO return array
+  }
+
+  getTokenHolderAddress(){
+  //TODO return array
+  }
+
+  getTxMeta(){
+    const config  = JSON.parse(JSON.stringify(OstRedmptionConfig)) || {};
+    return config["transactionMeta"] || {};
+  }
+
+  getRedeemableDetails(){
+    return  {
+       "redeemable_sku_id": "",
+       "amount": 10.25,
+       "currency": "USD",
+       "email": this.state.emailId
+    }
+  }
+
+  executeTranscaction = () => {
+    const controller = new RedemptionController(this.ostUserId, this, this.ostWalletUIWorkflowCallback) ; 
+    const delegate = controller.getWorkflowDelegate();
+    OstRedemptionTransactionHelper.executeDirectTransfer( this.ostUserId, 
+                                                          this.geAmount(), 
+                                                          this.getTokenHolderAddress(),
+                                                          this.getTxMeta(),
+                                                          this.getRedeemableDetails(),  
+                                                          delegate);
+  }
+
+
+  
 }
 
 export default OstRedeemableSkuDetails;
