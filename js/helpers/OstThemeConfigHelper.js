@@ -152,7 +152,6 @@ class OstThemeConfigHelper {
     return {
       color: nsConfig.color,
       fontSize: nsConfig.size,
-      alignSelf: this.getTextAlignment(nsConfig.alignment),
       fontFamily: nsConfig.font,
       borderRadius: nsConfig.border_radius
     }
@@ -165,13 +164,7 @@ class OstThemeConfigHelper {
       fontSize: tfConfig.size,
       fontFamily: tfConfig.font,
       borderRadius: tfConfig.border_radius,
-      backgroundColor: tfConfig.background_color,
-      placeHolder: {
-        color: tfConfig.placeholder.color,
-        fontSize: tfConfig.placeholder.size,
-        alignSelf: this.getTextAlignment(tfConfig.placeholder.alignment),
-        fontFamily: tfConfig.placeholder.font
-      }
+      backgroundColor: tfConfig.background_color
     }
   }
 }
