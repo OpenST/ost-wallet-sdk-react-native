@@ -136,7 +136,7 @@ const ListHeaderComponent = (props) => {
             description = OstRedemableCustomConfig.getDescription()
       ;
     return (<View styles={styles.headingWrapper}>
-        {storeLogo && <Image source={storeLogo} style={styles.logoSkipFont}/> }
+        {storeLogo && <Image source={storeLogo} resizeMode={'contain'} style={styles.logoSkipFont}/> }
         {header && <Text style={[styles.title, OstThemeConfigHelper.getH1Config()]}>{header}</Text> }
         {description && <Text style={[styles.description, OstThemeConfigHelper.getH3Config()]}>{description}</Text> }
     </View>)
