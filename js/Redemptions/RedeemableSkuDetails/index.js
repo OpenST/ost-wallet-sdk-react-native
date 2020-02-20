@@ -1,5 +1,5 @@
 import React,{PureComponent} from 'react';
-import {View, Text, Image, ScrollView, TextInput, TouchableOpacity, Alert} from 'react-native';
+import {View, Text, Image, ScrollView, Platform, TextInput, TouchableOpacity, Alert,ActivityIndicator} from 'react-native';
 import OstRedmptionConfig from "../ost-redemption-config";
 
 import OstRedemptionTransactionHelper from "../RedemptionTransactionHelper";
@@ -10,8 +10,36 @@ import RNPickerSelect from 'react-native-picker-select';
 import {stylesMap,inputBoxStyles} from './styles';
 import msgIcon from '../../../assets/msg-icon.png';
 import downArrow from '../../../assets/down-arrow.png';
+import OstRedemableCustomConfig from "../RedemableCustomConfig";
+import OstThemeConfigHelper from '../../helpers/OstThemeConfigHelper';
+import HeaderRight from "../CommonComponents/HeaderRight";
 
 class OstRedeemableSkuDetails extends PureComponent{
+  static navigationOptions = ({ navigation }) => {
+    const balance = navigation && navigation.getParam("balance") || 0 ,
+         isCustomBack = !!OstRedemableCustomConfig.getBackArrowUri()
+    ;
+    let navigationOption = {
+      title: navigation && navigation.getParam('navTitle')|| "",
+      headerStyle:  {
+        borderBottomWidth: 0,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 1
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 3
+      },
+      headerBackTitle: null,
+      headerRight: <HeaderRight balance={balance}/>
+    };
+    if( isCustomBack ){
+      navigationOption["headerBackImage"] = ""; //TODO @Preshita
+    }
+
+    return Object.assign(navigationOption, OstThemeConfigHelper.getNavigationHeaderConfig());
+};
   constructor(props){
     super(props);
     this.navigation = props.navigation ;
@@ -55,7 +83,11 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
   componentWillUnmount (){
-    //TODO @Sharaddha in componnent unmount clear refs,   this.navigation ,  set __setState to blank function
+    this.inputRefs.countryPicker = null;
+    this.inputRefs.currencyPicker = null;
+    this.inputRefs.emailIdInput = null;
+    this.navigation = null ;
+    this.__setState = () =>{};
   }
 
 
@@ -65,7 +97,7 @@ class OstRedeemableSkuDetails extends PureComponent{
 
   onDetailsError = (data={}) =>{
     const resultType = data["result_type"] ;
-    // this.skuDetails = data[resultType]; TODO remove this once Api is ready
+    // this.skuDetails = data[resultType]; TODO @shraddha remove this once Api is ready
     this.skuDetails = {
        id : 1,
        name : "product name",
@@ -124,6 +156,9 @@ class OstRedeemableSkuDetails extends PureComponent{
   onDetailsSuccess =( error)=> {
     //TODO lets discuss
     console.log("in error ----",error);
+    this.__setState({
+      refreshing : false,
+    })
   };
 
   setBtnText = () => {
@@ -251,7 +286,8 @@ class OstRedeemableSkuDetails extends PureComponent{
     //State change to show success message
     //Enable form
     this.__setState({
-      isPurchasing: false
+      isPurchasing: false,
+      transactionSuccess :true
     })
   }
 
@@ -259,24 +295,55 @@ class OstRedeemableSkuDetails extends PureComponent{
     //Set state for error , enable form
     this.__setState({
       isPurchasing: false,
-      errorText : "Transaction Error"
+      errorText : "Transaction Error",
+      transactionSuccess :false
     })
   }
 
   onFormChange = () => {
     //Clear state error
-    this.__setState({
-      isPurchasing: false,
-      errorText : ""
-    });
     //Any value change in form Show button and hide success message
     // set state transaction success false
+    this.__setState({
+      isPurchasing: false,
+      errorText : "",
+      transactionSuccess : false
+    });
+
   }
 
   onEmailChange = (text) =>{
     this.__setState({
       emailId:text
     })
+  }
+
+  setCountryPickerRef = (ref) =>{
+    this.inputRefs.countryPicker = ref;
+  }
+
+  setDenominationPickerRef = (ref) =>{
+    this.inputRefs.currencyPicker = ref;
+  }
+
+  setEmailINputPickerRef = (ref) =>{
+    this.inputRefs.emailIdInput = ref;
+  }
+
+  onDownArrowClickCountry = () =>{
+    this.inputRefs.currencyPicker.togglePicker();
+  }
+
+  onDownArrowClickCurrency = () =>{
+    this.inputRefs.emailIdInput.focus();
+  }
+
+  onUpArrowClickCurrency = () =>{
+    this.inputRefs.countryPicker.togglePicker();
+  }
+
+  showDownArrow = () =>{
+    return ;
   }
 
 
@@ -292,6 +359,9 @@ class OstRedeemableSkuDetails extends PureComponent{
           {this.skuDetails.description.text}
         </Text>
 
+        <ActivityIndicator
+          animating = {this.state.refreshing}
+        />
         {/*//TODO if not availablity Dont render anything below */}
         {this.skuDetails.availability && (
           <React.Fragment>
@@ -357,7 +427,7 @@ class OstRedeemableSkuDetails extends PureComponent{
               />
             </View>
             <Text style={stylesMap.errorText}>{this.state.errorText}</Text>
-            {false &&
+            {this.state.transactionSuccess &&
               <View style={stylesMap.successMessageWrapper}>
                 <Image source={msgIcon} style={stylesMap.imageSuccessMessage}/>
                 <Text style={stylesMap.successText}>
@@ -403,13 +473,13 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
   executeTranscaction = () => {
-    const controller = new RedemptionController(this.ostUserId, this, this.ostWalletUIWorkflowCallback) ; 
+    const controller = new RedemptionController(this.ostUserId, this, this.ostWalletUIWorkflowCallback) ;
     const delegate = controller.getWorkflowDelegate();
-    OstRedemptionTransactionHelper.executeDirectTransfer( this.ostUserId, 
-                                                          this.geAmount(), 
+    OstRedemptionTransactionHelper.executeDirectTransfer( this.ostUserId,
+                                                          this.geAmount(),
                                                           this.getTokenHolderAddress(),
                                                           this.getTxMeta(),
-                                                          this.getRedeemableDetails(),  
+                                                          this.getRedeemableDetails(),
                                                           delegate);
   }
 

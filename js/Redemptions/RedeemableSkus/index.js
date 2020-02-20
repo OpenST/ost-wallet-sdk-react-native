@@ -9,6 +9,7 @@ import OstWalletUIWorkflowCallback from '../../OstWalletUIWorkflowCallback';
 import styles from './styles';
 import SkusList from './SkusList';
 import BackArrow from '../CommonComponents/BackArrow';
+import Pricer from '../../helpers/Pricer';
 
 function __getParam(navigation ,  paramName) {
   if(navigation && navigation.getParam){
@@ -16,6 +17,7 @@ function __getParam(navigation ,  paramName) {
   }
   return null;
 }
+
 
 class OstRedeemableSkus extends React.PureComponent {
    
@@ -35,6 +37,7 @@ class OstRedeemableSkus extends React.PureComponent {
             shadowOpacity: 0.1,
             shadowRadius: 3
           },
+          headerBackTitle: null,
           headerRight: <HeaderRight balance={balance}/>
         };
         if( isCustomBack ){
@@ -59,13 +62,14 @@ class OstRedeemableSkus extends React.PureComponent {
           let err = new Error("ostWalletUIWorkflowCallback can not be null and must be an instanceof OstWalletUIWorkflowCallback");
           throw err;
         }
-
-        OstJsonApi.getBalanceForUserId(this.ostUserId, (res) => {
-          let balance = res && res.balance && res.balance.available_balance;
-          props.navigation.setParams({
-            balance
-          })
-        }, (ostError) => {});
+  
+       OstJsonApi.getBalanceForUserId(this.userId, (res) => {
+        let balance = res.balance && res.balance.available_balance;
+        balance = Pricer.toBtPrecision(Pricer.fromDecimal(balance));
+        props.navigation.setParams({
+          balance
+        })
+      }, (ostError) => {});
     }
 
     componentWillUnmount(){
