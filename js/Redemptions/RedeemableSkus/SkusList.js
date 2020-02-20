@@ -48,7 +48,7 @@ class SkusList extends React.PureComponent{
         if(item.isEmpty){
             return (<View>No items found!!!</View>);
         }
-        let imageUrl = (item.images && item.images.list.original.url) || null;
+        let imageUrl = (item.images && item.images.cover.original.url) || null;
         return (
             <TouchableWithoutFeedback onPress={multipleClickHandler(() => {
                     this.onItemClick(item , index)
