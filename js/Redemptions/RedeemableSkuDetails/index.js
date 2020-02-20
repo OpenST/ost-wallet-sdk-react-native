@@ -51,8 +51,8 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.purchaseValue = 60;
     this.denominationData = [];
     this.countrydata = [];
-  
-    
+
+
     if(!this.skuDetails) return;
 
     this.inputRefs = {
@@ -66,9 +66,9 @@ class OstRedeemableSkuDetails extends PureComponent{
       selectedAvailability : null,
       selectedDenomination : null,
       transactionSuccess: false,
-      errorText : null,
+      errorText : "",
       isPurchasing: false,
-      emailId : null,
+      emailId : "",
       btnText : ""
     };
 
@@ -117,53 +117,10 @@ class OstRedeemableSkuDetails extends PureComponent{
     OstJsonApi.getRedeemableSkuDetails(this.ostUserId, this.skuDetails.id ,{}, this.onDetailsSuccess ,  this.onDetailsError)
   };
 
-  onDetailsError = (data={}) =>{
+  onDetailsSuccess = (data={}) =>{
     const resultType = data["result_type"] ;
-    // this.skuDetails = data[resultType]; TODO @shraddha remove this once Api is ready
-    this.skuDetails = {
-       id : 1,
-       name : "product name",
-      description: {text: "some description"}
-      ,images: {
-      product: {
-        original: {
-          url:"https://dummyimage.com/600x400/000/fff"
-        }
-      }},
-    availability: [
-      {
-        country: "INDIA",
-        country_iso_code: "INR",
-        currency_iso_code: "INR",
-        denominations: [
-          {
-            amount_in_fiat: '10',
-            amount_in_wei: '10',
-          },
-          {
-            amount_in_fiat: '20',
-            amount_in_wei: '20',
-          }
-        ]
-      },
-      {
-        country: "INDIA1",
-        country_iso_code: "INR1",
-        currency_iso_code: "INR1",
-        denominations: [
-          {
-            amount_in_fiat: '11',
-            amount_in_wei: '11',
-          },
-          {
-            amount_in_fiat: '21',
-            amount_in_wei: '21',
-          }
-        ]
-      }
-
-    ]
-    }
+    this.skuDetails = data[resultType];
+    console.log("this.skuDetails product details ------",this.skuDetails);
     //get first country and
     this.countrydata = this.getAvailableCountryList();
     //get first Denomination of selected country
@@ -175,7 +132,7 @@ class OstRedeemableSkuDetails extends PureComponent{
 
   };
 
-  onDetailsSuccess =( error)=> {
+  onDetailsError =( error)=> {
     //TODO lets discuss
     console.log("in error ----",error);
     this.__setState({
@@ -246,13 +203,22 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.denominationData = currencyData;
     this.__setState({
       selectedAvailability: value
-    })
+    });
+    this.onFormChange();
   }
 
   onDenominationChange = ( value ) =>{
     this.__setState({
-      selectedCurrency : value
+      selectedDenomination : value
     })
+    this.onFormChange();
+  }
+
+  onEmailChange = (text) =>{
+    this.__setState({
+      emailId:text
+    })
+    this.onFormChange();
   }
 
   onPurchaseClick = () =>{
@@ -281,10 +247,10 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
   isInputValid = () =>{
-    if(this.state.emailId == null ){
+    if(this.state.emailId == '' ){
       this.__setState({
         errorText:'Email Id is required'
-      })
+      });
       return false;
     }
     return true
@@ -334,11 +300,7 @@ class OstRedeemableSkuDetails extends PureComponent{
 
   }
 
-  onEmailChange = (text) =>{
-    this.__setState({
-      emailId:text
-    })
-  }
+
 
   setCountryPickerRef = (ref) =>{
     this.inputRefs.countryPicker = ref;
@@ -368,17 +330,34 @@ class OstRedeemableSkuDetails extends PureComponent{
     return ;
   }
 
+  getImage = () =>{
+    if(this.skuDetails && this.skuDetails.images && this.skuDetails.images.product && this.skuDetails.images.product.original && this.skuDetails.images.product.original.url){
+      return this.skuDetails.images.product.original.url;
+    }
+  }
+  getDescription = () =>{
+    if(this.skuDetails && this.skuDetails.description && this.skuDetails.description.text){
+      return this.skuDetails.description.text;
+    }
+  }
+
+  getName = () =>{
+    if(this.skuDetails && this.skuDetails.name){
+      return this.skuDetails.name;
+    }
+  }
+
 
   render(){
     return(
       <ScrollView style={stylesMap.container}>
-        <Text style={stylesMap.heading}>{this.skuDetails.name}</Text>
+        <Text style={[stylesMap.heading, OstThemeConfigHelper.getH2Config()]}>{this.getName()}</Text>
         <Image
           style={stylesMap.imageStyle}
-          source={{uri:this.skuDetails.images.product.original.url}}>
+          source={{uri:this.getImage()}}>
         </Image>
-        <Text style={stylesMap.descText}>
-          {this.skuDetails.description.text}
+        <Text style={[stylesMap.descText, OstThemeConfigHelper.getH3Config()]}>
+          {this.getDescription()}
         </Text>
 
         <ActivityIndicator
@@ -388,17 +367,13 @@ class OstRedeemableSkuDetails extends PureComponent{
         {this.skuDetails.availability && (
           <React.Fragment>
             <View style={stylesMap.wrapperPicker}>
-              <Text style={stylesMap.labelStyle}> Select Country </Text>
+              <Text style={[stylesMap.labelStyle, OstThemeConfigHelper.getH4Config()]}> Select Country </Text>
               <RNPickerSelect
-                ref={ref => {
-                  this.inputRefs.countryPicker = ref;
-                }}
-                onDownArrow={() => {
-                  this.inputRefs.currencyPicker.togglePicker();
-                }}
-                style={inputBoxStyles}
+                ref={this.setCountryPickerRef}
+                onDownArrow={this.onDownArrowClickCountry}
+                style={[inputBoxStyles, OstThemeConfigHelper.getNativeSelectConfig() ]}
                 placeholder={{}}
-                onValueChange={(value) => this.onCountryChange(value)}
+                onValueChange={this.onCountryChange}
                 items={this.getAvailableCountryList()}
                 useNativeAndroidPickerStyle={false}
                 Icon={() => {
@@ -409,18 +384,16 @@ class OstRedeemableSkuDetails extends PureComponent{
             </View>
 
             <View style={stylesMap.wrapperPicker}>
-              <Text style={stylesMap.labelStyle}> Card Amount </Text>
+              <Text style={[stylesMap.labelStyle, OstThemeConfigHelper.getH4Config()]}> Card Amount </Text>
               <RNPickerSelect
-                ref={ref => {
-                  this.inputRefs.currencyPicker = ref;
-                }}
+                ref={this.setDenominationPickerRef}
                 onUpArrow={() => {
                   this.inputRefs.countryPicker.togglePicker();
                 }}
                 onDownArrow={() => {
                   this.inputRefs.emailIdInput.focus();
                 }}
-                style={inputBoxStyles}
+                style={[inputBoxStyles, OstThemeConfigHelper.getNativeSelectConfig() ]}
                 placeholder={{}}
                 value = {this.state.selectedDenomination}
                 onValueChange={(value) => this.onDenominationChange(value)}
@@ -434,21 +407,19 @@ class OstRedeemableSkuDetails extends PureComponent{
             </View>
 
             <View>
-              <Text style={stylesMap.labelStyle}> Your mail id</Text>
+              <Text style={[stylesMap.labelStyle, OstThemeConfigHelper.getH4Config()]}> Your mail id</Text>
               <TextInput
-                ref={ref => {
-                  this.inputRefs.emailIdInput = ref;
-                }}
+                ref={this.setEmailINputPickerRef}
                 returnKeyType="done"
                 enablesReturnKeyAutomatically
-                style={inputBoxStyles.inputIOS}
+                style={[inputBoxStyles.inputIOS, OstThemeConfigHelper.getTextFieldConfig()]}
                 blurOnSubmit={false}
                 value = {this.state.emailId}
                 onChangeText={this.onEmailChange}
                 editable = {!this.state.isPurchasing}
               />
             </View>
-            <Text style={stylesMap.errorText}>{this.state.errorText}</Text>
+            <Text style={[stylesMap.errorText, ]}>{this.state.errorText}</Text>
             {this.state.transactionSuccess &&
               <View style={stylesMap.successMessageWrapper}>
                 <Image source={msgIcon} style={stylesMap.imageSuccessMessage}/>
@@ -460,7 +431,7 @@ class OstRedeemableSkuDetails extends PureComponent{
 
             <TouchableOpacity
               onPress={this.onPurchaseClick}
-              style={stylesMap.purchaseBtn}
+              style={[stylesMap.purchaseBtn, OstThemeConfigHelper.getB1Config()]}
               disabled = {this.state.isPurchasing}>
               <Text style={stylesMap.purchaseBtnText}>
                 {this.state.btnText}
@@ -513,7 +484,7 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
 
-  
+
 }
 
 export default OstRedeemableSkuDetails;

@@ -51,7 +51,8 @@ let stylesMap = StyleSheet.create({
     fontFamily:'Avenir-Book',
     fontWeight:"300",
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    height : 13
   },
   purchaseBtn:{
     marginTop:20,
