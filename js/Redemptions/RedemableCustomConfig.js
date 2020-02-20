@@ -1,15 +1,15 @@
-import OstRedmptionConfig from "./ost-redemption-config";
+import OstRedemptionConfig from "./ost-redemption-config";
 import objectMerge from "lodash.merge";
 
 class OstRedemableCustomConfig {
     constructor(){
-        const config        = JSON.parse(JSON.stringify(OstRedmptionConfig)) || {};
-        this.defautlConfig  = config["themeingConfig"];
+        const config        = JSON.parse(JSON.stringify(OstRedemptionConfig)) || {};
+        this.defaultConfig  = config["themeingConfig"];
         this.config         = {};
     }
 
     setConfig = (externalConfig={}) => {
-        this.config = objectMerge(this.defautlConfig, externalConfig);
+        this.config = objectMerge(this.defaultConfig, externalConfig);
     }
 
     getBackArrowUri = () => {
