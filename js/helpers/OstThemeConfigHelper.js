@@ -20,6 +20,7 @@ class OstThemeConfigHelper {
   _getThemeConfig() {
     return new Promise((resolve, reject) => {
       OstWalletSdkUI.getThemeConfig((themeConfig) => {
+        console.log("====", themeConfig);
         resolve(themeConfig)
       })
     });
@@ -158,7 +159,7 @@ class OstThemeConfigHelper {
   }
 
   getTextFieldConfig() {
-    let tfConfig = this.themeConfig.native_select;
+    let tfConfig = this.themeConfig.text_field;
     return {
       color: tfConfig.color,
       fontSize: tfConfig.size,
