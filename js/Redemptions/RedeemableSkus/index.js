@@ -63,7 +63,7 @@ class OstRedeemableSkus extends React.PureComponent {
           throw err;
         }
   
-       OstJsonApi.getBalanceForUserId(this.userId, (res) => {
+       OstJsonApi.getBalanceForUserId(this.ostUserId, (res) => {
         let balance = res.balance && res.balance.available_balance;
         balance = Pricer.toBtPrecision(Pricer.fromDecimal(balance));
         props.navigation.setParams({
