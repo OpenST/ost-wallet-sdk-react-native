@@ -1,5 +1,5 @@
 import React,{PureComponent} from 'react';
-import {View, Text, Image, ScrollView, Platform, TextInput, TouchableOpacity, Alert,ActivityIndicator} from 'react-native';
+import {View, Text, Image, ScrollView, Platform,KeyboardAvoidingView, TextInput, TouchableOpacity, Alert,ActivityIndicator} from 'react-native';
 import OstRedmptionConfig from "../ost-redemption-config";
 
 import OstRedemptionTransactionHelper from "../RedemptionTransactionHelper";
@@ -14,6 +14,7 @@ import OstRedemableCustomConfig from "../RedemableCustomConfig";
 import OstThemeConfigHelper from '../../helpers/OstThemeConfigHelper';
 import HeaderRight from "../CommonComponents/HeaderRight";
 import tokenHelper from "../TokenHelper";
+import AlertBox from "../CommonComponents/AlertBox";
 
 const transactionErrorMsgs = {
   unauthorized: "Device unathorized, please authorized the device.",
@@ -51,11 +52,10 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.navigation = props.navigation ;
     this.ostUserId = props.ostUserId || props.navigation.getParam("ostUserId");
     this.ostWalletUIWorkflowCallback = props.ostWalletUIWorkflowCallback ||  props.navigation.getParam("ostWalletUIWorkflowCallback");
-    this.skuDetails = this.navigation.getParam('redemptionSku');
+    this.skuDetails = this.navigation && this.navigation.getParam('redemptionSku');
     this.tokenSymbol = 'DCT';
     this.purchaseValue = 60;
     this.denominationData = [];
-    this.countrydata = [];
 
 
     if(!this.skuDetails) return;
@@ -125,9 +125,8 @@ class OstRedeemableSkuDetails extends PureComponent{
   onDetailsSuccess = (data={}) =>{
     const resultType = data["result_type"] ;
     this.skuDetails = data[resultType];
-    console.log("this.skuDetails product details ------",this.skuDetails);
+    console.log("this.skuDetails (product details) ------",this.skuDetails);
     //get first country and
-    this.countrydata = this.getAvailableCountryList();
     //get first Denomination of selected country
     this.getFirstDenomination();
     //Set state refeshing false here
@@ -140,8 +139,10 @@ class OstRedeemableSkuDetails extends PureComponent{
   onDetailsError =( error)=> {
     //TODO lets discuss
     console.log("in error ----",error);
+    let errorMsg  = error && error.error_info && error.error_info.err && error.error_info.err.msg
     this.__setState({
       refreshing : false,
+      errorText : errorMsg
     })
   };
 
@@ -162,7 +163,7 @@ class OstRedeemableSkuDetails extends PureComponent{
   };
 
   getFirstCountry = () =>{
-    let countryName = this.skuDetails.availability[0].country;
+    let countryName = this.skuDetails && this.skuDetails.availability && this.skuDetails.availability[0] && this.skuDetails.availability[0].country;
     return countryName ;
   };
 
@@ -172,7 +173,7 @@ class OstRedeemableSkuDetails extends PureComponent{
   };
 
   getAvailableCountryList = () =>{
-    let availabilityData = this.skuDetails.availability || [],
+    let availabilityData = (this.skuDetails && this.skuDetails.availability) || [],
       countryData      = [];
     if(!availabilityData) return;
     for(let cnt = 0; cnt< availabilityData.length ; cnt++){
@@ -196,8 +197,9 @@ class OstRedeemableSkuDetails extends PureComponent{
         currencyIsoCode   =availabilityData.currency_iso_code;
 
     for(let cnt = 0 ; cnt < denominationsArray.length ; cnt ++){
-      let label = `${denominationsArray[cnt].amount_in_fiat} ${currencyIsoCode}`;
-      currencyItems.push({label:label, value:denominationsArray[cnt].amount_in_fiat})
+      let label = `${denominationsArray[cnt].amount_in_fiat} ${currencyIsoCode}`,
+          value = denominationsArray && denominationsArray[cnt] && denominationsArray[cnt].amount_in_fiat
+      currencyItems.push({label:label, value:value})
     }
   return currencyItems;
   }
@@ -236,19 +238,19 @@ class OstRedeemableSkuDetails extends PureComponent{
   };
 
   showConfirmationAlert = () =>{
-    Alert.alert(
-      '',
-      `We have received your order and will send an email shortly to ${this.state.emailId}`,
-      [
-        {
-          text: 'Cancel',
-          onPress: () => {this.onAlertCancel()},
-          style: 'cancel',
-        },
-        {text: 'Confirm', onPress: () => {this.onAlertConfirm()}},
-      ],
-      {cancelable: false},
-    );
+    let config ={
+      title : "",
+      Message : `Confirm email address: ${this.state.emailId}`,
+      cancelBtnText : "Cancel",
+      successBtnText : "Confirm",
+      cancelCallback : this.onAlertCancel,
+      successCallback : this.onAlertConfirm,
+      cancelStyle : 'cancel'
+
+    }
+    let alertBox = new AlertBox(config);
+    alertBox.showAlert();
+
   }
 
   isInputValid = () =>{
@@ -306,7 +308,7 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
 
-
+  /* setters for inputRefs */
   setCountryPickerRef = (ref) =>{
     this.inputRefs.countryPicker = ref;
   }
@@ -319,6 +321,7 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.inputRefs.emailIdInput = ref;
   }
 
+  /* RNPickerSelect related methods */
   onDownArrowClickCountry = () =>{
     this.inputRefs.currencyPicker.togglePicker();
   }
@@ -331,10 +334,11 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.inputRefs.countryPicker.togglePicker();
   }
 
-  showDownArrow = () =>{
-    return ;
+  getPickerIcon = () =>{
+    return <Image source={downArrow} style={stylesMap.downArrow}/>;
   }
 
+  /* getters for product details */
   getImage = () =>{
     if(this.skuDetails && this.skuDetails.images && this.skuDetails.images.product && this.skuDetails.images.product.original && this.skuDetails.images.product.original.url){
       return this.skuDetails.images.product.original.url;
@@ -345,7 +349,6 @@ class OstRedeemableSkuDetails extends PureComponent{
       return this.skuDetails.description.text;
     }
   }
-
   getName = () =>{
     if(this.skuDetails && this.skuDetails.name){
       return this.skuDetails.name;
@@ -388,9 +391,7 @@ class OstRedeemableSkuDetails extends PureComponent{
                 onValueChange={this.onCountryChange}
                 items={this.getAvailableCountryList()}
                 useNativeAndroidPickerStyle={false}
-                Icon={() => {
-                  return <Image source={downArrow} style={stylesMap.downArrow}/>;
-                }}
+                Icon={this.getPickerIcon}
                 disabled = {this.state.isPurchasing}
               />
             </View>
@@ -399,21 +400,15 @@ class OstRedeemableSkuDetails extends PureComponent{
               <Text style={[stylesMap.labelStyle, OstThemeConfigHelper.getC2Config()]}> Card Amount </Text>
               <RNPickerSelect
                 ref={this.setDenominationPickerRef}
-                onUpArrow={() => {
-                  this.inputRefs.countryPicker.togglePicker();
-                }}
-                onDownArrow={() => {
-                  this.inputRefs.emailIdInput.focus();
-                }}
+                onUpArrow={this.onUpArrowClickCurrency}
+                onDownArrow={this.onDownArrowClickCurrency}
                 style={this.getRNPickerStyles()}
                 placeholder={{}}
                 value = {this.state.selectedDenomination}
-                onValueChange={(value) => this.onDenominationChange(value)}
+                onValueChange={this.onDenominationChange}
                 items={this.denominationData}
                 useNativeAndroidPickerStyle={false}
-                Icon={() => {
-                  return <Image source={downArrow} style={stylesMap.downArrow}/>;
-                }}
+                Icon={this.getPickerIcon}
                 disabled = {this.state.isPurchasing}
               />
             </View>
