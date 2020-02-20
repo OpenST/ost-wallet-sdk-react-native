@@ -17,8 +17,8 @@ let stylesMap = StyleSheet.create({
         height: 18
     },
     walletImgSkipFont : {
-        width: 33, 
-        height: 30,
+        width: 20, 
+        height: 18,
         marginRight: 8
     },
     headerRightWrapper : {
