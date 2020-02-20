@@ -50,8 +50,8 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.purchaseValue = 60;
     this.denominationData = [];
     this.countrydata = [];
-  
-    
+
+
     if(!this.skuDetails) return;
 
     this.inputRefs = {
@@ -65,9 +65,9 @@ class OstRedeemableSkuDetails extends PureComponent{
       selectedAvailability : null,
       selectedDenomination : null,
       transactionSuccess: false,
-      errorText : null,
+      errorText : "",
       isPurchasing: false,
-      emailId : null,
+      emailId : "",
       btnText : ""
     };
 
@@ -224,13 +224,22 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.denominationData = currencyData;
     this.__setState({
       selectedAvailability: value
-    })
+    });
+    this.onFormChange();
   }
 
   onDenominationChange = ( value ) =>{
     this.__setState({
-      selectedCurrency : value
+      selectedDenomination : value
     })
+    this.onFormChange();
+  }
+
+  onEmailChange = (text) =>{
+    this.__setState({
+      emailId:text
+    })
+    this.onFormChange();
   }
 
   onPurchaseClick = () =>{
@@ -259,10 +268,10 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
   isInputValid = () =>{
-    if(this.state.emailId == null ){
+    if(this.state.emailId == '' ){
       this.__setState({
         errorText:'Email Id is required'
-      })
+      });
       return false;
     }
     return true
@@ -312,11 +321,7 @@ class OstRedeemableSkuDetails extends PureComponent{
 
   }
 
-  onEmailChange = (text) =>{
-    this.__setState({
-      emailId:text
-    })
-  }
+
 
   setCountryPickerRef = (ref) =>{
     this.inputRefs.countryPicker = ref;
@@ -484,7 +489,7 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
 
-  
+
 }
 
 export default OstRedeemableSkuDetails;
