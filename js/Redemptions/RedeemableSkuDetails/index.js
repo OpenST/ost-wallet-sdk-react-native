@@ -6,6 +6,9 @@ import RNPickerSelect from 'react-native-picker-select';
 import {stylesMap,inputBoxStyles} from './styles';
 import msgIcon from '../../../assets/msg-icon.png';
 import downArrow from '../../../assets/down-arrow.png';
+import OstRedemableCustomConfig from "../RedemableCustomConfig";
+import OstThemeConfigHelper from '../../helpers/OstThemeConfigHelper';
+import HeaderRight from "../CommonComponents/HeaderRight";
 
 class OstRedeemableSkuDetails extends PureComponent{
   static navigationOptions = ({ navigation }) => {
