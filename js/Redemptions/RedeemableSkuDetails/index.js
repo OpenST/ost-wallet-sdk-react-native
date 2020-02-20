@@ -1,33 +1,42 @@
 import React,{PureComponent} from 'react';
-import {View, Text, Image, ScrollView, Platform,KeyboardAvoidingView, TextInput, TouchableOpacity, Alert,ActivityIndicator} from 'react-native';
-import OstRedmptionConfig from "../ost-redemption-config";
-
+import {View, Text, Image, ScrollView,KeyboardAvoidingView, TextInput, TouchableOpacity,ActivityIndicator} from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
+import HeaderRight from "../CommonComponents/HeaderRight";
+import BackArrow from '../CommonComponents/BackArrow';
+import OstJsonApi from "../../OstJsonApi";
 import OstRedemptionTransactionHelper from "../RedemptionTransactionHelper";
 import RedemptionController from "../RedemptionController";
-import OstJsonApi from "../../OstJsonApi";
-import RNPickerSelect from 'react-native-picker-select';
-
-import {stylesMap} from './styles';
-import msgIcon from '../../../assets/msg-icon.png';
-import downArrow from '../../../assets/down-arrow.png';
-import OstRedemableCustomConfig from "../RedemableCustomConfig";
 import OstThemeConfigHelper from '../../helpers/OstThemeConfigHelper';
-import HeaderRight from "../CommonComponents/HeaderRight";
+import OstRedemableCustomConfig from "../RedemableCustomConfig";
+import OstRedmptionConfig from "../ost-redemption-config";
 import tokenHelper from "../TokenHelper";
 import AlertBox from "../CommonComponents/AlertBox";
+import msgIcon from '../../../assets/msg-icon.png';
+import downArrow from '../../../assets/down-arrow.png';
 
-const transactionErrorMsgs = {
+import {stylesMap} from './styles';
+
+const errorMsgs = {
   unauthorized: "Device unathorized, please authorized the device.",
-  generalError: "Something went wrong"
+  generalError: "Something went wrong.",
+  emailRequired: "Email Id is required."
 }
+
+function __getParam(navigation ,  paramName) {
+  if(navigation && navigation.getParam){
+    return navigation.getParam(paramName);
+  }
+  return null;
+}
+
 
 class OstRedeemableSkuDetails extends PureComponent{
   static navigationOptions = ({ navigation }) => {
-    const balance = navigation && navigation.getParam("balance") || 0 ,
+    const balance =  __getParam(navigation , "balance") || 0 ,
          isCustomBack = !!OstRedemableCustomConfig.getBackArrowUri()
     ;
     let navigationOption = {
-      title: navigation && navigation.getParam('navTitle')|| "",
+      title: __getParam(navigation , "navTitle") || "",
       headerStyle:  {
         borderBottomWidth: 0,
         shadowColor: '#000',
@@ -42,21 +51,18 @@ class OstRedeemableSkuDetails extends PureComponent{
       headerRight: <HeaderRight balance={balance}/>
     };
     if( isCustomBack ){
-      navigationOption["headerBackImage"] = ""; //TODO @Preshita
+      navigationOption["headerBackImage"] = <BackArrow/>; 
     }
-
     return Object.assign(navigationOption, OstThemeConfigHelper.getNavigationHeaderConfig());
-};
+  };
+
   constructor(props){
     super(props);
     this.navigation = props.navigation ;
-    this.ostUserId = props.ostUserId || props.navigation.getParam("ostUserId");
-    this.ostWalletUIWorkflowCallback = props.ostWalletUIWorkflowCallback ||  props.navigation.getParam("ostWalletUIWorkflowCallback");
-    this.skuDetails = this.navigation && this.navigation.getParam('redemptionSku');
-    this.tokenSymbol = 'DCT';
-    this.purchaseValue = 60;
+    this.ostUserId = props.ostUserId || __getParam(props.navigation, "ostUserId") ;
+    this.ostWalletUIWorkflowCallback = props.ostWalletUIWorkflowCallback || __getParam(props.navigation, "ostWalletUIWorkflowCallback");
+    this.skuDetails = __getParam(props.navigation, "redemptionSku") || {};
     this.denominationData = [];
-
 
     if(!this.skuDetails) return;
 
@@ -73,11 +79,24 @@ class OstRedeemableSkuDetails extends PureComponent{
       transactionSuccess: false,
       errorText : "",
       isPurchasing: false,
-      emailId : "",
-      btnText : ""
+      emailId : ""
     };
+  }
 
+  __setState = (state={}) => {
+    this.setState(state);
+  };
+
+  componentDidMount(){
     this.init();
+  }
+
+  componentWillUnmount (){
+    this.__setState = () =>{};
+    this.inputRefs.countryPicker = null;
+    this.inputRefs.currencyPicker = null;
+    this.inputRefs.emailIdInput = null;
+    this.navigation = null ;
   }
 
   init(){
@@ -88,126 +107,82 @@ class OstRedeemableSkuDetails extends PureComponent{
     }else{
       this.updateBalance();
     }
+    this.fetchDetails();   
   }
 
   updateBalance(){
     OstJsonApi.getBalanceForUserId(this.ostUserId, (res) => {
       let balance = res.balance && res.balance.available_balance;
       balance = tokenHelper.toBtPrecision(tokenHelper.fromDecimal(balance));
-      this.props.navigation && this.props.navigation.setParams && this.props.navigation.setParams({
+      this.navigation && this.navigation.setParams && this.navigation.setParams({
         balance
       })
     }, () => {});
   }
-
-  __setState = (state={}) => {
-    this.setState(state);
-  };
-
-  componentDidMount(){
-    this.fetchDetails();
-    this.setBtnText();
-  }
-
-  componentWillUnmount (){
-    this.inputRefs.countryPicker = null;
-    this.inputRefs.currencyPicker = null;
-    this.inputRefs.emailIdInput = null;
-    this.navigation = null ;
-    this.__setState = () =>{};
-  }
-
 
   fetchDetails = () => {
     OstJsonApi.getRedeemableSkuDetails(this.ostUserId, this.skuDetails.id ,{}, this.onDetailsSuccess ,  this.onDetailsError)
   };
 
   onDetailsSuccess = (data={}) =>{
-    const resultType = data["result_type"] ;
-    this.skuDetails = data[resultType];
-    console.log("this.skuDetails (product details) ------",this.skuDetails);
-    //get first country and
-    //get first Denomination of selected country
-    this.getFirstDenomination();
-    //Set state refeshing false here
+    const resultType = data["result_type"] || {};
+    this.skuDetails = data[resultType] || {};
+    this.setFirstDenomination();
     this.__setState({
       refreshing : false,
     })
-
   };
 
   onDetailsError =( error)=> {
-    //TODO lets discuss
-    console.log("in error ----",error);
-    let errorMsg  = error && error.error_info && error.error_info.err && error.error_info.err.msg
     this.__setState({
       refreshing : false,
-      errorText : errorMsg
+      errorText : errorMsgs.generalError
     })
   };
 
-  setBtnText = () => {
-    //Logic
-    //If purchaing -  text to processing
-    //If not show value text
+  getBtnText = () => {
     if(this.state.isPurchasing){
-      this.__setState({
-        btnText:'Processing'
-      });
-
+      return "Processing";
     }else{
-      this.__setState({
-        btnText:`Purchase for ${this.purchaseValue} ${this.tokenSymbol}`
-      });
+      return `Purchase for ${this.getSelectedAmountInBT()} ${tokenHelper.getTokenSymbol()}`  
     }
   };
 
-  getFirstCountry = () =>{
-    let countryName = this.skuDetails && this.skuDetails.availability && this.skuDetails.availability[0] && this.skuDetails.availability[0].country;
-    return countryName ;
-  };
-
-  getFirstDenomination = () => {
-    let availabilityData = this.skuDetails && this.skuDetails.availability && this.skuDetails.availability[0]
+  setFirstDenomination = () => {
+    let availabilityData = this.skuDetails.availability && this.skuDetails.availability[0];
     this.denominationData = this.getAvailableCurrencyData(availabilityData);
   };
 
   getAvailableCountryList = () =>{
     let availabilityData = (this.skuDetails && this.skuDetails.availability) || [],
-      countryData      = [];
-    if(!availabilityData) return;
+        countryData      = [];
+    if(!availabilityData) return countryData;
     for(let cnt = 0; cnt< availabilityData.length ; cnt++){
-      let country = availabilityData[cnt] ,
-        countryName = country &&  country.country
-      ;
+      let country = availabilityData[cnt] || {} ,
+          countryName = country &&  country.country;
       countryData.push({label: countryName, value: country});
     }
     return countryData;
   };
 
-
   getAvailableCurrencyData = ( availabilityData ) =>{
-
-    //Loop on state denomination
-    //Create selector Obj
-    if(!availabilityData) return;
-    let selectedCountry   = availabilityData.country,
-        denominationsArray = availabilityData.denominations,
-        currencyItems     = [],
-        currencyIsoCode   =availabilityData.currency_iso_code;
-
+    if(!availabilityData) return [];
+    let denominationsArray = availabilityData.denominations || [],
+        currencyIsoCode   = availabilityData.currency_iso_code,
+        currencyItems     = []
+        ;
     for(let cnt = 0 ; cnt < denominationsArray.length ; cnt ++){
-      let label = `${denominationsArray[cnt].amount_in_fiat} ${currencyIsoCode}`,
-          value = denominationsArray && denominationsArray[cnt] && denominationsArray[cnt].amount_in_fiat
-      currencyItems.push({label:label, value:value})
+      let currentDenomination = denominationsArray[cnt] || {},
+          label = `${currentDenomination.amount_in_fiat} ${currencyIsoCode}`,
+          value = currentDenomination.amount_in_fiat ;
+      currencyItems.push({label, value})
     }
-  return currencyItems;
+   return currencyItems;
   }
 
 
   onCountryChange = (value) =>{
-    let currencyData = this.getAvailableCurrencyData(value);
-    this.denominationData = currencyData;
+    this.denominationData = this.getAvailableCurrencyData(value);
     this.__setState({
       selectedAvailability: value
     });
@@ -229,12 +204,9 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
   onPurchaseClick = () =>{
-    //Validate inputs
     if(this.isInputValid()){
-      //Show Alert
       this.showConfirmationAlert();
     }
-
   };
 
   showConfirmationAlert = () =>{
@@ -246,69 +218,53 @@ class OstRedeemableSkuDetails extends PureComponent{
       cancelCallback : this.onAlertCancel,
       successCallback : this.onAlertConfirm,
       cancelStyle : 'cancel'
-
     }
     let alertBox = new AlertBox(config);
     alertBox.showAlert();
-
   }
 
   isInputValid = () =>{
     if(this.state.emailId == '' ){
       this.__setState({
-        errorText:'Email Id is required'
+        errorText: errorMsgs.emailRequired
       });
       return false;
     }
     return true
   }
 
-  onAlertCancel = () => {
-
-  }
+  onAlertCancel = () => {}
 
   onAlertConfirm = () => {
-    //Change button text to processing
-    // isPurchasing flag takes care of disabling form
     this.__setState({
       isPurchasing: true
     })
-    this.setBtnText();
     this.executeTranscaction();
   }
 
   onTransactionSuccess = () => {
-    //State change to show success message
-    //Enable form
     this.__setState({
       isPurchasing: false,
       transactionSuccess :true
     })
   }
 
-  onTransactionError =( )=> {
-    //Set state for error , enable form
+  onTransactionError =( error)=> {
     this.__setState({
       isPurchasing: false,
-      errorText : "Transaction Error",
+      errorText : error,
       transactionSuccess :false
     })
   }
 
   onFormChange = () => {
-    //Clear state error
-    //Any value change in form Show button and hide success message
-    // set state transaction success false
     this.__setState({
       isPurchasing: false,
       errorText : "",
       transactionSuccess : false
     });
-
   }
 
-
-  /* setters for inputRefs */
   setCountryPickerRef = (ref) =>{
     this.inputRefs.countryPicker = ref;
   }
@@ -321,36 +277,36 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.inputRefs.emailIdInput = ref;
   }
 
-  /* RNPickerSelect related methods */
   onDownArrowClickCountry = () =>{
-    this.inputRefs.currencyPicker.togglePicker();
+    this.inputRefs.currencyPicker && this.inputRefs.currencyPicker.togglePicker();
   }
 
   onDownArrowClickCurrency = () =>{
-    this.inputRefs.emailIdInput.focus();
+    this.inputRefs.emailIdInput && this.inputRefs.emailIdInput.focus();
   }
 
   onUpArrowClickCurrency = () =>{
-    this.inputRefs.countryPicker.togglePicker();
+    this.inputRefs.countryPicker && this.inputRefs.countryPicker.togglePicker();
   }
 
   getPickerIcon = () =>{
     return <Image source={downArrow} style={stylesMap.downArrow}/>;
   }
 
-  /* getters for product details */
   getImage = () =>{
-    if(this.skuDetails && this.skuDetails.images && this.skuDetails.images.product && this.skuDetails.images.product.original && this.skuDetails.images.product.original.url){
+    if(this.skuDetails.images && this.skuDetails.images.product && this.skuDetails.images.product.original && this.skuDetails.images.product.original.url){
       return this.skuDetails.images.product.original.url;
     }
   }
+
   getDescription = () =>{
-    if(this.skuDetails && this.skuDetails.description && this.skuDetails.description.text){
+    if(this.skuDetails.description && this.skuDetails.description.text){
       return this.skuDetails.description.text;
     }
   }
+
   getName = () =>{
-    if(this.skuDetails && this.skuDetails.name){
+    if(this.skuDetails.name){
       return this.skuDetails.name;
     }
   }
@@ -378,7 +334,6 @@ class OstRedeemableSkuDetails extends PureComponent{
         <ActivityIndicator
           animating = {this.state.refreshing}
         />
-        {/*//TODO if not availablity Dont render anything below */}
         {this.skuDetails.availability && (
           <React.Fragment>
             <View style={stylesMap.wrapperPicker}>
@@ -441,13 +396,17 @@ class OstRedeemableSkuDetails extends PureComponent{
               style={[stylesMap.purchaseBtn, OstThemeConfigHelper.getB1Config()]}
               disabled = {this.state.isPurchasing}>
               <Text style={stylesMap.purchaseBtnText}>
-                {this.state.btnText}
+                {this.getBtnText()}
               </Text>
             </TouchableOpacity>
 
           </React.Fragment>)}
       </ScrollView>
     )
+  }
+
+  getSelectedAmountInBT() {
+    return tokenHelper.toBtPrecision( tokenHelper.fromDecimal(this.getSelectedAmountInWei()),  2);
   }
 
   getSelectedAmountInWei(){
@@ -491,30 +450,28 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
   requestAcknowledged = () => {
-    this.__setState({ isPurchasing: false, 
-                      transactionSuccess: true,
-                      errorText : ""});
+    this.onTransactionSuccess();
     this.updateBalance();
   }
 
   flowInterrupt = () => {
-    this.__setState({ isPurchasing: false, errorText : transactionErrorMsgs.generalError});
+    this.onTransactionError( errorMsgs.generalError);
   }
 
   onUnauthorized =( ) => {
-    this.__setState({ isPurchasing: false, errorText : transactionErrorMsgs.unauthorized});
+    this.onTransactionError( errorMsgs.unauthorized);
   }
 
   saltFetchFailed =() => {
-    this.__setState({ isPurchasing: false, errorText : transactionErrorMsgs.generalError});
+    this.onTransactionError( errorMsgs.generalError);
   }
 
   deviceTimeOutOfSync = () => {
-    this.__setState({ isPurchasing: false, errorText : transactionErrorMsgs.generalError});
+    this.onTransactionError( errorMsgs.generalError);
   }
 
   workflowFailed = () => {
-    this.__setState({ isPurchasing: false, errorText : transactionErrorMsgs.generalError});
+    this.onTransactionError( errorMsgs.generalError);
   }
 
 }

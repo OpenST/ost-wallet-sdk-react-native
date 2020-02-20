@@ -57,6 +57,10 @@ class TokenHelper {
        return this.token["decimals"]
      }
 
+     getTokenSymbol(){
+      return this.token["symbol"];
+     }
+
     fromDecimal(val, decimals){
         decimals = decimals || this.getDecimals();
         if (!val || !decimals) return '';
