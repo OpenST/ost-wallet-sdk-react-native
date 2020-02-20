@@ -5,7 +5,6 @@ import { StyleSheet } from 'react-native';
 let stylesMap = StyleSheet.create({
     container : {
         flex: 1,
-        backgroundColor: 'white',
         paddingVertical: 4,
         marginTop: 10
     },

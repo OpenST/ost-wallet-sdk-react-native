@@ -1,12 +1,12 @@
 import React from 'react';
 import { FlatList, ActivityIndicator, View, Image, Text, TouchableWithoutFeedback } from 'react-native';
-
-import styles from './styles';
 import RedemptionSkusModel from "../../services/OstJsonApiPagination/RedemptionSkusModel";
 import Pagination from '../../services/OstJsonApiPagination/Pagination';
 import OstRedemableCustomConfig from "../RedemableCustomConfig";
 import multipleClickHandler from '../MultipleClickHandler';
 import OstThemeConfigHelper from '@ostdotcom/ost-wallet-sdk-react-native/js/helpers/OstThemeConfigHelper';
+
+import styles from './styles';
 
 class SkusList extends React.PureComponent{
     constructor( props ){

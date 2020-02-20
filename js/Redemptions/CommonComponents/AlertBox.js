@@ -1,10 +1,9 @@
-import React from 'react';
-import {View , Image, Alert } from "react-native";
+import { Alert } from "react-native";
 
 class AlertBox{
 
   constructor(config){
-    this.config = config;
+    this.config = config || {};
   }
 
   showAlert(){

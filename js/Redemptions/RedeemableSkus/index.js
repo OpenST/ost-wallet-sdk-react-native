@@ -18,9 +18,6 @@ function __getParam(navigation ,  paramName) {
   return null;
 }
 
-
-//TODO lets think on navigation checks
-
 class OstRedeemableSkus extends React.PureComponent {
    
     static navigationOptions = ({ navigation }) => {
@@ -54,6 +51,7 @@ class OstRedeemableSkus extends React.PureComponent {
     
         this.ostUserId = props.ostUserId || __getParam(props.navigation , "ostUserId");
         this.ostWalletUIWorkflowCallback = props.ostWalletUIWorkflowCallback || __getParam(props.navigation , "ostWalletUIWorkflowCallback");
+        this.balanceInBt = 0;
         
         if( !this.ostUserId ) {
           let err = new Error("ostUserId can not be null");
@@ -64,6 +62,10 @@ class OstRedeemableSkus extends React.PureComponent {
           let err = new Error("ostWalletUIWorkflowCallback can not be null and must be an instanceof OstWalletUIWorkflowCallback");
           throw err;
         }  
+
+        if(!props.navigation){
+          console.warn("navigation is required for ost redemption ui sdk flow.");
+        }
 
         this.init();
     }
@@ -82,6 +84,7 @@ class OstRedeemableSkus extends React.PureComponent {
       OstJsonApi.getBalanceForUserId(this.ostUserId, (res) => {
         let balance = res.balance && res.balance.available_balance;
         balance = tokenHelper.toBtPrecision(tokenHelper.fromDecimal(balance));
+        this.balanceInBt = balance;
         this.props.navigation && this.props.navigation.setParams && this.props.navigation.setParams({
           balance
         })
@@ -103,7 +106,8 @@ class OstRedeemableSkus extends React.PureComponent {
       } else {
         this.props.navigation && this.props.navigation.push && this.props.navigation.push('RedeemableSkuDetails', {'redemptionSku': item,
                                                             'ostUserId':this.ostUserId,
-                                                            'ostWalletUIWorkflowCallback': this.ostWalletUIWorkflowCallback
+                                                            'ostWalletUIWorkflowCallback': this.ostWalletUIWorkflowCallback, 
+                                                            'balance': this.balanceInBt
                                                           });
       }
     }
