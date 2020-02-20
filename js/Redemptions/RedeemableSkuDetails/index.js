@@ -15,6 +15,11 @@ import OstThemeConfigHelper from '../../helpers/OstThemeConfigHelper';
 import HeaderRight from "../CommonComponents/HeaderRight";
 import tokenHelper from "../TokenHelper";
 
+const transactionErrorMsgs = {
+  unauthorized: "Device unathorized, please authorized the device.",
+  generalError: "Something went wrong"
+}
+
 class OstRedeemableSkuDetails extends PureComponent{
   static navigationOptions = ({ navigation }) => {
     const balance = navigation && navigation.getParam("balance") || 0 ,
@@ -483,7 +488,32 @@ class OstRedeemableSkuDetails extends PureComponent{
                                                           delegate);
   }
 
+  requestAcknowledged = () => {
+    this.__setState({ isPurchasing: false, 
+                      transactionSuccess: true,
+                      errorText : ""});
+    this.updateBalance();
+  }
 
+  flowInterrupt = () => {
+    this.__setState({ isPurchasing: false, errorText : transactionErrorMsgs.generalError});
+  }
+
+  onUnauthorized =( ) => {
+    this.__setState({ isPurchasing: false, errorText : transactionErrorMsgs.unauthorized});
+  }
+
+  saltFetchFailed =() => {
+    this.__setState({ isPurchasing: false, errorText : transactionErrorMsgs.generalError});
+  }
+
+  deviceTimeOutOfSync = () => {
+    this.__setState({ isPurchasing: false, errorText : transactionErrorMsgs.generalError});
+  }
+
+  workflowFailed = () => {
+    this.__setState({ isPurchasing: false, errorText : transactionErrorMsgs.generalError});
+  }
 
 }
 

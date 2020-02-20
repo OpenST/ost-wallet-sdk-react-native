@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
-import { OstJsonApi } from '../../OstJsonApi';;
+import  OstJsonApi from '../../OstJsonApi';;
 
 import HeaderRight from "../CommonComponents/HeaderRight";
 import OstRedemableCustomConfig from "../RedemableCustomConfig";
