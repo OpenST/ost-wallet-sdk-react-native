@@ -350,12 +350,12 @@ class OstRedeemableSkuDetails extends PureComponent{
   render(){
     return(
       <ScrollView style={stylesMap.container}>
-        <Text style={stylesMap.heading}>{this.skuDetails.name}</Text>
+        <Text style={[stylesMap.heading, OstThemeConfigHelper.getH2Config()]}>{this.skuDetails.name}</Text>
         <Image
           style={stylesMap.imageStyle}
           source={{uri:this.skuDetails.images.product.original.url}}>
         </Image>
-        <Text style={stylesMap.descText}>
+        <Text style={[stylesMap.descText, OstThemeConfigHelper.getH3Config()]}>
           {this.skuDetails.description.text}
         </Text>
 
@@ -366,7 +366,7 @@ class OstRedeemableSkuDetails extends PureComponent{
         {this.skuDetails.availability && (
           <React.Fragment>
             <View style={stylesMap.wrapperPicker}>
-              <Text style={stylesMap.labelStyle}> Select Country </Text>
+              <Text style={[stylesMap.labelStyle, OstThemeConfigHelper.getH4Config()]}> Select Country </Text>
               <RNPickerSelect
                 ref={ref => {
                   this.inputRefs.countryPicker = ref;
@@ -374,7 +374,7 @@ class OstRedeemableSkuDetails extends PureComponent{
                 onDownArrow={() => {
                   this.inputRefs.currencyPicker.togglePicker();
                 }}
-                style={inputBoxStyles}
+                style={[inputBoxStyles, OstThemeConfigHelper.getNativeSelectConfig() ]}
                 placeholder={{}}
                 onValueChange={(value) => this.onCountryChange(value)}
                 items={this.getAvailableCountryList()}
@@ -387,7 +387,7 @@ class OstRedeemableSkuDetails extends PureComponent{
             </View>
 
             <View style={stylesMap.wrapperPicker}>
-              <Text style={stylesMap.labelStyle}> Card Amount </Text>
+              <Text style={[stylesMap.labelStyle, OstThemeConfigHelper.getH4Config()]}> Card Amount </Text>
               <RNPickerSelect
                 ref={ref => {
                   this.inputRefs.currencyPicker = ref;
@@ -398,7 +398,7 @@ class OstRedeemableSkuDetails extends PureComponent{
                 onDownArrow={() => {
                   this.inputRefs.emailIdInput.focus();
                 }}
-                style={inputBoxStyles}
+                style={[inputBoxStyles, OstThemeConfigHelper.getNativeSelectConfig() ]}
                 placeholder={{}}
                 value = {this.state.selectedDenomination}
                 onValueChange={(value) => this.onDenominationChange(value)}
@@ -412,21 +412,21 @@ class OstRedeemableSkuDetails extends PureComponent{
             </View>
 
             <View>
-              <Text style={stylesMap.labelStyle}> Your mail id</Text>
+              <Text style={[stylesMap.labelStyle, OstThemeConfigHelper.getH4Config()]}> Your mail id</Text>
               <TextInput
                 ref={ref => {
                   this.inputRefs.emailIdInput = ref;
                 }}
                 returnKeyType="done"
                 enablesReturnKeyAutomatically
-                style={inputBoxStyles.inputIOS}
+                style={[inputBoxStyles.inputIOS, OstThemeConfigHelper.getTextFieldConfig()]}
                 blurOnSubmit={false}
                 value = {this.state.emailId}
                 onChangeText={this.onEmailChange}
                 editable = {!this.state.isPurchasing}
               />
             </View>
-            <Text style={stylesMap.errorText}>{this.state.errorText}</Text>
+            <Text style={[stylesMap.errorText, ]}>{this.state.errorText}</Text>
             {this.state.transactionSuccess &&
               <View style={stylesMap.successMessageWrapper}>
                 <Image source={msgIcon} style={stylesMap.imageSuccessMessage}/>
@@ -438,7 +438,7 @@ class OstRedeemableSkuDetails extends PureComponent{
 
             <TouchableOpacity
               onPress={this.onPurchaseClick}
-              style={stylesMap.purchaseBtn}
+              style={[stylesMap.purchaseBtn, OstThemeConfigHelper.getB1Config()]}
               disabled = {this.state.isPurchasing}>
               <Text style={stylesMap.purchaseBtnText}>
                 {this.state.btnText}

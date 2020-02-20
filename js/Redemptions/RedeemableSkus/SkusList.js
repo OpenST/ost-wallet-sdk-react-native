@@ -6,6 +6,7 @@ import RedemptionSkusModel from "../../services/OstJsonApiPagination/RedemptionS
 import Pagination from '../../services/OstJsonApiPagination/Pagination';
 import OstRedemableCustomConfig from "../RedemableCustomConfig";
 import multipleClickHandler from '../MultipleClickHandler';
+import OstThemeConfigHelper from '@ostdotcom/ost-wallet-sdk-react-native/js/helpers/OstThemeConfigHelper';
 
 class SkusList extends React.PureComponent{
     constructor( props ){
@@ -136,8 +137,8 @@ const ListHeaderComponent = (props) => {
       ;
     return (<View styles={styles.headingWrapper}>
         {storeLogo && <Image source={storeLogo} style={styles.logoSkipFont}/> }
-        {header && <Text style={styles.title}>{header}</Text> }
-        {description && <Text style={styles.description}>{description}</Text> }
+        {header && <Text style={[styles.title, OstThemeConfigHelper.getH1Config()]}>{header}</Text> }
+        {description && <Text style={[styles.description, OstThemeConfigHelper.getH3Config()]}>{description}</Text> }
     </View>)
 }
 
