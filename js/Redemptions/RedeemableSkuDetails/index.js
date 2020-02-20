@@ -1,5 +1,5 @@
 import React,{PureComponent} from 'react';
-import {View, Text, Image, ScrollView, Platform, TextInput, TouchableOpacity, Alert} from 'react-native';
+import {View, Text, Image, ScrollView, Platform, TextInput, TouchableOpacity, Alert,ActivityIndicator} from 'react-native';
 import OstJsonApi from "../../OstJsonApi";
 import RNPickerSelect from 'react-native-picker-select';
 
@@ -42,7 +42,7 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.purchaseValue = 60;
     this.denominationData = [];
     this.countrydata = [];
-    this.btnText = "";
+    ;
     if(!this.skuDetails) return;
 
     this.inputRefs = {
@@ -58,10 +58,11 @@ class OstRedeemableSkuDetails extends PureComponent{
       transactionSuccess: false,
       errorText : null,
       isPurchasing: false,
-      emailId : null
+      emailId : null,
+      btnText : ""
     };
 
-    this.setBtnText();
+
 
 
   }
@@ -71,12 +72,15 @@ class OstRedeemableSkuDetails extends PureComponent{
   };
   componentDidMount(){
     this.fetchDetails();
+    this.setBtnText();
   }
 
   componentWillUnmount (){
-    this.__setState = () => {};
-    this.navigation = null;
-    this.inputRefs = null;
+    this.inputRefs.countryPicker = null;
+    this.inputRefs.currencyPicker = null;
+    this.inputRefs.emailIdInput = null;
+    this.navigation = null ;
+    this.__setState = () =>{};
   }
 
 
@@ -86,7 +90,7 @@ class OstRedeemableSkuDetails extends PureComponent{
 
   onDetailsError = (data={}) =>{
     const resultType = data["result_type"] ;
-    // this.skuDetails = data[resultType]; TODO remove this once Api is ready
+    // this.skuDetails = data[resultType]; TODO @shraddha remove this once Api is ready
     this.skuDetails = {
        id : 1,
        name : "product name",
@@ -145,6 +149,9 @@ class OstRedeemableSkuDetails extends PureComponent{
   onDetailsSuccess =( error)=> {
     //TODO lets discuss
     console.log("in error ----",error);
+    this.__setState({
+      refreshing : false,
+    })
   };
 
   setBtnText = () => {
@@ -152,9 +159,14 @@ class OstRedeemableSkuDetails extends PureComponent{
     //If purchaing -  text to processing
     //If not show value text
     if(this.state.isPurchasing){
-        this.btnText= 'Processing';
+      this.__setState({
+        btnText:'Processing'
+      });
+
     }else{
-      this.btnText=`Purchase for ${this.purchaseValue} ${this.tokenSymbol}`
+      this.__setState({
+        btnText:`Purchase for ${this.purchaseValue} ${this.tokenSymbol}`
+      });
     }
   };
 
@@ -255,8 +267,12 @@ class OstRedeemableSkuDetails extends PureComponent{
 
   onAlertConfirm = () => {
     //Change button text to processing
-    //Disable form
-  }
+    // isPurchasing flag takes care of disabling form
+    this.__setState({
+      isPurchasing: true
+    })
+    this.setBtnText();
+    }
 
   excequteTranscaction = () => {
     //@Ashutosh
@@ -265,25 +281,65 @@ class OstRedeemableSkuDetails extends PureComponent{
   onTransactionSuccess = () => {
     //State change to show success message
     //Enable form
+    this.__setState({
+      isPurchasing: false,
+      transactionSuccess :true
+    })
   }
 
   onTransactionError =( )=> {
-    //Set state for error , enale form
+    //Set state for error , enable form
+    this.__setState({
+      isPurchasing: false,
+      errorText : "Transaction Error",
+      transactionSuccess :false
+    })
   }
 
   onFormChange = () => {
     //Clear state error
-    //Any value change in from Show button and hide success message //set state transactoion success false
-  }
+    //Any value change in form Show button and hide success message
+    // set state transaction success false
+    this.__setState({
+      isPurchasing: false,
+      errorText : "",
+      transactionSuccess : false
+    });
 
-  onTransactionError = () => {
-    //Display error set state
   }
 
   onEmailChange = (text) =>{
     this.__setState({
       emailId:text
     })
+  }
+
+  setCountryPickerRef = (ref) =>{
+    this.inputRefs.countryPicker = ref;
+  }
+
+  setDenominationPickerRef = (ref) =>{
+    this.inputRefs.currencyPicker = ref;
+  }
+
+  setEmailINputPickerRef = (ref) =>{
+    this.inputRefs.emailIdInput = ref;
+  }
+
+  onDownArrowClickCountry = () =>{
+    this.inputRefs.currencyPicker.togglePicker();
+  }
+
+  onDownArrowClickCurrency = () =>{
+    this.inputRefs.emailIdInput.focus();
+  }
+
+  onUpArrowClickCurrency = () =>{
+    this.inputRefs.countryPicker.togglePicker();
+  }
+
+  showDownArrow = () =>{
+    return ;
   }
 
 
@@ -299,6 +355,9 @@ class OstRedeemableSkuDetails extends PureComponent{
           {this.skuDetails.description.text}
         </Text>
 
+        <ActivityIndicator
+          animating = {this.state.refreshing}
+        />
         {/*//TODO if not availablity Dont render anything below */}
         {this.skuDetails.availability && (
           <React.Fragment>
@@ -319,6 +378,7 @@ class OstRedeemableSkuDetails extends PureComponent{
                 Icon={() => {
                   return <Image source={downArrow} style={stylesMap.downArrow}/>;
                 }}
+                disabled = {this.state.isPurchasing}
               />
             </View>
 
@@ -343,6 +403,7 @@ class OstRedeemableSkuDetails extends PureComponent{
                 Icon={() => {
                   return <Image source={downArrow} style={stylesMap.downArrow}/>;
                 }}
+                disabled = {this.state.isPurchasing}
               />
             </View>
 
@@ -358,14 +419,25 @@ class OstRedeemableSkuDetails extends PureComponent{
                 blurOnSubmit={false}
                 value = {this.state.emailId}
                 onChangeText={this.onEmailChange}
+                editable = {!this.state.isPurchasing}
               />
             </View>
             <Text style={stylesMap.errorText}>{this.state.errorText}</Text>
+            {this.state.transactionSuccess &&
+              <View style={stylesMap.successMessageWrapper}>
+                <Image source={msgIcon} style={stylesMap.imageSuccessMessage}/>
+                <Text style={stylesMap.successText}>
+                  We have received your order and will send an email shortly to {this.state.emailId}
+                </Text>
+              </View>
+            }
+
             <TouchableOpacity
               onPress={this.onPurchaseClick}
-              style={stylesMap.purchaseBtn}>
+              style={stylesMap.purchaseBtn}
+              disabled = {this.state.isPurchasing}>
               <Text style={stylesMap.purchaseBtnText}>
-                {this.btnText}
+                {this.state.btnText}
               </Text>
             </TouchableOpacity>
 
