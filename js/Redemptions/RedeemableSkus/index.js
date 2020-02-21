@@ -107,7 +107,8 @@ class OstRedeemableSkus extends React.PureComponent {
         this.props.navigation && this.props.navigation.push && this.props.navigation.push('RedeemableSkuDetails', {'redemptionSku': item,
                                                             'ostUserId':this.ostUserId,
                                                             'ostWalletUIWorkflowCallback': this.ostWalletUIWorkflowCallback, 
-                                                            'balance': this.balanceInBt
+                                                            'balance': this.balanceInBt,
+                                                            'navTitle': __getParam(this.props.navigation , "navTitle")
                                                           });
       }
     }
