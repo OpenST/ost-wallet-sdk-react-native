@@ -32,6 +32,14 @@ class OstRedemableCustomConfig {
         return this.config && this.config.skuListScreen && this.config.skuListScreen["description"];
     }
 
+    getSkuListNavHeader = () => {
+        return this.config && this.config.skuListScreen && this.config.skuListScreen["navHeader"];
+    }
+
+    getSkuDetailsScreenNavHeader = () => {
+        return this.config && this.config.skuDetailsScreen && this.config.skuDetailsScreen["navHeader"];
+    }
+
     
 }
 

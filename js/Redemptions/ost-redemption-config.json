@@ -6,10 +6,13 @@
         "storeIcon": null
     },
     "skuListScreen": {
+        "navHeader": null,
         "header": null,
         "description": null
     },
-    "skuDetailsScreen": { }  
+    "skuDetailsScreen": { 
+      "navHeader": null
+    }  
   },
   "transactionMeta" : {
     "name": "",

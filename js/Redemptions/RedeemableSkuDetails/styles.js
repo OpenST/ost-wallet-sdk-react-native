@@ -2,9 +2,11 @@ import { StyleSheet } from 'react-native';
 
 let stylesMap = StyleSheet.create({
   container:{
-    padding:20,
     flex:1,
     flexDirection:'column'
+  },
+  scrollViewContainer:{
+    padding:20,
   },
   imageStyle:{
     width:"100%",
@@ -26,7 +28,9 @@ let stylesMap = StyleSheet.create({
   errorText:{
     justifyContent:'center',
     alignItems:'center',
-    height : 13
+    fontSize:13,
+    height : 15,
+    color:'red'
   },
   purchaseBtn:{
     marginTop:20,
@@ -35,7 +39,8 @@ let stylesMap = StyleSheet.create({
     width:'100%',
     height:46,
     flex:1,
-    flexDirection:'column'
+    flexDirection:'column',
+    marginBottom:50
   },
   purchaseBtnText:{
    

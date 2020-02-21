@@ -140,20 +140,17 @@ class OstThemeConfigHelper {
   getNavigationHeaderConfig() {
     let config = this.themeConfig.navigation_bar;
     let headerConfig = this.themeConfig.navigation_bar_header;
-    let finalConfig = {
+    return {
       headerStyle: {
         backgroundColor: config.tint_color
       },
       headerTintColor: headerConfig.tint_color
     }
-    if(headerConfig.title){
-      finalConfig.title = headerConfig.title;
-    }
-    return headerConfig;
   }
 
   getFormFieldConfig() {
     let nsConfig = this.themeConfig.form_field;
+    if(!nsConfig) return {};
     return {
       color: nsConfig.color,
       fontSize: nsConfig.size,
