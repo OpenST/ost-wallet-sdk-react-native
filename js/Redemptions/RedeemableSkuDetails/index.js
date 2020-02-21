@@ -215,6 +215,9 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
   onPurchaseClick = () =>{
+    this.__setState({
+      errorText : ""
+    })
     if(this.isInputValid()){
       this.showConfirmationAlert();
     }
@@ -332,8 +335,8 @@ class OstRedeemableSkuDetails extends PureComponent{
 
   render(){
     return(
-      <KeyboardAvoidingView style={stylesMap.container} behavior={Platform.OS == 'android' ?'padding' :''} enabled>
-      <ScrollView>
+      <KeyboardAvoidingView style={stylesMap.container} behavior={Platform.OS == 'android' ?'' :'padding'} keyboardVerticalOffset={30} enabled>
+      <ScrollView style={stylesMap.scrollViewContainer}>
         <Text style={[stylesMap.heading, OstThemeConfigHelper.getH2Config()]}>{this.getName()}</Text>
         <Image
           style={stylesMap.imageStyle}
