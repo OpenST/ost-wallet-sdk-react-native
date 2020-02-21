@@ -148,7 +148,7 @@ class OstThemeConfigHelper {
   }
 
   getNativeSelectConfig() {
-    let nsConfig = this.themeConfig.native_select;
+    let nsConfig = this.themeConfig.form_field;
     return {
       color: nsConfig.color,
       fontSize: nsConfig.size,

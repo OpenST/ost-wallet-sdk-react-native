@@ -1,6 +1,7 @@
 import React,{PureComponent} from 'react';
 import {View, Text, Image, ScrollView,KeyboardAvoidingView, TextInput, TouchableOpacity,ActivityIndicator} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
+
 import HeaderRight from "../CommonComponents/HeaderRight";
 import BackArrow from '../CommonComponents/BackArrow';
 import OstJsonApi from "../../OstJsonApi";
@@ -13,6 +14,7 @@ import tokenHelper from "../TokenHelper";
 import AlertBox from "../CommonComponents/AlertBox";
 import msgIcon from '../../../assets/msg-icon.png';
 import downArrow from '../../../assets/down-arrow.png';
+import multipleClickHandler from '../MultipleClickHandler';
 
 import {stylesMap} from './styles';
 
@@ -391,7 +393,9 @@ class OstRedeemableSkuDetails extends PureComponent{
             }
 
             <TouchableOpacity
-              onPress={this.onPurchaseClick}
+              onPress={multipleClickHandler(() => {
+                this.onPurchaseClick()
+              })}
               style={[stylesMap.purchaseBtn, OstThemeConfigHelper.getB1Config()]}
               disabled = {this.state.isPurchasing}>
               <Text style={stylesMap.purchaseBtnText}>
