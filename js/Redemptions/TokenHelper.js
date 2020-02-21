@@ -49,7 +49,7 @@ class TokenHelper {
     }
 
     getTokenHolderAdresses(){
-      return this.token["token_holder_address"] || "";
+      return this.token.auxiliary_chains && this.token.auxiliary_chains[0] && this.token.auxiliary_chains[0].company_token_holders;
      }
  
      getDecimals(){
