@@ -25,7 +25,7 @@ class OstRedeemableSkus extends React.PureComponent {
              isCustomBack = !!OstRedemableCustomConfig.getBackArrowUri()
         ;
         let navigationOption = {
-          title: __getParam(navigation , "navTitle") || "" ,
+          title: __getParam(navigation , "navTitle") ||  OstRedemableCustomConfig.getSkuListNavHeader() ,
           headerStyle:  {
             borderBottomWidth: 0,
             shadowColor: '#000',
@@ -108,8 +108,7 @@ class OstRedeemableSkus extends React.PureComponent {
         this.props.navigation && this.props.navigation.push && this.props.navigation.push('RedeemableSkuDetails', {'redemptionSku': item,
                                                             'ostUserId':this.ostUserId,
                                                             'ostWalletUIWorkflowCallback': this.ostWalletUIWorkflowCallback, 
-                                                            'balance': this.balanceInBt,
-                                                            'navTitle': __getParam(this.props.navigation , "navTitle")
+                                                            'balance': this.balanceInBt
                                                           });
       }
     }

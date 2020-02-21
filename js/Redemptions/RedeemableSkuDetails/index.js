@@ -48,7 +48,7 @@ class OstRedeemableSkuDetails extends PureComponent{
          isCustomBack = !!OstRedemableCustomConfig.getBackArrowUri()
     ;
     let navigationOption = {
-      title: __getParam(navigation , "navTitle") || "",
+      title: __getParam(navigation , "navTitle") || OstRedemableCustomConfig.getSkuDetailsScreenNavHeader(),
       headerStyle:  {
         borderBottomWidth: 0,
         shadowColor: '#000',
@@ -459,7 +459,7 @@ class OstRedeemableSkuDetails extends PureComponent{
     const controller = new RedemptionController(this.ostUserId, this, this.ostWalletUIWorkflowCallback) ;
     const delegate = controller.getWorkflowDelegate() ,
           amounts = [this.getSelectedAmountInWei()] ,
-          address = [tokenHelper.getTokenHolderAdresses()]
+          address = [tokenHelper.getTokenHolderAddress()]
     ;
     OstRedemptionTransactionHelper.executeDirectTransfer( this.ostUserId,
                                                           amounts,

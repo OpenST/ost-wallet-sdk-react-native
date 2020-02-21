@@ -48,8 +48,11 @@ class TokenHelper {
         });
     }
 
-    getTokenHolderAdresses(){
-      return this.token.auxiliary_chains && this.token.auxiliary_chains[0] && this.token.auxiliary_chains[0].company_token_holders;
+    getTokenHolderAddress(){
+      const auxChain = this.token && this.token.auxiliary_chains , 
+            firstAuxChain = auxChain && auxChain[0], 
+            companyTokenHolders = firstAuxChain && firstAuxChain["company_token_holders"] ; 
+      return companyTokenHolders && companyTokenHolders[0] || "";
      }
  
      getDecimals(){
