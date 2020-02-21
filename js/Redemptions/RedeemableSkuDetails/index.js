@@ -153,7 +153,7 @@ class OstRedeemableSkuDetails extends PureComponent{
 
   getBtnText = () => {
     if(this.state.isPurchasing){
-      return "Processing";
+      return "Processing...";
     }else{
       return `Purchase for ${this.getSelectedAmountInBT()} ${tokenHelper.getTokenSymbol()}`  
     }
