@@ -1,5 +1,15 @@
 import React,{PureComponent} from 'react';
-import {View, Text, Image, ScrollView,KeyboardAvoidingView, TextInput, TouchableOpacity,ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  KeyboardAvoidingView,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+  Platform
+} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import HeaderRight from "../CommonComponents/HeaderRight";
 import BackArrow from '../CommonComponents/BackArrow';
@@ -293,8 +303,8 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
   getImage = () =>{
-    if(this.skuDetails.images && this.skuDetails.images.product && this.skuDetails.images.product.original && this.skuDetails.images.product.original.url){
-      return this.skuDetails.images.product.original.url;
+    if(this.skuDetails.images && this.skuDetails.images.detail && this.skuDetails.images.detail.original && this.skuDetails.images.detail.original.url){
+      return this.skuDetails.images.detail.original.url;
     }
   }
 
@@ -320,7 +330,8 @@ class OstRedeemableSkuDetails extends PureComponent{
 
   render(){
     return(
-      <ScrollView style={stylesMap.container}>
+      <KeyboardAvoidingView style={stylesMap.container} behavior={Platform.OS == 'android' ?'padding' :''} enabled>
+      <ScrollView>
         <Text style={[stylesMap.heading, OstThemeConfigHelper.getH2Config()]}>{this.getName()}</Text>
         <Image
           style={stylesMap.imageStyle}
@@ -401,6 +412,7 @@ class OstRedeemableSkuDetails extends PureComponent{
 
           </React.Fragment>)}
       </ScrollView>
+      </KeyboardAvoidingView>
     )
   }
 
