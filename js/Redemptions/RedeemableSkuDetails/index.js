@@ -323,7 +323,7 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
   getRNPickerStyles = () => {
-    let styles = {...stylesMap.input, ...OstThemeConfigHelper.getNativeSelectConfig()};
+    let styles = {...stylesMap.input, ...OstThemeConfigHelper.getFormFieldConfig()};
     return {
       inputIOS : styles,
       inputAndroid : styles
@@ -386,7 +386,7 @@ class OstRedeemableSkuDetails extends PureComponent{
                 ref={this.setEmailINputPickerRef}
                 returnKeyType="done"
                 enablesReturnKeyAutomatically
-                style={[stylesMap.input, OstThemeConfigHelper.getTextFieldConfig()]}
+                style={[stylesMap.input, OstThemeConfigHelper.getFormFieldConfig()]}
                 blurOnSubmit={false}
                 value = {this.state.emailId}
                 onChangeText={this.onEmailChange}

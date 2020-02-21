@@ -106,7 +106,8 @@ class OstThemeConfigHelper {
             color: b1Config.color,
             fontSize: b1Config.size,
             backgroundColor: b1Config.background_color,
-            fontFamily: b1Config.font
+            fontFamily: b1Config.font,
+            borderRadius: b1Config.border_radius
           }
   }
 
@@ -148,24 +149,14 @@ class OstThemeConfigHelper {
     }
   }
 
-  getNativeSelectConfig() {
+  getFormFieldConfig() {
     let nsConfig = this.themeConfig.form_field;
     return {
       color: nsConfig.color,
       fontSize: nsConfig.size,
       fontFamily: nsConfig.font,
-      borderRadius: nsConfig.border_radius
-    }
-  }
-
-  getTextFieldConfig() {
-    let tfConfig = this.themeConfig.text_field;
-    return {
-      color: tfConfig.color,
-      fontSize: tfConfig.size,
-      fontFamily: tfConfig.font,
-      borderRadius: tfConfig.border_radius,
-      backgroundColor: tfConfig.background_color
+      borderRadius: nsConfig.border_radius,
+      borderColor: nsConfig.border_color
     }
   }
 }
