@@ -150,6 +150,7 @@ class OstThemeConfigHelper {
 
   getFormFieldConfig() {
     let nsConfig = this.themeConfig.form_field;
+    if(!nsConfig) return {};
     return {
       color: nsConfig.color,
       fontSize: nsConfig.size,
