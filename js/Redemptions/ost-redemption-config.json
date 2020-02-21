@@ -15,9 +15,8 @@
     }  
   },
   "transactionMeta" : {
-    "name": "",
-    "type": "user_to_company", 
-    "details": ""
+    "name": "redemption",
+    "type": "user_to_company"
   }
 }
 
