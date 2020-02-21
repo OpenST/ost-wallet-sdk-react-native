@@ -51,6 +51,7 @@ class OstRedeemableSkus extends React.PureComponent {
     
         this.ostUserId = props.ostUserId || __getParam(props.navigation , "ostUserId");
         this.ostWalletUIWorkflowCallback = props.ostWalletUIWorkflowCallback || __getParam(props.navigation , "ostWalletUIWorkflowCallback");
+        this.onItemClick = props.onItemClick || __getParam(props.navigation , "onItemClick");
         this.balanceInBt = 0;
         
         if( !this.ostUserId ) {
@@ -100,9 +101,9 @@ class OstRedeemableSkus extends React.PureComponent {
       this.setState(state);
     }
 
-    onItemClick = (item , index) => {
-      if(this.props.onItemClick){
-        this.props.onItemClick(item , index);
+    __onItemClick = (item , index) => {
+      if(typeof "function" == this.onItemClick){
+        this.onItemClick(item , index);
       } else {
         this.props.navigation && this.props.navigation.push && this.props.navigation.push('RedeemableSkuDetails', {'redemptionSku': item,
                                                             'ostUserId':this.ostUserId,
@@ -115,7 +116,7 @@ class OstRedeemableSkus extends React.PureComponent {
 
     render(){
         return (<SafeAreaView style={styles.container}>
-                    <SkusList ostUserId={this.ostUserId} onItemClick={this.onItemClick}/>
+                    <SkusList ostUserId={this.ostUserId} onItemClick={this.__onItemClick}/>
                 </SafeAreaView>
               );}
 }
