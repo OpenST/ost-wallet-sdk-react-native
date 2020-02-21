@@ -16,7 +16,7 @@ import HeaderRight from "../CommonComponents/HeaderRight";
 import BackArrow from '../CommonComponents/BackArrow';
 import OstJsonApi from "../../OstJsonApi";
 import OstRedemptionTransactionHelper from "../RedemptionTransactionHelper";
-import RedemptionController from "../RedemptionController";
+import OstWalletSdkUI from "../../OstWalletSdkUI";
 import OstThemeConfigHelper from '../../helpers/OstThemeConfigHelper';
 import OstRedemableCustomConfig from "../RedemableCustomConfig";
 import OstRedmptionConfig from "../ost-redemption-config";
@@ -25,6 +25,7 @@ import AlertBox from "../CommonComponents/AlertBox";
 import msgIcon from '../../../assets/msg-icon.png';
 import downArrow from '../../../assets/down-arrow.png';
 import multipleClickHandler from '../MultipleClickHandler';
+import OstWalletSdkHelper from "../../helpers/OstWalletSdkHelper";
 
 import {stylesMap} from './styles';
 
@@ -48,7 +49,7 @@ class OstRedeemableSkuDetails extends PureComponent{
          isCustomBack = !!OstRedemableCustomConfig.getBackArrowUri()
     ;
     let navigationOption = {
-      title: __getParam(navigation , "navTitle") || OstRedemableCustomConfig.getSkuDetailsScreenNavHeader(),
+      title: __getParam(navigation , "navTitle") || "",
       headerStyle:  {
         borderBottomWidth: 0,
         shadowColor: '#000',
@@ -215,9 +216,6 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
   onPurchaseClick = () =>{
-    this.__setState({
-      errorText : ""
-    })
     if(this.isInputValid()){
       this.showConfirmationAlert();
     }
@@ -335,8 +333,8 @@ class OstRedeemableSkuDetails extends PureComponent{
 
   render(){
     return(
-      <KeyboardAvoidingView style={stylesMap.container} behavior={Platform.OS == 'android' ?'' :'padding'} keyboardVerticalOffset={30} enabled>
-      <ScrollView style={stylesMap.scrollViewContainer}>
+      <KeyboardAvoidingView style={stylesMap.container} behavior={Platform.OS == 'android' ?'padding' :''} enabled>
+      <ScrollView>
         <Text style={[stylesMap.heading, OstThemeConfigHelper.getH2Config()]}>{this.getName()}</Text>
         <Image
           style={stylesMap.imageStyle}
@@ -459,17 +457,33 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
   executeTranscaction = () => {
-    const controller = new RedemptionController(this.ostUserId, this, this.ostWalletUIWorkflowCallback) ;
-    const delegate = controller.getWorkflowDelegate() ,
-          amounts = [this.getSelectedAmountInWei()] ,
+    const amounts = [tokenHelper.fromDecimal(this.getSelectedAmountInWei())] ,
           address = [tokenHelper.getTokenHolderAddress()]
     ;
-    OstRedemptionTransactionHelper.executeDirectTransfer( this.ostUserId,
-                                                          amounts,
-                                                          address,
-                                                          this.getTxMeta(),
-                                                          this.getRedemptionMeta(),
-                                                          delegate);
+    const uuid = OstRedemptionTransactionHelper.executeDirectTransfer( this.ostUserId,
+                                                                        amounts,
+                                                                        address,
+                                                                        this.getTxMeta(),
+                                                                        this.getRedemptionMeta(),
+                                                                        this.ostWalletUIWorkflowCallback );
+
+   
+    OstWalletSdkUI.subscribe(uuid,  OstWalletSdkUI.EVENTS.requestAcknowledged, (workflowContext, contextEntity) => {
+      this.requestAcknowledged();
+      const requestAcknowledged =  this.ostWalletUIWorkflowCallback["requestAcknowledged"] ;
+      requestAcknowledged &&  requestAcknowledged.call(this.ostWalletUIWorkflowCallback , workflowContext, contextEntity);
+    });
+
+    OstWalletSdkUI.subscribe(uuid,  OstWalletSdkUI.EVENTS.flowInterrupt, (workflowContext, ostError) => {
+      this.flowInterrupt(workflowContext, ostError);
+      const flowInterrupt =  this.ostWalletUIWorkflowCallback["flowInterrupt"] ;
+      flowInterrupt && flowInterrupt.call(this.ostWalletUIWorkflowCallback , workflowContext, ostError);  
+    });
+
+    OstWalletSdkUI.subscribe(uuid,  OstWalletSdkUI.EVENTS.flowComplete, (workflowContext, contextEntity) => {
+      this.ostWalletUIWorkflowCallback["flowComplete"] &&  this.ostWalletUIWorkflowCallback["flowComplete"](workflowContext, contextEntity);
+    });
+
   }
 
   requestAcknowledged = () => {
@@ -477,24 +491,13 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.updateBalance();
   }
 
-  flowInterrupt = () => {
-    this.onTransactionError( errorMsgs.generalError);
-  }
-
-  onUnauthorized =( ) => {
-    this.onTransactionError( errorMsgs.unauthorized);
-  }
-
-  saltFetchFailed =() => {
-    this.onTransactionError( errorMsgs.generalError);
-  }
-
-  deviceTimeOutOfSync = () => {
-    this.onTransactionError( errorMsgs.generalError);
-  }
-
-  workflowFailed = () => {
-    this.onTransactionError( errorMsgs.generalError);
+  flowInterrupt = ( workflowContext, ostError) => {
+    const errorCode = ostError && ostError.error && ostError.error["error_code"] || "";
+    if(OstWalletSdkHelper.isDeviceUnauthorizedError(ostError) || errorCode == "DEVICE_UNAUTHORIZED" ){
+      this.onTransactionError( errorMsgs.unauthorized);
+    }else{
+      this.onTransactionError( errorMsgs.generalError);
+    }
   }
 
 }

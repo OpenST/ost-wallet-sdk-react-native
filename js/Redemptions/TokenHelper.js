@@ -73,7 +73,7 @@ class TokenHelper {
 
     toDecimal(val, decimals){
         decimals = decimals || this.getDecimals();
-        if (!val || decimals) return '';
+        if (!val || !decimals) return '';
         val = BigNumber(val);
         let exp = BigNumber(10).exponentiatedBy(decimals);
         return val.multipliedBy(exp).toString(10);
