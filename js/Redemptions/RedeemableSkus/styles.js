@@ -22,7 +22,8 @@ let stylesMap = StyleSheet.create({
     },
     title : {
         alignSelf: 'center',
-        paddingHorizontal: 50
+        paddingHorizontal: 50,
+        marginBottom: 10
     },
     description : {
         marginTop: 5,
