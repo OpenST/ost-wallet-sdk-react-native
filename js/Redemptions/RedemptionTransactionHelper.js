@@ -26,6 +26,7 @@ class OstRedemptionTransactionExecutor extends OstTransactionExecutor {
 
     getSpedingLimitAndExpiryTimeBucket(){
         let validBucket = super.getSpedingLimitAndExpiryTimeBucket();
+        console.log("TransactionHelper.isExternalConfig" , TransactionHelper.isExternalConfig);
         if (!TransactionHelper.isExternalConfig ) {
             if( !validBucket ){
                 validBucket = {
@@ -37,14 +38,18 @@ class OstRedemptionTransactionExecutor extends OstTransactionExecutor {
         return validBucket;
     }
 
-    callExecuteTransfer(executeTxDelegate){
+    onPerformCatch(err){
+       this.delegate["flowInterrupt"] &&  this.delegate["flowInterrupt"]( err.ostWorkflowContext , err.ostError);
+    }
+
+    callExecuteTransfer(){
         OstWalletSdk.executeTransaction(
             this.userId,
             this.addresses,
             this.decimalAmounts,
             this.ruleName,
             this.txMeta,
-            executeTxDelegate,
+            this.delegate,
             {"redemption_meta": this.redemptionDetails}
           )
     }

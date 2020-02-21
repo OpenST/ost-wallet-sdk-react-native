@@ -32,11 +32,6 @@ class RedemptionController {
           this._excequteInternalWorkflow("flowComplete", args);
           this._excequteExternalWorkFlow("flowComplete", args);
         };
-
-        delegate.flowInterrupt = (...args) => {
-            this._excequteInternalWorkflow("flowInterrupt", args);
-            this._excequteExternalWorkFlow("flowInterrupt", args);
-        };  
     
         delegate.onUnauthorized = (...args) => {
           this._excequteInternalWorkflow("onUnauthorized", args);

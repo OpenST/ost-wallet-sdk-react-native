@@ -106,9 +106,13 @@ class OstTransactionExecutor {
 
       this.executeTransfer()
     }catch(err) {
-      let eName = OstWalletUIWorkFlowCallback.EVENTS.flowInterrupt;
-      this.ee.emit(eName, err.ostWorkflowContext , err.ostError);
+      this.onPerformCatch(err);
     }
+  }
+
+  onPerformCatch(err){
+    let eName = OstWalletUIWorkFlowCallback.EVENTS.flowInterrupt;
+    this.ee.emit(eName, err.ostWorkflowContext , err.ostError);
   }
 
   getOstUser() {
