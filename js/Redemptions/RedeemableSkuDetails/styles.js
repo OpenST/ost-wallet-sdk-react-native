@@ -57,7 +57,9 @@ let stylesMap = StyleSheet.create({
     flex:1,
     flexDirection:'row',
     padding:10,
-    borderRadius:8
+    borderRadius:8,
+    alignItems:'center',
+    justifyContent:'center'
   },
   imageSuccessMessage:{
     height:60,
