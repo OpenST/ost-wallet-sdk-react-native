@@ -140,6 +140,7 @@ class OstThemeConfigHelper {
     let config = this.themeConfig.navigation_bar;
     let headerConfig = this.themeConfig.navigation_bar_header;
     return {
+      title: headerConfig.title,
       headerStyle: {
         backgroundColor: config.tint_color
       },
