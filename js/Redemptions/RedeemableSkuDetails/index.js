@@ -73,7 +73,7 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.navigation = props.navigation ;
     this.ostUserId = props.ostUserId || __getParam(props.navigation, "ostUserId") ;
     this.ostWalletUIWorkflowCallback = props.ostWalletUIWorkflowCallback || __getParam(props.navigation, "ostWalletUIWorkflowCallback");
-    this.skuDetails = __getParam(props.navigation, "redemptionSku") || {};
+    this.skuDetails = props.redemptionSku  || __getParam(props.navigation, "redemptionSku") || {};
 
     if(!this.skuDetails) return;
 
