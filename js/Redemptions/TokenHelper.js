@@ -86,6 +86,13 @@ class TokenHelper {
         return bt.decimalPlaces(precession, 1).toString(10);
     }
 
+    isBalSufficient(bal,value){
+      let balance = new BigNumber(bal);
+      let purchaseValue = new BigNumber(value);
+      return balance.comparedTo(purchaseValue);
+
+    }
+
 }
 
 export default new TokenHelper();

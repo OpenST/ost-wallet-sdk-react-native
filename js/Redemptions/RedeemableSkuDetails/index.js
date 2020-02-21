@@ -31,7 +31,9 @@ import {stylesMap} from './styles';
 const errorMsgs = {
   unauthorized: "Device unathorized, please authorized the device.",
   generalError: "Something went wrong.",
-  emailRequired: "Email Id is required."
+  emailRequired: "Email Id is required.",
+  inSufficientbalance : "Insufficient wallet balance",
+  invalidAmount : "Given amount is Invalid"
 }
 
 function __getParam(navigation ,  paramName) {
@@ -74,6 +76,7 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.ostUserId = props.ostUserId || __getParam(props.navigation, "ostUserId") ;
     this.ostWalletUIWorkflowCallback = props.ostWalletUIWorkflowCallback || __getParam(props.navigation, "ostWalletUIWorkflowCallback");
     this.skuDetails = props.redemptionSku  || __getParam(props.navigation, "redemptionSku") || {};
+    this.balance = __getParam(props.navigation,"balance");
 
     if(!this.skuDetails) return;
 
@@ -237,12 +240,28 @@ class OstRedeemableSkuDetails extends PureComponent{
     alertBox.showAlert();
   }
 
+  campareBalAndPurchaseValue = () =>{
+    let purchaseValueInBt = tokenHelper.toBtPrecision( tokenHelper.fromDecimal(this.getSelectedAmountInWei()),  2);
+    return tokenHelper.isBalSufficient(this.balance,purchaseValueInBt);
+  }
+
   isInputValid = () =>{
     if(this.state.emailId == '' ){
       this.__setState({
         errorText: errorMsgs.emailRequired
       });
       return false;
+    }
+    let comparisonResult = this.campareBalAndPurchaseValue();
+    if(comparisonResult === -1){
+      this.__setState({
+        errorText: errorMsgs.inSufficientbalance
+      });
+      return false;
+    }else if(comparisonResult === null){
+      this.__setState({
+        errorText: errorMsgs.invalidAmount
+      });
     }
     return true
   }
@@ -336,7 +355,7 @@ class OstRedeemableSkuDetails extends PureComponent{
   render(){
     return(
       <KeyboardAvoidingView style={stylesMap.container} behavior={Platform.OS == 'android' ?'' :'padding'} keyboardVerticalOffset={30} enabled>
-      <ScrollView style={stylesMap.scrollViewContainer}>
+      <ScrollView contentContainerStyle={stylesMap.scrollViewContainer}>
         <Text style={[stylesMap.heading, OstThemeConfigHelper.getH2Config()]}>{this.getName()}</Text>
         <Image
           style={stylesMap.imageStyle}
