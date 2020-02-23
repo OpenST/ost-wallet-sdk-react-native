@@ -1,1 +1,5 @@
-
+name: ost-wallet-sdk-react-native
+title: Ost Wallet SDK React Native
+version: '1.0'
+nav:
+- modules/ROOT/nav.adoc

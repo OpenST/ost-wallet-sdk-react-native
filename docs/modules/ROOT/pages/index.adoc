@@ -1,1 +1,3 @@
+This is the index.adoc page for OST-WALLET-SDK-REACT-NATIVE
 
+This is a test :)
