@@ -2,11 +2,11 @@
   "item_display_order": [
     "activate_user",
     "wallet_details",
-    "recover_device", 
+    "recover_device",
     "abort_recovery",
-    "add_session", 
-    "reset_pin", 
-    "show_mnemonics", 
+    "add_session",
+    "reset_pin",
+    "show_mnemonics",
     "authorize_device_with_mnemonics",
     "revoke_device",
     "add_another_device",
@@ -22,7 +22,7 @@
         "description": "View your wallet details."
       },
       "config": {
-        "ost_view_endpoint": ''
+        "ost_view_endpoint": ""
       }
     },
     "activate_user": {
