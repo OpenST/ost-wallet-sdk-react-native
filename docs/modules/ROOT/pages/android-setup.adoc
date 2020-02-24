@@ -73,9 +73,3 @@ As TrustKit can only be inititialized with application's https://developer.andro
 To work-around this issues, application needs to have TrustKit as a dependency and initialize it.
 
 Please refer to https://github.com/ostdotcom/ost-wallet-sdk-android/blob/develop/documentation/TrustKitPublickeyPinning.md[Public Key Pinning Using TrustKit] documentation.
-
-= Next Steps
-
-. link:index.adoc#sdk-usage[SDK Usage]
-. link:index.adoc#sdk-methods[SDK Methods]
-. link:index.adoc#sdk-workflow-callbacks[SDK Callbacks]

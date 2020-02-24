@@ -144,9 +144,3 @@ When UseSeedPassword set to `true`, different deterministic salts are used for d
 
 *These configurations are MANDATORY for successful operation.
 Failing to set them will significantly impact usage.*
-
-= Next Steps
-
-. link:../README.md#sdk-usage[SDK Usage]
-. link:../README.md#sdk-methods[SDK Methods]
-. link:../README.md#sdk-workflow-callbacks[SDK Callbacks]
