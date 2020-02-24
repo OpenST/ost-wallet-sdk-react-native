@@ -40,7 +40,8 @@ let stylesMap = StyleSheet.create({
     height:46,
     flex:1,
     flexDirection:'column',
-    marginBottom:50
+    marginBottom:50,
+    borderRadius:5
   },
   purchaseBtnText:{
    
@@ -73,7 +74,8 @@ let stylesMap = StyleSheet.create({
     fontSize: 15,
     paddingVertical: 13,
     paddingHorizontal: 21,
-    borderWidth: 1
+    borderWidth: 1,
+    borderRadius:5
   }
 });
 

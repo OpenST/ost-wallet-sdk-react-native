@@ -106,8 +106,7 @@ class OstThemeConfigHelper {
             color: b1Config.color,
             fontSize: b1Config.size,
             backgroundColor: b1Config.background_color,
-            fontFamily: b1Config.font,
-            borderRadius: b1Config.border_radius
+            fontFamily: b1Config.font
           }
   }
 
@@ -155,7 +154,6 @@ class OstThemeConfigHelper {
       color: nsConfig.color,
       fontSize: nsConfig.size,
       fontFamily: nsConfig.font,
-      borderRadius: nsConfig.border_radius,
       borderColor: nsConfig.border_color
     }
   }
