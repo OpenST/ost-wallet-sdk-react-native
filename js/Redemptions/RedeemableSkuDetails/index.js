@@ -413,7 +413,6 @@ class OstRedeemableSkuDetails extends PureComponent{
                 editable = {!this.state.isPurchasing}
               />
             </View>
-            <Text style={[stylesMap.errorText, ]}>{this.state.errorText}</Text>
             {this.state.transactionSuccess &&
               <View style={stylesMap.successMessageWrapper}>
                 <Image source={msgIcon} style={stylesMap.imageSuccessMessage}/>
@@ -433,6 +432,10 @@ class OstRedeemableSkuDetails extends PureComponent{
                 {this.getBtnText()}
               </Text>
             </TouchableOpacity>
+            <View style={stylesMap.errorContainer}>
+              <Text style={[stylesMap.errorText, ]}>{this.state.errorText}</Text>
+            </View>
+
 
           </React.Fragment>)}
       </ScrollView>
