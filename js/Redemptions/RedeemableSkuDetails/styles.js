@@ -11,7 +11,8 @@ let stylesMap = StyleSheet.create({
   imageStyle:{
     width:"100%",
     height : 150,
-    marginBottom:20
+    marginBottom:20,
+    backgroundColor:'#DBDBDB'
   },
   heading:{
     marginBottom:20

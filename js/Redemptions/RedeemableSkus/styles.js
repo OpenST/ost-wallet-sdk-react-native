@@ -34,7 +34,7 @@ let stylesMap = StyleSheet.create({
     item:{
         flex: 1, 
         margin: 10, 
-        backgroundColor: '#B3B3B3', 
+        backgroundColor: '#DBDBDB', 
         alignItems:'center', 
         justifyContent: 'center'
     },
