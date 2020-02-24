@@ -110,6 +110,15 @@ class OstThemeConfigHelper {
           }
   }
 
+  getB1TextConfig() {
+    let b1Config = this.themeConfig.b1;
+    return {
+      color: b1Config.color,
+      fontSize: b1Config.size,
+      fontFamily: b1Config.font
+    }
+  }
+
   getLinkConfig() {
     let cl1Config = this.themeConfig.link;
     return {

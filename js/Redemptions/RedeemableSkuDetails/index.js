@@ -429,7 +429,7 @@ class OstRedeemableSkuDetails extends PureComponent{
               })}
               style={[stylesMap.purchaseBtn, OstThemeConfigHelper.getB1Config()]}
               disabled = {this.state.isPurchasing}>
-              <Text style={stylesMap.purchaseBtnText}>
+              <Text style={[stylesMap.purchaseBtnText, OstThemeConfigHelper.getB1TextConfig()]}>
                 {this.getBtnText()}
               </Text>
             </TouchableOpacity>

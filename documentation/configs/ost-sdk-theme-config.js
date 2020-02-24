@@ -12,6 +12,10 @@ export default {
     "system_font_weight": "bold",
     "alignment": "left"
   },
+  "b1":{
+    "color":"#ffffff",
+    "size":15
+  },
     
   "c2": {
     "size": 12,
