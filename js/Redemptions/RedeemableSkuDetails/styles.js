@@ -23,7 +23,7 @@ let stylesMap = StyleSheet.create({
   labelStyle:{
     marginBottom:5
   },
-  wrapperPicker:{
+  wrapperFormInput:{
     marginBottom:20
   },
   errorContainer:{
@@ -39,7 +39,6 @@ let stylesMap = StyleSheet.create({
     marginBottom:50,
   },
   purchaseBtn:{
-    marginTop:20,
     alignItems:'center',
     justifyContent : 'center',
     width:'100%',

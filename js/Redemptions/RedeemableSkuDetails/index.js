@@ -368,7 +368,7 @@ class OstRedeemableSkuDetails extends PureComponent{
         />
         {this.skuDetails.availability && (
           <React.Fragment>
-            <View style={stylesMap.wrapperPicker}>
+            <View style={stylesMap.wrapperFormInput}>
               <Text style={[stylesMap.labelStyle, OstThemeConfigHelper.getC2Config()]}> Select Country </Text>
               <RNPickerSelect
                 ref={this.setCountryPickerRef}
@@ -383,7 +383,7 @@ class OstRedeemableSkuDetails extends PureComponent{
               />
             </View>
 
-            <View style={stylesMap.wrapperPicker}>
+            <View style={stylesMap.wrapperFormInput}>
               <Text style={[stylesMap.labelStyle, OstThemeConfigHelper.getC2Config()]}> Card Amount </Text>
               <RNPickerSelect
                 ref={this.setDenominationPickerRef}
@@ -400,7 +400,7 @@ class OstRedeemableSkuDetails extends PureComponent{
               />
             </View>
 
-            <View>
+            <View style={stylesMap.wrapperFormInput}>
               <Text style={[stylesMap.labelStyle, OstThemeConfigHelper.getC2Config()]}> Your mail id</Text>
               <TextInput
                 ref={this.setEmailINputPickerRef}
@@ -421,7 +421,7 @@ class OstRedeemableSkuDetails extends PureComponent{
                 </Text>
               </View>
             }
-
+            {!this.state.transactionSuccess &&
             <TouchableOpacity
               onPress={multipleClickHandler(() => {
                 this.onPurchaseClick()
@@ -432,6 +432,7 @@ class OstRedeemableSkuDetails extends PureComponent{
                 {this.getBtnText()}
               </Text>
             </TouchableOpacity>
+            }
             <View style={stylesMap.errorContainer}>
               <Text style={[stylesMap.errorText, ]}>{this.state.errorText}</Text>
             </View>
