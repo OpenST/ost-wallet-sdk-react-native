@@ -47,7 +47,7 @@ class SkusList extends React.PureComponent{
 
     _renderItem = ({item, index}) => {
         if(item.isEmpty){
-            return (<View>No items found!!!</View>);
+            return (<View style={{flex:1,justifyContent:'center', alignItems:'center'}}><Text>No items found!!!</Text></View>);
         }
         let imageUrl = (item.images && item.images.cover && item.images.cover.original.url) || null;
         return (
@@ -101,7 +101,7 @@ class SkusList extends React.PureComponent{
         this.pagination.refresh();
     }
     
-    _keyExtractor = ({item, index})=> {
+    _keyExtractor = (item, index)=> {
         return `id_${index}`
     }
 
@@ -111,6 +111,7 @@ class SkusList extends React.PureComponent{
     };
 
     render = () => {
+        if(!this.state.list) return null;
         return (
                 <FlatList
                     style={styles.list}
