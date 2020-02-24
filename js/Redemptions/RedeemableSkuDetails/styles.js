@@ -26,12 +26,17 @@ let stylesMap = StyleSheet.create({
   wrapperPicker:{
     marginBottom:20
   },
-  errorText:{
+  errorContainer:{
+    flex:1,
     justifyContent:'center',
     alignItems:'center',
+  },
+  errorText:{
     fontSize:13,
     height : 15,
-    color:'red'
+    color:'red',
+    marginTop:10,
+    marginBottom:50,
   },
   purchaseBtn:{
     marginTop:20,
@@ -41,7 +46,6 @@ let stylesMap = StyleSheet.create({
     height:46,
     flex:1,
     flexDirection:'column',
-    marginBottom:50,
     borderRadius:5
   },
   purchaseBtnText:{
