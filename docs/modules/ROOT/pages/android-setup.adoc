@@ -1,4 +1,5 @@
 = Android set-up required for Ost React Native SDK
+:doctype: book
 
 == 1. Linking the Ost React Native SDK
 
