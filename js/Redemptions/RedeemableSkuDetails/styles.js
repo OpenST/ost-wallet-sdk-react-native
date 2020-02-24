@@ -38,6 +38,15 @@ let stylesMap = StyleSheet.create({
     marginBottom:50,
     textAlign:'center'
   },
+  iconWrapper:{
+    paddingRight : 17,
+    flex:1,
+    marginTop: 17 // [(inputbBoxHeight /2 ) - (heightOfArrow/2 )] where inputbBoxHeight = 46 and heightOfArrow = 12
+  },
+  downArrow : {
+    height : 12,
+    width :20
+  },
   purchaseBtn:{
     alignItems:'center',
     justifyContent : 'center',
@@ -49,12 +58,6 @@ let stylesMap = StyleSheet.create({
   },
   purchaseBtnText:{
    
-  },
-  downArrow : {
-    height : 12,
-    width :20,
-    marginVertical : 17,
-    marginRight : 17
   },
   successMessageWrapper : {
     borderWidth: 1,
@@ -79,7 +82,8 @@ let stylesMap = StyleSheet.create({
     paddingVertical: 13,
     paddingHorizontal: 21,
     borderWidth: 1,
-    borderRadius:5
+    borderRadius:5,
+    height:46
   }
 });
 

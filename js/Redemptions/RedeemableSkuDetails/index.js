@@ -77,7 +77,6 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.ostUserId = props.ostUserId || __getParam(props.navigation, "ostUserId") ;
     this.ostWalletUIWorkflowCallback = props.ostWalletUIWorkflowCallback || __getParam(props.navigation, "ostWalletUIWorkflowCallback");
     this.skuDetails = props.redemptionSku  || __getParam(props.navigation, "redemptionSku") || {};
-    this.balance = __getParam(props.navigation,"balance");
 
     if(!this.skuDetails) return;
 
@@ -239,8 +238,9 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
   campareBalAndPurchaseValue = () =>{
-    let purchaseValueInBt = tokenHelper.toBtPrecision( tokenHelper.fromDecimal(this.getSelectedAmountInWei()),  2);
-    return tokenHelper.isBalSufficient(this.balance,purchaseValueInBt);
+    let purchaseValueInBt = tokenHelper.toBtPrecision( tokenHelper.fromDecimal(this.getSelectedAmountInWei()),  2),
+      balance = __getParam(this.props.navigation,"balance");
+    return tokenHelper.isBalSufficient(balance,purchaseValueInBt);
   }
 
   isInputValid = () =>{
@@ -321,7 +321,11 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
   getPickerIcon = () =>{
-    return <Image source={downArrow} style={stylesMap.downArrow}/>;
+    return (
+      <View style={stylesMap.iconWrapper}>
+        <Image source={downArrow} style={stylesMap.downArrow}/>
+      </View>
+    )
   }
 
   getImage = () =>{
