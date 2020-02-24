@@ -30,7 +30,7 @@ import OstWalletSdkHelper from "../../helpers/OstWalletSdkHelper";
 import {stylesMap} from './styles';
 
 const errorMsgs = {
-  unauthorized: "Device unathorized, please authorized the device.",
+  unauthorized: "Device unathorized, please authorize the device.",
   generalError: "Something went wrong.",
   emailRequired: "Email Id is required.",
   inSufficientbalance : "Insufficient wallet balance",
@@ -434,7 +434,7 @@ class OstRedeemableSkuDetails extends PureComponent{
             </TouchableOpacity>
             }
             <View style={stylesMap.errorContainer}>
-              <Text style={[stylesMap.errorText, ]}>{this.state.errorText}</Text>
+              <Text style={[stylesMap.errorText]}>{this.state.errorText}</Text>
             </View>
 
 

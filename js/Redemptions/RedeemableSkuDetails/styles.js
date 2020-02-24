@@ -33,10 +33,10 @@ let stylesMap = StyleSheet.create({
   },
   errorText:{
     fontSize:13,
-    height : 15,
     color:'red',
     marginTop:10,
     marginBottom:50,
+    textAlign:'center'
   },
   purchaseBtn:{
     alignItems:'center',
