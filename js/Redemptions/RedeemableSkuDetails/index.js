@@ -407,7 +407,7 @@ class OstRedeemableSkuDetails extends PureComponent{
                 returnKeyType="done"
                 enablesReturnKeyAutomatically
                 style={[stylesMap.input, OstThemeConfigHelper.getFormFieldConfig()]}
-                blurOnSubmit={false}
+                blurOnSubmit={true}
                 value = {this.state.emailId}
                 onChangeText={this.onEmailChange}
                 editable = {!this.state.isPurchasing}
