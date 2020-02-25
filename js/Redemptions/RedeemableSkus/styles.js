@@ -29,19 +29,23 @@ let stylesMap = StyleSheet.create({
         marginTop: 5,
         paddingHorizontal: 50,
         textAlign: 'center',
-        marginBottom: 40
+        marginBottom: 30
     },
     item:{
         flex: 1, 
-        margin: 10, 
+        margin:10,
         backgroundColor: '#DBDBDB', 
         alignItems:'center', 
         justifyContent: 'center'
     },
     itemWrapper: {
         flex: 0.5, 
-        width: 160, 
-        height: 160
+        width: 150,
+        height: 150
+    },
+    list:{
+        marginHorizontal:10,
+        marginBottom : 10
     }
 });
 
