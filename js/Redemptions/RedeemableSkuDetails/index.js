@@ -200,14 +200,14 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.__setState({
       selectedAvailability: value
     });
-    this.onFormChange();
+    // this.onFormChange();
   }
 
   onDenominationChange = ( value ) =>{
     this.__setState({
       selectedDenomination : value
     })
-    this.onFormChange();
+    // this.onFormChange();
   }
 
   onEmailChange = (text) =>{
@@ -383,6 +383,7 @@ class OstRedeemableSkuDetails extends PureComponent{
                 items={this.getAvailableCountryList()}
                 useNativeAndroidPickerStyle={false}
                 Icon={this.getPickerIcon}
+                onOpen={this.onFormChange}
                 disabled = {this.state.isPurchasing}
               />
             </View>
@@ -400,6 +401,7 @@ class OstRedeemableSkuDetails extends PureComponent{
                 items={this.getAvailableCurrencyData()}
                 useNativeAndroidPickerStyle={false}
                 Icon={this.getPickerIcon}
+                onOpen={this.onFormChange}
                 disabled = {this.state.isPurchasing}
               />
             </View>
