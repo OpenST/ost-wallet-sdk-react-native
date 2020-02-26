@@ -38,6 +38,8 @@ const errorMsgs = {
   invalidAmount : "Given amount is Invalid."
 }
 
+const apiErrorParameterKey = "redemption_meta";
+
 function __getParam(navigation ,  paramName) {
   if(navigation && navigation.getParam){
     return navigation.getParam(paramName);
@@ -555,7 +557,11 @@ class OstRedeemableSkuDetails extends PureComponent{
   flowInterrupt = ( workflowContext, error) => {
     let errorMsg = errorMsgs.generalError;
     if(error && error.isApiError()){
-      //Show general error.
+      const errData = error.getApiErrorData() || [] ,
+            errObj = errData[0] || {};
+      if(errObj["parameter"] == apiErrorParameterKey){
+        errorMsg = errObj["msg"];
+      }
     }else if( workflowContext ){
       if(OstWalletSdkHelper.isUserCancelled(error)){
         errorMsg = "";
