@@ -89,6 +89,11 @@ let stylesMap = StyleSheet.create({
     flex:1,
     alignItems:'center',
     justifyContent:'center',
+    borderWidth: 1,
+    borderColor: '#2a293b',
+    padding:10,
+    borderRadius:8,
+    borderStyle: 'dashed'
   }
 });
 

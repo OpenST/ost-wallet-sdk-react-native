@@ -49,7 +49,12 @@ let stylesMap = StyleSheet.create({
     noDataWrapper : {
         flex:1,
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        borderWidth: 1,
+        borderColor: '#2a293b',
+        padding:10,
+        borderRadius:8,
+        borderStyle: 'dashed'
     }
 });
 

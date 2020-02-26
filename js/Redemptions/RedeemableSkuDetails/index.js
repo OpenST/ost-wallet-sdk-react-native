@@ -391,7 +391,7 @@ class OstRedeemableSkuDetails extends PureComponent{
         />
         {(!this.skuDetails.availability && !this.state.refreshing) && (
           <View style={stylesMap.emptyProductDetailsWrapper}>
-            <Text style={OstThemeConfigHelper.getH3Config()}> Oops! failed to load available options</Text>
+            <Text> Oops! failed to load available options</Text>
           </View>
 
         )}
