@@ -24,8 +24,17 @@ class SkusList extends React.PureComponent{
         }
     }
 
+    __setState = (state) => {
+        if(!state) return;
+        this.setState(state);
+    }
+
     componentDidMount(){
         this.init();
+    }
+
+    componentWillUnmount(){
+        this.__setState = () => {};
     }
 
     init(){
@@ -72,27 +81,27 @@ class SkusList extends React.PureComponent{
     }
 
     beforeRefresh = ( ) => {
-        this.setState({ refreshing : true });
+        this.__setState({ refreshing : true });
     }
 
     onRefresh = ( res ) => {
-        this.setState({ refreshing : false, list : this.getResults() });
+        this.__setState({ refreshing : false, list : this.getResults() });
     }
 
     onRefreshError = ( error ) => {
-        this.setState({ refreshing : false });
+        this.__setState({ refreshing : false });
     }
 
     beforeNext =() => {
-        this.setState({ loadingNext : true });
+        this.__setState({ loadingNext : true });
     }
 
     onNext = ( res  ) => {
-        this.setState({ loadingNext : false ,  list : this.getResults() });
+        this.__setState({ loadingNext : false ,  list : this.getResults() });
     }
 
     onNextError = ( error ) => {
-        this.setState({ loadingNext : false });
+        this.__setState({ loadingNext : false });
     }
 
     getNext = () => {
