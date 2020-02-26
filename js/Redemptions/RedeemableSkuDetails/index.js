@@ -25,16 +25,16 @@ import AlertBox from "../CommonComponents/AlertBox";
 import msgIcon from '../../../assets/msg-icon.png';
 import downArrow from '../../../assets/down-arrow.png';
 import multipleClickHandler from '../MultipleClickHandler';
+import {sdkErrorHelper} from "../../helpers/OstSdkErrorHelper";
 import OstWalletSdkHelper from "../../helpers/OstWalletSdkHelper";
 
 import {stylesMap} from './styles';
 
 const errorMsgs = {
-  unauthorized: "Device unathorized, please authorize the device.",
-  generalError: "Something went wrong.",
+  generalError: "Failed to redeem, please try again later.",
   emailRequired: "Email Id is required.",
-  inSufficientbalance : "Insufficient wallet balance",
-  invalidAmount : "Given amount is Invalid"
+  inSufficientbalance : "Insufficient wallet balance.",
+  invalidAmount : "Given amount is Invalid."
 }
 
 function __getParam(navigation ,  paramName) {
@@ -201,14 +201,12 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.__setState({
       selectedAvailability: value
     });
-    // this.onFormChange();
   }
 
   onDenominationChange = ( value ) =>{
     this.__setState({
       selectedDenomination : value
     })
-    // this.onFormChange();
   }
 
   onEmailChange = (text) =>{
@@ -522,13 +520,15 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.updateBalance();
   }
 
-  flowInterrupt = ( workflowContext, ostError) => {
-    const errorCode = ostError && ostError.error && ostError.error["error_code"] || "";
-    if(OstWalletSdkHelper.isDeviceUnauthorizedError(ostError) || errorCode == "DEVICE_UNAUTHORIZED" ){
-      this.onTransactionError( errorMsgs.unauthorized);
-    }else{
-      this.onTransactionError( errorMsgs.generalError);
+  flowInterrupt = ( workflowContext, error) => {
+    let errorMsg = errorMsgs.generalError;
+    if( workflowContext ){
+      errorMsg = sdkErrorHelper.getErrorMessage(workflowContext, error);
+      if(OstWalletSdkHelper.isUserCancelled(error)){
+        errorMsg = "";
+      } 
     }
+    this.onTransactionError(errorMsg);
   }
 
 }
