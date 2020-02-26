@@ -77,6 +77,7 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.ostUserId = props.ostUserId || __getParam(props.navigation, "ostUserId") ;
     this.ostWalletUIWorkflowCallback = props.ostWalletUIWorkflowCallback || __getParam(props.navigation, "ostWalletUIWorkflowCallback");
     this.skuDetails = props.redemptionSku  || __getParam(props.navigation, "redemptionSku") || {};
+    this.onPurchaseSuccess = props.onPurchaseSuccess || __getParam(props.navigation, "onPurchaseSuccess") ;
 
     if(!this.skuDetails) return;
 
@@ -278,6 +279,7 @@ class OstRedeemableSkuDetails extends PureComponent{
       isPurchasing: false,
       transactionSuccess :true
     })
+    this.onPurchaseSuccess && this.onPurchaseSuccess();
   }
 
   onTransactionError =( error)=> {

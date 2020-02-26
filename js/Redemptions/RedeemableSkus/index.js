@@ -68,10 +68,6 @@ class OstRedeemableSkus extends React.PureComponent {
           console.warn("navigation is required for ost redemption ui sdk flow.");
         }
 
-        this.didFocusSubscription = this.props.navigation && this.props.navigation.addListener('didFocus', (payload) => {
-          this.updateBalance();
-        });
-
         this.init();
     }
 
@@ -98,7 +94,6 @@ class OstRedeemableSkus extends React.PureComponent {
   
     componentWillUnmount(){
       this.__setState = () => {};
-      this.didFocusSubscription &&  this.didFocusSubscription.remove();
     }
 
     __setState = (state) => {
@@ -113,9 +108,14 @@ class OstRedeemableSkus extends React.PureComponent {
         this.props.navigation && this.props.navigation.push && this.props.navigation.push('RedeemableSkuDetails', {'redemptionSku': item,
                                                             'ostUserId':this.ostUserId,
                                                             'ostWalletUIWorkflowCallback': this.ostWalletUIWorkflowCallback, 
-                                                            'balance': this.balanceInBt
+                                                            'balance': this.balanceInBt,
+                                                            'onPurchaseSuccess': this.onPurchaseSuccess
                                                           });
       }
+    }
+
+    onPurchaseSuccess = ()=> {
+      this.updateBalance();
     }
 
     render(){
