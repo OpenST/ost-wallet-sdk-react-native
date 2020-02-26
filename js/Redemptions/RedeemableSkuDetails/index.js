@@ -137,7 +137,14 @@ class OstRedeemableSkuDetails extends PureComponent{
   }
 
   fetchDetails = () => {
-    OstJsonApi.getRedeemableSkuDetails(this.ostUserId, this.skuDetails.id ,{}, this.onDetailsSuccess ,  this.onDetailsError)
+    if(this.skuDetails.id){
+      OstJsonApi.getRedeemableSkuDetails(this.ostUserId, this.skuDetails.id ,{}, this.onDetailsSuccess ,  this.onDetailsError)
+    }else{
+      this.__setState({
+        refreshing : false,
+      });
+    }
+
   };
 
   onDetailsSuccess = (data={}) =>{
@@ -151,8 +158,7 @@ class OstRedeemableSkuDetails extends PureComponent{
 
   onDetailsError =( error)=> {
     this.__setState({
-      refreshing : false,
-      errorText : errorMsgs.generalError
+      refreshing : false
     })
   };
 
@@ -338,19 +344,30 @@ class OstRedeemableSkuDetails extends PureComponent{
 
   getImage = () =>{
     if(this.skuDetails.images && this.skuDetails.images.detail && this.skuDetails.images.detail.original && this.skuDetails.images.detail.original.url){
-      return this.skuDetails.images.detail.original.url;
+      return (
+        <Image
+          style={stylesMap.imageStyle}
+          source={{uri:this.skuDetails.images.detail.original.url}}>
+        </Image>
+      )
     }
   }
 
   getDescription = () =>{
     if(this.skuDetails.description && this.skuDetails.description.text){
-      return this.skuDetails.description.text;
+      return(
+        <Text style={[stylesMap.descText, OstThemeConfigHelper.getH3Config()]}>
+          {this.skuDetails.description.text}
+        </Text>
+      )
     }
   }
 
   getName = () =>{
     if(this.skuDetails.name){
-      return this.skuDetails.name;
+      return(
+        <Text style={[stylesMap.heading, OstThemeConfigHelper.getH2Config()]}>{this.skuDetails.name}</Text>
+      )
     }
   }
 
@@ -366,18 +383,18 @@ class OstRedeemableSkuDetails extends PureComponent{
     return(
       <KeyboardAvoidingView style={stylesMap.container} behavior={Platform.OS == 'android' ?'' :'padding'} keyboardVerticalOffset={30} enabled>
       <ScrollView contentContainerStyle={stylesMap.scrollViewContainer}>
-        <Text style={[stylesMap.heading, OstThemeConfigHelper.getH2Config()]}>{this.getName()}</Text>
-        <Image
-          style={stylesMap.imageStyle}
-          source={{uri:this.getImage()}}>
-        </Image>
-        <Text style={[stylesMap.descText, OstThemeConfigHelper.getH3Config()]}>
-          {this.getDescription()}
-        </Text>
-
+        {this.getName()}
+        {this.getImage()}
+        {this.getDescription()}
         <ActivityIndicator
           animating = {this.state.refreshing}
         />
+        {(!this.skuDetails.availability && !this.state.refreshing) && (
+          <View style={stylesMap.emptyProductDetailsWrapper}>
+            <Text style={OstThemeConfigHelper.getH3Config()}> Oops! failed to load available options</Text>
+          </View>
+
+        )}
         {this.skuDetails.availability && (
           <React.Fragment>
             <View style={stylesMap.wrapperFormInput}>

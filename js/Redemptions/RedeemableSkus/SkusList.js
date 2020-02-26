@@ -5,7 +5,7 @@ import RedemptionSkusModel from "../../services/OstJsonApiPagination/RedemptionS
 import Pagination from '../../services/OstJsonApiPagination/Pagination';
 import OstRedemableCustomConfig from "../RedemableCustomConfig";
 import multipleClickHandler from '../MultipleClickHandler';
-import OstThemeConfigHelper from '@ostdotcom/ost-wallet-sdk-react-native/js/helpers/OstThemeConfigHelper';
+import OstThemeConfigHelper from '../../helpers/OstThemeConfigHelper';
 
 import styles from './styles';
 
@@ -47,7 +47,9 @@ class SkusList extends React.PureComponent{
 
     _renderItem = ({item, index}) => {
         if(item.isEmpty){
-            return (<View style={{flex:1,justifyContent:'center', alignItems:'center'}}><Text>No items found!!!</Text></View>);
+            return (<View style={styles.noDataWrapper}>
+                        <Text style={OstThemeConfigHelper.getH3Config()}>No items found!!!</Text>
+                    </View>);
         }
         let imageUrl = (item.images && item.images.cover && item.images.cover.original.url) || null;
         return (

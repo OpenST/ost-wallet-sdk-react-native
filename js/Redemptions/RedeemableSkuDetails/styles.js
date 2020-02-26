@@ -84,6 +84,11 @@ let stylesMap = StyleSheet.create({
     borderWidth: 1,
     borderRadius:5,
     height:46
+  },
+  emptyProductDetailsWrapper : {
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
   }
 });
 

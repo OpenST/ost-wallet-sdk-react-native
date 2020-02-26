@@ -45,6 +45,11 @@ let stylesMap = StyleSheet.create({
     list:{
         marginHorizontal:10,
         marginBottom : 10
+    },
+    noDataWrapper : {
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center'
     }
 });
 
