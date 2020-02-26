@@ -520,13 +520,16 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.updateBalance();
   }
 
-  flowInterrupt = ( workflowContext, error) => {
+  flowInterrupt = ( workflowContext, error={}) => {
     let errorMsg = errorMsgs.generalError;
-    if( workflowContext ){
-      errorMsg = sdkErrorHelper.getErrorMessage(workflowContext, error);
+    if(error.isApiError()){
+      //Show general error.
+    }else if( workflowContext ){
       if(OstWalletSdkHelper.isUserCancelled(error)){
         errorMsg = "";
-      } 
+      } else {
+        errorMsg = sdkErrorHelper.getErrorMessage(workflowContext, error);
+      }
     }
     this.onTransactionError(errorMsg);
   }
