@@ -163,7 +163,8 @@ class OstThemeConfigHelper {
       color: nsConfig.color,
       fontSize: nsConfig.size,
       fontFamily: nsConfig.font,
-      borderColor: nsConfig.border_color
+      borderColor: nsConfig.border_color,
+      textAlign: nsConfig.alignment
     }
   }
 }
