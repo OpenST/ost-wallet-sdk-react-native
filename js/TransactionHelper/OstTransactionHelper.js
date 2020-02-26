@@ -1,7 +1,6 @@
 import BigNumber from 'bignumber.js';
 import OstWalletSdk from '../OstWalletSdk';
 import OstWalletSdkUI from  '../OstWalletSdkUI';
-import {sdkErrorHelper, USER_UNAUTHORIZED, DEFAULT_CONTEXT} from '../helpers/OstSdkErrorHelper';
 import OstWalletUIDelegate from '../OstWalletUIWorkflowCallback'
 import OstWalletDelegate  from '../OstWalletWorkFlowCallback'
 import EventEmitter from 'eventemitter3';
@@ -12,12 +11,14 @@ import { setInstance } from '../callbackHandlers/OstWalletSdkUICallbackManager';
 import OstWalletUIWorkFlowCallback from "../OstWalletUICoreCallback";
 
 import defaultTransactionConfig from "./ost-transaction-config";
-import OstWalletUIWorkflowCallback from "@ostdotcom/ost-wallet-sdk-react-native/js/OstWalletUIWorkflowCallback";
-import OstRNError from "@ostdotcom/ost-wallet-sdk-react-native/js/OstRNError/OstRNError";
+import OstWalletUIWorkflowCallback from "../OstWalletUIWorkflowCallback";
+import OstRNError from "../OstRNError/OstRNError";
+import TokenHelper from "../helpers/TokenHelper";
 
 let transactionConfig = {};
 
 class OstTransactionHelper {
+  
   constructor() {
     this.isExternalConfig = false;
     this.setTxConfig();
@@ -52,6 +53,28 @@ class OstTransactionHelper {
     obj.perform();
 
     return obj.uuid;
+  }
+
+  /**
+   * @param {*} amount -  wei 
+   * @param {*} decimal - Number
+   */
+  static getValidBucket(amount ,  decimal){
+    let validBucket = null;
+    if(!(amount instanceof BigNumber)){
+      amount =  new BigNumber(amount);
+    }
+    for(bucket of transactionConfig.session_buckets) {
+      let decimalSpedingLimit = TokenHelper.toDecimal(bucket.spending_limit , decimal) ;
+      let bucketSpendingLimit = new BigNumber(decimalSpedingLimit);
+      if (amount.lte(bucketSpendingLimit)) {
+        validBucket = {};
+        Object.assign(validBucket, bucket)
+        validBucket.spending_limit = decimalSpedingLimit
+        break;
+      }
+    }
+    return validBucket
   }
 }
 
@@ -142,7 +165,7 @@ class OstTransactionExecutor {
     let totalAmount = new BigNumber('0');
 
     for (amount of this.amounts) {
-      let decimalAmount = this.toDecimal(amount);
+      let decimalAmount = TokenHelper.toDecimal(amount, this.getTokenDecimal());
       this.decimalAmounts.push(decimalAmount)
 
       let bnAmount = new BigNumber(decimalAmount);
@@ -202,25 +225,7 @@ class OstTransactionExecutor {
   }
 
   getSpedingLimitAndExpiryTimeBucket() {
-    let validBucket = null;
-    for(bucket of transactionConfig.session_buckets) {
-      let decimalSpedingLimit = this.toDecimal(bucket.spending_limit)
-      let bucketSpendingLimit = new BigNumber(decimalSpedingLimit);
-      if (this.totalTxAmount.lte(bucketSpendingLimit)) {
-        validBucket = {};
-        Object.assign(validBucket, bucket)
-        validBucket.spending_limit = decimalSpedingLimit
-        break;
-      }
-    }
-
-    return validBucket
-  }
-
-  toDecimal(val) {
-    val = BigNumber(val);
-    let exp = BigNumber(10).exponentiatedBy(this.getTokenDecimal());
-    return val.multipliedBy(exp).toString(10);
+    return OstTransactionHelper.getValidBucket(this.totalTxAmount ,this.getTokenDecimal());
   }
 
   executeTransfer() {

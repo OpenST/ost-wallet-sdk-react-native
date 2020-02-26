@@ -16,11 +16,12 @@ import HeaderRight from "../CommonComponents/HeaderRight";
 import BackArrow from '../CommonComponents/BackArrow';
 import OstJsonApi from "../../OstJsonApi";
 import OstRedemptionTransactionHelper from "../RedemptionTransactionHelper";
+import {OstTransactionHelper} from "../../TransactionHelper/OstTransactionHelper";
 import OstWalletSdkUI from "../../OstWalletSdkUI";
 import OstThemeConfigHelper from '../../helpers/OstThemeConfigHelper';
 import OstRedemableCustomConfig from "../RedemableCustomConfig";
 import OstRedmptionConfig from "../ost-redemption-config";
-import tokenHelper from "../TokenHelper";
+import tokenHelper from "../../helpers/TokenHelper";
 import AlertBox from "../CommonComponents/AlertBox";
 import msgIcon from '../../../assets/msg-icon.png';
 import downArrow from '../../../assets/down-arrow.png';
@@ -185,13 +186,20 @@ class OstRedeemableSkuDetails extends PureComponent{
     if(!this.state.selectedAvailability) return [];
     let denominationsArray = this.state.selectedAvailability.denominations || [],
         currencyIsoCode   = this.state.selectedAvailability.currency_iso_code,
-        currencyItems     = []
+        currencyItems     = [] , sanitizedCurrencyItems = []
         ;
     for(let cnt = 0 ; cnt < denominationsArray.length ; cnt ++){
       let currentDenomination = denominationsArray[cnt] || {},
+          btAmount = currentDenomination.amount_in_wei,
           label = `${currentDenomination.amount_in_fiat} ${currencyIsoCode}`,
           value = currentDenomination ;
-      currencyItems.push({label, value})
+          if(!!OstTransactionHelper.getValidBucket(btAmount, tokenHelper.getDecimals())){
+            sanitizedCurrencyItems.push({label, value});
+          }
+      currencyItems.push({label, value});
+    }
+    if(sanitizedCurrencyItems.length > 0){
+      return sanitizedCurrencyItems;
     }
    return currencyItems;
   }

@@ -9,7 +9,7 @@ import OstWalletUIWorkflowCallback from '../../OstWalletUIWorkflowCallback';
 import styles from './styles';
 import SkusList from './SkusList';
 import BackArrow from '../CommonComponents/BackArrow';
-import tokenHelper from "../TokenHelper";
+import tokenHelper from "../../helpers/TokenHelper";
 
 function __getParam(navigation ,  paramName) {
   if(navigation && navigation.getParam){

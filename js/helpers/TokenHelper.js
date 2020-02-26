@@ -90,7 +90,6 @@ class TokenHelper {
       let balance = new BigNumber(bal);
       let purchaseValue = new BigNumber(value);
       return balance.comparedTo(purchaseValue);
-
     }
 
 }
