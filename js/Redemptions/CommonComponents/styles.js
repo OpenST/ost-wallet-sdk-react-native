@@ -14,11 +14,13 @@ let stylesMap = StyleSheet.create({
     },
     backArrowStyle : {
         width: 10, 
-        height: 18
+        height: 18,
+        aspectRatio: 1
     },
     walletImgSkipFont : {
         width: 20, 
         height: 18,
+        aspectRatio: 1,
         marginRight: 8
     },
     headerRightWrapper : {

@@ -150,8 +150,8 @@ const ListHeaderComponent = (props) => {
       ;
     return (<View styles={styles.headingWrapper}>
         {storeLogo && <Image source={storeLogo} resizeMode={'contain'} style={styles.logoSkipFont}/> }
-        {header && <Text style={[styles.title, OstThemeConfigHelper.getH1Config()]}>{header}</Text> }
-        {description && <Text style={[styles.description, OstThemeConfigHelper.getH3Config()]}>{description}</Text> }
+        {header.length > 0 && <Text style={[styles.title, OstThemeConfigHelper.getH1Config()]}>{header}</Text> }
+        {description.length > 0 && <Text style={[styles.description, OstThemeConfigHelper.getH3Config()]}>{description}</Text> }
     </View>)
 }
 
