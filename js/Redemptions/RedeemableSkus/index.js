@@ -43,7 +43,7 @@ class OstRedeemableSkus extends React.PureComponent {
           navigationOption["headerBackImage"] = <BackArrow/>;
         }
 
-        return Object.assign(navigationOption, OstThemeConfigHelper.getNavigationHeaderConfig());
+        return Object.assign({}, navigationOption, OstThemeConfigHelper.getNavigationHeaderConfig());
     };
     
     constructor( props ){
