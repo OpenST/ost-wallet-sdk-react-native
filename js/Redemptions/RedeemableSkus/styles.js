@@ -40,8 +40,7 @@ let stylesMap = StyleSheet.create({
     },
     itemWrapper: {
         flex: 0.5, 
-        width: 150,
-        height: 150
+        aspectRatio:1
     },
     list:{
         marginHorizontal:10,
