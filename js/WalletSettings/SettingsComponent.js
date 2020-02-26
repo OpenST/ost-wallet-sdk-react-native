@@ -12,6 +12,7 @@ import OstWalletSettings from "@ostdotcom/ost-wallet-sdk-react-native/js/WalletS
 class SettingsComponent extends PureComponent {
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
+    console.trace("navigationOptions===============");
     let navigationParams = {
       title: navigation.getParam('navTitle', 'Wallet Settings'),
       headerStyle:  {
@@ -39,7 +40,7 @@ class SettingsComponent extends PureComponent {
 
     this.flatListLayout = null
 
-    OstThemeConfigHelper.updateConfig();
+   this.initTheme();
 
     let ostUserId = this.props.ostUserId;
     let delegate = this.props.ostWalletUIWorkflowCallback;
@@ -52,6 +53,12 @@ class SettingsComponent extends PureComponent {
     }
 
     this.controller = new WalletSettingsController(ostUserId, delegate);
+  }
+
+  initTheme(){
+    OstThemeConfigHelper.updateConfig().then((res)=> {
+      this.props.navigation && this.props.navigation.setParams && this.props.navigation.setParams({"ostThemeUpdated": true});
+    }).catch((error)=> {})
   }
 
   componentDidMount() {

@@ -48,7 +48,9 @@ class OstRedeemableSkus extends React.PureComponent {
     
     constructor( props ){
         super(props);
-    
+
+        this.initTheme();
+
         this.ostUserId = props.ostUserId || __getParam(props.navigation , "ostUserId");
         this.ostWalletUIWorkflowCallback = props.ostWalletUIWorkflowCallback || __getParam(props.navigation , "ostWalletUIWorkflowCallback");
         this.onItemClick = props.onItemClick || __getParam(props.navigation , "onItemClick");
@@ -69,6 +71,12 @@ class OstRedeemableSkus extends React.PureComponent {
         }
 
         this.init();
+    }
+
+    initTheme(){
+      OstThemeConfigHelper.updateConfig().then((res)=> {
+        this.props.navigation && this.props.navigation.setParams && this.props.navigation.setParams({"ostThemeUpdated": true});
+      }).catch((error)=> {})
     }
 
     init(){

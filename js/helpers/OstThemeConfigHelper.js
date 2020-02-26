@@ -3,7 +3,7 @@ import OstWalletSdkUI from '../OstWalletSdkUI'
 class OstThemeConfigHelper {
   constructor(){
     this.themeConfig = {}
-    this.updateConfig()
+    this.updateConfig();
   }
 
   getThemeConfig() {
@@ -11,7 +11,7 @@ class OstThemeConfigHelper {
   }
 
   updateConfig() {
-    this._getThemeConfig()
+    return this._getThemeConfig()
       .then((themeConfig) => {
         this.themeConfig = themeConfig
       })

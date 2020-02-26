@@ -75,6 +75,7 @@ class OstRedeemableSkuDetails extends PureComponent{
   constructor(props){
     super(props);
     this.navigation = props.navigation ;
+    this.initTheme();
     this.ostUserId = props.ostUserId || __getParam(props.navigation, "ostUserId") ;
     this.ostWalletUIWorkflowCallback = props.ostWalletUIWorkflowCallback || __getParam(props.navigation, "ostWalletUIWorkflowCallback");
     this.skuDetails = props.redemptionSku  || __getParam(props.navigation, "redemptionSku") || {};
@@ -113,6 +114,12 @@ class OstRedeemableSkuDetails extends PureComponent{
     this.inputRefs.currencyPicker = null;
     this.inputRefs.emailIdInput = null;
     this.navigation = null ;
+  }
+
+  initTheme(){
+    OstThemeConfigHelper.updateConfig().then((res)=> {
+      this.props.navigation && this.props.navigation.setParams && this.props.navigation.setParams({"ostThemeUpdated": true});
+    }).catch((error)=> {})
   }
 
   init(){
