@@ -48,7 +48,7 @@ class SkusList extends React.PureComponent{
     _renderItem = ({item, index}) => {
         if(item.isEmpty){
             return (<View style={styles.noDataWrapper}>
-                        <Text style={OstThemeConfigHelper.getH3Config()}>No items found!!!</Text>
+                        <Text >No items found!!!</Text>
                     </View>);
         }
         let imageUrl = (item.images && item.images.cover && item.images.cover.original.url) || null;
