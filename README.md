@@ -242,6 +242,7 @@ Activate User workflow deploys user's wallet on the blockchain and whitelists th
 #### Implementation
 Please refer to [Activate User UI Workflow Documentation](./documentation/OstWalletUI.md#activate-user) for implementation details.
 
+<a id="wallet-settings-ui-component">
 ### 3. Wallet Settings UI Component 
 ---
 OstWallet Settings is a pre-built UI component available exclusively available in `ost-wallet-sdk-react-native` SDK.
