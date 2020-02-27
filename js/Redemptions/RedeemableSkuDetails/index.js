@@ -54,7 +54,7 @@ class OstRedeemableSkuDetails extends PureComponent{
          isCustomBack = !!OstThemeConfigHelper.getBackArrowSource()
     ;
     let navigationOption = {
-      title: __getParam(navigation , "navTitle") || "",
+      title: __getParam(navigation , "navTitle") || OstRedemableCustomConfig.getSkuDetailsScreenNavHeader(),
       headerStyle:  {
         borderBottomWidth: 0,
         shadowColor: '#000',
