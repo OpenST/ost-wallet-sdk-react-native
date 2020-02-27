@@ -158,7 +158,6 @@ class OstThemeConfigHelper {
 
   getFormFieldConfig() {
     let nsConfig = this.themeConfig.form_field;
-    if(!nsConfig) return {};
     return {
       color: nsConfig.color,
       fontSize: nsConfig.size,
@@ -166,6 +165,12 @@ class OstThemeConfigHelper {
       borderColor: nsConfig.border_color,
       textAlign: nsConfig.alignment
     }
+  }
+
+  getBackArrowSource(){
+      const icons = this.themeConfig.icons || {} , 
+            back = icons.back || {};
+      return back.source;
   }
 }
 

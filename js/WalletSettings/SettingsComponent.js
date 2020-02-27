@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
-import {Alert, FlatList, Linking, Platform, Text, TouchableWithoutFeedback, View} from 'react-native';
-import OstWalletSdkHelper from "../helpers/OstWalletSdkHelper";
-import WalletDetails from './WalletDetails'
+import {FlatList, Text, TouchableWithoutFeedback, View} from 'react-native';
+import WalletDetails from './WalletDetails';
+import BackArrow from '../Redemptions/CommonComponents/BackArrow';
 
 import inlineStyle from './styles'
 
@@ -12,7 +12,7 @@ import OstWalletSettings from "@ostdotcom/ost-wallet-sdk-react-native/js/WalletS
 class SettingsComponent extends PureComponent {
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
-    console.trace("navigationOptions===============");
+    const isCustomBack = !!OstThemeConfigHelper.getBackArrowSource() ;
     let navigationParams = {
       title: navigation.getParam('navTitle', 'Wallet Settings'),
       headerStyle:  {
@@ -26,6 +26,10 @@ class SettingsComponent extends PureComponent {
         shadowRadius: 3
       }
     };
+
+    if(isCustomBack){
+      navigationParams["headerBackImage"] = <BackArrow/>; 
+    }
 
     return Object.assign(navigationParams, OstThemeConfigHelper.getNavigationHeaderConfig());
   };

@@ -22,7 +22,7 @@ class OstRedeemableSkus extends React.PureComponent {
    
     static navigationOptions = ({ navigation }) => {
         const balance = __getParam(navigation , "balance") || 0 ,
-             isCustomBack = !!OstRedemableCustomConfig.getBackArrowUri()
+             isCustomBack = !!OstThemeConfigHelper.getBackArrowSource()
         ;
         let navigationOption = {
           title: __getParam(navigation , "navTitle") ||  OstRedemableCustomConfig.getSkuListNavHeader() ,

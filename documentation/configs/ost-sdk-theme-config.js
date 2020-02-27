@@ -37,7 +37,8 @@ export default {
       "tint_color": "#ffffff"
     },
     "back":{
-      "tint_color": "#ffffff"
+      "tint_color": "#ffffff",
+      "source" : null
     }
   },
 
@@ -63,6 +64,7 @@ export default {
     "size":15,
     "system_font_weight":"regular",
     "color":"#484848",
-    "border_color": "#484848"
+    "border_color": "#484848",
+    "alignment": "left"
   }
 }
