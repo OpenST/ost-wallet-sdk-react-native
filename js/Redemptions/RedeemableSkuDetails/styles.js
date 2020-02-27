@@ -80,10 +80,11 @@ let stylesMap = StyleSheet.create({
   input : {
     fontSize: 15,
     paddingVertical: 13,
-    paddingHorizontal: 21,
+    paddingLeft: 21,
+    paddingRight: 54, // iconWidth(20) + iconPaddingRight(17) + iconPaddingLeft(17)
     borderWidth: 1,
     borderRadius:5,
-    height:46
+    height:46,
   },
   emptyProductDetailsWrapper : {
     flex:1,
