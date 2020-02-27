@@ -1,4 +1,4 @@
-# OstWallet Settings Config
+# OstWallet Redemption Config
 
 ## Introduction
 
