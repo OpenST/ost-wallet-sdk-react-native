@@ -24,6 +24,9 @@ OST JSON APIs are a set of *asynchronous* methods that make API calls to OST Pla
     - [Usage](#usage-4)
     - [Sample Response](#sample-response-4)
     - [Sample Error](#sample-error)
+  - [Get Redeemable Sku Details](#get-redeemable-sku-details)
+    - [Usage](#usage-8)
+    - [Sample Response](#sample-response-8)  
 - [List API](#list-api)
   - [Get Transactions](#get-transactions)
     - [Usage](#usage-5)
@@ -31,6 +34,9 @@ OST JSON APIs are a set of *asynchronous* methods that make API calls to OST Pla
   - [Get Devices](#get-devices)
     - [Usage](#usage-6)
     - [Sample Response](#sample-response-6)
+  - [Get Redeemable Skus](#get-redeemable-skus)
+    - [Usage](#usage-7)
+    - [Sample Response](#sample-response-7)
 
 
 <a id="before-we-begin"></a>
@@ -342,6 +348,141 @@ The `getPendingRecoveryForUserId` API will respond with `UNPROCESSABLE_ENTITY` A
 }
 ```
 
+<a id="get-redeemable-sku-details"></a>
+### Get Redeemable Sku Details
+API to get redeemable sku details.
+
+<a id="usage-8"></a>
+##### Usage
+```javascript
+/*
+  Please update userId as per your needs. 
+  Since this userId does not belong to your economy, you will get an error if you do not change it.
+*/
+let userId = "71c59448-ff77-484c-99d8-abea8a419836";
+let skuDetailId = "2";
+let extraParams = {};
+
+/**
+   * Api to get redeemable skus
+   * @param {String} userId - Ost User id
+   * @param {String} skuDetailId - Sku detail id got from list of Redeemable skus
+   * @param {Object} extraParams (@nullable).
+   * @param {function} Success callback with success data
+   * @param {function} Failure callback with error and failure response
+   * @public
+ */
+
+
+OstJsonApi.getRedeemableSkuDetails(userId, skuDetailId ,extraParams, (response) => {
+    console.log(response);    
+  }, (error)=> {
+    console.log("An error has occurred while fetching redeemable sku details.");
+    console.log( error );
+  });
+```
+
+<a id="sample-response-8"></a>
+##### Sample Response
+```json
+{
+   "result_type":"redemption_product",
+   "redemption_product":{
+      "status":"active",
+      "images":{
+         "detail":{
+            "original":{
+               "size":90821,
+               "url":"https://dxwfxs8b4lg24.cloudfront.net/ost-platform/rskus/stag-starbucks-d-original.png",
+               "width":150,
+               "height":150
+            }
+         },
+         "cover":{
+            "original":{
+               "size":193141,
+               "url":"https://dxwfxs8b4lg24.cloudfront.net/ost-platform/rskus/stag-starbucks-c-original.png",
+               "width":320,
+               "height":320
+            }
+         }
+      },
+      "availability":[
+         {
+            "country_iso_code":"USA",
+            "country":"USA",
+            "currency_iso_code":"USD",
+            "denominations":[
+               {
+                  "amount_in_wei":"49938358",
+                  "amount_in_fiat":5
+               },
+               {
+                  "amount_in_wei":"99876717",
+                  "amount_in_fiat":10
+               },
+               ...
+            ]
+         },
+         {
+            "country_iso_code":"CAN",
+            "country":"Canada",
+            "currency_iso_code":"CAD",
+            "denominations":[
+               {
+                  "amount_in_wei":"37547638",
+                  "amount_in_fiat":5
+               },
+               {
+                  "amount_in_wei":"75095276",
+                  "amount_in_fiat":10
+               },
+               ...
+            ]
+         },
+         {
+            "country_iso_code":"GBR",
+            "country":"United Kingdom",
+            "currency_iso_code":"GBP",
+            "denominations":[
+               {
+                  "amount_in_wei":"64855011",
+                  "amount_in_fiat":5
+               },
+               {
+                  "amount_in_wei":"129710022",
+                  "amount_in_fiat":10
+               },
+               ...
+            ]
+         },
+         {
+            "country_iso_code":"IND",
+            "country":"India",
+            "currency_iso_code":"INR",
+            "denominations":[
+               {
+                  "amount_in_wei":"1396",
+                  "amount_in_fiat":0.01
+               },
+               {
+                  "amount_in_wei":"139609",
+                  "amount_in_fiat":1
+               },
+               ...
+            ]
+         }
+      ],
+      "id":"2",
+      "updated_timestamp":1582024811,
+      "description":{
+         "text":null
+      },
+      "name":"Starbucks"
+   }
+}
+```
+
 <a id="list-api"></a>
 ## List API
 All `List` APIs support pagination. The response of all `List` APIs has an extra attribute `meta`.
@@ -544,5 +685,90 @@ OstJsonApi.getDeviceListForUserId(userId, nextPagePayload,
     }
   ],
   "result_type": "devices"
+}
+```
+
+<a id="get-redeemable-skus"></a>
+### Get Redeemable Skus
+API to get redeemable skus.
+
+<a id="usage-7"></a>
+##### Usage
+```javascript
+/*
+  Please update userId as per your needs. 
+  Since this userId does not belong to your economy, you will get an error if you do not change it.
+*/
+let userId = "71c59448-ff77-484c-99d8-abea8a419836";
+let nextPagePayload = null;
+
+/**
+   * Api to get redeemable skus
+   * @param {String} userId - Ost User id
+   * @param {Object} nextPagePayload (@nullable). Pass null to get first page.
+   * @param {function} Success callback with success data
+   * @param {function} Failure callback with error and failure response
+   * @public
+ */
+
+
+OstJsonApi.getRedeemableSkus(userId, nextPagePayload , (respones) => {
+    console.log(response);
+    // Let's check if more pages of data is available.
+    if ( response.meta ) {
+      let nextPagePayloadFromResponse = response.meta.next_page_payload || {};
+      if ( Object.keys(nextPagePayloadFromResponse).length > 0 ) {
+        // Next page is available.
+        // Update nextPagePayload 
+        nextPagePayload = nextPagePayloadFromResponse;
+        // To fetch the next page, pass the updated nextPagePayload.
+      }
+    }
+  }, (error)=> {
+    console.log("An error has occurred while fetching redeemable skus.");
+    console.log( error );
+  });
+```
+
+<a id="sample-response-7"></a>
+##### Sample Response
+```json
+{
+   "meta":{
+      "next_page_payload":{
+      }
+   },
+   "result_type":"redemption_products",
+   "redemption_products":[
+      {
+         "status":"active",
+         "updated_timestamp":1582024811,
+         "id":"2",
+         "description":{
+            "text":null
+         },
+         "images":{
+            "detail":{
+               "original":{
+                  "size":90821,
+                  "url":"https://dxwfxs8b4lg24.cloudfront.net/ost-platform/rskus/stag-starbucks-d-original.png",
+                  "width":150,
+                  "height":150
+               }
+            },
+            "cover":{
+               "original":{
+                  "size":193141,
+                  "url":"https://dxwfxs8b4lg24.cloudfront.net/ost-platform/rskus/stag-starbucks-c-original.png",
+            "width":320,
+                  "height":320
+               }
+            }
+         },
+         "name":"Starbucks"
+      },
+      ...
+      ...
+   ]
 }
 ```
