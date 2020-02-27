@@ -21,7 +21,7 @@ let redemptionStack = createStackNavigator(
 );
 ```
 
-### Naviagte to settings page
+### Navigate to settings page
 `ostUserId` and `ostWalletUIWorkflowCallback` are mandetory parameters that need to be passed as params to the `WalletSettingScreen` screen.
 ```js
 const ostUserId = <APPLICATION-USER-OST-USER-ID>
