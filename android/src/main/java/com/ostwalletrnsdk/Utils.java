@@ -95,6 +95,8 @@ public class Utils {
                 map.putDouble(key, (Double) value);
             } else if (value instanceof String)  {
                 map.putString(key, (String) value);
+            } else if (null == value || "null".equalsIgnoreCase(value.toString())){
+                map.putNull(key);
             } else {
                 map.putString(key, value.toString());
             }
@@ -119,6 +121,8 @@ public class Utils {
                 array.pushDouble((Double) value);
             } else if (value instanceof String)  {
                 array.pushString((String) value);
+            } else if (null == value || "null".equalsIgnoreCase(value.toString())) {
+                array.pushNull();
             } else {
                 array.pushString(value.toString());
             }
