@@ -254,6 +254,7 @@ Please refer to [OstWallet Settings Documentation](./documentation/OstWalletSett
 ### 4. Redemption Flow UI Component
 OstRedemption component is a pre-built UI component available exclusively in `ost-wallet-sdk-react-native` SDK.
 It consist two pages - one displaying redeemable product list and another displaying product details and redemption options. It can be used by end-users to integrate redemption flow into their app.
+> <b>IMPORTANT:</b> This feature requires application to use [React Navigation](https://reactnavigation.org/docs/en/getting-started.html) package.
 
 #### Implementation
 Please reder to [OstRedemption flow Documentation](./documentation/OstRedemptionFlow.md) for implementation details.
