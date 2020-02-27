@@ -253,6 +253,8 @@ It is a wallet settings page that can be used by end-users to perfrom 12 differe
 #### Implementation
 Please refer to [OstWallet Settings Documentation](./documentation/OstWalletSettings.md) for implementation details.
 
+<a id="redemption-flow-ui-component" />
+
 ### 4. Redemption Flow UI Component
 ---
 OstRedemption component is a pre-built UI component available exclusively in `ost-wallet-sdk-react-native` SDK.
