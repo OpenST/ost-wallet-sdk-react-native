@@ -19,7 +19,6 @@ import OstRedemptionTransactionHelper from "../RedemptionTransactionHelper";
 import {OstTransactionHelper} from "../../TransactionHelper/OstTransactionHelper";
 import OstWalletSdkUI from "../../OstWalletSdkUI";
 import OstThemeConfigHelper from '../../helpers/OstThemeConfigHelper';
-import OstRedemableCustomConfig from "../RedemableCustomConfig";
 import OstRedmptionConfig from "../ost-redemption-config";
 import tokenHelper from "../../helpers/TokenHelper";
 import AlertBox from "../CommonComponents/AlertBox";
@@ -54,7 +53,7 @@ class OstRedeemableSkuDetails extends PureComponent{
          isCustomBack = !!OstThemeConfigHelper.getBackArrowSource()
     ;
     let navigationOption = {
-      title: __getParam(navigation , "navTitle") || "",
+      title: __getParam(navigation , "navTitle") || OstRedemableCustomConfig.getSkuDetailsScreenNavHeader(),
       headerStyle:  {
         borderBottomWidth: 0,
         shadowColor: '#000',
@@ -400,7 +399,7 @@ class OstRedeemableSkuDetails extends PureComponent{
         />
         {(!this.skuDetails.availability && !this.state.refreshing) && (
           <View style={stylesMap.emptyProductDetailsWrapper}>
-            <Text> Oops! failed to load available options</Text>
+            <Text>Oops! failed to load available options</Text>
           </View>
 
         )}

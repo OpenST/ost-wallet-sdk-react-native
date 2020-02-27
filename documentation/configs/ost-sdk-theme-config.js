@@ -1,5 +1,3 @@
-import colors from '../styles/Colors'
-
 export default {
 
   "nav_bar_logo_image": {
@@ -25,7 +23,7 @@ export default {
   },
 
   "navigation_bar": {
-    "tint_color": colors.brightSky
+    "tint_color": "#61B2C9"
   },
 
   "navigation_bar_header": {
