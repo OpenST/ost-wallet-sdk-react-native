@@ -22,11 +22,13 @@ let redemptionStack = createStackNavigator(
 ```
 
 ### Navigate to settings page
-`ostUserId` and `ostWalletUIWorkflowCallback` are mandetory parameters that need to be passed as params to the `WalletSettingScreen` screen.
+`ostUserId` and `ostWalletUIWorkflowCallback` are mandetory parameters that need to be passed as params to the `RedeemableSkusScreen` screen.
 ```js
 const ostUserId = <APPLICATION-USER-OST-USER-ID>
 const delegate = new OstWalletUIWorkflowCallback(ostUserId, {})
-this.props.navigation.push("WalletSettingScreen", {'ostUserId': ostUserId, 'ostWalletUIWorkflowCallback': delegate});
+this.props.navigation.push("RedeemableSkusScreen", {'ostUserId': ostUserId ,
+                                                        'ostWalletUIWorkflowCallback': delegate,
+                                                        'navTitle': 'My Store'});
 ```
 
 ><b>Note</b> <br/>
@@ -35,21 +37,20 @@ this.props.navigation.push("WalletSettingScreen", {'ostUserId': ostUserId, 'ostW
 
 ## UI Customization
 
-Developer can customize wallet settings by updating respective properties mentioned in image. OstTheme config shown [here](./configs/ost-sdk-theme-config.js)
+Developer can customize Redemption flow by updating respective properties mentioned in image. OstTheme config shown [here](./configs/ost-sdk-theme-config.js)
 
-![copy-framework-file](images/wallet_settings.png)
-![copy-framework-file](images/wallet_details.png)
+![copy-framework-file](images/redemptionFlow.png)
 
 ## Settings Content
 
-Developer can modify `header` and `description` of settings options. To modify contet, [refer here](./OstWalletSettingsConfig.md).
+Developer can make various modifications in redemption flow component. To modify contet, [refer here](./OstWalletSettingsConfig.md).
 
 ```js
-import {OstWalletSettings} from "@ostdotcom/ost-wallet-sdk-react-native/js/index";
+import {OstWalletSdkUI} from "@ostdotcom/ost-wallet-sdk-react-native/js/index";
 
-let settingsContentConfig = {}
+let ost_sdk_theme_config = {}
 
-OstWalletSettings.setMasterConfig(settingsContentConfig)
+OstWalletSdkUI.setThemeConfig(ost_sdk_theme_config);
 ```
 
 
