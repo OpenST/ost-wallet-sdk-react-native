@@ -43,14 +43,14 @@ Developer can customize Redemption flow by updating respective properties mentio
 
 ## Settings Content
 
-Developer can make various modifications in redemption flow component. To modify contet, [refer here](./OstWalletSettingsConfig.md).
+Developer can make various modifications in redemption flow component. To modify contet, [refer here](./OstRedemptionConfig.md).
 
 ```js
-import {OstWalletSdkUI} from "@ostdotcom/ost-wallet-sdk-react-native/js/index";
+import ost_sdk_redemption_config from "../../theme/ostsdk/ost-sdk-redemption-config";
+import { OstRedemableCustomConfig } from '@ostdotcom/ost-wallet-sdk-react-native';
 
-let ost_sdk_theme_config = {}
+ OstRedemableCustomConfig.setConfig(ost_sdk_redemption_config);
 
-OstWalletSdkUI.setThemeConfig(ost_sdk_theme_config);
 ```
 
 
