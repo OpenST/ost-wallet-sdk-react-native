@@ -1,10 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 let stylesMap = StyleSheet.create({
-    balanceText :{
-        color: '#535353',  
-        fontSize: 14
-    },
     backArrowImageWrapper : {
         width: 50,
         height: 50,
