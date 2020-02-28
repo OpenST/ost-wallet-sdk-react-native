@@ -27,6 +27,7 @@ import downArrow from '../../../assets/down-arrow.png';
 import multipleClickHandler from '../MultipleClickHandler';
 import {sdkErrorHelper} from "../../helpers/OstSdkErrorHelper";
 import OstWalletSdkHelper from "../../helpers/OstWalletSdkHelper";
+import OstRedemableCustomConfig from "../RedemableCustomConfig";
 
 import {stylesMap} from './styles';
 
