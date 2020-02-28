@@ -57,7 +57,7 @@ class SkusList extends React.PureComponent{
     _renderItem = ({item, index}) => {
         if(item.isEmpty){
             return (<View style={styles.noDataWrapper}>
-                        <Text >No items found for redemption.</Text>
+                        <Text >No items selected for redemption.</Text>
                     </View>);
         }
         let imageUrl = (item.images && item.images.cover && item.images.cover.original.url) || null;
