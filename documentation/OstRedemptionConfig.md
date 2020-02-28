@@ -41,3 +41,16 @@ In the above example:
 * The second-level key `common` includes options to configure the wallet icon in header and the store icon.
 * The second-level key `skuListScreen` allows to configure the navigation header and the header and description shown on the redemption store list page.
 * The second-level key `skuDetailsScreen` allows to configure the navigation header shown on the redemption store details page.
+
+## Redemption Config
+
+The following are the customizable options provided. These can be set in the above config.
+
+| customizable component                                      | Config Keys                                                   | Config Type          |
+| --------------------------------------    | --------------------------------------------------    | ------------------------------- |
+| Wallet icon      				            | - walletIcon                        			        | Custom icon Image to be rendered.                |                                                                                 
+| Store icon                      	        | -  storeIcon 				                            | Custom icon Image to be rendered. 			     |
+| Skulist Header    			            | - skuListScreen.header                      	        | String                                                   |
+| Skulist Description                       | - skuListScreen.description                           | String  |                                                                                          
+| SkuDetails Screen Navigation header       | - skuDetailsScreen.navHeader                          | String  |
+| Skulist Screen Navigation header          | - skuListScreen.navHeader                             | String|
