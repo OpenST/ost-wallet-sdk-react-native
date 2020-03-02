@@ -165,31 +165,31 @@ public class OstWalletUiRnSdkModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void scanQRCodeToAuthorizeDevice(String userId, String uuid) {
+    public void scanQRCodeToAuthorizeDevice(String userId, String qrPayload, String uuid) {
         Activity currentActivity = getCurrentActivity();
         OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
                 new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.AUTHORIZE_DEVICE_WITH_QR_CODE));
-        String workflowId = OstWalletUI.scanQRCodeToAuthorizeDevice(currentActivity, userId, ostUICallback);
+        String workflowId = OstWalletUI.scanQRCodeToAuthorizeDevice(currentActivity, qrPayload, userId, ostUICallback);
         SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
     }
 
 
     @ReactMethod
-    public void scanQRCodeToAuthorizeSession(String userId, String uuid) {
+    public void scanQRCodeToAuthorizeSession(String userId, String qrPayload, String uuid) {
         Activity currentActivity = getCurrentActivity();
         OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
                 new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.AUTHORIZE_DEVICE_WITH_QR_CODE));
-        String workflowId = OstWalletUI.scanQRCodeToAuthorizeSession(currentActivity, userId, ostUICallback);
+        String workflowId = OstWalletUI.scanQRCodeToAuthorizeSession(currentActivity, qrPayload, userId, ostUICallback);
         SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
     }
 
 
     @ReactMethod
-    public void scanQRCodeToExecuteTransaction(String userId, String uuid) {
+    public void scanQRCodeToExecuteTransaction(String userId, String qrPayload, String uuid) {
         Activity currentActivity = getCurrentActivity();
         OstUICallbackImpl ostUICallback = new OstUICallbackImpl( uuid, this.reactContext,
                 new OstWorkflowContext(OstWorkflowContext.WORKFLOW_TYPE.EXECUTE_TRANSACTION));
-        String workflowId = OstWalletUI.scanQRCodeToExecuteTransaction(currentActivity, userId, ostUICallback);
+        String workflowId = OstWalletUI.scanQRCodeToExecuteTransaction(currentActivity, qrPayload, userId, ostUICallback);
         SdkInteract.getInstance().subscribe(workflowId, ostUICallback);
     }
 

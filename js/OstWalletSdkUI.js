@@ -54,27 +54,27 @@ class OstWalletRNSdkUI {
   }
 
   /**
-   * Initiate device recovery 
+   * Initiate device recovery
    * @param {String} userId - Ost User id
    * @param {String} deviceAddressToRecover - Device address which wants to recover
-   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication 
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
    * @public
    */
   initiateDeviceRecovery(userId, deviceAddressToRecover, uiCallback ) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    OstWalletSdkUI.initiateDeviceRecovery( userId, deviceAddressToRecover, coreUiCallback.uuid ); 
+    OstWalletSdkUI.initiateDeviceRecovery( userId, deviceAddressToRecover, coreUiCallback.uuid );
     return coreUiCallback.uuid;
   }
 
   /**
-   * Abort device recovery 
+   * Abort device recovery
    * @param {String} userId - Ost User id
-   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication 
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
    * @public
    */
   abortDeviceRecovery( userId, uiCallback ) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    OstWalletSdkUI.abortDeviceRecovery( userId, coreUiCallback.uuid); 
+    OstWalletSdkUI.abortDeviceRecovery( userId, coreUiCallback.uuid);
     return coreUiCallback.uuid;
   }
 
@@ -180,9 +180,15 @@ class OstWalletRNSdkUI {
    */
   scanQRCodeToAuthorizeDevice(userId, uiCallback) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    OstWalletSdkUI.scanQRCodeToAuthorizeDevice( userId, coreUiCallback.uuid );
+    OstWalletSdkUI.scanQRCodeToAuthorizeDevice( userId, null, coreUiCallback.uuid );
     return coreUiCallback.uuid;
   }
+
+	scanQRCodeToAuthorizeDevice(userId, qrPayload, uiCallback) {
+		let coreUiCallback = this._getCoreUiCallback(uiCallback);
+		OstWalletSdkUI.scanQRCodeToAuthorizeDevice( userId, qrPayload, coreUiCallback.uuid );
+		return coreUiCallback.uuid;
+	}
 
   /**
    * Authorize browser session via QR code
@@ -192,8 +198,14 @@ class OstWalletRNSdkUI {
    */
   scanQRCodeToAuthorizeSession(userId, uiCallback) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    OstWalletSdkUI.scanQRCodeToAuthorizeSession( userId, coreUiCallback.uuid );
+    OstWalletSdkUI.scanQRCodeToAuthorizeSession( userId, null ,coreUiCallback.uuid );
     return coreUiCallback.uuid;
+  }
+
+	authorizeSessionWithQRPayload(userId, qrPayload, uiCallback) {
+		let coreUiCallback = this._getCoreUiCallback(uiCallback);
+		OstWalletSdkUI.scanQRCodeToAuthorizeSession( userId, qrPayload, coreUiCallback.uuid );
+		return coreUiCallback.uuid;
   }
 
   /**
@@ -205,9 +217,15 @@ class OstWalletRNSdkUI {
    */
   scanQRCodeToExecuteTransaction(userId, uiCallback) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    OstWalletSdkUI.scanQRCodeToExecuteTransaction( userId, coreUiCallback.uuid );
+    OstWalletSdkUI.scanQRCodeToExecuteTransaction( userId, qrPayload, coreUiCallback.uuid );
     return coreUiCallback.uuid;
   }
+
+	executeTransactionWithQRPayload(userId, qrPayload, uiCallback) {
+		let coreUiCallback = this._getCoreUiCallback(uiCallback);
+		OstWalletSdkUI.scanQRCodeToExecuteTransaction( userId, qrPayload, coreUiCallback.uuid );
+		return coreUiCallback.uuid;
+	}
 
   /**
    * Show device component sheet
@@ -292,7 +310,7 @@ class OstWalletRNSdkUI {
   _getCoreUiCallback(uiCallback) {
     if ( !uiCallback || !(uiCallback instanceof OstWalletUIWorkflowCallback) ) {
       let err = new Error('Invalid uiCallback. The argument \'uiCallback\' must be an instanceof OstWalletUIWorkflowCallback');
-    }    
+    }
     return new OstWalletUICoreCallback(uiCallback);
   }
 }
