@@ -184,11 +184,11 @@ class OstWalletRNSdkUI {
     return coreUiCallback.uuid;
   }
 
-	scanQRCodeToAuthorizeDevice(userId, qrPayload, uiCallback) {
-		let coreUiCallback = this._getCoreUiCallback(uiCallback);
-		OstWalletSdkUI.scanQRCodeToAuthorizeDevice( userId, qrPayload, coreUiCallback.uuid );
-		return coreUiCallback.uuid;
-	}
+  scanQRCodeToAuthorizeDevice(userId, qrPayload, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.scanQRCodeToAuthorizeDevice( userId, qrPayload, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
+  }
 
   /**
    * Authorize browser session via QR code
@@ -202,10 +202,10 @@ class OstWalletRNSdkUI {
     return coreUiCallback.uuid;
   }
 
-	authorizeSessionWithQRPayload(userId, qrPayload, uiCallback) {
-		let coreUiCallback = this._getCoreUiCallback(uiCallback);
-		OstWalletSdkUI.scanQRCodeToAuthorizeSession( userId, qrPayload, coreUiCallback.uuid );
-		return coreUiCallback.uuid;
+  authorizeSessionWithQRPayload(userId, qrPayload, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.scanQRCodeToAuthorizeSession( userId, qrPayload, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
   }
 
   /**
@@ -221,11 +221,11 @@ class OstWalletRNSdkUI {
     return coreUiCallback.uuid;
   }
 
-	executeTransactionWithQRPayload(userId, qrPayload, uiCallback) {
-		let coreUiCallback = this._getCoreUiCallback(uiCallback);
-		OstWalletSdkUI.scanQRCodeToExecuteTransaction( userId, qrPayload, coreUiCallback.uuid );
-		return coreUiCallback.uuid;
-	}
+  executeTransactionWithQRPayload(userId, qrPayload, uiCallback) {
+    let coreUiCallback = this._getCoreUiCallback(uiCallback);
+    OstWalletSdkUI.scanQRCodeToExecuteTransaction( userId, qrPayload, coreUiCallback.uuid );
+    return coreUiCallback.uuid;
+  }
 
   /**
    * Show device component sheet
