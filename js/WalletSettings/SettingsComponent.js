@@ -9,13 +9,6 @@ import {optionIds, WalletSettingsController} from './WalletSettingsController';
 import OstThemeConfigHelper from '../helpers/OstThemeConfigHelper'
 import OstWalletSettings from "@ostdotcom/ost-wallet-sdk-react-native/js/WalletSettings/OstWalletSettings";
 
-let AndroidOpenSettings = null;
-import('react-native-android-open-settings').then((pack) => {
-  AndroidOpenSettings = pack.default;
-}).catch( (err) => {
-
-});
-
 class SettingsComponent extends PureComponent {
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -113,24 +106,6 @@ class SettingsComponent extends PureComponent {
       this.onWorkflowStarted( workflowInfo );
     } else {
       console.log("PepoError", "ws_indx_osit_1", "Some coding error occurred");
-    }
-  }
-
-  enableAccess() {
-    if (Platform.OS == 'android') {
-      if (AndroidOpenSettings) {
-        AndroidOpenSettings.appDetailsSettings();
-      }
-    } else {
-      Linking.canOpenURL('app-settings:')
-        .then((supported) => {
-          if (!supported) {
-            console.log("Can't handle settings url");
-          } else {
-            return Linking.openURL('app-settings:');
-          }
-        })
-        .catch((err) => console.error('An error occurred', err));
     }
   }
 

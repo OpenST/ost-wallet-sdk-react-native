@@ -36,6 +36,9 @@ Ost React Native Wallet SDK...
     - [Implementation](#implementation-3)
 * [Intermediate Usage - Ost Wallet SDK UI](#intermediate-usage---ost-wallet-sdk-ui)
 * [Advance Usage - Ost Wallet Core Workflow APIs](#advance-usage---ost-wallet-core-workflow-apis)
+* [Known Issues](#known-issues)
+  + [Sdk Initialization Fails on Android 9](#sdk-initialization-fails-on-android-9-api-level-28)
+  + [Setup Device Workflow Fails on iOS-13 Simulator](#setup-device-workflow-fails-on-ios-13-simulator)
 
 
 ## Installing React-native SDK
@@ -45,15 +48,21 @@ Ost React Native Wallet SDK...
 Follow this [official react-native getting started guide](https://facebook.github.io/react-native/docs/0.59/getting-started) to install react native and create a react-native project
 
 2. Install Ost React Native SDK in your project
+The sdk needs following peer dependencies:
+* [eventemitter3](https://www.npmjs.com/package/eventemitter3)
+* [lodash.merge](https://www.npmjs.com/package/lodash.merge)
+* [bignumber.js](https://www.npmjs.com/package/bignumber.js)
+
+```bash
+  npm install --save lodash.merge
+  npm install --save eventemitter3
+  npm install --save bignumber.js
+```
+
 Run following command in your react-native project root
 
 ```bash
- npm install @ostdotcom/ost-wallet-sdk-react-native
-```
-
-The sdk needs [eventemitter3](https://github.com/primus/eventemitter3) as peer-dependency. To install `eventemitter3`, run following command in your react-native project root
-```bash
- npm install eventemitter3
+ npm install --save @ostdotcom/ost-wallet-sdk-react-native
 ```
 
 3. Linking the Ost React Native SDK with your project
@@ -256,3 +265,12 @@ Please refer to [Ost Wallet SDK UI ](./documentation/OstWalletUI.md) for documen
 Ost core workflows API do not use any UI components, thereby giving complete ux control to the developers. The [`OstWalletSdkUI`](./documentation/OstWalletUI.md) also uses Ost core workflows.
 
 Please refer to [Ost Core Workflow APIs](./documentation/OstCoreWorkflows.md) for documentation.
+
+## Known Issues
+
+### Sdk Initialization Fails on Android 9 (API level 28)
+Starting with Android 9 (API level 28), [cleartext support](https://developer.android.com/training/articles/security-config#CleartextTrafficPermitted) is disabled by default. On the other hand, Ost Wallet Android Sdk leverages on **Public Key Pinning** to ensure the authenticity of a Ost Platform server's public key used in TLS sessions using [TrustKit](https://github.com/datatheorem/TrustKit-Android). As TrustKit can only be inititialized with application's [network security configuration](https://developer.android.com/training/articles/security-config), sdk initialization fails. To work-around this issues, application needs to have TrustKit as a dependency and initialize it. 
+
+### Setup Device Workflow Fails on iOS-13 Simulator
+Ost Wallet Sdk uses iOS's [Keychain](https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys/storing_keys_in_the_keychain) to store user's cryptographic keys. Unfortunately, Keychain doesn't work as expected on iOS-13 Simulators. We request you to kindly test your application on actual iOS-13 device while we continue to look for a workaround.
+

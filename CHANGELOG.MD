@@ -1,5 +1,10 @@
 # OST Wallet SDK Changelog
 
+## Version 2.3.14
+* ReadMe updates<br/>
+* Removed unused imports<br/>
+* Peer dependency fixes<br/>
+
 ## Version 2.3.12
 * OstWalletSettings UI component is now available in SDK. To use `OstWalletSettings`, please update downstream sdk.<br/>
 iOS:`v2.3.6`<br/>
