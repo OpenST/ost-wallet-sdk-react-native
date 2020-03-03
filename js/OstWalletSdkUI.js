@@ -184,7 +184,14 @@ class OstWalletRNSdkUI {
     return coreUiCallback.uuid;
   }
 
-  scanQRCodeToAuthorizeDevice(userId, qrPayload, uiCallback) {
+  /**
+   * Authorize device with QR code payload
+   * @param {String} userId - Ost User id
+   * @param {String} qrPayload - QR-Code payload
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @return {*|number}
+   */
+  authorizeDeviceWithQRPayload(userId, qrPayload, uiCallback) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
     OstWalletSdkUI.scanQRCodeToAuthorizeDevice( userId, qrPayload, coreUiCallback.uuid );
     return coreUiCallback.uuid;
@@ -202,6 +209,13 @@ class OstWalletRNSdkUI {
     return coreUiCallback.uuid;
   }
 
+  /**
+   * Authorize browser session with QR code payload
+   * @param {String} userId - Ost User id
+   * @param {String} qrPayload - QR-Code payload
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @return {*|number}
+   */
   authorizeSessionWithQRPayload(userId, qrPayload, uiCallback) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
     OstWalletSdkUI.scanQRCodeToAuthorizeSession( userId, qrPayload, coreUiCallback.uuid );
@@ -217,10 +231,17 @@ class OstWalletRNSdkUI {
    */
   scanQRCodeToExecuteTransaction(userId, uiCallback) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
-    OstWalletSdkUI.scanQRCodeToExecuteTransaction( userId, qrPayload, coreUiCallback.uuid );
+    OstWalletSdkUI.scanQRCodeToExecuteTransaction( userId, null, coreUiCallback.uuid );
     return coreUiCallback.uuid;
   }
 
+  /**
+   * Execute transaction with QR code payload
+   * @param {String} userId - Ost User id
+   * @param {String} qrPayload - QR-Code payload
+   * @param {OstWalletUIWorkflowCallback} uiCallback
+   * @return {*|number}
+   */
   executeTransactionWithQRPayload(userId, qrPayload, uiCallback) {
     let coreUiCallback = this._getCoreUiCallback(uiCallback);
     OstWalletSdkUI.scanQRCodeToExecuteTransaction( userId, qrPayload, coreUiCallback.uuid );
