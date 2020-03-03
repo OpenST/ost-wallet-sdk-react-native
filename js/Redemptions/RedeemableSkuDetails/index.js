@@ -19,7 +19,6 @@ import OstRedemptionTransactionHelper from "../RedemptionTransactionHelper";
 import {OstTransactionHelper} from "../../TransactionHelper/OstTransactionHelper";
 import OstWalletSdkUI from "../../OstWalletSdkUI";
 import OstThemeConfigHelper from '../../helpers/OstThemeConfigHelper';
-import OstRedemableCustomConfig from "../RedemableCustomConfig";
 import OstRedmptionConfig from "../ost-redemption-config";
 import tokenHelper from "../../helpers/TokenHelper";
 import AlertBox from "../CommonComponents/AlertBox";
@@ -28,14 +27,15 @@ import downArrow from '../../../assets/down-arrow.png';
 import multipleClickHandler from '../MultipleClickHandler';
 import {sdkErrorHelper} from "../../helpers/OstSdkErrorHelper";
 import OstWalletSdkHelper from "../../helpers/OstWalletSdkHelper";
+import OstRedemableCustomConfig from "../RedemableCustomConfig";
 
 import {stylesMap} from './styles';
 
 const errorMsgs = {
   generalError: "Failed to redeem, please try again later.",
-  emailRequired: "Email Id is required.",
+  emailRequired: "Email address is required.",
   inSufficientbalance : "Insufficient wallet balance.",
-  invalidAmount : "Given amount is Invalid."
+  invalidAmount : "Given token amount is invalid."
 }
 
 const apiErrorParameterKey = "redemption_meta";
@@ -400,7 +400,7 @@ class OstRedeemableSkuDetails extends PureComponent{
         />
         {(!this.skuDetails.availability && !this.state.refreshing) && (
           <View style={stylesMap.emptyProductDetailsWrapper}>
-            <Text> Oops! failed to load available options</Text>
+            <Text>Oops! Failed to load available options or no options available.</Text>
           </View>
 
         )}

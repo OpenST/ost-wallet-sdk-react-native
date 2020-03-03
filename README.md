@@ -242,6 +242,8 @@ Activate User workflow deploys user's wallet on the blockchain and whitelists th
 #### Implementation
 Please refer to [Activate User UI Workflow Documentation](./documentation/OstWalletUI.md#activate-user) for implementation details.
 
+<a id="wallet-settings-ui-component" />
+
 ### 3. Wallet Settings UI Component 
 ---
 OstWallet Settings is a pre-built UI component available exclusively available in `ost-wallet-sdk-react-native` SDK.
@@ -251,7 +253,10 @@ It is a wallet settings page that can be used by end-users to perfrom 12 differe
 #### Implementation
 Please refer to [OstWallet Settings Documentation](./documentation/OstWalletSettings.md) for implementation details.
 
+<a id="redemption-flow-ui-component" />
+
 ### 4. Redemption Flow UI Component
+---
 OstRedemption component is a pre-built UI component available exclusively in `ost-wallet-sdk-react-native` SDK.
 It consist two pages - one displaying redeemable product list and another displaying product details and redemption options. It can be used by end-users to integrate redemption flow into their app.
 > <b>IMPORTANT:</b> This feature requires application to use [React Navigation](https://reactnavigation.org/docs/en/getting-started.html) package.
@@ -259,7 +264,7 @@ It consist two pages - one displaying redeemable product list and another displa
 #### Implementation
 Please reder to [OstRedemption flow Documentation](./documentation/OstRedemptionFlow.md) for implementation details.
 
-### 5. OstvTransaction Helper - Transaction and Add Session Integrated Workflow
+### 5. OstTransaction Helper - Transaction and Add Session Integrated Workflow
 ---
 `OstTransactionHelper` is a transaction helper provided by the SDK that creates session keys before performing a transaction if needed. App developers can configure the session creation parameters (session buckets) as per application's need.
 

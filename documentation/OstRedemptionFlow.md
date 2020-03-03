@@ -41,7 +41,7 @@ Developer can customize Redemption flow by updating respective properties mentio
 
 ![copy-framework-file](images/redemptionFlow.png)
 
-## Settings Content
+## Redemption Content
 
 Developer can make various modifications in redemption flow component. To modify contet, [refer here](./OstRedemptionConfig.md).
 
