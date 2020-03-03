@@ -1,0 +1,22 @@
+{
+  "themeingConfig": {
+    "common": {
+        "backArrow": null, 
+        "walletIcon": null,
+        "storeIcon": null
+    },
+    "skuListScreen": {
+        "navHeader": null,
+        "header": null,
+        "description": null
+    },
+    "skuDetailsScreen": { 
+      "navHeader": null
+    }  
+  },
+  "transactionMeta" : {
+    "name": "redemption",
+    "type": "user_to_company"
+  }
+}
+

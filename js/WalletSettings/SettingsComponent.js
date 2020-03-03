@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
-import {Alert, FlatList, Linking, Platform, Text, TouchableWithoutFeedback, View} from 'react-native';
-import OstWalletSdkHelper from "../helpers/OstWalletSdkHelper";
-import WalletDetails from './WalletDetails'
+import {FlatList, Text, TouchableWithoutFeedback, View} from 'react-native';
+import WalletDetails from './WalletDetails';
+import BackArrow from '../Redemptions/CommonComponents/BackArrow';
 
 import inlineStyle from './styles'
 
@@ -12,6 +12,7 @@ import OstWalletSettings from "@ostdotcom/ost-wallet-sdk-react-native/js/WalletS
 class SettingsComponent extends PureComponent {
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
+    const isCustomBack = !!OstThemeConfigHelper.getBackArrowSource() ;
     let navigationParams = {
       title: navigation.getParam('navTitle', 'Wallet Settings'),
       headerStyle:  {
@@ -26,6 +27,10 @@ class SettingsComponent extends PureComponent {
       }
     };
 
+    if(isCustomBack){
+      navigationParams["headerBackImage"] = <BackArrow/>; 
+    }
+
     return Object.assign(navigationParams, OstThemeConfigHelper.getNavigationHeaderConfig());
   };
 
@@ -39,7 +44,7 @@ class SettingsComponent extends PureComponent {
 
     this.flatListLayout = null
 
-    OstThemeConfigHelper.updateConfig();
+   this.initTheme();
 
     let ostUserId = this.props.ostUserId;
     let delegate = this.props.ostWalletUIWorkflowCallback;
@@ -52,6 +57,12 @@ class SettingsComponent extends PureComponent {
     }
 
     this.controller = new WalletSettingsController(ostUserId, delegate);
+  }
+
+  initTheme(){
+    OstThemeConfigHelper.updateConfig().then((res)=> {
+      this.props.navigation && this.props.navigation.setParams && this.props.navigation.setParams({"ostThemeUpdated": true});
+    }).catch((error)=> {})
   }
 
   componentDidMount() {
