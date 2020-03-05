@@ -14,13 +14,10 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url "https://jitpack.io" }
     }
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
-group = 'com.github.ostdotcom'
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
