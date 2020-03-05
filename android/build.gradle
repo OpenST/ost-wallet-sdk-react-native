@@ -18,7 +18,6 @@ allprojects {
 }
 
 apply plugin: 'com.android.library'
-
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
@@ -45,5 +44,5 @@ repositories {
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
-    api 'com.ost:ost-wallet-sdk-android:2.3.8'
+    api 'com.ost:ost-wallet-sdk-android:2.4.0'
 }

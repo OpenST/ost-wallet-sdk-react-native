@@ -74,4 +74,3 @@ Some workflows requires additional data. It can be passed to workflow by setting
 | add_session    			          | - spending_limit                        			 | String                                  |
 |                                                       | - expiration_time                       			 | Number				 |
 
-
