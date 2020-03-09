@@ -2,8 +2,8 @@
 
 ## Version 2.4.1
 * User can authorize external session by scanning QR-Code. To use `Authorize session by scanning QR code`, please update downstream sdk.<br/>
-iOS:`v2.4.1`<br/>
-Android:`v2.4.1`
+iOS: v2.4.1<br/>
+Android: v2.4.1
 * User can pass QR-Code payload to perform QR-Code actions without opening Scanner in OstWalletUI. 
 This functionality is available for `scanQRCodeToAuthorizeSession`, `scanQRCodeToExecuteTransaction`, `scanQRCodeToAuthorizeDevice`,  
 
