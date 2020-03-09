@@ -75,4 +75,25 @@ RCT_EXPORT_METHOD(getCurrentDeviceForUserId: (NSString * _Nonnull)userId
   [OstJsonApi getCurrentDeviceForUserId:userId delegate:delegate];
 }
 
+
+RCT_EXPORT_METHOD(getRedeemableSkus: (NSString * _Nonnull)userId
+                  params: (NSDictionary<NSString *, id> * _Nullable)params
+                  successCallback: (RCTResponseSenderBlock _Nonnull) successCallback
+                  errorCallback: (RCTResponseSenderBlock _Nonnull) errorCallback )
+{
+  OstJsonApiCallbackImpl *delegate = [[OstJsonApiCallbackImpl alloc]initWithSuccess:successCallback errorCallback:errorCallback];
+  [OstJsonApi getRedeemableSkusWithUserId:userId params:params delegate:delegate];
+}
+
+
+RCT_EXPORT_METHOD(getRedeemableSkuDetails: (NSString * _Nonnull)userId
+                  skuId: (NSString * _Nonnull)skuId
+                  params: (NSDictionary<NSString *, id> * _Nullable)params
+                  successCallback: (RCTResponseSenderBlock _Nonnull) successCallback
+                  errorCallback: (RCTResponseSenderBlock _Nonnull) errorCallback )
+{
+  OstJsonApiCallbackImpl *delegate = [[OstJsonApiCallbackImpl alloc]initWithSuccess:successCallback errorCallback:errorCallback];
+  [OstJsonApi getRedeemableSkuDetailsWithUserId:userId skuId:skuId params:params delegate: delegate];
+}
+
 @end

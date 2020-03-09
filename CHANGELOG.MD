@@ -1,6 +1,11 @@
 # OST Wallet SDK Changelog
 
-## Version 2.3.13
+## Version 2.4.0
+* OstRedemption UI component is now available in SDK. To use `OstRedemption`, please update downstream sdk.<br/>
+iOS:`v2.4.0`<br/>
+Android:`v2.4.0`
+
+## Version 2.3.14
 * ReadMe updates<br/>
 * Removed unused imports<br/>
 * Peer dependency fixes<br/>
