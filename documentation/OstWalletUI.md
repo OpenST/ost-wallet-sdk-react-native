@@ -752,7 +752,7 @@ QR-Code Sample:
 ```
 
 * <b> with QR Code payload </b> <br />
-Developer can pass QR code payload to authorize device. QR code scanner view won't open if developer pass payload.
+Developer can pass QR code payload to execute transaction. QR code scanner view won't appear if developer pass payload.
   
 ```js
   let uiCallback = new UserPassphrasePrefixDelegate();
