@@ -144,6 +144,7 @@ static NSMutableDictionary *uiCallbackImplMap = nil;
       case OstWorkflowTypeLogoutAllSessions: return @"LOGOUT_ALL_SESSIONS";
       case OstWorkflowTypeUpdateBiometricPreference: return @"UPDATE_BIOMETRIC_PREFERENCE";
       case OstWorkflowTypeShowDeviceQR: return @"SHOW_DEVICE_QR";
+      case OstWorkflowTypeAuthorizeSessionWithQRCode: return @"AUTHORIZE_SESSION_WITH_QR_CODE";
     default: return @"UNKNOWN";
   }
 }

@@ -3,6 +3,8 @@
   },
   "ADD_SESSION": {
   },
+  "AUTHORIZE_SESSION_WITH_QR_CODE": {
+  },
   "GET_DEVICE_MNEMONICS": {
   },
   "PERFORM_QR_ACTION": {
@@ -24,6 +26,7 @@
   "EXECUTE_TRANSACTION": {
   },
   "__DEFAULT_CONTEXT": {
+    "INVALID_SIGNATURE": "The QR code does not contain valid signature.",
     "USER_UNAUTHORIZED": "Device is not authorized. Please authorize device again.",
     "DEVICE_OUT_OF_SYNC": "Device time is out of sync. Please check the time on your device reflects current date and time.",
     "NETWORK_ERROR": "Request could not be executed due to cancellation, a connectivity problem or timeout.",

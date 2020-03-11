@@ -2,14 +2,15 @@
   "item_display_order": [
     "activate_user",
     "wallet_details",
-    "recover_device", 
+    "recover_device",
     "abort_recovery",
-    "add_session", 
-    "reset_pin", 
-    "show_mnemonics", 
+    "add_session",
+    "reset_pin",
+    "show_mnemonics",
     "authorize_device_with_mnemonics",
     "revoke_device",
     "add_another_device",
+    "authorize_browser_session",
     "show_device_qr_code",
     "enable_biometrics",
     "disable_biometrics"
@@ -21,7 +22,7 @@
         "description": "View your wallet details."
       },
       "config": {
-        "ost_view_endpoint": ''
+        "ost_view_endpoint": ""
       }
     },
     "activate_user": {
@@ -84,6 +85,12 @@
       "content_config": {
         "heading": "Add Another Device",
         "description": "Scan QR Code to add another device."
+      }
+    },
+    "authorize_browser_session": {
+      "content_config": {
+        "heading": "Authorize Browser Session",
+        "description": "Scan QR Code to authorize browser session."
       }
     },
     "show_device_qr_code": {
