@@ -17,8 +17,6 @@ allprojects {
     }
 }
 
-apply plugin: 'maven'
-group = 'com.github.ostdotcom'
 apply plugin: 'com.android.library'
 android {
     compileSdkVersion 28
@@ -46,5 +44,5 @@ repositories {
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
-    api 'com.ost:ost-wallet-sdk-android:2.4.0'
+    api 'com.ost:ost-wallet-sdk-android:2.4.1'
 }
