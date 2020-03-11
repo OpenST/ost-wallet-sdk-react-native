@@ -3,7 +3,7 @@ import objectMerge from "lodash.merge";
 
 import {sdkErrorHelper} from '../helpers/OstSdkErrorHelper'
 
-const ItemsThatNeedCamera = ["add_another_device"];
+const ItemsThatNeedCamera = ["add_another_device", "authorize_browser_session"];
 
 class OstWalletSettingsClass {
   constructor() {
