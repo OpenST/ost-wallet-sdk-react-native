@@ -18,6 +18,7 @@ const optionIds = {
   viewMnemonics: "show_mnemonics",
   authorizeWithMnemonics: "authorize_device_with_mnemonics",
   authorizeWithQR: "add_another_device",
+  authorizeSessionWithQR: "authorize_browser_session",
   showQR: "show_device_qr_code",
   enableBiometrics: "enable_biometrics",
   disableBiometrics: "disable_biometrics",
@@ -163,6 +164,7 @@ class WalletSettingsController {
         this._updateOptionsData(optionIds.addSession, false, true);
         this._updateOptionsData(optionIds.viewMnemonics, false, true);
         this._updateOptionsData(optionIds.authorizeWithQR, false, true);
+        this._updateOptionsData(optionIds.authorizeSessionWithQR, false, true);
         this._updateOptionsData(optionIds.resetPin, false, true);
         this._updateOptionsData(optionIds.revokeDevice, false, true);
 
@@ -365,6 +367,10 @@ class WalletSettingsController {
       case optionIds.authorizeWithQR:
         workflowId = OstWalletSdkUI.scanQRCodeToAuthorizeDevice(userId, delegate);
         break;
+
+      case optionIds.authorizeSessionWithQR:
+        workflowId = OstWalletSdkUI.scanQRCodeToAuthorizeSession(userId, delegate);
+        break;      
 
       case optionIds.showQR:
         workflowId = OstWalletSdkUI.getAddDeviceQRCode(userId, delegate);

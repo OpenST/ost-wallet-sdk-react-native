@@ -1,5 +1,3 @@
-import colors from '../styles/Colors'
-
 export default {
 
   "nav_bar_logo_image": {
@@ -12,6 +10,10 @@ export default {
     "system_font_weight": "bold",
     "alignment": "left"
   },
+  "b1":{
+    "color":"#ffffff",
+    "size":15
+  },
     
   "c2": {
     "size": 12,
@@ -21,7 +23,7 @@ export default {
   },
 
   "navigation_bar": {
-    "tint_color": colors.brightSky
+    "tint_color": "#61B2C9"
   },
 
   "navigation_bar_header": {
@@ -33,7 +35,8 @@ export default {
       "tint_color": "#ffffff"
     },
     "back":{
-      "tint_color": "#ffffff"
+      "tint_color": "#ffffff",
+      "source" : null
     }
   },
 
@@ -53,5 +56,13 @@ export default {
     "color": "#0F9D58",
     "system_font_weight": "regular",
     "alignment": "left",
+  },
+
+  "form_field": {
+    "size":15,
+    "system_font_weight":"regular",
+    "color":"#484848",
+    "border_color": "#484848",
+    "alignment": "left"
   }
 }

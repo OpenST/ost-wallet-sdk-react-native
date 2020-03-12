@@ -159,26 +159,44 @@ RCT_EXPORT_METHOD(getAddDeviceQRCode: (NSString * _Nonnull) userId
 }
 
 RCT_EXPORT_METHOD(scanQRCodeToAuthorizeDevice: (NSString * _Nonnull) userId
+                  addDevicePayload: (NSString * _Nullable) addDevicePayload
                   uuid:(NSString *)uuid) {
   
   OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
   
   NSString *worklfowId = [OstWalletUI scanQRCodeToAuthorizeDeviceWithUserId: userId
+                                                           addDevicePayload: addDevicePayload
                                                    passphrasePrefixDelegate: uiCallbackImpl];
   
   [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
 }
   
 RCT_EXPORT_METHOD(scanQRCodeToExecuteTransaction: (NSString * _Nonnull) userId
+                  executeTransactionPayload: (NSString * _Nullable) executeTransactionPayload
                   uuid:(NSString *)uuid) {
   
   OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
     
   NSString *worklfowId = [OstWalletUI scanQRCodeToExecuteTransactionWithUserId: userId
+                                                     executeTransactionPayload: executeTransactionPayload
                                                       passphrasePrefixDelegate: uiCallbackImpl];
   
   [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
 }
+
+RCT_EXPORT_METHOD(scanQRCodeToAuthorizeSession: (NSString * _Nonnull) userId
+                  qrPayload: (NSString * _Nullable) qrPayload
+                  uuid:(NSString *)uuid) {
+  
+  OstUICallbackImpl *uiCallbackImpl = [[OstUICallbackImpl alloc]initWithId:uuid];
+  
+  NSString *worklfowId = [OstWalletUI scanQRCodeToAuthorizeSessionWithUserId: userId
+                                                                   qrPayload: qrPayload
+                                                    passphrasePrefixDelegate: uiCallbackImpl];
+  
+  [OstWalletUI subscribeWithWorkflowId:worklfowId listner: uiCallbackImpl];
+}
+
   
 
 @end

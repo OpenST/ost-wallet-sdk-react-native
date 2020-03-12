@@ -236,6 +236,9 @@ OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWo
 
 #### Add Session
 A session is a period of time during which a sessionKey is authorized to sign transactions under a pre-set limit per transaction on behalf of the user. The device manager, which controls the tokens, authorizes sessions.
+
+* <b>By Calling function</b> <br />
+
 ```js
 
 let uiCallback = new UserPassphrasePrefixDelegate()
@@ -252,6 +255,80 @@ let workflowId = OstWalletSdkUI.addSession(
     userId, 
     expiresAfterInSecs, 
     spendingLimit, 
+    uiCallback
+) 
+
+// Subscribe to events
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.requestAcknowledged, () => {
+  // Session is being added.
+});
+
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext , ostContextEntity) => {
+  // Show success message to user.
+  // Session has been added.
+});
+
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWorkflowContext , ostError) => {
+  // Show error to user.
+  // An error occoured during the workflow. The Session has NOT been added.
+});
+```
+
+* <b> By scanning QR-Code </b> <br />
+
+QR Code Sample
+```
+as|2.0.0|2a421359d02132e8161cda9518aeaa62647b648e|5369b4d7e0e53e1159d6379b989a8429a7b2dd59|1|1583308559|4d40c46a7302974134a67ce77bdfae0e1f78ee518e87b6cda861ffc5847dfaca11a653651c6cdfadf0224574f6f07e1a78aabacdfed66d8c78e1fb2c9bc750161c
+```
+
+```js
+
+let uiCallback = new UserPassphrasePrefixDelegate()
+
+/**
+   * Add user session
+   * @param {String} userId - Ost User id
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @public
+   */
+let workflowId = OstWalletSdkUI.scanQRCodeToAuthorizeSession(
+    userId,
+    uiCallback
+) 
+
+// Subscribe to events
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.requestAcknowledged, () => {
+  // Session is being added.
+});
+
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext , ostContextEntity) => {
+  // Show success message to user.
+  // Session has been added.
+});
+
+OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWorkflowContext , ostError) => {
+  // Show error to user.
+  // An error occoured during the workflow. The Session has NOT been added.
+});
+```
+
+
+* <b> With QR Code Payload </b> <br />
+
+```js
+
+let uiCallback = new UserPassphrasePrefixDelegate()
+let payload = "as|2.0.0|2a421359d02132e8161cda9518aeaa62647b648e|5369b4d7e0e53e1159d6379b989a8429a7b2dd59|1|1583308559|4d40c46a7302974134a67ce77bdfae0e1f78ee518e87b6cda861ffc5847dfaca11a653651c6cdfadf0224574f6f07e1a78aabacdfed66d8c78e1fb2c9bc750161c"
+/**
+   * Authorize browser session with QR code payload
+   * @param {String} userId - Ost User id
+   * @param {String} qrPayload - QR-Code payload
+   * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+   * @return {*|number}
+   */
+let workflowId = OstWalletSdkUI.authorizeSessionWithQRPayload(
+    userId,
+    payload,
     uiCallback
 ) 
 
@@ -553,6 +630,8 @@ QR-Code Sample:
 }
 ```
 
+* <b> By scanning QR-Code </b> <br />
+
 ```js
   let uiCallback = new UserPassphrasePrefixDelegate();
 
@@ -563,6 +642,37 @@ QR-Code Sample:
    * @public
    */
    let workflowId = OstWalletSdkUI.scanQRCodeToAuthorizeDevice(userId, uiCallback);
+
+  // Subscribe to events
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.requestAcknowledged, () => {
+    // Device is being authorized.
+  });
+
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext , ostContextEntity) => {
+    // Show success message to user.
+    // Device has been authorized.
+  });
+
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWorkflowContext , ostError) => {
+    // Show error to user.
+    // An error occoured during the workflow. 
+  });
+```
+
+* <b> with QR Code payload </b> <br />
+Developer can pass QR code payload to authorize device. QR code scanner view won't open if developer pass payload.
+  
+```js
+  let uiCallback = new UserPassphrasePrefixDelegate();
+  let payload = "{\"dd\":\"AD\",\"ddv\":\"1.1.0\",\"d\":{\"da\":\"0x7701af46018fc57c443b63e839eb24872755a2f8\"}}"
+  /**
+    * Authorize device with QR code payload
+    * @param {String} userId - Ost User id
+    * @param {String} qrPayload - QR-Code payload
+    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+    * @return {*|number}
+    */
+   let workflowId = OstWalletSdkUI.authorizeDeviceWithQRPayload(userId, payload, uiCallback);
 
   // Subscribe to events
   OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.requestAcknowledged, () => {
@@ -633,6 +743,37 @@ QR-Code Sample:
   OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext , ostContextEntity) => {
     // Show success message to user.
     // Transaction has been executed successfully.
+  });
+
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWorkflowContext , ostError) => {
+    // Show error to user.
+    // An error occoured during the workflow. 
+  });
+```
+
+* <b> with QR Code payload </b> <br />
+Developer can pass QR code payload to execute transaction. QR code scanner view won't appear if developer pass payload.
+  
+```js
+  let uiCallback = new UserPassphrasePrefixDelegate();
+  let payload = <TRANSACTON_QR_CODE_PAYLAOD_STRING>
+  /**
+    * Execute transaction with QR code payload
+    * @param {String} userId - Ost User id
+    * @param {String} qrPayload - QR-Code payload
+    * @param {OstWalletUIWorkflowCallback} uiCallback - callback implementation instances for application communication
+    * @return {*|number}
+    */
+   let workflowId = OstWalletSdkUI.executeTransactionWithQRPayload(userId, payload, uiCallback);
+
+  // Subscribe to events
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.requestAcknowledged, () => {
+    // Device is being authorized.
+  });
+
+  OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext , ostContextEntity) => {
+    // Show success message to user.
+    // Device has been authorized.
   });
 
   OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (ostWorkflowContext , ostError) => {

@@ -150,6 +150,46 @@ public class OstRNSdkJsonApiModule extends ReactContextBaseJavaModule {
         }
     }
 
+    @ReactMethod
+    public void getRedeemableSkus(
+            String userId,
+            ReadableMap requestMap,
+            Callback successCallback,
+            Callback errorCallback
+    ) {
+        try {
+            Map<String,Object> requestPayload = new HashMap<>();
+            if (null != requestMap) {
+                requestPayload = requestMap.toHashMap();
+            }
+            OstJsonApi.getRedeemableSkus(userId ,requestPayload, new OstJsonApiCallbackImpl(successCallback, errorCallback));
+        } catch (Throwable e) {
+            errorCallback.invoke(Utils.getError(e, "rn_orsjam_grs_1"));
+            return;
+        }
+    }
+
+
+    @ReactMethod
+    public void getRedeemableSkuDetails(
+            String userId,
+            String skuId,
+            ReadableMap requestMap,
+            Callback successCallback,
+            Callback errorCallback
+    ) {
+        try {
+            Map<String,Object> requestPayload = new HashMap<>();
+            if (null != requestMap) {
+                requestPayload = requestMap.toHashMap();
+            }
+            OstJsonApi.getRedeemableSkuDetails(userId , skuId ,requestPayload, new OstJsonApiCallbackImpl(successCallback, errorCallback));
+        } catch (Throwable e) {
+            errorCallback.invoke(Utils.getError(e, "rn_orsjam_grsd_1"));
+            return;
+        }
+    }
+
 
     private static class OstJsonApiCallbackImpl implements OstJsonApiCallback {
 
